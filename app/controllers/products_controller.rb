@@ -21,5 +21,17 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find(params[:id])
+    @store = params[:store_id]
+  end
+
+  def update
+    @product = Product.find(params[:id])
+    @store = params[:product][:store_id]
+    if @product.update_attributes(params[:product])
+      redirect_to(store_product_path(@store, @product))
+    else
+      render 'edit'
+    end
   end
 end

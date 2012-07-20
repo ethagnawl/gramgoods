@@ -1,6 +1,15 @@
-= @product.name
-= @product.description
-= @product.price
-= @product.quantity
+.widget
+  Name:
+  = @product.name
+.widget
+  Description:
+  = @product.description
+.widget
+  Price:
+  = @product.price
+.widget
+  Quantity:
+  = @product.quantity
 
 = link_to('edit', edit_store_product_path(@store, @product))
+= link_to('back to store', store_path(@store))
