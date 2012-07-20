@@ -1,6 +1,12 @@
 class StoresController < ApplicationController
+  def index
+    @user = current_user
+  end
+
   def new
+    @user = current_user.id
     @store = Store.new
+    @store.user_id = @user
   end
 
   def create
