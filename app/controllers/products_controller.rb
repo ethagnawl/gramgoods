@@ -1,12 +1,14 @@
 class ProductsController < ApplicationController
   def new
     @product = Product.new
+    @store = params[:store_id]
   end
 
   def create
     @product = Product.new(params[:product])
+    @store = params[:store_id]
     if @product.save
-      redirect_to product_path(@product)
+      redirect_to(store_product_path(@store, @product))
     else
       render 'new'
     end
@@ -14,5 +16,9 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
+    @store = params[:store_id]
+  end
+
+  def edit
   end
 end

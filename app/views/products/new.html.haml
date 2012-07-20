@@ -1,6 +1,7 @@
 = render 'shared/form_errors', :target => @product
 
 = form_for(@product) do |form|
+  %input{ :type => 'hidden', :name => 'store_id', :value => @store }
   %fieldset
     = form.label :name
     = form.text_field :name
