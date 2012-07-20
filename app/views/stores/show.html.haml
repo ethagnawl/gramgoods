@@ -1,2 +1,7 @@
 "Welcome to, #{@store.name}!"
 "You can find us on the web at #{@store.url}"
+
+- @store.products.each do |product|
+  = product.name
+
+= link_to('add product', new_store_product_path(@store))

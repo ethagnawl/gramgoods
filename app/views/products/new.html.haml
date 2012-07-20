@@ -1,0 +1,18 @@
+= render 'shared/form_errors', :target => @product
+
+= form_for(@product) do |form|
+  %fieldset
+    = form.label :name
+    = form.text_field :name
+  %fieldset
+    = form.label :description
+    = form.text_field :description
+  %fieldset
+    = form.label :price
+    = form.text_field :price
+  %fieldset
+    = form.label :quantity
+    = form.text_field :quantity
+  %fieldset
+    = form.submit
+
