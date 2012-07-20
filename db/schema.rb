@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120720064924) do
+ActiveRecord::Schema.define(:version => 20120720075239) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at", :null => false
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120720064924) do
     t.string   "description"
     t.decimal  "price",       :precision => 8, :scale => 2
     t.integer  "quantity"
+    t.integer  "store_id"
   end
 
   create_table "stores", :force => true do |t|

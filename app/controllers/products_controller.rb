@@ -2,11 +2,12 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @store = params[:store_id]
+    @product.store_id = @store
   end
 
   def create
     @product = Product.new(params[:product])
-    @store = params[:store_id]
+    @store = params[:product][:store_id]
     if @product.save
       redirect_to(store_product_path(@store, @product))
     else
