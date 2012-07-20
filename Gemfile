@@ -23,3 +23,5 @@ end
 gem 'jquery-rails'
 gem 'devise'
 gem 'haml'
+gem 'omniauth'
+gem 'omniauth-instagram'
