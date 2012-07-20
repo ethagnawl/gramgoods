@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+
   def new
     @product = Product.new
     @store = params[:store_id]

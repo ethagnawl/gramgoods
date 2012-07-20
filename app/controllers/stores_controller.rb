@@ -1,4 +1,7 @@
 class StoresController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
+
+
   def index
     @stores = Store.find_all_by_user_id(current_user)
   end
