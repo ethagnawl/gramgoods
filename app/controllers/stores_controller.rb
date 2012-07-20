@@ -1,6 +1,6 @@
 class StoresController < ApplicationController
   def index
-    @user = current_user
+    @stores = Store.find_all_by_user_id(current_user)
   end
 
   def new
