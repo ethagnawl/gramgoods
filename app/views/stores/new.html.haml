@@ -1,3 +1,10 @@
 = form_for(@store) do |form|
-  = form.label :name
-  = form.text_field :name
+  %fieldset
+    = form.label :name
+    = form.text_field :name
+  %fieldset
+    = form.label :url
+    = form.text_field :url
+  %fieldset
+    = form.submit
+
