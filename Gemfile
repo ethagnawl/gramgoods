@@ -26,3 +26,4 @@ gem 'haml'
 gem 'omniauth'
 gem 'omniauth-instagram'
 gem 'instagram'
+gem 'pry-rails', :group => :development
