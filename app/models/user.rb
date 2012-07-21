@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     :remember_me, :name, :website, :thumbnail
 
   def apply_omniauth(omniauth)
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token => omniauth['credentials']['token'])
   end
 
   def password_required?
