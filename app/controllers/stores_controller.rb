@@ -7,13 +7,13 @@ class StoresController < ApplicationController
   end
 
   def new
-    @user = current_user.id
     @store = Store.new
     @store.user_id = @user
   end
 
   def create
     @store = Store.new(params[:store])
+    @store[:user_id] = current_user.id
     if @store.save
       redirect_to store_path(@store)
     else
