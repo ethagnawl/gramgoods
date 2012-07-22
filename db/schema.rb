@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721035701) do
+ActiveRecord::Schema.define(:version => 20120722064936) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -22,16 +22,8 @@ ActiveRecord::Schema.define(:version => 20120721035701) do
     t.string   "access_token"
   end
 
-  create_table "products", :force => true do |t|
-    t.datetime "created_at",                                                     :null => false
-    t.datetime "updated_at",                                                     :null => false
-    t.string   "name"
-    t.string   "description"
-    t.decimal  "price",       :precision => 8, :scale => 2
-    t.integer  "quantity"
-    t.integer  "store_id"
-    t.string   "status",                                    :default => "draft"
-  end
+# Could not dump table "products" because of following StandardError
+#   Unknown type 'flat_rate_shipping_cost' for column 'flatrate_shipping_cost'
 
   create_table "stores", :force => true do |t|
     t.datetime "created_at", :null => false
