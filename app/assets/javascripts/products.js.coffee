@@ -1,3 +1,7 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+($ '.product-photo').on 'click', ->
+    ($ @).toggleClass 'selected'
+
+($ '.product-form').on 'submit', (e) ->
+    product_photos = $.map ($ '.product-photo.selected'), (product_photo) ->
+        ($ product_photo).data('url')
+    ($ '#product_photos').val(product_photos)

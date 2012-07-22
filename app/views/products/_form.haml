@@ -1,16 +1,17 @@
-- configure_instagram(@user.authentications.first.uid, @user.authentications.first.access_token)
-- tags = (Instagram.user_recent_media).find_all { |tag| !tag['tags'].empty? }
-- tags.each do |tag|
-  .widget
-    = tag['tags']
-    = image_tag(tag['images']['standard_resolution']['url'])
-- Instagram.reset
+.product-photos
+  - configure_instagram(@user.authentications.first.uid, @user.authentications.first.access_token)
+  - Instagram.user_recent_media.each do |tag|
+    .product-photo{ :data => { :url => product_photo_url(tag) } }
+      = image_tag(product_photo_url(tag))
+      = tag['tags'].join(', ')
+  - Instagram.reset
 
 
 = render 'shared/form_errors', :target => @product
 
-= form_for(@product) do |form|
+= form_for(@product, :html => { :class => 'product-form' }) do |form|
   = form.hidden_field :store_id
+  = form.hidden_field :photos
   %fieldset
     = form.label :name
     = form.text_field :name
