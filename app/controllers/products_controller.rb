@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to(store_product_path(@store, @product))
     else
-       'new'
+       render 'new'
     end
   end
 
