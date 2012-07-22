@@ -1,3 +1,12 @@
+- configure_instagram(@user.authentications.first.uid, @user.authentications.first.access_token)
+- tags = (Instagram.user_recent_media).find_all { |tag| !tag['tags'].empty? }
+- tags.each do |tag|
+  .widget
+    = tag['tags']
+    = image_tag(tag['images']['standard_resolution']['url'])
+- Instagram.reset
+
+
 = render 'shared/form_errors', :target => @product
 
 = form_for(@product) do |form|
@@ -5,6 +14,9 @@
   %fieldset
     = form.label :name
     = form.text_field :name
+  %fieldset
+    = form.label :instagram_tag
+    = form.text_field :instagram_tag
   %fieldset
     = form.label :description
     = form.text_field :description
@@ -15,8 +27,17 @@
     = form.label :quantity
     = form.text_field :quantity
   %fieldset
+    = form.label :colors
+    = form.text_field :colors
+  %fieldset
+    = form.label :sizes
+    = form.text_field :sizes
+  %fieldset
+    = form.label :flatrate_shipping_cost
+    = form.text_field :flatrate_shipping_cost
+  %fieldset
     = form.label :status
-    = form.select :status, [:draft, :active, :out_of_stock]
+    = form.select :status, ['Draft', 'Active', 'Out of Stock']
   %fieldset
     = form.submit
 
