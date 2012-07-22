@@ -5,9 +5,9 @@
 - tags = tags.concat(@product.photos.split(',')).uniq
 .product-photos
   - tags.each do |tag|
-    = image_tag(tag, :class => 'product-photo')
+    .product-photo
+      = image_tag(tag)
 - Instagram.reset
-
 
 .widget
   Name:
@@ -19,7 +19,7 @@
 
 .widget
   Price:
-  = @product.price
+  = number_to_currency(@product.price)
 
 .widget
   Quantity:
@@ -46,7 +46,7 @@
 - if @product.flatrate_shipping_cost
   .widget
     Flat Rate Shipping Cost:
-    = @product.flatrate_shipping_cost
+    = number_to_currency(@product.flatrate_shipping_cost)
 
 
 = link_to('edit', edit_store_product_path(@store, @product))
