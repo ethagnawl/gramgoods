@@ -29,7 +29,8 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
-    @store = params[:store_id]
+    @store = Store.find(params[:store_id])
+    @user = User.find(Integer(@store.user_id))
   end
 
   def edit
