@@ -1,5 +1,5 @@
 class Product < ActiveRecord::Base
-  belongs_to :store, :dependent => :destroy
+  belongs_to :store
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :colors, :sizes, :flatrate_shipping_cost, :instagram_tag, :photos
