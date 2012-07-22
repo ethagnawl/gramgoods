@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120722064936) do
+ActiveRecord::Schema.define(:version => 20120722183315) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
