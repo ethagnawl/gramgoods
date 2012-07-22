@@ -1,5 +1,14 @@
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :except => [:show, :index] do |controller|
+    controller.instance_eval do
+      if store_id = (params[:store_id] || params[:product][:store_id])
+        redirect_to(root_path) unless user_owns_store?(store_id)
+      else
+        redirect_to(root_path)
+      end
+    end
+  end
 
   def new
     @product = Product.new
@@ -8,16 +17,12 @@ class ProductsController < ApplicationController
   end
 
   def create
-    if user_owns_store?(params[:product][:store_id])
-      @product = Product.new(params[:product])
-      @store = params[:product][:store_id]
-      if @product.save
-        redirect_to(store_product_path(@store, @product))
-      else
-        render 'new'
-      end
+    @product = Product.new(params[:product])
+    @store = params[:product][:store_id]
+    if @product.save
+      redirect_to(store_product_path(@store, @product))
     else
-      redirect_to root_path
+       'new'
     end
   end
 
