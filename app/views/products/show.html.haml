@@ -2,17 +2,41 @@
   Name:
   = @product.name
 .widget
+
   Description:
   = @product.description
+
 .widget
   Price:
   = @product.price
+
 .widget
   Quantity:
   = @product.quantity
+
 .widget
   Status:
   = @product.status
+
+.widget
+  Instagram Tag:
+  = @product.instagram_tag
+
+- if @product.colors
+  .widget
+    Colors:
+    = @product.colors
+
+- if @product.sizes
+  .widget
+    Sizes:
+    = @product.sizes
+
+- if @product.flatrate_shipping_cost
+  .widget
+    Flat Rate Shipping Cost:
+    = @product.flatrate_shipping_cost
+
 
 = link_to('edit', edit_store_product_path(@store, @product))
 = link_to('back to store', store_path(@store))
