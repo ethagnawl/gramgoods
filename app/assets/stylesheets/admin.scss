@@ -16,6 +16,7 @@
 }
 
 html body {
+    background-color: #ccc;
     margin: 40px auto;
     width: 960px;
 }
@@ -26,17 +27,18 @@ html body {
     .product-photo {
         @include widget;
 
-        border: 1px solid #fff;
         height: 180px;
-        margin: 0 4px;
+        margin: 0 8px;
         width: 152px;
 
         img {
+            border: 4px solid #fff;
             width: 150px;
+
         }
 
-        &.selected {
-            border-color: green;
+        &.selected img {
+            border-color: #bada55;
         }
     }
 }
