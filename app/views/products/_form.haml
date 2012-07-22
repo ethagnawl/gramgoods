@@ -1,9 +1,10 @@
 .product-photos
+  %h2 Click to select product photos.
   - configure_instagram(@user.authentications.first.uid, @user.authentications.first.access_token)
   - Instagram.user_recent_media.each do |photo|
     .product-photo{ :class => (!@product.photos.nil? && @product.photos_array.include?(product_photo_url(photo)) ? 'selected' : nil), :data => { :url => product_photo_url(photo) } }
       = image_tag(product_photo_url(photo))
-      = photo['tags'].join(', ')
+      = photo['tags'].map { |tag| '#' + tag }.join(', ')
   - Instagram.reset
 
 
