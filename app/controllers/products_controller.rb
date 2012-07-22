@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @user = current_user
     @product = Product.new
     @store = params[:store_id]
     @product.store_id = @store
@@ -32,6 +33,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @product = Product.find(params[:id])
     @store = params[:store_id]
   end
