@@ -8,12 +8,16 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(params[:product])
-    @store = params[:product][:store_id]
-    if @product.save
-      redirect_to(store_product_path(@store, @product))
+    if user_owns_store?(params[:product][:store_id])
+      @product = Product.new(params[:product])
+      @store = params[:product][:store_id]
+      if @product.save
+        redirect_to(store_product_path(@store, @product))
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      redirect_to root_path
     end
   end
 
@@ -35,5 +39,11 @@ class ProductsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  private
+
+  def user_owns_store?(store_id)
+    current_user.store_ids.include?(Integer(store_id))
   end
 end

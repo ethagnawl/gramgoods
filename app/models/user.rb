@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
   def password_required?
     (authentications.empty? || !password.blank?) && super
   end
+
+  def self.store_ids
+    Store.find_all_by_user_id(self.id).map { |store| store.id }
+  end
 end
