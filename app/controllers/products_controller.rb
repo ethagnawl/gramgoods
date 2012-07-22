@@ -21,7 +21,9 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @store = params[:product][:store_id]
+    @product.status = 'Draft' if params[:product][:photos].empty?
     if @product.save
+      flash[:notice] = "You will need to attach at least one image to #{@product.name} before setting status to Active."
       redirect_to(store_product_path(@store, @product))
     else
        render 'new'
@@ -43,7 +45,9 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     @store = params[:product][:store_id]
+    params[:product][:status] = 'Draft' if params[:product][:photos].empty?
     if @product.update_attributes(params[:product])
+      flash[:notice] = "You will need to attach at least one image to #{@product.name} before setting status to Active."
       redirect_to(store_product_path(@store, @product))
     else
       render 'edit'
