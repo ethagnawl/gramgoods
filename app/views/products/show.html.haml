@@ -9,6 +9,8 @@
       = image_tag(tag)
 - Instagram.reset
 
+%h1 Store: #{@store.name}
+
 .widget
   Name:
   = @product.name
@@ -33,17 +35,17 @@
   Instagram Tag:
   = @product.instagram_tag
 
-- if @product.colors
+- unless @product.colors.empty?
   .widget
     Colors:
     = @product.colors
 
-- if @product.sizes
+- unless @product.sizes.empty?
   .widget
     Sizes:
     = @product.sizes
 
-- if @product.flatrate_shipping_cost
+- unless @product.flatrate_shipping_cost.empty?
   .widget
     Flat Rate Shipping Cost:
     = number_to_currency(@product.flatrate_shipping_cost)
@@ -51,3 +53,4 @@
 
 = link_to('edit', edit_store_product_path(@store, @product))
 = link_to('back to store', store_path(@store))
+= link_to("Delete #{@product.name}", @product, :data => { :confirm =>"Are you sure you want to delete #{@product.name}?" }, :method => :delete)

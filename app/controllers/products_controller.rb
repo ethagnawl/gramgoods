@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :except => [:show, :index] do |controller|
+  before_filter :except => [:show, :index, :destroy] do |controller|
+    # why won't this work for :destroy?
     controller.instance_eval do
       if store_id = (params[:store_id] || params[:product][:store_id])
         redirect_to(root_path) unless user_owns_store?(store_id)
@@ -46,6 +47,19 @@ class ProductsController < ApplicationController
       redirect_to(store_product_path(@store, @product))
     else
       render 'edit'
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @store = Store.find(Integer(@product.store_id))
+
+    if user_owns_store?(@store.id)
+      @product.destroy
+      flash[:notice] = "#{@product.name} was successfully deleted."
+      redirect_to(store_path(@store))
+    else
+      redirect_to(root_path)
     end
   end
 
