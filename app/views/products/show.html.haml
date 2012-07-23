@@ -1,4 +1,5 @@
-= render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos_array, :source => 'static' }
+- unless @product.photos_array.empty?
+  = render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos_array, :source => 'static' }
 
 %h1 Store: #{@store.name}
 
