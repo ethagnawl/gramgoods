@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
-  def self.store_ids
+  def store_ids
     Store.find_all_by_user_id(self.id).map { |store| store.id }
   end
 end
