@@ -4,6 +4,7 @@ class StoresController < ApplicationController
   def index
     @user = current_user
     @stores = Store.find_all_by_user_id(current_user)
+    render_conditional_layout(params[:layout])
   end
 
   def new
@@ -23,5 +24,6 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find(params[:id])
+    render_conditional_layout(params[:layout])
   end
 end

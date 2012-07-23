@@ -13,4 +13,12 @@ module ApplicationHelper
     Instagram.reset
     user_photo_feed
   end
+
+  def render_conditional_layout(layout = nil)
+    if user_signed_in?
+      render :layout => (layout.nil? ? 'admin' : layout)
+    else
+      render :layout => 'mobile'
+    end
+  end
 end

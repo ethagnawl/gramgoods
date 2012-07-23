@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @store = Store.find(params[:store_id])
     @user = User.find(Integer(@store.user_id))
-    render_conditional_layout
+    render_conditional_layout(params[:layout])
   end
 
   def edit
