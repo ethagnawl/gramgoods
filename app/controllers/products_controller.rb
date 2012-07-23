@@ -25,9 +25,12 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @store = params[:product][:store_id]
-    @product.status = 'Draft' if params[:product][:photos].empty?
+    product_photos_is_empty = params[:product][:photos].empty?
+    @product.status = 'Draft' if product_photos_is_empty
     if @product.save
-      flash[:notice] = "You will need to attach at least one image to #{@product.name} before setting status to Active."
+      if product_photos_is_empty
+        flash[:notice] = product_photos_empty_message(@product.name)
+      end
       redirect_to(store_product_path(@store, @product))
     else
        render 'new'
@@ -50,9 +53,12 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     @store = params[:product][:store_id]
-    params[:product][:status] = 'Draft' if params[:product][:photos].empty?
+    product_photos_is_empty = params[:product][:photos].empty?
+    params[:product][:status] = 'Draft' if product_photos_is_empty
     if @product.update_attributes(params[:product])
-      flash[:notice] = "You will need to attach at least one image to #{@product.name} before setting status to Active."
+      if product_photos_is_empty
+        flash[:notice] = product_photos_empty_message(@product.name)
+      end
       redirect_to(store_product_path(@store, @product))
     else
       render 'edit'
@@ -73,6 +79,10 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def product_photos_empty_message(name)
+    "You will need to attach at least one image to #{name} before setting status to Active."
+  end
 
   def user_owns_store?(store_id)
     current_user.store_ids.include?(Integer(store_id))
