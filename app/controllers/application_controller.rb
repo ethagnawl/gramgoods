@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def user_owns_store?(store_id)
+    current_user.store_ids.include?(store_id)
+  end
+
   def render_conditional_layout(layout = nil)
     if user_signed_in?
       render :layout => (layout.nil? ? 'admin' : layout)

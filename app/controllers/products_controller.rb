@@ -87,8 +87,4 @@ class ProductsController < ApplicationController
   def product_photos_empty_message(name)
     "You will need to attach at least one image to #{name} before setting status to Active."
   end
-
-  def user_owns_store?(store_id)
-    current_user.store_ids.include?(store_id)
-  end
 end
