@@ -1,0 +1,18 @@
+= render 'shared/form_errors', :target => @store
+
+= form_for(@store) do |form|
+  %fieldset
+    = form.label :name
+    = form.text_field :name
+  %fieldset
+    - if params[:action] == 'new'
+      = form.label :url
+      = form.text_field :url
+    - else
+      %label #{@store.url}
+  %fieldset
+    = form.label :return_policy
+    = form.text_field :return_policy
+  %fieldset
+    = form.submit
+

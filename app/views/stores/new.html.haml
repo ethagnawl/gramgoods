@@ -1,12 +1,1 @@
-= render 'shared/form_errors', :target => @store
-
-= form_for(@store) do |form|
-  %fieldset
-    = form.label :name
-    = form.text_field :name
-  %fieldset
-    = form.label :url
-    = form.text_field :url
-  %fieldset
-    = form.submit
-
+= render 'form'
