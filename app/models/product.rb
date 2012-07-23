@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :price, :quantity, :description, :instagram_tag
 
   def photos_array
-    return [] if self.photos.nil?
+    return [] if self.photos.nil? || self.photos.empty?
     return [self.photos] unless self.photos.include?(',')
     self.photos.split(',')
   end
