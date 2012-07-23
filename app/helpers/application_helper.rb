@@ -5,4 +5,12 @@ module ApplicationHelper
       config.access_token = access_token
     end
   end
+
+  def get_instagram_photo_feed_for_user(user)
+    hoge = user.authentications.first
+    configure_instagram(hoge.uid, hoge.access_token)
+    user_photo_feed = Instagram.user_recent_media
+    Instagram.reset
+    user_photo_feed
+  end
 end

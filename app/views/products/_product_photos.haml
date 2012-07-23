@@ -1,0 +1,5 @@
+- locals[:product_photos].each do |photo|
+  .product-photo{ :class => (!locals[:product].photos.nil? && locals[:product].photos_array.include?(product_photo_url(photo)) ? 'selected' : nil), :data => { :url => product_photo_url(photo) } }
+    = image_tag(product_photo_url(photo))
+    = photo['tags'].map { |tag| '#' + tag }.join(', ')
+
