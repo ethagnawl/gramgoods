@@ -1,3 +1,9 @@
+$white: #fff;
+$light-grey: #ccc;
+$medium-grey: #666;
+$dark-grey: #333;
+$green: #bada55;
+
 @mixin widget {
     float: left;
     margin-bottom: 10px;
@@ -16,7 +22,7 @@
 }
 
 html body {
-    background-color: #ccc;
+    background-color: $light-grey;
     margin: 40px auto;
     width: 960px;
 }
@@ -24,7 +30,7 @@ html body {
 .product-photos {
     @include widget;
 
-    border-top: 1px solid #666;
+    border-top: 1px solid $medium-grey;
 
     .product-photo {
         @include widget;
@@ -34,17 +40,51 @@ html body {
         width: 152px;
 
         img {
-            border: 4px solid #fff;
+            border: 4px solid $white;
             width: 150px;
-
         }
 
         &.selected img {
-            border-color: #bada55;
+            border-color: $green;
         }
     }
 }
 
 .product-form {
     @include widget;
+}
+
+.product-widget {
+    @include widget;
+
+    border: 1px solid $dark-grey;
+    padding: 4px 6px 6px;
+    position: relative;
+    width: 300px;
+
+    .product-name {
+        font-weight: bold;
+    }
+
+    .product-image {
+        display: block;
+        width: 100%;
+    }
+
+    .product-description {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .product-count {
+        position: absolute;
+        right: 10px;
+        top: 200px;
+    }
+
+    .edit-product {
+        position: absolute;
+        right: 10px;
+        top: 20px;
+    }
 }
