@@ -11,6 +11,11 @@ class ProductsController < ApplicationController
     end
   end
 
+  # redirect old urls to new urls
+  #if request.path != store_path(@store)
+  #  redirect_to(@store, :status => :moved_permanently)
+  #end
+
   def index
     redirect_to(store_path(Store.find(params[:store_id])))
   end

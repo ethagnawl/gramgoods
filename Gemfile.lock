@@ -51,6 +51,7 @@ GEM
       multipart-post (~> 1.1)
     faraday_middleware (0.8.8)
       faraday (>= 0.7.4, < 0.9)
+    friendly_id (4.0.7)
     gon (3.0.5)
       actionpack (>= 2.3.0)
       json
@@ -157,6 +158,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
+  friendly_id
   gon
   haml
   instagram

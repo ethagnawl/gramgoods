@@ -1,5 +1,8 @@
 class Product < ActiveRecord::Base
   belongs_to :store
+  extend FriendlyId
+
+  friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :colors, :sizes, :flatrate_shipping_cost, :instagram_tag, :photos
