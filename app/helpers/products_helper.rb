@@ -1,5 +1,5 @@
 module ProductsHelper
   def product_photo_url(product)
-    product['images']['thumbnail']['url']
+    product['images']['standard_resolution']['url']
   end
 end
