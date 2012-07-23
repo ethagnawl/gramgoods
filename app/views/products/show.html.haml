@@ -1,4 +1,4 @@
-= render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos }
+= render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos_array, :source => 'static' }
 
 %h1 Store: #{@store.name}
 
@@ -26,17 +26,17 @@
   Instagram Tag:
   = @product.instagram_tag
 
-- unless @product.colors.empty?
+- unless @product.colors.nil?
   .widget
     Colors:
     = @product.colors
 
-- unless @product.sizes.empty?
+- unless @product.sizes.nil?
   .widget
     Sizes:
     = @product.sizes
 
-- unless @product.flatrate_shipping_cost.empty?
+- unless @product.flatrate_shipping_cost.nil?
   .widget
     Flat Rate Shipping Cost:
     = number_to_currency(@product.flatrate_shipping_cost)

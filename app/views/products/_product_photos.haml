@@ -1,5 +1,6 @@
-- locals[:product_photos].each do |photo|
-  .product-photo{ :class => (!locals[:product].photos.nil? && locals[:product].photos_array.include?(product_photo_url(photo)) ? 'selected' : nil), :data => { :url => product_photo_url(photo) } }
-    = image_tag(product_photo_url(photo))
-    = photo['tags'].map { |tag| '#' + tag }.join(', ')
+- unless locals[:product_photos].empty?
+  .product-photos
+    - locals[:product_photos].each do |photo|
+      .product-photo{ :class => (locals[:source] == 'dynamic' && !locals[:product].photos_array.empty? && locals[:product].photos_array.include?(product_photo_url(photo)) ? 'selected' : nil), :data => { :url => (locals[:source] == 'dynamic' ? product_photo_url(photo) : photo) } }
+        = image_tag(locals[:source] == 'dynamic' ? product_photo_url(photo) : photo)
 

@@ -33,7 +33,7 @@
   %fieldset
     .product-photos
       %h2 Click a photo to attach it to the product
-      = render 'product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user) }
+      = render 'product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user), :source => 'dynamic' }
   %fieldset
     = form.submit
 
