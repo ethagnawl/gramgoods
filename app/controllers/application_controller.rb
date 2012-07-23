@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   private
 
   def render_conditional_layout
-    logger.info 'woot'
     if user_signed_in?
       render :layout => 'admin'
     else

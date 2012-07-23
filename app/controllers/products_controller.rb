@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
   end
 
   def index
-    render_conditional_layout
+    redirect_to(store_path(Store.find(params[:store_id])))
   end
 
   def new
@@ -66,7 +66,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
+    @product = Product.find(params[:product])
     @store = Store.find(Integer(@product.store_id))
 
     if user_owns_store?(@store.id)

@@ -5,6 +5,8 @@
     = image_tag(product.photos_array.first, :alt => product.name)
     = product.name
     = number_to_currency(product.price)
-    = link_to(product.name, store_product_path(@store, product))
+    = link_to('View', store_product_path(@store, product))
+    = link_to('Edit', edit_store_product_path(@store, product))
+    = link_to('Delete', {:controller => 'products', :action => 'destroy', :product => product, :store => @store}, :data => { :confirm =>"Are you sure you want to delete #{product.name}?" }, :method => :delete)
 
 = link_to('add product', new_store_product_path(@store))

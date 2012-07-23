@@ -51,6 +51,6 @@
     = number_to_currency(@product.flatrate_shipping_cost)
 
 
-= link_to('edit', edit_store_product_path(@store, @product))
-= link_to('back to store', store_path(@store))
-= link_to("Delete #{@product.name}", @product, :data => { :confirm =>"Are you sure you want to delete #{@product.name}?" }, :method => :delete)
+= link_to('Back to Store', store_path(@store))
+= link_to('Edit', edit_store_product_path(@store, @product))
+= link_to('Delete', {:controller => 'products', :action => 'destroy', :product => @product, :store => @store}, :data => { :confirm =>"Are you sure you want to delete #{@product.name}?" }, :method => :delete)
