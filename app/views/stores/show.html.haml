@@ -3,8 +3,12 @@
   - @store.products.each do |product|
     .product-widget
       = product.name
-      = image_tag(product.photos_array.first, :alt => product.name)
-      = product.description
+      - unless product.photos_array.empty?
+        = image_tag(product.photos_array.first, :alt => product.name)
+      %p.widget
+        = product.description
+      %p.widget
+        Status: #{product.status}
       %p.widget
         Price: #{number_to_currency(product.price)}
       %p.widget
