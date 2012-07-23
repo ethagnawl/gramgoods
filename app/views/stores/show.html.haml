@@ -1,12 +1,27 @@
 %h1 #{@store.name}
-
-- @store.products.each do |product|
-  .widget
-    = image_tag(product.photos_array.first, :alt => product.name)
-    = product.name
-    = number_to_currency(product.price)
-    = link_to('View', store_product_path(@store, product))
-    = link_to('Edit', edit_store_product_path(@store, product))
-    = link_to('Delete', {:controller => 'products', :action => 'destroy', :product => product, :store => @store}, :data => { :confirm =>"Are you sure you want to delete #{product.name}?" }, :method => :delete)
+- unless @store.products.empty?
+  - @store.products.each do |product|
+    .product-widget
+      = product.name
+      = image_tag(product.photos_array.first, :alt => product.name)
+      = product.description
+      %p.widget
+        Price: #{number_to_currency(product.price)}
+      %p.widget
+        - unless product.flatrate_shipping_cost.nil?
+          Shipping: #{number_to_currency(product.flatrate_shipping_cost)}
+      %p.widget
+        - unless product.sizes.nil?
+          Sizes: #{product.sizes}
+      %p.widget
+        - unless product.colors.nil?
+          Colors: #{product.colors}
+      %span.product-count
+        = product.photos_array.length
+      = link_to('Edit', edit_store_product_path(@store, product), :class => 'edit-product')
+      .widget
+        = link_to('View', store_product_path(@store, product))
+        = link_to('Edit', edit_store_product_path(@store, product))
+        = link_to('Delete', {:controller => 'products', :action => 'destroy', :product => product, :store => @store}, :data => { :confirm =>"Are you sure you want to delete #{product.name}?" }, :method => :delete)
 
 = link_to('add product', new_store_product_path(@store))
