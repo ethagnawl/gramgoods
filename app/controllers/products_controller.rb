@@ -11,6 +11,10 @@ class ProductsController < ApplicationController
     end
   end
 
+  def index
+    render_conditional_layout
+  end
+
   def new
     @user = current_user
     @product = Product.new
@@ -34,6 +38,7 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @store = Store.find(params[:store_id])
     @user = User.find(Integer(@store.user_id))
+    render_conditional_layout
   end
 
   def edit
