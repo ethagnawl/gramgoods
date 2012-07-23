@@ -3,8 +3,8 @@ class ProductsController < ApplicationController
   before_filter :except => [:show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
-      if store_id = (params[:store_id] || params[:product][:store_id])
-        redirect_to(root_path) unless user_owns_store?(store_id)
+      if store = Store.find((params[:store_id] || params[:product][:store_id]))
+        redirect_to(root_path) unless user_owns_store?(store.id)
       else
         redirect_to(root_path)
       end
@@ -23,13 +23,12 @@ class ProductsController < ApplicationController
   def new
     @user = current_user
     @product = Product.new
-    @store = params[:store_id]
-    @product.store_id = @store
+    @store = Store.find(params[:store_id])
   end
 
   def create
     @product = Product.new(params[:product])
-    @store = params[:product][:store_id]
+    @store = Store.find(params[:product][:store_id])
     product_photos_is_empty = params[:product][:photos].empty?
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
@@ -52,12 +51,12 @@ class ProductsController < ApplicationController
   def edit
     @user = current_user
     @product = Product.find(params[:id])
-    @store = params[:store_id]
+    @store = Store.find(params[:store_id])
   end
 
   def update
     @product = Product.find(params[:id])
-    @store = params[:product][:store_id]
+    @store = Store.find(params[:product][:store_id])
     product_photos_is_empty = params[:product][:photos].empty?
     params[:product][:status] = 'Draft' if product_photos_is_empty
     if @product.update_attributes(params[:product])
@@ -90,6 +89,6 @@ class ProductsController < ApplicationController
   end
 
   def user_owns_store?(store_id)
-    current_user.store_ids.include?(Integer(store_id))
+    current_user.store_ids.include?(store_id)
   end
 end
