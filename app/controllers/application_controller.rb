@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def render_conditional_layout(layout = nil)
+    if user_signed_in?
+      render :layout => (layout.nil? ? 'admin' : layout)
+    else
+      render :layout => 'mobile'
+    end
+  end
+
   def set_gon
     gon.page = "#{params[:controller]}_#{params[:action]}"
   end
