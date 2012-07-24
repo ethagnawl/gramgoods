@@ -1,39 +1,39 @@
 = render 'shared/form_errors', :target => @product
 
-= form_for(@product, :html => { :class => 'product-form' }) do |form|
+= form_for(@product, :html => { :class => 'well' }) do |form|
   = form.hidden_field :store_id, :value => @store.id
   = form.hidden_field :photos
   %fieldset
     = form.label :name
-    = form.text_field :name
+    = form.text_field :name, :class => 'span3'
   %fieldset
     = form.label :instagram_tag
-    = form.text_field :instagram_tag
+    = form.text_field :instagram_tag, :class => 'span3'
   %fieldset
     = form.label :description
-    = form.text_field :description
+    = form.text_area :description, :class => 'span3'
   %fieldset
     = form.label :price
-    = form.text_field :price
+    = form.text_field :price, :class => 'span3'
   %fieldset
     = form.label :quantity
-    = form.text_field :quantity
+    = form.text_field :quantity, :class => 'span3'
   %fieldset
     = form.label :colors
-    = form.text_field :colors
+    = form.text_field :colors, :class => 'span3'
   %fieldset
     = form.label :sizes
-    = form.text_field :sizes
+    = form.text_field :sizes, :class => 'span3'
   %fieldset
     = form.label :flatrate_shipping_cost
-    = form.text_field :flatrate_shipping_cost
+    = form.text_field :flatrate_shipping_cost, :class => 'span3'
   %fieldset
     = form.label :status
     = form.select :status, ['Draft', 'Active', 'Out of Stock']
   %fieldset
-    .product-photos
-      %h2 Click a photo to attach it to the product
-      = render 'product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user), :source => 'dynamic' }
+    %h2 Product Photos
+    = render 'product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user), :source => 'dynamic' }
   %fieldset
-    = form.submit
+    = form.submit :class => 'btn btn-primary'
 
+= link_to('Back to Store', store_path(@store))
