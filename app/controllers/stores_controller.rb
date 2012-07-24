@@ -1,6 +1,7 @@
 class StoresController < ApplicationController
+  layout 'admin'
   before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :except => [:show, :index, :destroy] do |controller|
+  before_filter :except => [:create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
@@ -11,7 +12,6 @@ class StoresController < ApplicationController
     end
   end
 
-
   def index
     @user = current_user
     @stores = Store.find_all_by_user_id(current_user)
@@ -20,7 +20,7 @@ class StoresController < ApplicationController
 
   def new
     @store = Store.new
-    @store.user_id = @user
+    @user = current_user
   end
 
   def create
@@ -40,6 +40,16 @@ class StoresController < ApplicationController
 
   def edit
     @store = Store.find(params[:id])
+  end
+
+  def update
+    @store = Store.find(params[:id])
+    if @store.update_attributes(params[:store])
+      flash[:notice] = "#{@store.name} was successfully updated."
+      redirect_to(@store)
+    else
+      render 'edit', :layout => 'admin'
+    end
   end
 
   def destroy

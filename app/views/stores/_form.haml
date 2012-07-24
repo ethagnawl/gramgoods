@@ -1,18 +1,26 @@
 = render 'shared/form_errors', :target => @store
 
-= form_for(@store) do |form|
+= form_for(@store, :html => { :class => 'well' }) do |form|
+  = form.hidden_field :user_id, :value => @user.id
   %fieldset
     = form.label :name
-    = form.text_field :name
+    = form.text_field :name, :class => 'span3'
   %fieldset
     - if params[:action] == 'new'
       = form.label :url
-      = form.text_field :url
+      = form.text_field :url, :class => 'span3'
     - else
+      %label URL
       %label #{@store.url}
+      %p.help-block
+        You cannot change your store's URL
   %fieldset
     = form.label :return_policy
-    = form.text_area :return_policy
+    = form.text_area :return_policy, :class => 'span3'
   %fieldset
-    = form.submit
+    = form.submit :class => 'btn btn-primary'
 
+- if params[:action] == 'edit'
+  = link_to('Back to Store', store_path(@store))
+- else
+  = link_to('Back to Stores', stores_path())
