@@ -1,4 +1,6 @@
 class AuthenticationsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @authentications = current_user.authentications if current_user
   end
@@ -10,19 +12,7 @@ class AuthenticationsController < ApplicationController
       flash[:notice] = 'Signed in successfully.'
       sign_in_and_redirect(:user, authentication.user)
     else
-      user = User.new({
-        :name => omniauth[:info][:name],
-        :website => omniauth[:info][:website],
-        :thumbnail => omniauth[:info][:image]
-      })
-      user.apply_omniauth(omniauth)
-      if user.save
-        flash[:notice] = 'Signed in successfully.'
-        sign_in_and_redirect(:user, user)
-      else
-        session[:omniauth] = omniauth.except('extra')
-        redirect_to(new_user_registration_url)
-      end
+      flash[:alert] = 'Something went wrong, please try again.'
     end
   end
 
