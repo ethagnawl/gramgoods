@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  layout 'admin'
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
@@ -33,7 +34,7 @@ class ProductsController < ApplicationController
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
       if product_photos_is_empty
-        flash[:notice] = product_photos_empty_message(@product.name)
+        flash[:alert] = product_photos_empty_message(@product.name)
       end
       redirect_to(store_product_path(@store, @product))
     else
@@ -61,7 +62,7 @@ class ProductsController < ApplicationController
     params[:product][:status] = 'Draft' if product_photos_is_empty
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
-        flash[:notice] = product_photos_empty_message(@product.name)
+        flash[:alert] = product_photos_empty_message(@product.name)
       end
       redirect_to(store_product_path(@store, @product))
     else
@@ -85,6 +86,6 @@ class ProductsController < ApplicationController
   private
 
   def product_photos_empty_message(name)
-    "You will need to attach at least one image to #{name} before setting status to Active."
+    "You will need to attach at least one image to '#{name}' before setting Status to Active."
   end
 end
