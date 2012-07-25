@@ -34,7 +34,9 @@ class StoresController < ApplicationController
   end
 
   def show
+    @user = current_user
     @store = Store.find(params[:id])
+    @product = Product.new
     render_conditional_layout(params[:layout])
   end
 

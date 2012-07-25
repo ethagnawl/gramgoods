@@ -2,11 +2,11 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     super
     #@user.update_attributes({
-    #  :name => session[:omniauth][:info][:name],
-    #  :website => session[:omniauth][:info][:website],
+    ##  :name => session[:omniauth][:info][:name],
+    ##  :website => session[:omniauth][:info][:website],
     #  :thumbnail => session[:omniauth][:info][:thumbnail]
     #})
-    #session[:omniauth] = nil
+    ##session[:omniauth] = nil
   end
 
   private
