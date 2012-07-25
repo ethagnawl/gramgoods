@@ -32,7 +32,7 @@
     = form.select :status, ['Draft', 'Active', 'Out of Stock']
   %fieldset
     %h2 Product Photos
-    = render 'product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user), :source => 'dynamic' }
+    = render 'products/product_photos', :locals => { :product => @product, :product_photos => get_instagram_photo_feed_for_user(@user), :source => 'dynamic' }
   %fieldset
     = form.submit :class => 'btn btn-primary'
 

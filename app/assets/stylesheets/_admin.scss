@@ -148,7 +148,8 @@ input[type=text] {
 body {
     // for when product images are selectable
     &.products-edit,
-    &.products-new {
+    &.products-new,
+    &.stores-show {
         .product-photo {
             cursor: pointer;
             position: relative;

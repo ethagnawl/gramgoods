@@ -1,4 +1,4 @@
-if gon.page is 'products_edit' or gon.page is 'products_new'
+if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'products_new'
     ($ '.product-photo').on 'click', ->
         ($ @).toggleClass 'selected'
         ($ @).find('.btn').toggleClass('btn-success btn-inverse')
