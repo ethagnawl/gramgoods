@@ -1,4 +1,4 @@
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => locals[:method] }) do |f|
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => 'well', :method => locals[:method] }) do |f|
   = devise_error_messages!
 
   %fieldset
@@ -20,6 +20,10 @@
   %fieldset
     = f.label :business_name
     = f.text_field :business_name
+
+  %fieldset
+    = f.label :website
+    = f.text_field :website
 
   %fieldset
     = f.label :first_name
@@ -47,14 +51,14 @@
 
   %fieldset
     = f.label :state
-    = f.select_tag :state, options_for_select(us_states)
+    = f.select :state, options_for_select(us_states)
 
   %fieldset
     = f.label :postal_code
     = f.text_field :postal_code
 
   %fieldset
-    = f.submit "Sign up"
+    = f.submit "Sign up", :class => 'btn btn-primary'
 
 - if locals[:method] == :put
   %h3 Cancel my account
