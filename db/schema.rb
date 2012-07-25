@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723172230) do
+ActiveRecord::Schema.define(:version => 20120725044235) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -75,9 +75,17 @@ ActiveRecord::Schema.define(:version => 20120723172230) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.string   "name"
+    t.string   "first_name"
     t.string   "website"
     t.string   "thumbnail"
+    t.string   "last_name"
+    t.string   "business_name"
+    t.string   "street_address_1"
+    t.string   "street_address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+    t.string   "phone_number"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

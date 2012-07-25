@@ -4,8 +4,14 @@ class User < ActiveRecord::Base
 
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
+
   attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :name, :website, :thumbnail
+    :remember_me, :first_name, :last_name, :website, :thumbnail,
+    :business_name, :street_address_1, :street_address_2, :city, :state,
+    :postal_code, :phone_number
+
+  validates_presence_of :first_name, :last_name, :business_name, :website,
+    :street_address_1, :city, :state, :postal_code, :phone_number
 
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token => omniauth['credentials']['token'])
