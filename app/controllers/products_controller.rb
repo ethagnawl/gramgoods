@@ -12,6 +12,8 @@ class ProductsController < ApplicationController
     end
   end
 
+  respond_to :html, :json
+
   # redirect old urls to new urls
   #if request.path != store_path(@store)
   #  redirect_to(@store, :status => :moved_permanently)
@@ -34,9 +36,10 @@ class ProductsController < ApplicationController
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
       if product_photos_is_empty
+        @product[:alert] = product_photos_empty_message(@product.name)
         flash[:alert] = product_photos_empty_message(@product.name)
       end
-      redirect_to(store_product_path(@store, @product))
+      respond_with(@product, :location => store_product_path(@store, @product))
     else
        render 'new'
     end
@@ -46,7 +49,12 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
     @store = Store.find(params[:store_id])
     @user = User.find(Integer(@store.user_id))
-    render_conditional_layout(params[:layout])
+    respond_to do |format|
+      format.json {
+        render :json => render_product_widget_template(@store, @product)
+      }
+      format.html { render_conditional_layout(params[:layout]) }
+    end
   end
 
   def edit

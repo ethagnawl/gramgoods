@@ -36,7 +36,11 @@ class StoresController < ApplicationController
   def show
     @user = current_user
     @store = Store.find(params[:id])
+    gon.store_slug = @store.slug
     @product = Product.new
+    gon.product_widgets = @store.products.map do |product|
+      render_product_widget_template(@store, product)
+    end
     render_conditional_layout(params[:layout])
   end
 

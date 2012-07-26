@@ -11,12 +11,10 @@
     .container
       .row
         .span12
-          - unless notice.nil?
-            %p.alert.alert-success
-              = notice
-          - unless alert.nil?
-            %p.alert.alert-error
-              = alert
+          %p.rails-notice.alert.alert-success{ :class => (notice.nil? ? 'hide' : nil) }
+            = notice
+          %p.rails-alert.alert.alert-error{ :class => (notice.nil? ? 'hide' : nil) }
+            = alert
           .widget
             - if user_signed_in?
               Signed in as #{current_user.email}. Not you?
