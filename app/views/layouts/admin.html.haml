@@ -8,6 +8,44 @@
     = stylesheet_link_tag 'admin', :media => "all"
     = csrf_meta_tags
   %body.admin-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
+    .navbar
+      .navbar-inner
+        .container
+          %a.brand{ :href => '/' } GramGoods
+          .nav-collapse
+            %ul.nav
+              %li{ :class => params[:controller] == 'stores' && params[:action] == 'index' ? 'active' : nil }
+                %a{ :href => '/stores' } Stores
+              %li
+                %a{ :href => '' } Products
+            %ul.nav.pull-right
+              - if user_signed_in?
+                %li
+                  %a{ :href => '' } Logged into GramGoods as #{current_user.email}
+                %li.divider-vertical
+                %li
+                  = link_to "Sign out of GramGoods", destroy_user_session_path, :method => :delete
+                - if current_user.authentication.nil?
+                  %li.divider-vertical
+                  %li
+                    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
+                    %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
+                - else
+                  %li.divider-vertical
+                  %li
+                    = link_to "Sign out of Instagram.", current_user.authentication, :method => :delete, :class => "remove"
+                  %li
+                    = image_tag(current_user.thumbnail, :class => 'user-thumbnail' )
+              - else
+                %li
+                  = link_to "Sign In", new_user_session_path
+                %li.divider-vertical
+                %li
+                  = link_to "Sign Up", new_user_registration_path
+
+            %ul.nav.pull-right
+              %li.dropdown
+
     .container
       .row
         .span12
@@ -15,20 +53,6 @@
             = notice
           %p.rails-alert.alert.alert-error{ :class => (alert.nil? ? 'hide' : nil) }
             = alert
-          .widget
-            - if user_signed_in?
-              Signed in as #{current_user.email}. Not you?
-              = link_to "Sign out", destroy_user_session_path, :method => :delete
-              - if current_user.authentication.nil?
-                %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
-                %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
-              - else
-                = image_tag current_user.thumbnail
-                = link_to "Sign out of Instagram.", current_user.authentication, :method => :delete, :class => "remove"
-            - else
-              = link_to "Sign up", new_user_registration_path
-              or
-              = link_to "sign in", new_user_session_path
           = yield
     = include_gon
     -# TODO

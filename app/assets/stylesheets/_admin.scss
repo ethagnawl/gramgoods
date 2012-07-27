@@ -47,6 +47,12 @@ input[type=text] {
     }
 }
 
+.user-thumbnail {
+    display: inline-block;
+    padding-top: 4px;
+    height: 35px;
+}
+
 .product-photos {
     @include widget;
 
