@@ -1,18 +1,15 @@
 class AuthenticationsController < ApplicationController
   def index
-    @authentications = current_user.authentications if current_user
+    @authentication = current_user.authentication if current_user
   end
 
   def create
     omniauth = request.env["omniauth.auth"]
-    authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
-    if authentication
-      flash[:notice] = "Signed in successfully."
-      sign_in_and_redirect(:user, authentication.user)
-    elsif current_user
-      current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token => omniauth['credentials']['token'])
+    if current_user
+      current_user.update_attributes :thumbnail => omniauth['info']['image']
+      current_user.create_authentication!(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token => omniauth['credentials']['token'])
       flash[:notice] = "Authentication successful."
-      redirect_to authentications_url
+      redirect_to(stores_path)
     else
       user = User.new
       user.apply_omniauth(omniauth)
@@ -27,10 +24,9 @@ class AuthenticationsController < ApplicationController
   end
 
   def destroy
-    @authentication = current_user.authentications.find(params[:id])
-    @authentication.destroy
+    current_user.authentication.destroy
     flash[:notice] = "Successfully destroyed authentication."
-    redirect_to authentications_url
+    redirect_to(stores_path)
   end
 end
 

@@ -13,12 +13,18 @@
         .span12
           %p.rails-notice.alert.alert-success{ :class => (notice.nil? ? 'hide' : nil) }
             = notice
-          %p.rails-alert.alert.alert-error{ :class => (notice.nil? ? 'hide' : nil) }
+          %p.rails-alert.alert.alert-error{ :class => (alert.nil? ? 'hide' : nil) }
             = alert
           .widget
             - if user_signed_in?
               Signed in as #{current_user.email}. Not you?
               = link_to "Sign out", destroy_user_session_path, :method => :delete
+              - if current_user.authentication.nil?
+                %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
+                %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
+              - else
+                = image_tag current_user.thumbnail
+                = link_to "Sign out of Instagram.", current_user.authentication, :method => :delete, :class => "remove"
             - else
               = link_to "Sign up", new_user_registration_path
               or

@@ -1,15 +1,13 @@
-<% if @authentications %>
-  <% unless @authentications.empty? %>
+<% if @authentication %>
+  <% unless @authentication.nil? %>
     <p><strong>You can sign in to this account using:</strong></p>
     <div class="authentications">
-      <% for authentication in @authentications %>
         <div class="authentication">
-          <%= image_tag "#{authentication.provider}_32.png", :size => "32x32" %>
-          <div class="provider"><%= authentication.provider.titleize %></div>
-          <div class="uid"><%= authentication.uid %></div>
-          <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
+          <%= image_tag "#{@authentication.provider}_32.png", :size => "32x32" %>
+          <div class="provider"><%= @authentication.provider.titleize %></div>
+          <div class="uid"><%= @authentication.uid %></div>
+          <%= link_to "X", @authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
         </div>
-      <% end %>
       <div class="clear"></div>
     </div>
   <% end %>
@@ -18,3 +16,5 @@
 <% end %>
 
 <a href="/auth/instagram" class="auth_provider">instagram</a>
+
+<iframe class='hide' src="https://instagram.com/accounts/logout/" frameborder="0"></iframe>

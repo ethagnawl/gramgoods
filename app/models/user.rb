@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :stores
-  has_many :authentications
+  has_one :authentication
 
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (authentications.empty? || !password.blank?) && super
+    super
   end
 
   def store_ids
