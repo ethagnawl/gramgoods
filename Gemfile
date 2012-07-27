@@ -8,6 +8,7 @@ gem 'rails', '3.2.6'
 group :development do
   gem 'pry-rails'
   gem 'sqlite3'
+  gem 'quiet_assets'
 end
 
 group :production do
