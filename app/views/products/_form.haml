@@ -17,7 +17,7 @@
     = form.text_field :price, :class => 'span3'
   %fieldset
     = form.label :quantity
-    = form.text_field :quantity, :class => 'span3'
+    = form.text_field :quantity, :class => 'span3', :disabled => (@product.unlimited_quantity == true ? 'disabled' : nil), :value => (@product.unlimited_quantity == true ? '' : @product.quantity)
   %fieldset
     = form.label :unlimited_quantity, 'Unlimited Quantity'
     = form.check_box :unlimited_quantity

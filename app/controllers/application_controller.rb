@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
       :url => "/stores/#{store.slug}/products/#{product.slug}",
       :description => truncate(product.description, :length => 45),
       :price => number_to_currency(product.price),
-      :quantity => product.quantity,
+      :quantity => product.get_quantity,
       :colors => product.colors ||= nil,
       :sizes => product.sizes ||= nil,
       :flatrate_shipping_cost => product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost),
