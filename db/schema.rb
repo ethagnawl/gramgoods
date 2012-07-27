@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725044235) do
+ActiveRecord::Schema.define(:version => 20120727180058) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120725044235) do
     t.integer "quantity"
     t.integer "store_id"
     t.string  "slug"
+    t.boolean "unlimited_quantity"
   end
 
   add_index "products", ["slug"], :name => "index_products_on_slug"

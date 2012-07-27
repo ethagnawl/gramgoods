@@ -16,16 +16,18 @@ class ApplicationController < ActionController::Base
   def render_product_widget_template(store, product)
     {
       :name => product.name,
+      :instagram_tag => product.instagram_tag,
       :truncated_name => truncate(product.name, :length => 38),
       :url => "/stores/#{store.slug}/products/#{product.slug}",
       :description => truncate(product.description, :length => 45),
-      :status => product.status,
-      :flatrate_shipping_cost => product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost),
-      :sizes => product.sizes ||= nil,
+      :price => number_to_currency(product.price),
+      :quantity => product.quantity,
       :colors => product.colors ||= nil,
+      :sizes => product.sizes ||= nil,
+      :flatrate_shipping_cost => product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost),
+      :status => product.status,
       :product_count => "#{product.photos_array.length} #{(product.photos_array.length > 1 ? 'Photos' : 'Photo')}",
-      :product_photo => product.photos_array.first,
-      :price => number_to_currency(product.price)
+      :product_photo => product.photos_array.first
     }
   end
 
