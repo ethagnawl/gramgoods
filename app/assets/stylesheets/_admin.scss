@@ -51,7 +51,7 @@ body {
     padding-bottom: 40px;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     // this is to fix some weird bootstrap bug
     height: 28px !important;
 }
