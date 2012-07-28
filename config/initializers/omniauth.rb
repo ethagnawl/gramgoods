@@ -3,7 +3,7 @@ if defined?(INSTAGRAM_CONFIG)
 elsif (!ENV["INSTAGRAM_ID"].nil? && !ENV["INSTAGRAM_SECRET"].nil?)
   INSTAGRAM_CONFIG = {
     'id' => ENV['INSTAGRAM_ID'],
-    'secret' => ENV['SECRET']
+    'secret' => ENV['INSTAGRAM_SECRET']
   }
 else
   require 'yaml'
