@@ -5,3 +5,6 @@
 
 .widget
   = link_to('add a new store', new_store_path)
+  - if current_user.authentication.nil?
+    or
+    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
