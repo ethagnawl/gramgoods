@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :first_name, :last_name, :website, :thumbnail,
+    :remember_me, :first_name, :last_name, :website,
     :business_name, :street_address_1, :street_address_2, :city, :state,
     :postal_code, :phone_number
 
