@@ -37,7 +37,8 @@
                       = link_to current_user.authentication, :method => :delete, :class => "gramgoods-tooltip remove" do
                         %i.icon-remove-sign
 
-                      = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
+                  %li
+                    = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
               - else
                 %li
                   = link_to "Sign In", new_user_session_path
