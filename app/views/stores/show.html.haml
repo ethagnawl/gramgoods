@@ -1,14 +1,17 @@
-.widget
-  = render 'products/form'
-
-.widget
-  = link_to('Add Product', new_store_product_path(@store), :class => 'btn btn-primary')
 .page-header
   %h1
     #{@store.name}
     %small
       = link_to('Edit', edit_store_path(@store))
-.btn.btn-success
+
+#product_form_wrapper.widget
+  %h2 Add Product
+  = render 'products/form'
+
+#product_count.btn.btn-success.float-left
   = pluralize(@store.products.length, 'Product', 'Products')
+
 - unless @store.products.empty?
   .product-widgets
+    %h2
+      Loading Products...

@@ -40,7 +40,8 @@
 
 - unless @product.photos_array.empty?
   %h2 Product Photos
-  = render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos_array, :source => 'static' }
+  .product-photos
+    = render 'product_photos', :locals => { :product => @product, :product_photos => @product.photos_array, :source => 'static' }
 
 
 = link_to('Back to Store', store_path(@store))

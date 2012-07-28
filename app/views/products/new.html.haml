@@ -1,3 +1,8 @@
 .page-header
   %h1 Create New Product
-= render 'form'
+
+#product_form_wrapper
+  = render 'form'
+
+.widget
+  = link_to('Back to Store', store_path(@store))

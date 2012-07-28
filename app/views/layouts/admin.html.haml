@@ -13,7 +13,7 @@
         .container
           %a.brand{ :href => '/' } GramGoods
           .nav-collapse
-            %ul.nav
+            %ul.nav.pull-left
               %li{ :class => params[:controller] == 'stores' && params[:action] == 'index' ? 'active' : nil }
                 %a{ :href => '/stores' } Stores
               %li
@@ -21,21 +21,23 @@
             %ul.nav.pull-right
               - if user_signed_in?
                 %li
-                  %a{ :href => '' } Logged into GramGoods as #{current_user.email}
+                  %p.navbar-text
+                    Logged into GramGoods as #{current_user.email}
+                    = link_to destroy_user_session_path, :method => :delete, :class => 'gramgoods-tooltip' do
+                      %i.icon-remove-sign
                 %li.divider-vertical
-                %li
-                  = link_to "Sign out of GramGoods", destroy_user_session_path, :method => :delete
                 - if current_user.authentication.nil?
-                  %li.divider-vertical
                   %li
                     %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
                     %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
                 - else
-                  %li.divider-vertical
                   %li
-                    = link_to "Sign out of Instagram.", current_user.authentication, :method => :delete, :class => "remove"
-                  %li
-                    = image_tag(current_user.thumbnail, :class => 'user-thumbnail' )
+                    %p.navbar-text
+                      Authenticated with Instagram as #{current_user.authentication.nickname}
+                      = link_to current_user.authentication, :method => :delete, :class => "gramgoods-tooltip remove" do
+                        %i.icon-remove-sign
+
+                      = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
               - else
                 %li
                   = link_to "Sign In", new_user_session_path

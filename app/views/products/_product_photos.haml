@@ -1,11 +1,10 @@
-- unless locals[:product_photos].empty?
-  .product-photos
-    - locals[:product_photos].each do |photo|
-      - selected = locals[:source] == 'dynamic' && !locals[:product].photos_array.empty? && locals[:product].photos_array.include?(product_photo_url(photo))
-      .product-photo{ :class => (selected == true ? 'selected' : nil), :data => { :url => (locals[:source] == 'dynamic' ? product_photo_url(photo) : photo) } }
-        = image_tag(locals[:source] == 'dynamic' ? product_photo_url(photo) : photo)
-        .btn{ :class => (selected == true ? 'btn-success' : 'btn-inverse') }
-          %i.icon-plus-sign
-          %i.icon-ok-sign
+- unless locals[:product_photos].nil? || locals[:product_photos].empty?
+  - locals[:product_photos].each do |photo|
+    - selected = locals[:source] == 'dynamic' && !locals[:product].photos_array.empty? && locals[:product].photos_array.include?(product_photo_url(photo))
+    .product-photo{ :class => (selected == true ? 'selected' : nil), :data => { :url => (locals[:source] == 'dynamic' ? product_photo_url(photo) : photo) } }
+      = image_tag(locals[:source] == 'dynamic' ? product_photo_url(photo) : photo)
+      .btn{ :class => (selected == true ? 'btn-success' : 'btn-inverse') }
+        %i.icon-plus-sign
+        %i.icon-ok-sign
 - else
   %h3 There are no photos associated with your Instagram account.

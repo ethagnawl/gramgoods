@@ -1,26 +1,33 @@
-= render 'shared/form_errors', :target => @store
+= form_for(@store, :html => { :class => 'well form-horizontal' }) do |form|
+  .form-errors-wrapper
+    = render 'shared/form_errors', :target => @store
+  = form.hidden_field :user_id, :value => current_user.id
+  %fieldset.float-left
+    .control-group
+      = form.label :name, :class => 'control-label'
+      .controls
+        = form.text_field :name, :class => 'input-xlarge'
+    .control-group
+      - if params[:action] == 'new'
+        = form.label :url, :class => 'control-label'
+        .controls
+          = form.text_field :url, :class => 'input-xlarge'
+      - else
+        %label.control-label URL
+        .controls
+          %p.help-block
+            = @store.url
+          %p.help-block
+            You cannot change your store's URL
+    .control-group
+      = form.label :return_policy, :class => 'control-label'
+      .controls
+        = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
+    .form-actions
+      = form.submit :class => 'btn btn-primary'
 
-= form_for(@store, :html => { :class => 'well' }) do |form|
-  = form.hidden_field :user_id, :value => @user.id
-  %fieldset
-    = form.label :name
-    = form.text_field :name, :class => 'span3'
-  %fieldset
-    - if params[:action] == 'new'
-      = form.label :url
-      = form.text_field :url, :class => 'span3'
-    - else
-      %label URL
-      %label #{@store.url}
-      %p.help-block
-        You cannot change your store's URL
-  %fieldset
-    = form.label :return_policy
-    = form.text_area :return_policy, :class => 'span3'
-  %fieldset
-    = form.submit :class => 'btn btn-primary'
-
-- if params[:action] == 'edit'
-  = link_to('Back to Store', store_path(@store))
-- else
-  = link_to('Back to Stores', stores_path())
+.widget
+  - if params[:action] == 'edit'
+    = link_to('Back to Store', store_path(@store))
+  - else
+    = link_to('Back to Stores', stores_path())
