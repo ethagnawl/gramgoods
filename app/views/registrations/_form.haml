@@ -58,7 +58,8 @@
     = f.text_field :postal_code
 
   %fieldset
-    = f.submit "Sign up", :class => 'btn btn-primary'
+    .form-actions
+      = f.submit "Sign up", :class => 'btn btn-primary'
 
 - if locals[:method] == :put
   %h3 Cancel my account
