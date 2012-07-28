@@ -82,7 +82,12 @@ window.product_form_template = """
                 </div>
             </fieldset>
             <div class="form-actions widget">
-              <input type="submit" value="Update Product" name="commit" class="btn btn-primary">
+                {{#put}}
+                    <input type="submit" value="Update Product" name="commit" class="btn btn-primary">
+                {{/put}}
+                {{^put}}
+                    <input type="submit" value="Create Product" name="commit" class="btn btn-primary">
+                {{/put}}
             </div>
         </fieldset>
     </form>
