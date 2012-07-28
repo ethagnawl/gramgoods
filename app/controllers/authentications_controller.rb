@@ -6,8 +6,12 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"]
     if current_user
-      current_user.update_attributes :thumbnail => omniauth['info']['image']
-      current_user.create_authentication!(:provider => omniauth['provider'], :uid => omniauth['uid'], :access_token => omniauth['credentials']['token'])
+      current_user.create_authentication!(
+        :thumbnail => omniauth['info']['image'],
+        :nickname => omniauth['info']['nickname'],
+        :provider => omniauth['provider'],
+        :uid => omniauth['uid'],
+        :access_token => omniauth['credentials']['token'])
       flash[:notice] = "Authentication successful."
       redirect_to(stores_path)
     else

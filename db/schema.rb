@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120727180058) do
+ActiveRecord::Schema.define(:version => 20120727213205) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20120727180058) do
     t.string   "provider"
     t.string   "uid"
     t.string   "access_token"
+    t.string   "nickname"
+    t.string   "thumbnail"
   end
 
   create_table "friendly_id_slugs", :force => true do |t|
