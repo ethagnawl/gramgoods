@@ -37,6 +37,7 @@ class StoresController < ApplicationController
     @user = current_user
     @store = Store.find(params[:id])
     gon.store_slug = @store.slug
+    gon.store_id = @store.id
     @product = Product.new
     gon.product_widgets = @store.products.map do |product|
       render_product_widget_template(@store, product)
@@ -45,6 +46,7 @@ class StoresController < ApplicationController
   end
 
   def edit
+    @user = current_user
     @store = Store.find(params[:id])
   end
 
