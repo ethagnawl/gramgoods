@@ -1,5 +1,5 @@
 window.product_widget_template = """
-    <div class="product-widget well">
+    <div class="product-widget well" data-name='{{name}}' data-instagram-tag='{{instagram_tag}}' data-slug='{{slug}}' data-store-slug='{{store_slug}}' data-store-id='{{store_id}}' data-url='{{url}}' data-description='{{description}}' data-price='{{raw_price}}' data-quantity='{{raw_quantity}}' data-unlimited-quantity='{{unlimited_quantity}}' data-colors='{{colors}}' data-sizes='{{sizes}}' data-flatrate-shipping-cost='{{raw_flatrate_shipping_cost}}' data-status='{{status}}' data-draft='{{draft}}' data-active='{{active}}' data-out-of-stock='{{out_of_stock}}'>
         <h2 class="product-name">
           <a href="{{url}}">{{truncated_name}}</a>
         </h2>
@@ -21,7 +21,8 @@ window.product_widget_template = """
         <p class="product-sizes">Sizes: {{sizes}}</p>
         {{/sizes}}
         <p class="product-status">Status: {{status}}</p>
-        <a title="Edit {{name}}" class="edit-product" href="{{url}}/edit"><i class="icon-cog"></i>
+        <a title="Edit {{name}}" class="gramgoods-tooltip edit-product" href="javascript: void(0);"><i class="icon-cog"></i>
+        <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' rel="nofollow" data-method="delete" data-confirm="Are you sure you want to delete {{name}}?" href="{{url}}?product={{slug}}&amp;store={{store_slug}}"><i class='icon-remove-sign'></i></a>
         </a>
     </div>
 """
