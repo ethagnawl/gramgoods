@@ -11,7 +11,7 @@
 #product_count.btn.btn-success.float-left
   = pluralize(@store.products.length, 'Product', 'Products')
 
-- unless @store.products.empty?
-  .product-widgets
+.product-widgets
+  - unless @store.products.empty?
     %h2
       Loading Products...
