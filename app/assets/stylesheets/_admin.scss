@@ -35,6 +35,22 @@ $green: #bada55;
     margin-top: 10px;
 }
 
+.float-left {
+    float: left;
+}
+
+.gramgoods-tooltip {
+    @include transition(.3s);
+
+    &:hover, &:active, &:focus {
+        text-decoration: none;
+    }
+}
+
+body {
+    padding-bottom: 40px;
+}
+
 input[type=text] {
     // this is to fix some weird bootstrap bug
     height: 28px !important;
@@ -48,9 +64,17 @@ input[type=text] {
 }
 
 .user-thumbnail {
-    display: inline-block;
-    padding-top: 4px;
+    float: right;
+    margin-top: 2px;
+    padding-left: 8px;
     height: 35px;
+}
+
+#product_form_wrapper,
+#store_form_wrapper {
+    .well {
+        float: left;
+    }
 }
 
 .product-photos {
@@ -88,13 +112,13 @@ input[type=text] {
 
         border: 1px solid $light-grey;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-        height: 500px;
+        height: 540px;
         margin: {
             right: 8px;
             left: 8px;
         }
         overflow: hidden;
-        padding-top: 6px;
+        padding-top: 12px;
         position: relative;
         width: 290px;
 
@@ -138,14 +162,16 @@ input[type=text] {
             text-align: center;
         }
 
-
-        .edit-product {
+        .gramgoods-tooltip {
             position: absolute;
-            right: 10px;
-            top: 10px;
+            top: 4px;
 
-            &:hover, &:active, &:focus {
-                text-decoration: none;
+            &.edit-product {
+                right: 30px;
+            }
+
+            &.delete-product {
+                right: 10px;
             }
         }
     }
