@@ -5,7 +5,7 @@ Gramgoods::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  root :to => "stores#index"
+  root :to => 'static#index'
 
   resources :stores do
     resources :products
