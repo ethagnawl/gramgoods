@@ -30,6 +30,7 @@ render_new_product_form = ->
 update_product_count = (product_count) -> ($ '#product_count').text(product_count)
 
 render_product_widgets = (product_widgets) ->
+    return if product_widgets.length == 0
     $wrapper = $('<div/>')
     for product_widget in product_widgets
         $wrapper.append(Mustache.render(product_widget_template, product_widget))
@@ -40,7 +41,7 @@ fetch_product_widgets = (callback) ->
     $.ajax
         url: "/stores/#{gon.store_slug}/products"
         dataType: 'json'
-        success: (response) -> callback(response) if response.length
+        success: (response) -> callback(response) if response
 
 fetch_and_render_product_widgets = (callback = render_product_widgets) ->
     fetch_product_widgets(callback)
