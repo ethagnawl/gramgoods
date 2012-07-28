@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   :unlimited_quantity
   validates_presence_of :name, :price, :description, :instagram_tag
   validates :quantity, :presence => true,
-    :unless => Proc.new { |product| product.unlimited_quantity }
+    :unless => Proc.new { |product| product.unlimited_quantity == true }
 
   def photos_array
     return [] if self.photos.nil? || self.photos.empty?
