@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   layout 'admin'
-  before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :except => [:show, :index, :destroy] do |controller|
+  before_filter :authenticate_user!, :except => [:show]
+  before_filter :except => [:show, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find((params[:store_id] || params[:product][:store_id]))
@@ -20,7 +20,15 @@ class ProductsController < ApplicationController
   #end
 
   def index
-    redirect_to(store_path(Store.find(params[:store_id])))
+    @store = Store.find(params[:store_id])
+    respond_to do |format|
+      format.json {
+        render :json => @store.products.reverse.map { |product|
+          render_product_widget_template(@store, product) }
+      }
+      format.html { redirect_to(store_path(Store.find(params[:store_id]))) }
+    end
+
   end
 
   def new
@@ -32,7 +40,8 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product])
     @store = Store.find(params[:product][:store_id])
-    product_photos_is_empty = params[:product][:photos].empty?
+    product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
+    product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
       if product_photos_is_empty
@@ -41,7 +50,14 @@ class ProductsController < ApplicationController
       end
       respond_with(@product, :location => store_product_path(@store, @product))
     else
-       render 'new'
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :status => 'error'
+          }.merge({ :errors => @product.errors.full_messages.map { |message| { :error => message }}})
+        }
+        format.html { render 'new' }
+      end
     end
   end
 
@@ -66,15 +82,26 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     @store = Store.find(params[:product][:store_id])
-    product_photos_is_empty = params[:product][:photos].empty?
+    product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
+    product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
     params[:product][:status] = 'Draft' if product_photos_is_empty
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
         flash[:alert] = product_photos_empty_message(@product.name)
       end
-      redirect_to(store_product_path(@store, @product))
+      respond_to do |format|
+        format.json {
+          render :json => @product
+        }
+        format.html { redirect_to(store_product_path(@store, @product)) }
+      end
     else
-      render 'edit'
+      respond_to do |format|
+        format.json {
+          render :json => @product.errors
+        }
+        format.html { render 'edit' }
+      end
     end
   end
 
