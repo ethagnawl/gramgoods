@@ -9,7 +9,6 @@ group :development do
   gem 'pry-rails'
   gem 'sqlite3'
   gem 'quiet_assets'
-  gem 'thin'
 end
 
 group :production do
@@ -31,3 +30,4 @@ gem 'omniauth-instagram'
 gem 'instagram'
 gem 'gon'
 gem 'friendly_id'
+gem 'thin'
