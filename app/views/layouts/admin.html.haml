@@ -8,6 +8,8 @@
     = stylesheet_link_tag 'admin', :media => "all"
     = csrf_meta_tags
   %body.admin-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
+    #spin_wrapper.hide
+      #spin
     .navbar
       .navbar-inner
         .container

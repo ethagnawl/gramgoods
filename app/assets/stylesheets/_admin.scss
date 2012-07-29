@@ -63,6 +63,26 @@ input[type=text], input[type=password], input[type=email] {
     }
 }
 
+#spin_wrapper {
+    background: rgba(0, 0, 0, .6);
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+
+    #spin {
+        left: 50%;
+        position: fixed;
+        top: 50%;
+    }
+    // /#spin
+
+}
+// /#spin_wrapper
+
+
 .user-thumbnail {
     float: right;
     height: auto;
