@@ -1,7 +1,6 @@
 = form_for(@store, :html => { :class => 'well form-horizontal' }) do |form|
   .form-errors-wrapper
     = render 'shared/form_errors', :target => @store
-  = form.hidden_field :user_id, :value => current_user.id
   %fieldset.float-left
     .control-group
       = form.label :name, :class => 'control-label'

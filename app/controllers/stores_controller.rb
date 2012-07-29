@@ -6,7 +6,7 @@ class StoresController < ApplicationController
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
-        redirect_to(root_path) unless user_owns_store?(store.id)
+        redirect_to(store_path(store)) unless user_owns_store?(store.id)
       else
         redirect_to(root_path)
       end
@@ -15,18 +15,18 @@ class StoresController < ApplicationController
 
   def index
     @user = current_user
-    @stores = Store.find_all_by_user_id(current_user)
+    @stores = @user.stores
     render_conditional_layout(params[:layout])
   end
 
   def new
-    @store = Store.new
     @user = current_user
+    @store = @user.stores.new
   end
 
   def create
-    @store = Store.new(params[:store])
-    @store[:user_id] = current_user.id
+    @user = current_user
+    @store = @user.stores.new(params[:store])
     if @store.save
       redirect_to store_path(@store)
     else
@@ -35,29 +35,34 @@ class StoresController < ApplicationController
   end
 
   def show
-    @user = current_user
     @store = Store.find(params[:id])
     gon.store_slug = @store.slug
     gon.store_id = @store.id
-    @product = Product.new
+    @product = @store.products.new
     gon.product_widgets = @store.products.map do |product|
       render_product_widget_template(@store, product)
     end
-    render_conditional_layout(params[:layout])
+    @current_user_owns_store = user_owns_store?(@store.id)
+    if @current_user_owns_store
+      render :layout => 'admin'
+    else
+      render :layout => 'mobile'
+    end
   end
 
   def edit
     @user = current_user
-    @store = Store.find(params[:id])
+    @store = @user.stores.find(params[:id])
   end
 
   def update
-    @store = Store.find(params[:id])
+    @user = current_user
+    @store = @user.stores.find(params[:id])
     if @store.update_attributes(params[:store])
       flash[:notice] = "#{@store.name} was successfully updated."
       redirect_to(@store)
     else
-      render 'edit', :layout => 'admin'
+      render 'edit'
     end
   end
 
