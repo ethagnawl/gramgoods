@@ -33,13 +33,14 @@ class ProductsController < ApplicationController
 
   def new
     @user = current_user
-    @product = Product.new
-    @store = Store.find(params[:store_id])
+    @store = @user.stores.find(params[:store_id])
+    @product = @store.products.new
   end
 
   def create
-    @product = Product.new(params[:product])
-    @store = Store.find(params[:product][:store_id])
+    @user = current_user
+    @store = @user.stores.find(params[:store_id])
+    @product = @store.products.new(params[:product])
     product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
     product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
     @product.status = 'Draft' if product_photos_is_empty
@@ -62,9 +63,8 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find(params[:id])
     @store = Store.find(params[:store_id])
-    @user = User.find(Integer(@store.user_id))
+    @product = @store.products.find(params[:id])
     respond_to do |format|
       format.json {
         render :json => render_product_widget_template(@store, @product)
@@ -75,13 +75,13 @@ class ProductsController < ApplicationController
 
   def edit
     @user = current_user
-    @product = Product.find(params[:id])
-    @store = Store.find(params[:store_id])
+    @store = @user.stores.find(params[:store_id])
+    @product = @store.products.find(params[:id])
   end
 
   def update
-    @product = Product.find(params[:id])
-    @store = Store.find(params[:product][:store_id])
+    @store = current_user.stores.find(params[:store_id])
+    @product = @store.products.find(params[:id])
     product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
     product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
     params[:product][:status] = 'Draft' if product_photos_is_empty

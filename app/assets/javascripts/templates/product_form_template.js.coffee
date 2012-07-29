@@ -1,9 +1,8 @@
 window.product_form_template = """
-    <form method="post" id="edit_product_{{id}}" class="well form-horizontal" action="/products/{{slug}}">
+    <form method="post" id="edit_product_{{id}}" class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
         {{#put}}
         <input type="hidden" value="put" name="_method">
         {{/put}}
-        <input type="hidden" value="{{storeId}}" name="product[store_id]" id="product_store_id">
         <input type="hidden" name="product[photos]" id="product_photos">
         <div class="form-errors-wrapper"></div>
         <fieldset class="float-left">
