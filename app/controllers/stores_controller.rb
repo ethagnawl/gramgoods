@@ -38,10 +38,10 @@ class StoresController < ApplicationController
     @store = Store.find(params[:id])
     gon.store_slug = @store.slug
     gon.store_id = @store.id
-    @product = @store.products.new
     gon.product_widgets = @store.products.map do |product|
       render_product_widget_template(@store, product)
     end
+    @product = @store.products.new
     @current_user_owns_store = user_owns_store?(@store.id)
     if @current_user_owns_store
       render :layout => 'admin'
