@@ -7,17 +7,11 @@
       .controls
         = form.text_field :name, :class => 'input-xlarge'
     .control-group
-      - if params[:action] == 'new'
-        = form.label :url, :class => 'control-label'
-        .controls
-          = form.text_field :url, :class => 'input-xlarge'
-      - else
-        %label.control-label URL
-        .controls
-          %p.help-block
-            = @store.url
-          %p.help-block
-            You cannot change your store's URL
+      = form.label :url, :class => 'control-label'
+      .controls
+        = form.text_field :url, :class => 'input-xlarge'
+        %p.help-block
+          Please be advised that you cannot change your store's URL.
     .control-group
       = form.label :return_policy, :class => 'control-label'
       .controls
