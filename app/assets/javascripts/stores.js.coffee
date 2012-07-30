@@ -23,7 +23,7 @@ render_edit_product_form = (product) ->
 
 render_new_product_form = ->
     ($ '#product_form_wrapper').find('form')
-        .replaceWith(Mustache.render(product_form_template, {storeId: gon.store_id}))
+        .replaceWith(Mustache.render(product_form_template, {storeSlug: gon.store_slug}))
     reset_h2()
     fetch_user_photos(render_user_photos)
 
