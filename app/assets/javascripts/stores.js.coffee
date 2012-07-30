@@ -12,7 +12,7 @@ if gon.page is 'stores_show'
     clear_alert_and_notice = ->
         ($ '.rails-notice, .rails-alert').text('').addClass('hide')
 
-    update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').text(text)
+    update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().text(text)
 
     reset_h2 = -> update_h2('Add Product')
 
