@@ -82,7 +82,7 @@ if gon.page is 'stores_show'
                         update_alert(response.alert) if response.alert?
                         setTimeout ->
                             clear_alert_and_notice()
-                        , 3000
+                        , 10000
                         render_new_product_form()
                         fetch_and_render_product_widgets()
                     else
