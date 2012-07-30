@@ -46,16 +46,28 @@ class ProductsController < ApplicationController
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
       if product_photos_is_empty
-        @product[:alert] = product_photos_empty_message(@product.name)
         flash[:alert] = product_photos_empty_message(@product.name)
       end
-      respond_with(@product, :location => store_product_path(@store, @product))
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :product => @product,
+            :alert => (product_photos_is_empty ? product_photos_empty_message(@product.name) : nil)
+          }
+        }
+        format.html {
+          redirect_to(store_product_path(@store, @product))
+        }
+      end
     else
       respond_to do |format|
         format.json {
           render :json => {
-            :status => 'error'
-          }.merge({ :errors => @product.errors.full_messages.map { |message| { :error => message }}})
+            :status => 'error',
+            :errors => @product.errors.full_messages.map do |message|
+              { :error => message }
+            end
+          }
         }
         format.html { render 'new' }
       end
@@ -91,7 +103,10 @@ class ProductsController < ApplicationController
       end
       respond_to do |format|
         format.json {
-          render :json => @product
+          render :json => {
+            :product => @product,
+            :alert => (product_photos_is_empty ? product_photos_empty_message(@product.name) : nil)
+          }
         }
         format.html { redirect_to(store_product_path(@store, @product)) }
       end
@@ -99,8 +114,11 @@ class ProductsController < ApplicationController
       respond_to do |format|
         format.json {
           render :json => {
-            :status => 'error'
-          }.merge({ :errors => @product.errors.full_messages.map { |message| { :error => message }}})
+            :status => 'error',
+            :errors => @product.errors.full_messages.map do |message|
+              { :error => message }
+            end
+          }
         }
         format.html { render 'edit' }
       end
@@ -108,13 +126,24 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:product])
-    @store = Store.find(Integer(@product.store_id))
+    @store = Store.find(params[:store_slug])
+    @product = @store.products.find(params[:product_slug])
 
     if user_owns_store?(@store.id)
       @product.destroy
-      flash[:notice] = "#{@product.name} was successfully deleted."
-      redirect_to(store_path(@store))
+      notice = "#{@product.name} was successfully deleted."
+      flash[:notice] = notice
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :status => 'success',
+            :notice => notice
+          }
+        }
+        format.html {
+          redirect_to(store_path(@store))
+        }
+      end
     else
       redirect_to(root_path)
     end
