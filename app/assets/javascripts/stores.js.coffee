@@ -59,7 +59,7 @@ fetch_user_photos = (callback, product_slug = '') ->
 
 if gon.page is 'stores_show'
     $ ->
-        fetch_and_render_product_widgets()
+        render_product_widgets(gon.product_widgets)
 
         ($ '.product-widgets').on 'click', '.edit-product', ->
             data = ($ @).closest('.product-widget').data()
