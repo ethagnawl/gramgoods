@@ -1,4 +1,6 @@
 = form_for([@store, @product], :html => { :class => 'well form-horizontal' }) do |form|
+  %a.refresh-form.gramgoods-tooltip{ :href => 'javascript: void(0);', :title => 'reset form' }
+    %i.icon-refresh
   .form-errors-wrapper
     = render 'shared/form_errors', :target => @product
   = form.hidden_field :photos

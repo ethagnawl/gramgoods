@@ -1,5 +1,11 @@
 window.product_form_template = """
-    <form method="post" id="edit_product_{{id}}" class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
+    <form method="post"
+    {{#put}}id="edit_product_{{slug}}"{{/put}}
+    {{^put}}id="new_product"{{/put}}
+    class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
+        <a href="javascript: void(0);" class="refresh-form gramgoods-tooltip" title='reset form'>
+            <i class="icon-refresh"></i>
+        </a>
         {{#put}}
         <input type="hidden" value="put" name="_method">
         {{/put}}

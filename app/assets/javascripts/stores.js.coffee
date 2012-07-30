@@ -1,3 +1,18 @@
+window.update_product_form = (data) ->
+    ($ '#product_form_wrapper').find('form')
+        .replaceWith(Mustache.render(product_form_template, data))
+    ($ window).scrollTop(($ '#product_form_wrapper'))
+
+window.render_edit_product_form = (data) ->
+    update_product_form(data)
+    update_h2("Edit #{data.name}")
+    fetch_user_photos(render_user_photos, data.slug)
+
+window.render_new_product_form = (data) ->
+    update_product_form(data)
+    reset_h2()
+    fetch_user_photos(render_user_photos)
+
 if gon.page is 'stores_show'
     update_alert = (message) ->
         ($ '.rails-alert').removeClass('hide') if ($ '.rails-alert').hasClass('hide')
@@ -16,17 +31,6 @@ if gon.page is 'stores_show'
 
     reset_h2 = -> update_h2('Add Product')
 
-    render_edit_product_form = (product) ->
-        update_h2("Edit #{product.name}")
-        ($ '#product_form_wrapper').find('form')
-            .replaceWith(Mustache.render(product_form_template, product))
-        ($ window).scrollTop(($ '#product_form_wrapper'))
-
-    render_new_product_form = ->
-        ($ '#product_form_wrapper').find('form')
-            .replaceWith(Mustache.render(product_form_template, {storeSlug: gon.store_slug}))
-        reset_h2()
-        fetch_user_photos(render_user_photos)
 
     update_product_count = (product_count) ->
         ($ '#product_count').text("#{product_count} Products")
@@ -79,7 +83,6 @@ if gon.page is 'stores_show'
                 data = ($ @).closest('.product-widget').data()
                 data.put = true
                 render_edit_product_form(data)
-                fetch_user_photos(render_user_photos, data.slug)
             .on 'click', '.delete-product', ->
                 data = ($ @).closest('.product-widget').data()
                 if confirm("Are you sure you want to delete #{data.name}?")
@@ -100,7 +103,7 @@ if gon.page is 'stores_show'
                         setTimeout ->
                             clear_alert_and_notice()
                         , 10000
-                        render_new_product_form()
+                        render_new_product_form({storeSlug: gon.store_slug})
                         fetch_and_render_product_widgets()
                     else
                         ($ '.form-errors-wrapper').html(Mustache.render(form_error_template, {errors: response.errors}))

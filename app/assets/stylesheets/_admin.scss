@@ -95,6 +95,13 @@ input[type=text], input[type=password], input[type=email] {
 #store_form_wrapper {
     .well {
         float: left;
+        position: relative;
+
+        .gramgoods-tooltip.refresh-form {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+        }
     }
 }
 
