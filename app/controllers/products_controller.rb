@@ -98,7 +98,9 @@ class ProductsController < ApplicationController
     else
       respond_to do |format|
         format.json {
-          render :json => @product.errors
+          render :json => {
+            :status => 'error'
+          }.merge({ :errors => @product.errors.full_messages.map { |message| { :error => message }}})
         }
         format.html { render 'edit' }
       end
