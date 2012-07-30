@@ -1,5 +1,6 @@
 $ ->
     $.ajaxSetup
+        dataType: 'json'
         timeout: 10000
         error: ->
             alert 'Something went wrong. Please refresh the page and try again.'
