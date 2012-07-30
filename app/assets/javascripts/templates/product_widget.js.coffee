@@ -22,7 +22,7 @@ window.product_widget_template = """
         {{/sizes}}
         <p class="product-status">Status: {{status}}</p>
         <a title="Edit {{name}}" class="gramgoods-tooltip edit-product" href="javascript: void(0);"><i class="icon-cog"></i>
-        <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' rel="nofollow" data-method="delete" data-confirm="Are you sure you want to delete {{name}}?" href="{{url}}?product={{slug}}&amp;store={{store_slug}}"><i class='icon-remove-sign'></i></a>
+        <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' href="javascript: void(0);"><i class='icon-remove-sign'></i></a>
         </a>
     </div>
 """
