@@ -31,8 +31,8 @@ class ApplicationController < ActionController::Base
   def render_product_widget_template(store, product)
     {
       :name => product.name,
+      :truncated_name => truncate(product.name, :length => 22),
       :instagram_tag => product.instagram_tag,
-      :truncated_name => truncate(product.name, :length => 38),
       :slug => product.slug,
       :store_slug => store.slug,
       :store_id => store.id,
@@ -52,8 +52,11 @@ class ApplicationController < ActionController::Base
       :draft => product.status == 'Draft',
       :active => product.status == 'Active',
       :out_of_stock => product.status == 'Out of Stock',
-      :product_count => "#{product.photos_array.length} #{(product.photos_array.length == 0 || product.photos_array.length > 1 ? 'Photos' : 'Photo')}",
-      :product_photo => product.photos_array.first
+      :raw_product_photo_count => product.photos_array.length,
+      :product_photo_count => "#{product.photos_array.length} #{(product.photos_array.length == 0 || product.photos_array.length > 1 ? 'Photos' : 'Photo')}",
+      :product_photo => product.photos_array.first,
+      :product_photos => product.photos_array.map { |photo| { :photo => photo } },
+      :product_photo_gallery_scroll => product.photos_array.length > 5 ? 'product-photos-gallery-scroll' : nil
     }
   end
 

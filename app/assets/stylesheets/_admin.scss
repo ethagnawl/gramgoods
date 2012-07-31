@@ -2,6 +2,7 @@ $white: #fff;
 $light-grey: #eee;
 $medium-grey: #666;
 $dark-grey: #333;
+$bootstrap-well-grey: #f5f5f5;
 $green: #bada55;
 
 @mixin transition($transition) {
@@ -51,9 +52,19 @@ body {
     padding-bottom: 40px;
 }
 
+// Twitter Bootstrap overrides
 input[type=text], input[type=password], input[type=email] {
-    // this is to fix some weird bootstrap bug
     height: 28px !important;
+}
+
+.input-prepend {
+    .add-on {
+        height: 28px;
+        margin-right: -4px;
+    }
+    .add-on + .input-xlarge {
+        width: 253px;
+    }
 }
 
 * {
@@ -145,8 +156,7 @@ input[type=text], input[type=password], input[type=email] {
             right: 8px;
             left: 8px;
         }
-        overflow: hidden;
-        padding-top: 12px;
+        padding-top: 22px;
         position: relative;
         width: 290px;
 
@@ -169,10 +179,11 @@ input[type=text], input[type=password], input[type=email] {
                 margin: 0 auto;
             }
 
-            .product-count {
+            .product-photo-count {
                 background-color: rgba(204, 204, 204, .8);
                 border: 1px solid $light-grey;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+                cursor: pointer;
                 padding: 2px 3px;
                 position: absolute;
                 right: 14px;
@@ -200,6 +211,65 @@ input[type=text], input[type=password], input[type=email] {
 
             &.delete-product {
                 right: 10px;
+            }
+        }
+
+        .product-photos-gallery {
+            background-color: $bootstrap-well-grey;
+            border: 1px solid $light-grey;
+            border-left: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            box-shadow: 5px 1px 5px rgba(0, 0, 0, 0.5);
+            max-height: 455px;
+            overflow: hidden;
+            padding: 20px;
+            position: absolute;
+            right: -116px;
+            top: 27px;
+            z-index: 2;
+
+            &.product-photos-gallery-scroll {
+                overflow-y: scroll;
+                img:last-child {
+                    padding-bottom: 20px;
+                }
+            }
+
+            img {
+                display: block;
+                cursor: pointer;
+                margin-top: 10px;
+                width: 75px;
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        .icon-zoom-out {
+            display: none;
+        }
+
+        &.product-photos-gallery-displayed {
+            .product-photos-gallery {
+                display: block;
+            }
+            .icon-zoom-out {
+                display: inline-block;
+            }
+            .icon-zoom-in {
+                display: none;
+            }
+        }
+
+        &[data-raw-product-photo-count='0'] {
+            .product-photo-count {
+                cursor: default;
+            }
+            .icon-zoom-in,
+            .icon-zoom-out {
+                display: none;
             }
         }
     }

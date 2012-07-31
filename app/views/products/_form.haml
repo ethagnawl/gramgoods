@@ -12,7 +12,9 @@
     .control-group
       = form.label :instagram_tag, :class => 'control-label'
       .controls
-        = form.text_field :instagram_tag, :class => 'input-xlarge'
+        .input-prepend
+          %span.add-on #
+          = form.text_field :instagram_tag, :class => 'input-xlarge'
     .control-group
       = form.label :description, :class => 'control-label'
       .controls
@@ -20,7 +22,9 @@
     .control-group
       = form.label :price, :class => 'control-label'
       .controls
-        = form.text_field :price, :class => 'input-xlarge'
+        .input-prepend
+          %span.add-on $
+          = form.text_field :price, :class => 'input-xlarge'
   %fieldset.float-left
     .control-group
       = form.label :quantity, :class => 'control-label'

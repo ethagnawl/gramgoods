@@ -21,7 +21,10 @@ window.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_instagram_tag">Instagram tag</label>
                 <div class="controls">
-                    <input type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                  <div class="input-prepend">
+                      <span class="add-on">#</span>
+                      <input type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                  </div>
                 </div>
             </div>
             <div class="control-group">
@@ -33,7 +36,10 @@ window.product_form_template = """
             <div class="control-group">
               <label class='control-label' for="product_price">Price</label>
               <div class="controls">
-                  <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
+                  <div class="input-prepend">
+                      <span class="add-on">$</span>
+                      <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
+                  </div>
               </div>
             </div>
         </fieldset>
