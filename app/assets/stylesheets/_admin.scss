@@ -164,6 +164,10 @@ input[type=text], input[type=password], input[type=email] {
         &:active,
         &:focus {
             box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+
+            .product-photos-gallery {
+                box-shadow: 5px 1px 5px rgba(0, 0, 0, 0.8);
+            }
         }
 
         .product-name a {
@@ -215,18 +219,20 @@ input[type=text], input[type=password], input[type=email] {
         }
 
         .product-photos-gallery {
+            @include transition(.3s);
+
             background-color: $bootstrap-well-grey;
             border: 1px solid $light-grey;
             border-left: none;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
             box-shadow: 5px 1px 5px rgba(0, 0, 0, 0.5);
             max-height: 455px;
             overflow: hidden;
             padding: 20px;
             position: absolute;
             right: -116px;
-            top: 27px;
+            top: 37px;
             z-index: 2;
 
             &.product-photos-gallery-scroll {
