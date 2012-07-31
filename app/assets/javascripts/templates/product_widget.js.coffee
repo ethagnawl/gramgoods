@@ -1,8 +1,6 @@
 window.product_widget_template = """
     <div class="product-widget well" data-name='{{name}}' data-instagram-tag='{{instagram_tag}}' data-slug='{{slug}}' data-store-slug='{{store_slug}}' data-store-id='{{store_id}}' data-url='{{url}}' data-description='{{description}}' data-price='{{raw_price}}' data-quantity='{{raw_quantity}}' data-unlimited-quantity='{{unlimited_quantity}}' data-colors='{{colors}}' data-sizes='{{sizes}}' data-flatrate-shipping-cost='{{raw_flatrate_shipping_cost}}' data-status='{{status}}' data-draft='{{draft}}' data-active='{{active}}' data-out-of-stock='{{out_of_stock}}' data-raw-product-photo-count='{{raw_product_photo_count}}'>
-        <h2 class="product-name">
-          <a href="{{url}}" title='{{name}}'>{{truncated_name}}</a>
-        </h2>
+        <h2 class="product-name">{{truncated_name}}</h2>
         <div class="product-image-wrapper">
             {{#product_photo}}
                 <img class='product-photo' src='{{product_photo}}' alt='{{name}}' />
