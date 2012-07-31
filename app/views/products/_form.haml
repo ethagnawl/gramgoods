@@ -45,7 +45,9 @@
     .control-group
       = form.label :flatrate_shipping_cost, :class => 'control-label'
       .controls
-        = form.text_field :flatrate_shipping_cost, :class => 'input-xlarge'
+        .input-prepend
+          %span.add-on $
+          = form.text_field :flatrate_shipping_cost, :class => 'input-xlarge'
     .control-group
       = form.label :status, :class => 'control-label'
       .controls

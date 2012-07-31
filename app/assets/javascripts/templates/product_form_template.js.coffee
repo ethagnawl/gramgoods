@@ -72,7 +72,10 @@ window.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_flatrate_shipping_cost">Flatrate shipping cost</label>
                 <div class="controls">
-                    <input type="text" value="{{flatrateShippingCost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
+                  <div class="input-prepend">
+                      <span class="add-on">$</span>
+                      <input type="text" value="{{flatrateShippingCost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
+                  </div>
                 </div>
             </div>
             <div class="control-group">
