@@ -1,3 +1,9 @@
+window.reset_product_form = (data) ->
+    ($ '#product_form_wrapper').find('form')
+        .replaceWith($('<form />'))
+    ($ window).scrollTop(($ '#product_form_wrapper'))
+    update_h2("Add Product <a class='render-new-product-form' href='javascript: void(0);'>+</a>")
+
 window.update_product_form = (data) ->
     ($ '#product_form_wrapper').find('form')
         .replaceWith(Mustache.render(product_form_template, data))
@@ -27,7 +33,7 @@ if gon.page is 'stores_show'
     clear_alert_and_notice = ->
         ($ '.rails-notice, .rails-alert').text('').addClass('hide')
 
-    update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().text(text)
+    update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().html(text)
 
     reset_h2 = -> update_h2('Add Product')
 
@@ -88,23 +94,29 @@ if gon.page is 'stores_show'
                 if confirm("Are you sure you want to delete #{data.name}?")
                     destroy_product(data.storeSlug, data.slug, fetch_and_render_product_widgets)
 
-        ($ '#product_form_wrapper').on 'submit', 'form', (e) ->
-            e.preventDefault()
-            verb = if @id is 'new_product' then 'created' else 'updated'
-            $.ajax
-                url: ($ @).prop('action')
-                data: ($ @).serialize()
-                type: 'post'
-                success: (response) =>
-                    if response.status isnt 'error'
-                        clear_alert_and_notice()
-                        update_notice("'#{response.product.name}' has been #{verb} successfully.")
-                        update_alert(response.alert) if response.alert?
-                        setTimeout ->
+        ($ '#product_form_wrapper')
+            .on 'click', '.render-new-product-form', ->
+                render_new_product_form({storeSlug: gon.store_slug})
+                update_h2('Add Product <a class="hide-new-product-form" href="javascript:void(0);">-</a>')
+            .on 'click', '.hide-new-product-form', ->
+                reset_product_form()
+            .on 'submit', 'form', (e) ->
+                e.preventDefault()
+                verb = if @id is 'new_product' then 'created' else 'updated'
+                $.ajax
+                    url: ($ @).prop('action')
+                    data: ($ @).serialize()
+                    type: 'post'
+                    success: (response) =>
+                        if response.status isnt 'error'
                             clear_alert_and_notice()
-                        , 10000
-                        render_new_product_form({storeSlug: gon.store_slug})
-                        fetch_and_render_product_widgets()
-                    else
-                        ($ '.form-errors-wrapper').html(Mustache.render(form_error_template, {errors: response.errors}))
-                        ($ window).scrollTop(($ '.form-errors-wrapper'))
+                            update_notice("'#{response.product.name}' has been #{verb} successfully.")
+                            update_alert(response.alert) if response.alert?
+                            setTimeout ->
+                                clear_alert_and_notice()
+                            , 10000
+                            reset_product_form()
+                            fetch_and_render_product_widgets()
+                        else
+                            ($ '.form-errors-wrapper').html(Mustache.render(form_error_template, {errors: response.errors}))
+                            ($ window).scrollTop(($ '.form-errors-wrapper'))
