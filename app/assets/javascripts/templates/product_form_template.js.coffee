@@ -13,13 +13,13 @@ window.product_form_template = """
         <div class="form-errors-wrapper"></div>
         <fieldset class="float-left">
             <div class="control-group">
-                <label class='control-label' for="product_name">Name</label>
+                <label class='control-label' for="product_name">Name*</label>
                 <div class="controls">
                     <input type="text" value="{{name}}" size="30" name="product[name]" id="product_name" class="input-xlarge">
                 </div>
             </div>
             <div class="control-group">
-                <label class='control-label' for="product_instagram_tag">Instagram tag</label>
+                <label class='control-label' for="product_instagram_tag">Instagram Tag*</label>
                 <div class="controls">
                   <div class="input-prepend">
                       <span class="add-on">#</span>
@@ -28,13 +28,13 @@ window.product_form_template = """
                 </div>
             </div>
             <div class="control-group">
-                <label class='control-label' for="product_description">Description</label>
+                <label class='control-label' for="product_description">Description*</label>
                 <div class="controls">
                     <textarea rows="5" name="product[description]" id="product_description" cols="40" class="input-xlarge">{{description}}</textarea>
                 </div>
             </div>
             <div class="control-group">
-              <label class='control-label' for="product_price">Price</label>
+              <label class='control-label' for="product_price">Price*</label>
               <div class="controls">
                   <div class="input-prepend">
                       <span class="add-on">$</span>
@@ -45,7 +45,7 @@ window.product_form_template = """
         </fieldset>
         <fieldset class='float-left'>
             <div class="control-group">
-                <label class='control-label' for="product_quantity">Quantity</label>
+                <label class='control-label' for="product_quantity">Quantity*</label>
                 <div class="controls">
                     <input type="text" value="{{^unlimitedQuantity}}{{quantity}}{{/unlimitedQuantity}}" size="30" name="product[quantity]" id="product_quantity" {{#unlimitedQuantity}}disabled="disabled"{{/unlimitedQuantity}} class="input-xlarge">
                 </div>
