@@ -8,6 +8,10 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 ($ @).toggleClass 'selected'
                 ($ @).find('.btn').toggleClass('btn-success btn-inverse')
 
+            .on 'click', '.fetch-more-user-photos', ->
+                max_id = ($ @).data('maxId')
+                fetch_user_photos(update_user_photos, {max_id})
+
             .on 'submit', 'form', ->
                 product_photos = $.map ($ '.product-photo.selected'), (product_photo) ->
                     ($ product_photo).data('url')

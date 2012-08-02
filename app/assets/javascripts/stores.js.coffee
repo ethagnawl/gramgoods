@@ -59,15 +59,26 @@ if gon.page is 'stores_show'
     fetch_and_render_product_widgets = (callback = render_product_widgets) ->
         fetch_product_widgets(callback)
 
-    render_user_photos = (user_photos) ->
+    window.update_user_photos = (user_photos) ->
+        container = $('<div />')
+        for user_photo in user_photos.product_photos
+            container.append(Mustache.render(user_photo_template, user_photo))
+        ($ '#product_form_wrapper').find('.product-photo:last').after(container)
+        ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
+
+    window.render_user_photos = (user_photos) ->
         ($ '#product_form_wrapper').find('.product-photos')
             .replaceWith(Mustache.render(user_photos_template, user_photos, product_photo: user_photo_template))
 
-    fetch_user_photos = (callback, product_slug = '') ->
+    window.fetch_user_photos = (callback = render_user_photos, options = {}) ->
         $.ajax
             url: '/get_instagram_feed_for_current_user'
-            data: { product_slug } unless product_slug is ''
-            success: (response) -> callback(response)
+            data: options
+            success: (response) ->
+                if response.status isnt 'error'
+                    callback(response)
+                else
+                    update_alert(response.alert)
 
     destroy_product = (store_slug, product_slug, callback) ->
         $.ajax
