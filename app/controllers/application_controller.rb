@@ -12,9 +12,23 @@ class ApplicationController < ActionController::Base
   end
 
   def _get_instagram_photo_feed_for_user
+    max_id = params[:max_id]
     product = params[:product_slug] == '' ? nil : Product.find_by_slug(params[:product_slug])
-    render :json => {
-      :product_photos => view_context.get_instagram_photo_feed_for_user(current_user).map { |photo| render_user_photo_template(product, photo) }}
+    user_feed = view_context.get_instagram_photo_feed_for_user(current_user, max_id)
+    if user_feed.empty? || user_feed.nil?
+      render :json => {
+        :status => 'error',
+        :alert => 'Sorry, there don\'t seem to be any more photos available.'
+      }
+    else
+      product_photos = user_feed.map do |photo|
+        render_user_photo_template(product, photo)
+      end
+      render :json => {
+        :max_id => user_feed.last[:id],
+        :product_photos => product_photos
+      }
+    end
   end
 
   private
