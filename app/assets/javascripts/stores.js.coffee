@@ -37,7 +37,6 @@ if gon.page is 'stores_show'
 
     reset_h2 = -> update_h2('Add Product')
 
-
     update_product_count = (product_count) ->
         ($ '#product_count').text("#{product_count} Products")
 
