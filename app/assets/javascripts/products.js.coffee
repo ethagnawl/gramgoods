@@ -24,11 +24,15 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 ($ @).removeClass(product_photos_gallery_displayed)
 
         ($ '.product-widgets')
-            .on 'click', '.product-photo-count', ->
+            .on 'click', '.product-image-wrapper', ->
                 # .product-photos-gallery is shown/hidden
                 # by css based on .products-gallery-displayed
                 product_widget = ($ @).closest('.product-widget')
+
+                # zoom in/out hidden if 0 or 1 in css
                 return if +(product_widget.data('rawProductPhotoCount')) is 0
+                return if +(product_widget.data('rawProductPhotoCount')) is 1
+
                 if product_widget.hasClass(product_photos_gallery_displayed)
                     product_widget.removeClass(product_photos_gallery_displayed)
                 else
@@ -36,5 +40,3 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                     product_widget.addClass(product_photos_gallery_displayed)
             .on 'click', '.product-photos-gallery-photo', ->
                 ($ @).closest('.product-widget').find('.product-photo').attr('src', ($ @).attr('src'))
-
-
