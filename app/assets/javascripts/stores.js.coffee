@@ -61,7 +61,7 @@ if gon.page is 'stores_show'
 
     render_user_photos = (user_photos) ->
         ($ '#product_form_wrapper').find('.product-photos')
-            .replaceWith(Mustache.render(user_photos_template, user_photos))
+            .replaceWith(Mustache.render(user_photos_template, user_photos, product_photo: user_photo_template))
 
     fetch_user_photos = (callback, product_slug = '') ->
         $.ajax
