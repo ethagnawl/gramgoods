@@ -1,3 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+if gon.page is 'registrations_new' or gon.page is 'registrations_edit'
+    $ ->
+        ($ '#registrations_form_wrapper').find('form').validate user_form_options

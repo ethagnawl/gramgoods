@@ -7,6 +7,7 @@ window.reset_product_form = (data) ->
 window.update_product_form = (data) ->
     ($ '#product_form_wrapper').find('form')
         .replaceWith(Mustache.render(product_form_template, data))
+    ($ '#product_form_wrapper').find('form').validate(product_form_options)
     ($ window).scrollTop(($ '#product_form_wrapper'))
 
 window.render_edit_product_form = (data) ->
@@ -18,6 +19,10 @@ window.render_new_product_form = (data) ->
     update_product_form(data)
     reset_h2()
     fetch_user_photos(render_user_photos)
+
+if gon.page is 'stores_new' or gon.page is 'stores_edit'
+    $ ->
+        ($ '#store_form_wrapper').find('form').validate store_form_options
 
 if gon.page is 'stores_show'
     update_alert = (message) ->
@@ -112,6 +117,7 @@ if gon.page is 'stores_show'
                 reset_product_form()
             .on 'submit', 'form', (e) ->
                 e.preventDefault()
+
                 verb = if @id is 'new_product' then 'created' else 'updated'
                 $.ajax
                     url: ($ @).prop('action')

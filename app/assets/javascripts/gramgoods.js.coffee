@@ -17,4 +17,12 @@ $ ->
     ($ '#spin_wrapper').bind 'ajaxSend ajaxComplete', ->
         window.spinner.toggleSpinner()
 
+    $.validator.addMethod("phoneUS", (phone_number, element) ->
+        phone_number = phone_number.replace(/\s+/g, "")
+        return this.optional(element) || phone_number.length > 9 && phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/)
+    , "Please specify a valid phone number")
+
+    $.validator.addMethod("postalCode", (postal_code, element) ->
+        return this.optional(element) || postal_code.match(/(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXYabceghjklmnpstvxy]{1}\d{1}[A-Za-z]{1} ?\d{1}[A-Za-z]{1}\d{1})$/)
+    , "Please specify a valid postal code")
 
