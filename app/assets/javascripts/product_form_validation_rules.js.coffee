@@ -3,7 +3,9 @@ $ ->
         rules:
             'product[name]': 'required'
             'product[instagram_tag]': 'required'
-            'product[description]': 'required'
+            'product[description]':
+                required: true
+                maxlength: 500
             'product[price]':
                 required: true
                 number: true

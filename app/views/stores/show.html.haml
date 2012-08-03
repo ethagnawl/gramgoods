@@ -5,10 +5,10 @@
       = link_to('Edit', edit_store_path(@store))
 
 #product_form_wrapper.widget
-  %h2
-    Add Product
-    %a.render-new-product-form{ :href => 'javascript: void(0);' }
-      +
+  %h2.widget
+    %a.render-new-product-form.btn.btn-primary.btn-large{ :href => "javascript: void(0);" }
+      Add Product
+      %i.icon-white.icon-plus-sign
   %form.hide
 #product_count.btn.btn-success.float-left
   = pluralize(@store.products.length, 'Product', 'Products')

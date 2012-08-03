@@ -5,13 +5,10 @@
     .control-group
       = form.label :name, :class => 'control-label'
       .controls
-        = form.text_field :name, :class => 'input-xlarge'
-    .control-group
-      = form.label :url, :class => 'control-label'
-      .controls
-        = form.text_field :url, :class => 'input-xlarge'
-        %p.help-block
-          Please be advised that you cannot change your store's URL.
+        = form.text_field :name, :class => 'input-xlarge', :disabled => (true if params[:action] == 'edit')
+        - if params[:action] == 'edit'
+          %span.help-inline You cannot change your store's name.
+
     .control-group
       = form.label :return_policy, :class => 'control-label'
       .controls

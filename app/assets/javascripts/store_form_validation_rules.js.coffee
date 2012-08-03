@@ -6,6 +6,6 @@ $ ->
                 maxlength: 30
             'store[return_policy]':
                 required: true
-                maxlength: 250
+                maxlength: 500
 
     $.extend(store_form_options, form_options)

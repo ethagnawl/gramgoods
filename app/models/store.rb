@@ -3,19 +3,9 @@ class Store < ActiveRecord::Base
   has_many :products, :order => 'updated_at DESC'
   extend FriendlyId
 
-  friendly_id :url, :use => [:slugged, :history]
+  friendly_id :name, :use => [:slugged, :history]
 
-  attr_accessible :name, :url, :user_id, :return_policy
-  validates_presence_of :name, :url, :return_policy
-  validates_uniqueness_of :url, :name
-
-  validate :url_has_changed, :on => :update
-
-  private
-
-  def url_has_changed
-    if self.url_changed? && self.url != self.url_was
-      errors[:base] = 'You cannot change your store\'s URL.'
-    end
-  end
+  attr_accessible :name, :user_id, :return_policy
+  validates_presence_of :name, :return_policy
+  validates_uniqueness_of :name
 end
