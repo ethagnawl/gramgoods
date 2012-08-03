@@ -20,6 +20,10 @@ class Product < ActiveRecord::Base
     self.photos.split(',')
   end
 
+  def product_image_ids
+    self.product_images.map { |product_image| product_image.instagram_id}
+  end
+
   def get_quantity
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
