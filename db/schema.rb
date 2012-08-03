@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802233305) do
+ActiveRecord::Schema.define(:version => 20120803173026) do
 
   create_table "authentications", :force => true do |t|
     t.timestamp "created_at",   :null => false
@@ -34,6 +34,17 @@ ActiveRecord::Schema.define(:version => 20120802233305) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
+
+  create_table "product_images", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "product_id"
+    t.string   "instagram_id"
+    t.string   "url"
+    t.string   "tags"
+  end
+
+  add_index "product_images", ["product_id"], :name => "index_product_imagess_on_product_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"

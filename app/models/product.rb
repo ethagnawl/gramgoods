@@ -1,15 +1,18 @@
 class Product < ActiveRecord::Base
   belongs_to :store
+  has_many :product_images
   extend FriendlyId
 
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :colors, :sizes, :flatrate_shipping_cost, :instagram_tag, :photos,
-  :unlimited_quantity
+  :unlimited_quantity, :product_images_attributes
   validates_presence_of :name, :price, :description, :instagram_tag
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
+
+  accepts_nested_attributes_for :product_images
 
   def photos_array
     return [] if self.photos.nil? || self.photos.empty?

@@ -13,9 +13,12 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 fetch_user_photos(update_user_photos, {max_id})
 
             .on 'submit', 'form', ->
-                product_photos = $.map ($ '.product-photo.selected'), (product_photo) ->
-                    ($ product_photo).data('url')
-                ($ '#product_photos').val(product_photos)
+                container = $('<div />')
+                ($ '.product-photo.selected').each (i, product_photo) ->
+                    data = ($ product_photo).data()
+                    container.append Mustache.render product_image_form_field, new ProductPhoto data.instagramId, data.url, data.tags, i
+                ($ @).append container
+
 
             .on 'change', '.product-unlimited-quantity', ->
                 status = if ($ @).prop('checked') then true else false

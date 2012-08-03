@@ -34,9 +34,12 @@ class ApplicationController < ActionController::Base
   private
 
   def render_user_photo_template(product = nil, photo)
+    logger.info "????? #{photo.id}"
     selected = product.nil? ? false : product.photos_array.include?(view_context.product_photo_url(photo))
     {
       :url => view_context.product_photo_url(photo),
+      :instagram_id => photo.id,
+      :tags => photo.tags,
       :selected => selected ? 'selected' : nil,
       :btnClass => selected ? 'btn-success' : 'btn-inverse'
     }

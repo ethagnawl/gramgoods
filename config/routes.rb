@@ -1,5 +1,4 @@
 Gramgoods::Application.routes.draw do
-  resources :products
 
   resources :authentications
 
@@ -8,7 +7,9 @@ Gramgoods::Application.routes.draw do
   root :to => 'static#index'
 
   resources :stores do
-    resources :products
+    resources :products do
+      resources :product_images
+    end
   end
   resources :users
   match '/auth/:provider/callback' => 'authentications#create'
