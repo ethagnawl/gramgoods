@@ -2,7 +2,7 @@ window.reset_product_form = (data) ->
     ($ '#product_form_wrapper').find('form')
         .replaceWith($('<form />'))
     ($ window).scrollTop(($ '#product_form_wrapper'))
-    update_h2("Add Product <a class='render-new-product-form' href='javascript: void(0);'>+</a>")
+    update_h2(Mustache.render(stores_h2_add_template, {}))
 
 window.update_product_form = (data) ->
     ($ '#product_form_wrapper').find('form')
@@ -12,7 +12,7 @@ window.update_product_form = (data) ->
 
 window.render_edit_product_form = (data) ->
     update_product_form(data)
-    update_h2("Edit #{data.name}")
+    update_h2(Mustache.render(stores_h2_edit_template, {name: data.name}))
     fetch_user_photos(render_user_photos, data.slug)
 
 window.render_new_product_form = (data) ->
@@ -40,7 +40,7 @@ if gon.page is 'stores_show'
 
     update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().html(text)
 
-    reset_h2 = -> update_h2('Add Product')
+    reset_h2 = -> update_h2(Mustache.render(stores_h2_add_template, {}))
 
     update_product_count = (product_count) ->
         ($ '#product_count').text("#{product_count} Products")
@@ -112,7 +112,7 @@ if gon.page is 'stores_show'
         ($ '#product_form_wrapper')
             .on 'click', '.render-new-product-form', ->
                 render_new_product_form({storeSlug: gon.store_slug})
-                update_h2('Add Product <a class="hide-new-product-form" href="javascript:void(0);">-</a>')
+                update_h2(Mustache.render(stores_h2_remove_template, {}))
             .on 'click', '.hide-new-product-form', ->
                 reset_product_form()
             .on 'submit', 'form', (e) ->
