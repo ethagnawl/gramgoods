@@ -24,6 +24,11 @@ class ApplicationController < ActionController::Base
       product_photos = user_feed.map do |photo|
         render_user_photo_template(product, photo)
       end
+      unless product.nil?
+        product_photos = product_photos.reject do |product_photo|
+          product.product_image_urls.include?(product_photo[:url])
+        end
+      end
       render :json => {
         :max_id => user_feed.last[:id],
         :product_photos => product_photos
@@ -34,10 +39,9 @@ class ApplicationController < ActionController::Base
   private
 
   def render_user_photo_template(product = nil, photo)
-    logger.info "????? #{photo.id}"
-    selected = product.nil? ? false : product.photos_array.include?(view_context.product_photo_url(photo))
+    selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
     {
-      :url => view_context.product_photo_url(photo),
+      :url => photo.url ||= view_context.product_photo_url(photo),
       :instagram_id => photo.id,
       :tags => photo.tags,
       :selected => selected ? 'selected' : nil,
@@ -46,35 +50,35 @@ class ApplicationController < ActionController::Base
   end
 
   def render_product_widget_template(store, product)
-    {
-      :name => product.name,
-      :truncated_name => truncate(product.name, :length => 22),
-      :instagram_tag => product.instagram_tag,
-      :slug => product.slug,
-      :store_slug => store.slug,
-      :store_id => store.id,
-      :url => "/stores/#{store.slug}/products/#{product.slug}",
-      :description => truncate(product.description, :length => 45),
-      :raw_description => product.description,
-      :price => number_to_currency(product.price),
-      :raw_price => product.price,
-      :quantity => product.get_quantity,
-      :raw_quantity => product.quantity,
-      :unlimited_quantity => product.unlimited_quantity,
-      :colors => product.colors ||= nil,
-      :sizes => product.sizes ||= nil,
-      :flatrate_shipping_cost => product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost),
-      :raw_flatrate_shipping_cost => product.flatrate_shipping_cost.nil? ? nil : product.flatrate_shipping_cost,
-      :status => product.status,
-      :draft => product.status == 'Draft',
-      :active => product.status == 'Active',
-      :out_of_stock => product.status == 'Out of Stock',
-      :raw_product_photo_count => product.photos_array.length,
-      :product_photo_count => "#{product.photos_array.length} #{(product.photos_array.length == 0 || product.photos_array.length > 1 ? 'Photos' : 'Photo')}",
-      :product_photo => product.photos_array.first,
-      :product_photos => product.photos_array.map { |photo| { :photo => photo } },
-      :product_photo_gallery_scroll => product.photos_array.length > 5 ? 'product-photos-gallery-scroll' : nil
-    }
+    Jbuilder.encode do |json|
+      json.name product.name
+      json.truncated_name truncate(product.name, :length => 22)
+      json.instagram_tag product.instagram_tag
+      json.slug product.slug
+      json.store_slug store.slug
+      json.store_id store.id
+      json.url "/stores/#{store.slug}/products/#{product.slug}"
+      json.description truncate(product.description, :length => 45)
+      json.raw_description product.description
+      json.price number_to_currency(product.price)
+      json.raw_price product.price
+      json.quantity product.get_quantity
+      json.raw_quantity product.quantity
+      json.unlimited_quantity product.unlimited_quantity
+      json.colors product.colors ||= nil
+      json.sizes product.sizes ||= nil
+      json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
+      json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : product.flatrate_shipping_cost
+      json.status product.status
+      json.draft product.status == 'Draft'
+      json.active product.status == 'Active'
+      json.out_of_stock product.status == 'Out of Stock'
+      json.raw_product_photo_count product.product_images.length
+      json.product_photo_count "#{product.product_images.length} #{(product.product_images.length == 0 || product.product_images.length > 1 ? 'Photos' : 'Photo')}"
+      json.product_photo product.product_images.length > 0 ? product.product_images.first.url : ''
+      json.product_photos product.product_images.map { |product_image| render_user_photo_template(product, product_image) }
+      json.product_photo_gallery_scroll product.product_images.length > 5 ? 'product-photos-gallery-scroll' : nil
+    end
   end
 
   def user_owns_store?(store_id)
