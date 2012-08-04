@@ -13,12 +13,13 @@ window.update_product_form = (data) ->
 window.render_edit_product_form = (data) ->
     update_product_form(data)
     update_h2(Mustache.render(stores_h2_edit_template, {name: data.name}))
-    fetch_user_photos(render_user_photos, data.slug)
+    render_user_photos {product_photos: data.productPhotos}
+    fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
 
 window.render_new_product_form = (data) ->
     update_product_form(data)
     reset_h2()
-    fetch_user_photos(render_user_photos)
+    fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit'
     $ ->
@@ -51,7 +52,9 @@ if gon.page is 'stores_show'
         else
             $wrapper = $('<div/>')
             for product_widget in product_widgets
-                $wrapper.append(Mustache.render(product_widget_template, product_widget))
+                _product_widget = JSON.parse(product_widget)
+                _product_widget._product_photos = JSON.stringify _product_widget.product_photos
+                $wrapper.append(Mustache.render(product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
 
@@ -66,13 +69,17 @@ if gon.page is 'stores_show'
     window.update_user_photos = (user_photos) ->
         container = $('<div />')
         for user_photo in user_photos.product_photos
-            container.append(Mustache.render(user_photo_template, user_photo))
+            container.append(Mustache.render(product_photo_template, user_photo))
         ($ '#product_form_wrapper').find('.product-photo:last').after(container)
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
         ($ '#product_form_wrapper').find('.product-photos')
-            .replaceWith(Mustache.render(user_photos_template, user_photos, product_photo: user_photo_template))
+            .replaceWith(Mustache.render(product_photos_template, user_photos, product_photo: product_photo_template))
+
+    window.render_user_photo_feed = (user_photos) ->
+        ($ '#product_form_wrapper').find('.photo-feed')
+            .replaceWith(Mustache.render(user_photo_feed_template, user_photos, product_photo: product_photo_template))
 
     window.fetch_user_photos = (callback = render_user_photos, options = {}) ->
         $.ajax

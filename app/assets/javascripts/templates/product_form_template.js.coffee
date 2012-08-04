@@ -9,7 +9,6 @@ window.product_form_template = """
         {{#put}}
         <input type="hidden" value="put" name="_method">
         {{/put}}
-        <input type="hidden" name="product[photos]" id="product_photos">
         <div class="form-errors-wrapper"></div>
         <fieldset class="float-left">
             <div class="control-group">
@@ -89,10 +88,20 @@ window.product_form_template = """
                 </div>
             </div>
             </fieldset>
+
+            {{#put}}
             <fieldset class="widget">
                 <div class="control-group">
                     <h2>Product Photos</h2>
                     <div class="product-photos">Loading photos...</div>
+                </div>
+            </fieldset>
+            {{/put}}
+
+            <fieldset class="widget">
+                <div class="control-group">
+                    <h2>Your Photo Feed</h2>
+                    <div class="photo-feed">Loading photos...</div>
                 </div>
             </fieldset>
             <div class="form-actions widget">

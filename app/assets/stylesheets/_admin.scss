@@ -120,7 +120,7 @@ label.error {
     }
 }
 
-.product-photos {
+.product-photos, .photo-feed {
     @include widget;
 
     border-top: 1px solid $light-grey;
@@ -130,12 +130,12 @@ label.error {
         @include widget;
 
         background-color: rgba(0, 0, 0, 0.1);
+        border: 4px solid $white;
         height: 172px;
         margin: 8px;
         width: 172px;
 
         img {
-            border: 4px solid $white;
             display: block;
             width: 100%;
         }
@@ -183,7 +183,8 @@ label.error {
         .product-image-wrapper {
             position: relative;
 
-            .product-image {
+            .product-photo {
+                border: none;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
                 display: block;
                 margin: 0 auto;
@@ -294,12 +295,15 @@ body {
     &.products-new,
     &.stores-show {
         .product-photo {
+            @include transition(.3s);
+
+            border: 4px solid rgba(0, 0, 0, 0.4);
             cursor: pointer;
             position: relative;
 
             img {
                 @include transition(.3s);
-                border: 4px solid rgba(0, 0, 0, 0.4);
+
                 opacity: .5;
             }
 
@@ -319,8 +323,9 @@ body {
             }
 
             &.selected {
+                border-color: $green;
+
                 img {
-                    border-color: $green;
                     opacity: 1;
                 }
 

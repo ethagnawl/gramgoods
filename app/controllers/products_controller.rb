@@ -41,8 +41,8 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.new(params[:product])
-    product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
-    product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
+    product_images = params[:product][:product_images_attributes]
+    product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
     @product.status = 'Draft' if product_photos_is_empty
     if @product.save
       if product_photos_is_empty
@@ -94,9 +94,10 @@ class ProductsController < ApplicationController
   def update
     @store = current_user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
-    product_photos_is_empty = true if defined?(params[:product][:photos]) == false # <- this is criminal!
-    product_photos_is_empty = !params[:product][:photos].nil? && params[:product][:photos].empty?
+    product_images = params[:product][:product_images_attributes]
+    product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
     params[:product][:status] = 'Draft' if product_photos_is_empty
+    @product.product_images.destroy_all
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
         flash[:alert] = product_photos_empty_message(@product.name)

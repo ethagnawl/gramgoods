@@ -1,5 +1,6 @@
 Gramgoods::Application.routes.draw do
 
+  resources :products
   resources :authentications
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
