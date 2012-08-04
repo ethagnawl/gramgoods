@@ -132,10 +132,12 @@ if gon.page is 'stores_show'
                     type: 'post'
                     success: (response) =>
                         if response.status isnt 'error'
-                            clear_alert_and_notice()
+                            if clear_alert_and_notice_timeout?
+                                clearTimeout(clear_alert_and_notice_timeout)
+                                clear_alert_and_notice()
                             update_notice("'#{response.product.name}' has been #{verb} successfully.")
                             update_alert(response.alert) if response.alert?
-                            setTimeout ->
+                            window.clear_alert_and_notice_timeout = setTimeout ->
                                 clear_alert_and_notice()
                             , 10000
                             reset_product_form()
