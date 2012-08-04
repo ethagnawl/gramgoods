@@ -117,6 +117,20 @@ label.error {
             top: 4px;
             right: 10px;
         }
+
+        span.label {
+            float: right;
+            margin-top: 4px;
+            margin-right: 4px;
+            padding-right: 15px;
+            position: relative;
+
+            .gramgoods-tooltip.icon-remove-sign {
+                position: absolute;
+                right: 3px;
+                top: 2px;
+            }
+        }
     }
 }
 

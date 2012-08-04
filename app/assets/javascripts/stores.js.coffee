@@ -5,8 +5,9 @@ window.reset_product_form = (data) ->
     update_h2(Mustache.render(stores_h2_add_template, {}))
 
 window.update_product_form = (data) ->
+    data.instagram_tags = $.map(data.rawInstagramTags.split(', '), (instagram_tag) -> {value: instagram_tag, name: 'instagram-tag'})
     ($ '#product_form_wrapper').find('form')
-        .replaceWith(Mustache.render(product_form_template, data))
+        .replaceWith(Mustache.render(product_form_template, data, {product_form_label_template}))
     ($ '#product_form_wrapper').find('form').validate(product_form_options)
     ($ window).scrollTop(($ '#product_form_wrapper'))
 
@@ -54,6 +55,8 @@ if gon.page is 'stores_show'
             for product_widget in product_widgets
                 _product_widget = JSON.parse(product_widget)
                 _product_widget._product_photos = JSON.stringify _product_widget.product_photos
+                _product_widget.raw_instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> "#{instagram_tag}").join(', ')
+                _product_widget.instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> {instagram_tag: instagram_tag})
                 $wrapper.append(Mustache.render(product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
@@ -117,6 +120,16 @@ if gon.page is 'stores_show'
                     destroy_product(data.storeSlug, data.slug, fetch_and_render_product_widgets)
 
         ($ '#product_form_wrapper')
+            .on 'click', '.search-by-instagram-tag', ->
+                instagram_tag = ($ '#product_instagram_tag').val()
+                ($ '#product_instagram_tag').val('')
+                ($ @).closest('.control-group').append(Mustache.render(product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
+                photos_with_tags = ($ '#product_form_wrapper').find("div[data-tags~='#{instagram_tag}']")
+                if photos_with_tags.length > 0
+                    photos_with_tags.each -> ($ @).addClass('selected')
+                    ($ window).scrollTop(photos_with_tags.eq(0).offset().top)
+            .on 'click', '.remove-label', ->
+                ($ @).parent().remove()
             .on 'click', '.render-new-product-form', ->
                 render_new_product_form({storeSlug: gon.store_slug})
                 update_h2(Mustache.render(stores_h2_remove_template, {}))

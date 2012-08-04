@@ -16,9 +16,18 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 container = $('<div />')
                 ($ '.product-photo.selected').each (i, product_photo) ->
                     data = ($ product_photo).data()
-                    container.append Mustache.render product_image_form_field, new ProductPhoto data.instagramId, data.url, data.tags, i
+                    container.append Mustache.render product_image_form_field, {
+                        url: data.url
+                        tags: data.tags
+                        instagram_id: data.instagramId
+                        product_image_n: i
+                    }
                 ($ @).append container
 
+                instagram_tags = []
+                ($ '.label-instagram-tag').each ->
+                    instagram_tags.push ($ @).data('value')
+                ($ '#product_instagram_tag').val(instagram_tags.join(','))
 
             .on 'change', '.product-unlimited-quantity', ->
                 status = if ($ @).prop('checked') then true else false

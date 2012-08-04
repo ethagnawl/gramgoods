@@ -23,8 +23,18 @@ window.product_form_template = """
                   <div class="input-prepend">
                       <span class="add-on">#</span>
                       <input type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                      <span class="help-inline">
+                          <a class='search-by-instagram-tag' href="javascript: void(0);">
+                              <i class='gramgoods-tooltip icon-eye-open'></i>
+                          </a>
+                      </span>
                   </div>
                 </div>
+                {{#put}}
+                    {{#instagram_tags}}
+                        {{> product_form_label_template}}
+                    {{/instagram_tags}}
+                {{/put}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_description">Description*</label>

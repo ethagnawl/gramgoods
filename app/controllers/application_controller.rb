@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
     {
       :url => photo.url ||= view_context.product_photo_url(photo),
       :instagram_id => photo.id,
-      :tags => photo.tags,
+      :tags => photo.tags.split(',').join(' '),
       :selected => selected ? 'selected' : nil,
       :btnClass => selected ? 'btn-success' : 'btn-inverse'
     }
@@ -53,7 +53,8 @@ class ApplicationController < ActionController::Base
     Jbuilder.encode do |json|
       json.name product.name
       json.truncated_name truncate(product.name, :length => 22)
-      json.instagram_tag product.instagram_tag
+      json.instagram_tags (product.instagram_tag.split(',').map { |instagram_tag| { :instagram_tag => instagram_tag}})
+      json.raw_instagram_tags product.instagram_tag
       json.slug product.slug
       json.store_slug store.slug
       json.store_id store.id
