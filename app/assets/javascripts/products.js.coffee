@@ -16,7 +16,7 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 container = $('<div />')
                 ($ '.product-photo.selected').each (i, product_photo) ->
                     data = ($ product_photo).data()
-                    container.append Mustache.render product_image_form_field, {
+                    container.append Mustache.render templates.product_image_form_field, {
                         url: data.url
                         tags: data.tags
                         instagram_id: data.instagramId

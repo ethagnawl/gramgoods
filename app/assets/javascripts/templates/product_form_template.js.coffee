@@ -1,4 +1,4 @@
-window.product_form_template = """
+templates.product_form_template = """
     <form method="post"
     {{#put}}id="edit_product_{{slug}}"{{/put}}
     {{^put}}id="new_product"{{/put}}

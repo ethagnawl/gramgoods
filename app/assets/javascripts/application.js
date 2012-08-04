@@ -15,4 +15,5 @@
 //= require twitter/bootstrap
 //= require jquery.validation
 //= require form_options
+//= require gramgoods
 //= require_tree .

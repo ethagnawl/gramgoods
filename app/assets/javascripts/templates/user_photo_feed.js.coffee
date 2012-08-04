@@ -1,4 +1,4 @@
-window.user_photo_feed_template = """
+templates.user_photo_feed_template = """
     <div class="photo-feed">
         {{#product_photos}}
             {{> product_photo}}

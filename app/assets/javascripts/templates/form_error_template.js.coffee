@@ -1,4 +1,4 @@
-window.form_error_template = """
+templates.form_error_template = """
 <div class="widget">
     {{#errors}}
         <div class="widget">{{error}}</div>

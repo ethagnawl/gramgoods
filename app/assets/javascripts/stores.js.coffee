@@ -2,18 +2,19 @@ window.reset_product_form = (data) ->
     ($ '#product_form_wrapper').find('form')
         .replaceWith($('<form />'))
     ($ window).scrollTop(($ '#product_form_wrapper'))
-    update_h2(Mustache.render(stores_h2_add_template, {}))
+    update_h2(Mustache.render(templates.stores_h2_add_template, {}))
 
 window.update_product_form = (data) ->
-    data.instagram_tags = $.map(data.rawInstagramTags.split(', '), (instagram_tag) -> {value: instagram_tag, name: 'instagram-tag'})
-    ($ '#product_form_wrapper').find('form')
-        .replaceWith(Mustache.render(product_form_template, data, {product_form_label_template}))
+    ($ '#product_form_wrapper')
+        .find('form').replaceWith(Mustache.render(templates.product_form_template, data, {product_form_label_template: templates.product_form_label_template}))
     ($ '#product_form_wrapper').find('form').validate(product_form_options)
     ($ window).scrollTop(($ '#product_form_wrapper'))
 
 window.render_edit_product_form = (data) ->
+    data.instagram_tags = $.map(data.rawInstagramTags.split(', '), (instagram_tag) ->
+        {value: instagram_tag, name: 'instagram-tag'})
     update_product_form(data)
-    update_h2(Mustache.render(stores_h2_edit_template, {name: data.name}))
+    update_h2(Mustache.render(templates.stores_h2_edit_template, {name: data.name}))
     render_user_photos {product_photos: data.productPhotos}
     fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
 
@@ -42,7 +43,7 @@ if gon.page is 'stores_show'
 
     update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().html(text)
 
-    reset_h2 = -> update_h2(Mustache.render(stores_h2_add_template, {}))
+    reset_h2 = -> update_h2(Mustache.render(templates.stores_h2_add_template, {}))
 
     update_product_count = (product_count) ->
         ($ '#product_count').text("#{product_count} Products")
@@ -57,7 +58,7 @@ if gon.page is 'stores_show'
                 _product_widget._product_photos = JSON.stringify _product_widget.product_photos
                 _product_widget.raw_instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> "#{instagram_tag}").join(', ')
                 _product_widget.instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> {instagram_tag: instagram_tag})
-                $wrapper.append(Mustache.render(product_widget_template, _product_widget))
+                $wrapper.append(Mustache.render(templates.product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
 
@@ -72,17 +73,17 @@ if gon.page is 'stores_show'
     window.update_user_photos = (user_photos) ->
         container = $('<div />')
         for user_photo in user_photos.product_photos
-            container.append(Mustache.render(product_photo_template, user_photo))
+            container.append(Mustache.render(templates.product_photo_template, user_photo))
         ($ '#product_form_wrapper').find('.product-photo:last').after(container)
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
         ($ '#product_form_wrapper').find('.product-photos')
-            .replaceWith(Mustache.render(product_photos_template, user_photos, product_photo: product_photo_template))
+            .replaceWith(Mustache.render(templates.product_photos_template, user_photos, product_photo: templates.product_photo_template))
 
     window.render_user_photo_feed = (user_photos) ->
         ($ '#product_form_wrapper').find('.photo-feed')
-            .replaceWith(Mustache.render(user_photo_feed_template, user_photos, product_photo: product_photo_template))
+            .replaceWith(Mustache.render(templates.user_photo_feed_template, user_photos, product_photo: templates.product_photo_template))
 
     window.fetch_user_photos = (callback = render_user_photos, options = {}) ->
         $.ajax
@@ -122,8 +123,9 @@ if gon.page is 'stores_show'
         ($ '#product_form_wrapper')
             .on 'click', '.search-by-instagram-tag', ->
                 instagram_tag = ($ '#product_instagram_tag').val()
+                instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
                 ($ '#product_instagram_tag').val('')
-                ($ @).closest('.control-group').append(Mustache.render(product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
+                ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
                 photos_with_tags = ($ '#product_form_wrapper').find("div[data-tags~='#{instagram_tag}']")
                 if photos_with_tags.length > 0
                     photos_with_tags.each -> ($ @).addClass('selected')
@@ -132,7 +134,7 @@ if gon.page is 'stores_show'
                 ($ @).parent().remove()
             .on 'click', '.render-new-product-form', ->
                 render_new_product_form({storeSlug: gon.store_slug})
-                update_h2(Mustache.render(stores_h2_remove_template, {}))
+                update_h2(Mustache.render(templates.stores_h2_remove_template, {}))
             .on 'click', '.hide-new-product-form', ->
                 reset_product_form()
             .on 'submit', 'form', (e) ->
@@ -156,5 +158,5 @@ if gon.page is 'stores_show'
                             reset_product_form()
                             fetch_and_render_product_widgets()
                         else
-                            ($ '.form-errors-wrapper').html(Mustache.render(form_error_template, {errors: response.errors}))
+                            ($ '.form-errors-wrapper').html(Mustache.render(templates.form_error_template, {errors: response.errors}))
                             ($ window).scrollTop(($ '.form-errors-wrapper'))

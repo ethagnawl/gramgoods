@@ -1,3 +1,5 @@
+window.templates = {}
+
 $ ->
     $.ajaxSetup
         dataType: 'json'
