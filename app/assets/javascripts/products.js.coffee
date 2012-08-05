@@ -2,6 +2,9 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
     #config
     product_photos_gallery_displayed = 'product-photos-gallery-displayed'
 
+    map_label_values = (name) -> $.map(($ ".label-#{name}"), (e) ->
+        ($ e).data('value')).join(',')
+
     $ ->
         ($ '#product_form_wrapper')
             .on 'click', '.product-photo', ->
@@ -24,11 +27,9 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                     }
                 ($ @).append container
 
-                instagram_tags = $.map ($ '.label-instagram-tag'), (e) -> ($ e).data('value')
-                ($ '#product_instagram_tag').val(instagram_tags.join(','))
-
-                sizes = $.map ($ '.label-size'), (e) -> ($ e).data('value')
-                ($ '#product_sizes').val(sizes.join(','))
+                ($ '#product_instagram_tag').val(map_label_values('instagram-tag'))
+                ($ '#product_sizes').val(map_label_values('size'))
+                ($ '#product_colors').val(map_label_values('color'))
 
             .on 'change', '.product-unlimited-quantity', ->
                 status = if ($ @).prop('checked') then true else false
