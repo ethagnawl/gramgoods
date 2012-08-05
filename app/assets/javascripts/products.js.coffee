@@ -13,7 +13,7 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                 fetch_user_photos(update_user_photos, {max_id})
 
             .on 'submit', 'form', ->
-                container = $('<div />')
+                container = $('<div />').attr('class', 'hide')
                 ($ '.product-photo.selected').each (i, product_photo) ->
                     data = ($ product_photo).data()
                     container.append Mustache.render templates.product_image_form_field, {
@@ -24,10 +24,11 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                     }
                 ($ @).append container
 
-                instagram_tags = []
-                ($ '.label-instagram-tag').each ->
-                    instagram_tags.push ($ @).data('value')
+                instagram_tags = $.map ($ '.label-instagram-tag'), (e) -> ($ e).data('value')
                 ($ '#product_instagram_tag').val(instagram_tags.join(','))
+
+                sizes = $.map ($ '.label-size'), (e) -> ($ e).data('value')
+                ($ '#product_sizes').val(sizes.join(','))
 
             .on 'change', '.product-unlimited-quantity', ->
                 status = if ($ @).prop('checked') then true else false

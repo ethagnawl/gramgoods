@@ -70,13 +70,28 @@ templates.product_form_template = """
                 <label class='control-label' for="product_colors">Colors</label>
                 <div class="controls">
                     <input type="text" value="{{colors}}" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
+                      <span class="help-inline">
+                          <a class='add-color' href="javascript: void(0);">
+                              <i class='gramgoods-tooltip icon-plus'></i>
+                          </a>
+                      </span>
                 </div>
               </div>
             <div class="control-group">
                 <label class='control-label' for="product_sizes">Sizes</label>
                 <div class="controls">
-                    <input type="text" value="{{sizes}}" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
+                    <input type="text" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
+                      <span class="help-inline">
+                          <a class='add-size' href="javascript: void(0);">
+                              <i class='gramgoods-tooltip icon-plus'></i>
+                          </a>
+                      </span>
                 </div>
+                {{#put}}
+                    {{#sizes}}
+                        {{> product_form_label_template}}
+                    {{/sizes}}
+                {{/put}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_flatrate_shipping_cost">Flatrate shipping cost</label>

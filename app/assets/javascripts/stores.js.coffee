@@ -13,6 +13,7 @@ window.update_product_form = (data) ->
 window.render_edit_product_form = (data) ->
     data.instagram_tags = $.map(data.rawInstagramTags.split(', '), (instagram_tag) ->
         {value: instagram_tag, name: 'instagram-tag'})
+    data.sizes = $.map(data.sizes.split(','), (size) -> {value: size, name: 'size'})
     update_product_form(data)
     update_h2(Mustache.render(templates.stores_h2_edit_template, {name: data.name}))
     render_user_photos {product_photos: data.productPhotos}
@@ -58,6 +59,7 @@ if gon.page is 'stores_show'
                 _product_widget._product_photos = JSON.stringify _product_widget.product_photos
                 _product_widget.raw_instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> "#{instagram_tag}").join(', ')
                 _product_widget.instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> {instagram_tag: instagram_tag})
+                _product_widget.sizes = _product_widget.sizes.split(',').join(', ')
                 $wrapper.append(Mustache.render(templates.product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
@@ -123,13 +125,19 @@ if gon.page is 'stores_show'
         ($ '#product_form_wrapper')
             .on 'click', '.search-by-instagram-tag', ->
                 instagram_tag = ($ '#product_instagram_tag').val()
-                instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
-                ($ '#product_instagram_tag').val('')
-                ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
-                photos_with_tags = ($ '#product_form_wrapper').find("div[data-tags~='#{instagram_tag}']")
-                if photos_with_tags.length > 0
-                    photos_with_tags.each -> ($ @).addClass('selected')
-                    ($ window).scrollTop(photos_with_tags.eq(0).offset().top)
+                if instagram_tag
+                    instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
+                    ($ '#product_instagram_tag').val('')
+                    ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
+                    photos_with_tags = ($ '#product_form_wrapper').find("div[data-tags~='#{instagram_tag}']")
+                    if photos_with_tags.length > 0
+                        photos_with_tags.each -> ($ @).addClass('selected')
+                        ($ window).scrollTop(photos_with_tags.eq(0).offset().top)
+            .on 'click', '.add-size', ->
+                size = ($ '#product_sizes').val()
+                if size
+                    ($ '#product_sizes').val('')
+                    ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: size, name: 'size'}))
             .on 'click', '.remove-label', ->
                 ($ @).parent().remove()
             .on 'click', '.render-new-product-form', ->
