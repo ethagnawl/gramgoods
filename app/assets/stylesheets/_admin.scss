@@ -125,6 +125,14 @@ label.error {
             padding-right: 15px;
             position: relative;
 
+            .remove-label {
+                color: #333;
+                &:hover, &:active, &:focus {
+                    // override bootstrap
+                    color: #333;
+                }
+            }
+
             .gramgoods-tooltip.icon-remove-sign {
                 position: absolute;
                 right: 3px;
