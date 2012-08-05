@@ -15,4 +15,7 @@ Gramgoods::Application.routes.draw do
   resources :users
   match '/auth/:provider/callback' => 'authentications#create'
   match 'get_instagram_feed_for_current_user' => 'application#_get_instagram_photo_feed_for_user'
+  match '/:id' => 'stores#show'
+  match '/:id/edit' => 'stores#edit'
+  match '/:store_id/:id' => 'products#show'
 end

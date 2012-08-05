@@ -1,6 +1,6 @@
 - @stores.each do |store|
   .widget
-    = link_to(store.name, store_path(store))
+    = link_to(store.name, store.slug)
 
 .widget
   = link_to('add a new store', new_store_path)
