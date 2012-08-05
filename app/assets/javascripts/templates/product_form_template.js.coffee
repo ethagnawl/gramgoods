@@ -22,10 +22,10 @@ templates.product_form_template = """
                 <div class="controls">
                   <div class="input-prepend">
                       <span class="add-on">#</span>
-                      <input type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                      <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
                       <span class="help-inline">
-                          <a class='search-by-instagram-tag' href="javascript: void(0);">
-                              <i class='gramgoods-tooltip icon-eye-open'></i>
+                          <a class='add-instagram-tag' href="javascript: void(0);" title='Click to link photos from your photo feed'>
+                              <i class='gramgoods-tooltip icon-plus'></i>
                           </a>
                       </span>
                   </div>

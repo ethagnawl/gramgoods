@@ -5,11 +5,14 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
     map_label_values = (name) -> $.map(($ ".label-#{name}"), (e) ->
         ($ e).data('value')).join(',')
 
+    window.select_photo = ($el) ->
+        $el.toggleClass('selected')
+        $el.find('.btn').toggleClass('btn-success btn-inverse')
+
     $ ->
         ($ '#product_form_wrapper')
             .on 'click', '.product-photo', ->
-                ($ @).toggleClass 'selected'
-                ($ @).find('.btn').toggleClass('btn-success btn-inverse')
+                select_photo(($ @))
 
             .on 'click', '.fetch-more-user-photos', ->
                 max_id = ($ @).data('maxId')

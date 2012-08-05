@@ -45,6 +45,12 @@ if gon.page is 'stores_show'
         ($ '.rails-notice').text(message)
         ($ window).scrollTop(0)
 
+    expire_alert_and_notice_in = (seconds) ->
+        clearTimeout(clear_alert_and_notice_timeout) if clear_alert_and_notice_timeout?
+        window.clear_alert_and_notice_timeout = setTimeout ->
+            clear_alert_and_notice()
+        , seconds
+
     clear_alert_and_notice = ->
         ($ '.rails-notice, .rails-alert').text('').addClass('hide')
 
@@ -130,16 +136,19 @@ if gon.page is 'stores_show'
                     destroy_product(data.storeSlug, data.slug, fetch_and_render_product_widgets)
 
         ($ '#product_form_wrapper')
-            .on 'click', '.search-by-instagram-tag', ->
+            .on 'click', '.add-instagram-tag', ->
                 instagram_tag = ($ '#product_instagram_tag').val()
                 if instagram_tag
                     instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
                     ($ '#product_instagram_tag').val('')
                     ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
-                    photos_with_tags = ($ '#product_form_wrapper').find("div[data-tags~='#{instagram_tag}']")
+                    photos_with_tags = ($ '#product_form_wrapper').find(".photo-feed div[data-tags~='#{instagram_tag}']")
                     if photos_with_tags.length > 0
-                        photos_with_tags.each -> ($ @).addClass('selected')
-                        ($ window).scrollTop(photos_with_tags.eq(0).offset().top)
+                        photos_with_tags.each -> select_photo(($ @))
+                        pluralized_photo = if photos_with_tags.length is 1 then 'photo' else 'photos'
+                        pluralized_has =  if photos_with_tags.length is 1 then 'has' else 'have'
+                        update_notice("#{photos_with_tags.length} #{pluralized_photo} from your feed #{pluralized_has} been linked.")
+                        expire_alert_and_notice_in(6000)
             .on 'click', '.add-size', ->
                 size = ($ '#product_sizes').val()
                 if size
@@ -172,9 +181,7 @@ if gon.page is 'stores_show'
                                 clear_alert_and_notice()
                             update_notice("'#{response.product.name}' has been #{verb} successfully.")
                             update_alert(response.alert) if response.alert?
-                            window.clear_alert_and_notice_timeout = setTimeout ->
-                                clear_alert_and_notice()
-                            , 10000
+                            expire_alert_and_notice_in(6000)
                             reset_product_form()
                             fetch_and_render_product_widgets()
                         else
