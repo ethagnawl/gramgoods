@@ -85,7 +85,7 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_sizes">Sizes</label>
                 <div class="controls">
-                    <input type="text" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
+                    <input placeholder='Enter a size and click +' type="text" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
                       <span class="help-inline">
                           <a class='add-size' href="javascript: void(0);">
                               <i class='gramgoods-tooltip icon-plus'></i>
