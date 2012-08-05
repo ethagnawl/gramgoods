@@ -69,7 +69,7 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_colors">Colors</label>
                 <div class="controls">
-                    <input type="text" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
+                    <input placeholder='Enter a color and click +' type="text" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
                       <span class="help-inline">
                           <a class='add-color' href="javascript: void(0);">
                               <i class='gramgoods-tooltip icon-plus'></i>
