@@ -7,6 +7,10 @@ $ ->
         error: ->
             alert 'Something went wrong. Please refresh the page and try again.'
 
+    window.hide = 'hide'
+    window.$window = ($ window)
+    window.$product_form_wrapper = ($ '#product_form_wrapper')
+
     window.spinner = new Spinner {color: '#fff'}
     $.extend window.spinner,
         start       : -> @spin (document.getElementById 'spin')
