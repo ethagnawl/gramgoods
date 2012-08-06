@@ -1,14 +1,14 @@
 window.reset_product_form = (data) ->
-    ($ '#product_form_wrapper').find('form')
+    $product_form_wrapper.find('form')
         .replaceWith($('<form />'))
-    ($ window).scrollTop(($ '#product_form_wrapper'))
+    $window.scrollTop($product_form_wrapper)
     update_h2(Mustache.render(templates.stores_h2_add_template, {}))
 
 window.update_product_form = (data) ->
-    ($ '#product_form_wrapper')
-        .find('form').replaceWith(Mustache.render(templates.product_form_template, data, {product_form_label_template: templates.product_form_label_template}))
-    ($ '#product_form_wrapper').find('form').validate(product_form_options)
-    ($ window).scrollTop(($ '#product_form_wrapper'))
+    $product_form_wrapper.find('form')
+        .replaceWith(Mustache.render(templates.product_form_template, data, {product_form_label_template: templates.product_form_label_template}))
+    $product_form_wrapper.find('form').validate(product_form_options)
+    $window.scrollTop($product_form_wrapper)
 
 window.render_edit_product_form = (data) ->
     if data.rawInstagramTags
@@ -31,30 +31,30 @@ window.render_new_product_form = (data) ->
     fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit'
-    $ ->
-        ($ '#store_form_wrapper').find('form').validate store_form_options
+    $ -> ($ '#store_form_wrapper').find('form').validate store_form_options
 
 if gon.page is 'stores_show'
     update_alert = (message) ->
-        ($ '.rails-alert').removeClass('hide') if ($ '.rails-alert').hasClass('hide')
+        ($ '.rails-alert').removeClass(hide) if ($ '.rails-alert').hasClass(hide)
         ($ '.rails-alert').text(message)
-        ($ window).scrollTop(0)
+        $window.scrollTop(0)
 
     update_notice = (message) ->
-        ($ '.rails-notice').removeClass('hide') if ($ '.rails-notice').hasClass('hide')
+        ($ '.rails-notice').removeClass(hide) if ($ '.rails-notice').hasClass(hide)
         ($ '.rails-notice').text(message)
-        ($ window).scrollTop(0)
+        $window.scrollTop(0)
 
     expire_alert_and_notice_in = (seconds) ->
         clearTimeout(clear_alert_and_notice_timeout) if clear_alert_and_notice_timeout?
+        clear_alert_and_notice()
         window.clear_alert_and_notice_timeout = setTimeout ->
             clear_alert_and_notice()
         , seconds
 
     clear_alert_and_notice = ->
-        ($ '.rails-notice, .rails-alert').text('').addClass('hide')
+        ($ '.rails-notice, .rails-alert').text('').addClass(hide)
 
-    update_h2 = (text) -> ($ '#product_form_wrapper').find('h2').first().html(text)
+    update_h2 = (text) -> $product_form_wrapper.find('h2').first().html(text)
 
     reset_h2 = -> update_h2(Mustache.render(templates.stores_h2_add_template, {}))
 
@@ -62,7 +62,7 @@ if gon.page is 'stores_show'
         ($ '#product_count').text("#{product_count} Products")
 
     render_product_widgets = (product_widgets) ->
-        if product_widgets.length == 0
+        if product_widgets.length is 0
             ($ '.product-widgets').empty()
         else
             $wrapper = $('<div/>')
@@ -89,15 +89,15 @@ if gon.page is 'stores_show'
         container = $('<div />')
         for user_photo in user_photos.product_photos
             container.append(Mustache.render(templates.product_photo_template, user_photo))
-        ($ '#product_form_wrapper').find('.product-photo:last').after(container)
+        $product_form_wrapper.find('.product-photo:last').after(container)
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
-        ($ '#product_form_wrapper').find('.product-photos')
+        $product_form_wrapper.find('.product-photos')
             .replaceWith(Mustache.render(templates.product_photos_template, user_photos, product_photo: templates.product_photo_template))
 
     window.render_user_photo_feed = (user_photos) ->
-        ($ '#product_form_wrapper').find('.photo-feed')
+        $product_form_wrapper.find('.photo-feed')
             .replaceWith(Mustache.render(templates.user_photo_feed_template, user_photos, product_photo: templates.product_photo_template))
 
     window.fetch_user_photos = (callback = render_user_photos, options = {}) ->
@@ -113,9 +113,7 @@ if gon.page is 'stores_show'
     destroy_product = (store_slug, product_slug, callback) ->
         $.ajax
             url: "/products/#{product_slug}"
-            data:
-                store_slug: store_slug
-                product_slug: product_slug
+            data: {store_slug, product_slug}
             type: 'delete'
             success: (response) ->
                 if response.status is 'success'
@@ -135,37 +133,43 @@ if gon.page is 'stores_show'
                 if confirm("Are you sure you want to delete #{data.name}?")
                     destroy_product(data.storeSlug, data.slug, fetch_and_render_product_widgets)
 
-        ($ '#product_form_wrapper')
+        $product_form_wrapper
             .on 'click', '.add-instagram-tag', ->
                 instagram_tag = ($ '#product_instagram_tag').val()
                 if instagram_tag
                     instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
                     ($ '#product_instagram_tag').val('')
                     ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
-                    photos_with_tags = ($ '#product_form_wrapper').find(".photo-feed div[data-tags~='#{instagram_tag}']")
+                    photos_with_tags = $product_form_wrapper.find(".photo-feed div[data-tags~='#{instagram_tag}']")
                     if photos_with_tags.length > 0
                         photos_with_tags.each -> select_photo(($ @))
                         pluralized_photo = if photos_with_tags.length is 1 then 'photo' else 'photos'
                         pluralized_has =  if photos_with_tags.length is 1 then 'has' else 'have'
-                        update_notice("#{photos_with_tags.length} #{pluralized_photo} from your feed #{pluralized_has} been linked.")
                         expire_alert_and_notice_in(6000)
+                        update_notice("#{photos_with_tags.length} #{pluralized_photo} from your feed #{pluralized_has} been linked.")
+
             .on 'click', '.add-size', ->
                 size = ($ '#product_sizes').val()
                 if size
                     ($ '#product_sizes').val('')
                     ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: size, name: 'size'}))
+
             .on 'click', '.add-color', ->
                 size = ($ '#product_colors').val()
                 if size
                     ($ '#product_colors').val('')
                     ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: size, name: 'color'}))
+
             .on 'click', '.remove-label', ->
                 ($ @).parent().remove()
+
             .on 'click', '.render-new-product-form', ->
                 render_new_product_form({storeSlug: gon.store_slug})
                 update_h2(Mustache.render(templates.stores_h2_remove_template, {}))
+
             .on 'click', '.hide-new-product-form', ->
                 reset_product_form()
+
             .on 'submit', 'form', (e) ->
                 e.preventDefault()
 
@@ -176,14 +180,11 @@ if gon.page is 'stores_show'
                     type: 'post'
                     success: (response) =>
                         if response.status isnt 'error'
-                            if clear_alert_and_notice_timeout?
-                                clearTimeout(clear_alert_and_notice_timeout)
-                                clear_alert_and_notice()
+                            expire_alert_and_notice_in(6000)
                             update_notice("'#{response.product.name}' has been #{verb} successfully.")
                             update_alert(response.alert) if response.alert?
-                            expire_alert_and_notice_in(6000)
                             reset_product_form()
                             fetch_and_render_product_widgets()
                         else
                             ($ '.form-errors-wrapper').html(Mustache.render(templates.form_error_template, {errors: response.errors}))
-                            ($ window).scrollTop(($ '.form-errors-wrapper'))
+                            $window.scrollTop(($ '.form-errors-wrapper'))
