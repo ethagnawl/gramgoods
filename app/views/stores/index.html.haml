@@ -1,9 +1,13 @@
-- @stores.each do |store|
-  .widget
-    = link_to(store.name, store.slug)
+- if @stores.length > 0
+  .page-header
+    %h1 Your Stores
+  - @stores.each do |store|
+    .widget
+      = link_to store.slug, :class => 'btn btn-primary btn-large' do
+        = store.name
+        %i.icon-white.icon-circle-arrow-right
 
 .widget
-  = link_to('add a new store', new_store_path)
-  - if current_user.authentication.nil?
-    or
-    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
+  = link_to new_store_path, :class => 'btn btn-success btn-large' do
+    Add a New Store
+    %i.icon-white.icon-plus-sign
