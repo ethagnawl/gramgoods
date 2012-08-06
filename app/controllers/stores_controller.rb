@@ -36,6 +36,7 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find(params[:id])
+    @products = @store.products
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     gon.product_widgets = @store.products.map do |product|
@@ -43,10 +44,13 @@ class StoresController < ApplicationController
     end
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     if @current_user_owns_store
-      @product = @store.products.new
-      render :layout => 'admin'
+      if params[:layout] == 'mobile'
+        render 'stores/show.mobile.html.haml', :layout => 'mobile'
+      else
+        @product = @store.products.new
+        render :layout => 'admin'
+      end
     else
-      @products = @store.products
       render 'stores/show.mobile.html.haml', :layout => 'mobile'
     end
   end

@@ -1,5 +1,5 @@
 .float-right
-  %a.btn.btn-primary.btn-large{ :href => "#{request.env["HTTP_HOST"]}/#{@store.slug}"}
+  %a.btn.btn-primary.btn-large{ :href => "http://#{request.env["HTTP_HOST"]}/#{@store.slug}?layout=mobile", :target => '_blank'}
     Your Store's Unique URL:
     %br
     #{request.env["HTTP_HOST"]}/#{@store.slug}
