@@ -1,3 +1,10 @@
+.float-right
+  %a.btn.btn-primary.btn-large{ :href => "#{request.env["HTTP_HOST"]}/#{@store.slug}"}
+    Your Store's Unique URL:
+    %br
+    #{request.env["HTTP_HOST"]}/#{@store.slug}
+    %i.icon-white.icon-globe
+
 .page-header
   %h1
     #{@store.name}

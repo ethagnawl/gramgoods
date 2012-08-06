@@ -40,6 +40,10 @@ $green: #bada55;
     float: left;
 }
 
+.float-right {
+    float: right;
+}
+
 .gramgoods-tooltip {
     @include transition(.3s);
 
