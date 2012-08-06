@@ -1,14 +1,18 @@
 templates.product_form_template = """
     <form method="post"
+
     {{#put}}id="edit_product_{{slug}}"{{/put}}
     {{^put}}id="new_product"{{/put}}
+
     class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
         <a href="javascript: void(0);" class="refresh-form gramgoods-tooltip" title='reset form'>
             <i class="icon-refresh"></i>
         </a>
+
         {{#put}}
-        <input type="hidden" value="put" name="_method">
+            <input type="hidden" value="put" name="_method">
         {{/put}}
+
         <div class="form-errors-wrapper"></div>
         <fieldset class="float-left">
             <div class="control-group">
@@ -20,15 +24,15 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_instagram_tag">Instagram Tag*</label>
                 <div class="controls">
-                  <div class="input-prepend">
-                      <span class="add-on">#</span>
-                      <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
-                      <span class="help-inline">
-                          <a class='add-instagram-tag' href="javascript: void(0);" title='Click to link photos from your photo feed'>
-                              <i class='gramgoods-tooltip icon-plus'></i>
-                          </a>
-                      </span>
-                  </div>
+                    <div class="input-prepend">
+                        <span class="add-on">#</span>
+                        <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                        <span class="help-inline">
+                            <a class='add-instagram-tag' href="javascript: void(0);" title='Click to link photos from your photo feed'>
+                                <i class='gramgoods-tooltip icon-plus'></i>
+                            </a>
+                        </span>
+                    </div>
                 </div>
                 {{#put}}
                     {{#instagram_tags}}
@@ -43,13 +47,13 @@ templates.product_form_template = """
                 </div>
             </div>
             <div class="control-group">
-              <label class='control-label' for="product_price">Price*</label>
-              <div class="controls">
-                  <div class="input-prepend">
-                      <span class="add-on">$</span>
-                      <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
-                  </div>
-              </div>
+                <label class='control-label' for="product_price">Price*</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>
+                        <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
+                    </div>
+                </div>
             </div>
         </fieldset>
         <fieldset class='float-left'>
@@ -70,18 +74,18 @@ templates.product_form_template = """
                 <label class='control-label' for="product_colors">Colors</label>
                 <div class="controls">
                     <input placeholder='Enter a color and click +' type="text" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
-                      <span class="help-inline">
-                          <a class='add-color' href="javascript: void(0);">
-                              <i class='gramgoods-tooltip icon-plus'></i>
-                          </a>
-                      </span>
+                        <span class="help-inline">
+                            <a class='add-color' href="javascript: void(0);">
+                                <i class='gramgoods-tooltip icon-plus'></i>
+                            </a>
+                        </span>
                 </div>
                 {{#put}}
                     {{#colors}}
                         {{> product_form_label_template}}
                     {{/colors}}
                 {{/put}}
-              </div>
+            </div>
             <div class="control-group">
                 <label class='control-label' for="product_sizes">Sizes</label>
                 <div class="controls">
@@ -101,10 +105,10 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_flatrate_shipping_cost">Flatrate shipping cost</label>
                 <div class="controls">
-                  <div class="input-prepend">
-                      <span class="add-on">$</span>
-                      <input type="text" value="{{flatrateShippingCost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
-                  </div>
+                    <div class="input-prepend">
+                        <span class="add-on">$</span>
+                        <input type="text" value="{{flatrateShippingCost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
+                    </div>
                 </div>
             </div>
             <div class="control-group">
