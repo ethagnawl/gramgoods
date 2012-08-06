@@ -58,6 +58,8 @@
             = notice
           %p.rails-alert.alert.alert-error{ :class => (alert.nil? ? 'hide' : nil) }
             = alert
+      .row
+        .span12
           = yield
     = include_gon
     -# TODO
