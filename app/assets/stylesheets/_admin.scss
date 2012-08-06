@@ -1,47 +1,7 @@
-$white: #fff;
-$light-grey: #eee;
-$medium-grey: #666;
-$dark-grey: #333;
-$bootstrap-well-grey: #f5f5f5;
-$green: #bada55;
-
-@mixin transition($transition) {
-    -moz-transition:    $transition;
-    -o-transition:      $transition;
-    -webkit-transition: $transition;
-    -ms-transition:     $transition;
-    transition:         $transition;
-}
-
-@mixin rounded_corners($radius) {
-    -moz-border-radius:     $radius;
-    -webkit-border-radius:  $radius;
-    border-radius:          $radius;
-}
-
-@mixin widget {
-    float: left;
-    margin-bottom: 10px;
-    width: 100%;
-}
-
-.hide {
-    display: none;
-}
-.widget {
-    @include widget;
-}
+@import './gramgoods_common';
 
 .alert {
     margin-top: 10px;
-}
-
-.float-left {
-    float: left;
-}
-
-.float-right {
-    float: right;
 }
 
 .gramgoods-tooltip {
@@ -75,12 +35,7 @@ label.error {
     display: none !important;
 }
 
-* {
-    font: {
-        family: sans-serif;
-        size: 1em;
-    }
-}
+
 
 #spin_wrapper {
     background: rgba(0, 0, 0, .6);

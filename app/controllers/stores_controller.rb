@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   layout 'admin'
   #before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
@@ -41,12 +41,13 @@ class StoresController < ApplicationController
     gon.product_widgets = @store.products.map do |product|
       render_product_widget_template(@store, product)
     end
-    @product = @store.products.new
-    @current_user_owns_store = user_owns_store?(@store.id)
+    @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     if @current_user_owns_store
+      @product = @store.products.new
       render :layout => 'admin'
     else
-      render :layout => 'mobile'
+      @products = @store.products
+      render 'stores/show.mobile.html.haml', :layout => 'mobile'
     end
   end
 

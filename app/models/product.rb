@@ -15,9 +15,11 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_images
 
   def photos_array
-    return [] if self.photos.nil? || self.photos.empty?
-    return [self.photos] unless self.photos.include?(',')
-    self.photos.split(',')
+    self.product_images.map { |product_image| product_image.url }
+  end
+
+  def first_photo
+
   end
 
   def product_image_ids

@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+    %meta{ :charset => "utf-8" }
+    %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
+    %title Gramgoods
+    = stylesheet_link_tag 'mobile', :media => "all"
+    = csrf_meta_tags
+  %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
+    #spin_wrapper.hide
+      #spin
+    = yield
+    = include_gon
+    = javascript_include_tag 'mobile'

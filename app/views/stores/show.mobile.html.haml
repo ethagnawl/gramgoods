@@ -1,0 +1,17 @@
+.store-header
+  %h1
+    = @store.name
+
+.products.widget
+  - @products.each do |product|
+    .product
+      .product-left
+        = image_tag("#{product.photos_array.first}", :class => 'product-thumbnail')
+      .product-right
+        .product-name
+          = truncate(product.name, :length => 20)
+        .widget
+          .product-price
+            = number_to_currency(product.price)
+          .product-link
+            = link_to('', "#{@store.slug}/#{product.slug}", :title => "View #{product.name}")
