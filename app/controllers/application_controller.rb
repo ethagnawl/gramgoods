@@ -96,6 +96,7 @@ class ApplicationController < ActionController::Base
 
   def set_gon
     gon.page = "#{params[:controller]}_#{params[:action]}"
+    gon.user_signed_in = user_signed_in?
   end
 
   def clear_gon

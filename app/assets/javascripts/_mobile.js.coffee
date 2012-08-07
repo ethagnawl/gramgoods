@@ -1,16 +1,16 @@
-# fix iOS sticky fixed position bug
+# fixes iOS sticky fixed position bug
 # when navigating from stores/show to
 # products/show the header would stick
 # at the position it was set to at page unload
 scrollTo(0, 0)
 
-if gon.page is 'stores_show'
+if gon.page is 'stores_show' and gon.user_signed_in isnt true
     navigate_to = (store_slug, product_slug) ->
         window.location.href = window.location.origin + '/' + store_slug + '/' + product_slug
 
     ($ '.product').tap -> navigate_to(gon.store_slug, ($ @).data('slug'))
 
-if gon.page is 'products_show'
+if gon.page is 'products_show' and gon.user_signed_in isnt true
     $('.product-gallery-controls').css('width', $('.product-gallery-controls').width()).removeClass('invisible').addClass('display-block')
     ($ '.product-thumbnail').swipeLeft ->
         next_index = ($ @).next().data('index')
