@@ -4,7 +4,7 @@
 
 .products.widget
   - @products.each do |product|
-    .product
+    .product{ :data => { :slug => product.slug }}
       .product-left
         = image_tag("#{product.photos_array.first}", :class => 'product-thumbnail')
       .product-right
