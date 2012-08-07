@@ -9,6 +9,9 @@
   %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
     #spin_wrapper.hide
       #spin
+    .store-header
+      %h1
+        = @store.name
     = yield
     = include_gon
     = javascript_include_tag 'mobile'

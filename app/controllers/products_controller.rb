@@ -81,7 +81,9 @@ class ProductsController < ApplicationController
       format.json {
         render :json => render_product_widget_template(@store, @product)
       }
-      format.html { render_conditional_layout(params[:layout]) }
+      format.html {
+        logger.info '!!!!!!!!'
+        render 'products/show.mobile.html.haml', :layout => 'mobile' }
     end
   end
 

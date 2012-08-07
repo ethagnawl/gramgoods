@@ -1,0 +1,14 @@
+.product-detail
+  .product
+    .product-thumbnail-gallery
+      - @product.photos_array.each_with_index do |product_photo, index|
+        = image_tag("#{product_photo}",
+          :class => index == 0 ? 'product-thumbnail on' : 'product-thumbnail hide',
+          :data => { :index => index })
+      .product-gallery-controls.invisible
+        - @product.photos_array.each_with_index do |product_photo, index|
+          %a.product-gallery-control{ :href => 'javascript: void(0);', :class => index == 0 ? 'on' : nil, :data => { :index => index } }
+    %h1.product-name
+      = @product.name
+    .product-price
+      Buy Now #{number_to_currency(@product.price)}

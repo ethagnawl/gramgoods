@@ -1,4 +1,5 @@
 $white: #fff;
+$black: #000;
 $light-grey: #eee;
 $medium-grey: #666;
 $dark-grey: #333;
@@ -31,8 +32,17 @@ $cream: #ced2c3;
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
+
+.invisible {
+    visibility: hidden !important;
+}
+
+.display-block {
+    display: block !important;
+}
+
 .widget {
     @include widget;
 }

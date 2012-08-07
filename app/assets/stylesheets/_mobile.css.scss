@@ -7,11 +7,15 @@
     box-sizing: border-box;
 }
 
+body {
+    position: relative;
+}
+
 .store-header {
     background-color: $cream;
     border-bottom: 1px solid $medium-grey;
     left: 0;
-    padding: 6% 0;
+    padding: 5% 0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -23,9 +27,42 @@
     }
 }
 
-.products {
+// *shared* denotes styles shared
+// between stores#show and products#show
+// wrapped by products and product-detail, respectively
+.products,
+.product-detail {
+    /* shared */
     margin-bottom: 0;
-    padding-top: 20%;
+    padding-top: 22%;
+
+    .product-thumbnail {
+        /* shared */
+        @include gramgoods_box_shadow;
+
+        display: inline-block;
+        width: 100%;
+    }
+
+    .product-name {
+        /* shared */
+        font-size: 1.2em;
+        margin-bottom: 4%;
+    }
+
+    .product-price {
+        /* shared */
+
+        @include gramgoods_box_shadow;
+
+        background-color: green;
+        border-radius: 2px;
+        color: $light-grey;
+        font-weight: bold;
+        margin-top: 2%;
+        padding: 1% 4%;
+        text-align: center;
+    }
 
     .product {
         @include widget;
@@ -41,35 +78,14 @@
             float: left;
             margin-right: 4%;
             width: 25%;
-
-            .product-thumbnail {
-                @include gramgoods_box_shadow;
-
-                display: inline-block;
-                width: 100%;
-            }
         }
 
         .product-right {
             float: left;
             width: 71%;
 
-            .product-name {
-                font-size: 1.2em;
-                margin-bottom: 4%;
-            }
-
             .product-price {
-                @include gramgoods_box_shadow;
-
-                background-color: green;
-                border-radius: 2px;
-                color: $light-grey;
                 float: left;
-                font-weight: bold;
-                margin-top: 2%;
-                padding: 1% 4%;
-                text-align: center;
             }
 
             .product-link a {
@@ -77,6 +93,51 @@
                 height: 32px;
                 float: right;
                 width: 32px;
+            }
+        }
+    }
+}
+
+.product-detail {
+    padding-top: 18%;
+
+    .product {
+        border-bottom: none;
+    }
+
+    .product-thumbnail {
+        display: block;
+        margin: 0 auto;
+        width: 11em;
+    }
+
+    .product-name {
+        font-weight: normal;
+        margin: 0% 0% 4%;
+        text-align: center;
+    }
+
+    .product-price {
+        font-size: 1.2em;
+        max-width: 80%;
+        margin: 0 auto;
+        padding: 3%;
+    }
+
+    .product-gallery-controls {
+        display: inline-block;
+        margin: 0 auto;
+
+        .product-gallery-control {
+            background-color: $medium-grey;
+            border-radius: 10px;
+            display: inline-block;
+            height: .4em;
+            text-align: center;
+            width: .4em;
+
+            &.on {
+                background-color: $black;
             }
         }
     }
