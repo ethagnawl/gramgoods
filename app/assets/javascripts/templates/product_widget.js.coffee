@@ -27,7 +27,7 @@ templates.product_widget_template = """
         <p class="product-status">Status: {{status}}</p>
         <a title="Edit {{name}}" class="gramgoods-tooltip edit-product" href="javascript: void(0);"><i class="icon-cog"></i></a>
         <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' href="javascript: void(0);"><i class='icon-remove-sign'></i></a>
-        <div class="product-photos-gallery hide {{product_photo_gallery_scroll}}">
+        <div class="product-photos-gallery {{product_photo_gallery_scroll}}">
             {{#product_photos}}
                 <img src="{{url}}" alt="{{name}}" class="product-photos-gallery-photo" />
             {{/product_photos}}
