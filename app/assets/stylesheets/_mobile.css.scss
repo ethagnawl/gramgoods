@@ -27,6 +27,42 @@ body {
     }
 }
 
+#address_form, #billing_form {
+    background-color: $blue;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .hide-form {
+        background-color: $white;
+        border-radius: 10px;
+        height: 10px;
+        text-decoration: none;
+        width: 10px;
+    }
+
+    legend {
+        @include widget;
+        margin-bottom: 3%;
+
+        color: $white;
+        text-align: center;
+    }
+
+    fieldset {
+        margin: 0 auto 2%;
+        width: 50%;
+
+        label {
+            @include widget;
+            margin-bottom: 2%;
+
+            color: $white;
+        }
+    }
+}
+
 // *shared* denotes styles shared
 // between stores#show and products#show
 // wrapped by products and product-detail, respectively
