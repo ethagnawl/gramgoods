@@ -3,11 +3,11 @@
     .product{ :data => { :slug => product.slug }}
       .product-left
         = image_tag("#{product.photos_array.first}", :class => 'product-thumbnail')
-      .product-right
+      .product-middle
         .product-name
           = truncate(product.name, :length => 20)
-        .widget
-          .product-price
-            = number_to_currency(product.price)
-          .product-link
-            = link_to('', "#{@store.slug}/#{product.slug}", :title => "View #{product.name}")
+        .product-price
+          = number_to_currency(product.price)
+      .product-right
+        .product-link
+          = link_to('', "#{@store.slug}/#{product.slug}", :title => "View #{product.name}")

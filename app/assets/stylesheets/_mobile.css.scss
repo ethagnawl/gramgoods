@@ -34,13 +34,12 @@ body {
 .product-detail {
     /* shared */
     margin-bottom: 0;
-    padding-top: 22%;
+    padding-top: 19%;
 
     .product-thumbnail {
         /* shared */
-        @include gramgoods_box_shadow;
 
-        display: inline-block;
+        display: block;
         width: 100%;
     }
 
@@ -67,45 +66,53 @@ body {
     .product {
         @include widget;
 
-        &:last-child {
-            margin-bottom: 0;
-        }
-
         border-bottom: 1px solid $medium-grey;
-        padding: 4%;
+        margin-bottom: 0;
+        padding-right: 2%;
 
         .product-left {
             float: left;
-            margin-right: 4%;
-            width: 25%;
+            width: 35%;
         }
 
-        .product-right {
+        .product-middle {
             float: left;
-            width: 71%;
+            margin-left: 5%;
+            margin-top: 6%;
+            width: 50%;
 
             .product-price {
                 float: left;
             }
+        }
 
-            .product-link a {
-                background: image-url('forward_arrow.png') no-repeat 0 0;
-                height: 32px;
-                float: right;
-                width: 32px;
+        .product-right {
+            float: right;
+            margin-top: 8%;
+            width: 10%;
+
+            .product-link {
+                a {
+                    background: image-url('forward_arrow.png') no-repeat 0 0;
+                    height: 57px;
+                    float: right;
+                    width: 57px;
+                }
             }
         }
     }
 }
 
 .product-detail {
-    padding-top: 18%;
+    padding-top: 22%;
 
     .product {
         border-bottom: none;
     }
 
     .product-thumbnail {
+        @include gramgoods_box_shadow;
+
         display: block;
         margin: 0 auto;
         width: 11em;
