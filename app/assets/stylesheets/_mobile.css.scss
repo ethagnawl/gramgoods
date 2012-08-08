@@ -12,8 +12,9 @@ body {
 }
 
 .store-header {
-    background-color: $cream;
+    background-color: $blue;
     border-bottom: 1px solid $medium-grey;
+    color: $white;
     left: 0;
     padding: 5% 0;
     position: fixed;
@@ -54,9 +55,9 @@ body {
 
         @include gramgoods_box_shadow;
 
-        background-color: green;
+        background-color: $blue;
         border-radius: 2px;
-        color: $light-grey;
+        color: $white;
         font-weight: bold;
         margin-top: 2%;
         padding: 1% 4%;
