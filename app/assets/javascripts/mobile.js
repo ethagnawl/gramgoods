@@ -1,4 +1,3 @@
-//= require zepto.min
-//= require mustache
-//= require _mobile
-//= require_tree ./mobile/templates
+//= require ./common/mustache
+//= require ./mobile/zepto.min
+//= require_tree ./mobile
