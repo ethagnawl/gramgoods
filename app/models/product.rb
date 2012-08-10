@@ -18,8 +18,12 @@ class Product < ActiveRecord::Base
     self.product_images.map { |product_image| product_image.url }
   end
 
-  def first_photo
-
+  def first_product_image
+    if self.product_images.length > 0
+      self.product_images.first.url
+    else
+      ''
+    end
   end
 
   def product_image_ids
