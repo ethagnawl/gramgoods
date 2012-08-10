@@ -38,6 +38,7 @@ if gon.page is 'stores_show' or gon.page is 'products_edit' or gon.page is 'prod
                         Mustache.render(templates.product_image_form_field,
                             url: data.url
                             tags: data.tags
+                            likes: data.likes
                             thumbnail: data.thumbnail
                             instagram_id: data.instagramId
                             product_image_n: i))

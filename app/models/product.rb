@@ -45,4 +45,8 @@ class Product < ActiveRecord::Base
   def get_instagram_tags
     self.instagram_tag.split(',')
   end
+
+  def like_count
+    self.product_images.inject(0) {|sum, product_image| sum + product_image.likes }
+  end
 end

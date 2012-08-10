@@ -22,6 +22,7 @@ class ApplicationController < ActionController::Base
       }
     else
       product_photos = user_feed.map do |photo|
+        logger.info "!!!! #{photo.likes[:count]}"
         render_user_photo_template(product, photo)
       end
       unless product.nil?
@@ -41,6 +42,7 @@ class ApplicationController < ActionController::Base
   def render_user_photo_template(product = nil, photo)
     selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
     {
+      :likes => (defined?(photo[:likes][:count].to_i)).nil? ? photo[:likes] : photo[:likes][:count].to_i,
       :thumbnail => (defined?(photo[:images][:thumbnail])).nil? ? photo[:thumbnail] : photo[:images][:thumbnail][:url],
       :url => photo.url ||= view_context.product_photo_url(photo),
       :tags => photo.tags.split(',').join(' '),

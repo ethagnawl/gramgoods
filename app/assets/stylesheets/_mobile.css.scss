@@ -5,6 +5,7 @@
     -moz-box-sizing: border-box; /*Firefox 1-3*/
     -webkit-box-sizing: border-box; /* Safari */
     box-sizing: border-box;
+    color: $dark-grey;
 }
 
 body {
@@ -20,8 +21,10 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 999;
 
     h1 {
+        color: $white;
         font-size: 1.4em;
         text-align: center;
     }
@@ -145,42 +148,55 @@ body {
         border-bottom: none;
     }
 
-    .product-thumbnail {
-        @include gramgoods_box_shadow;
+    .product-top {
+        position: relative;
 
-        display: block;
-        margin: 0 auto;
-        width: 11em;
-    }
+        .product-thumbnail {
+            @include gramgoods_box_shadow;
 
-    .product-name {
-        font-weight: normal;
-        margin: 0% 0% 4%;
-        text-align: center;
-    }
+            display: block;
+            margin: 0 auto;
+            width: 11em;
+        }
 
-    .product-price {
-        font-size: 1.2em;
-        margin: 2% auto 0;
-        padding: 3% 3% 4%;
-        width: 94%;
-    }
-
-    .product-gallery-controls {
-        display: inline-block;
-        margin: 0 auto;
-
-        .product-gallery-control {
-            background-color: $medium-grey;
-            border-radius: 10px;
+        .product-gallery-controls {
             display: inline-block;
-            height: .4em;
-            text-align: center;
-            width: .4em;
+            margin: 0 auto;
 
-            &.on {
-                background-color: $black;
+            .product-gallery-control {
+                background-color: $medium-grey;
+                border-radius: 10px;
+                display: inline-block;
+                height: .4em;
+                text-align: center;
+                width: .4em;
+
+                &.on {
+                    background-color: $dark-grey;
+                }
             }
         }
+
+        .product-name {
+            font-weight: normal;
+            margin: 0% 0% 4%;
+            text-align: center;
+        }
+
+        .product-like-count {
+            background: image-url('like.png') no-repeat 0 0;
+            left: 4%;
+            padding-left: 8%;
+            position: absolute;
+            bottom: 20%;
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            margin: 2% auto 0;
+            padding: 3% 3% 4%;
+            width: 94%;
+        }
     }
+
 }

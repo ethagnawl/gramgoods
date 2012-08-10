@@ -4,6 +4,7 @@ templates.product_photo_template = """
         data-instagram-id="{{instagram_id}}"
         data-tags="{{tags}}"
         data-thumbnail="{{thumbnail}}"
+        data-likes="{{likes}}"
         class="product-photo {{selected}}">
 
         <img src="{{url}}" />

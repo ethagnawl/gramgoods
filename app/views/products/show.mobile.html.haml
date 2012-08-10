@@ -14,6 +14,8 @@
             :class => index == 0 ? 'on' : nil, :data => { :index => index } }
       %h1.product-name
         = @product.name
+      .product-like-count
+        #{@product.like_count} Likes
       .product-price
         Buy Now #{number_to_currency(@product.price)}
     .product-bottom.widget
