@@ -47,6 +47,9 @@ class Product < ActiveRecord::Base
   end
 
   def like_count
-    self.product_images.inject(0) {|sum, product_image| sum + product_image.likes }
+    product_images_with_likes = self.product_images.reject do |product_image|
+      !product_image.likes.is_a? Integer
+    end
+    product_images_with_likes.inject(0) {|sum, product_image| sum + product_image.likes }
   end
 end
