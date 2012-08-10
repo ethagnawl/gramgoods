@@ -168,7 +168,7 @@ if gon.page is 'stores_show'
                 render_new_product_form({storeSlug: gon.store_slug})
                 update_h2(Mustache.render(templates.stores_h2_remove_template, {}))
 
-            .on 'click', '.hide-new-product-form', ->
+            .on 'click', '.hide-product-form', ->
                 reset_product_form()
 
             .on 'submit', 'form', (e) ->

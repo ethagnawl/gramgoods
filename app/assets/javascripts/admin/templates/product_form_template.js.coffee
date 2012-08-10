@@ -5,8 +5,8 @@ templates.product_form_template = """
     {{^put}}id="new_product"{{/put}}
 
     class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
-        <a href="javascript: void(0);" class="refresh-form gramgoods-tooltip" title='reset form'>
-            <i class="icon-refresh"></i>
+        <a href="javascript: void(0);" class="hide-product-form gramgoods-tooltip" title='hide product form'>
+            <i class="icon-remove-sign"></i>
         </a>
 
         {{#put}}
