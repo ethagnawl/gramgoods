@@ -37,4 +37,8 @@ class Product < ActiveRecord::Base
   def get_quantity
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
+
+  def get_instagram_tags
+    self.instagram_tag.split(',')
+  end
 end
