@@ -4,13 +4,14 @@
   .product
     .product-top.widget
       .product-thumbnail-gallery
-        - @product.thumbnails_array.each_with_index do |product_photo, index|
+        - @product.photos_array.each_with_index do |product_photo, index|
           = image_tag("#{product_photo}",
             :class => index == 0 ? 'product-thumbnail on' : 'product-thumbnail hide',
             :data => { :index => index })
         .product-gallery-controls.invisible
           - @product.photos_array.each_with_index do |product_photo, index|
-            %a.product-gallery-control{ :href => 'javascript: void(0);', :class => index == 0 ? 'on' : nil, :data => { :index => index } }
+            %a.product-gallery-control{ :href => 'javascript: void(0);', |
+            :class => index == 0 ? 'on' : nil, :data => { :index => index } }
       %h1.product-name
         = @product.name
       .product-price
@@ -28,9 +29,15 @@
 
       .widget
         %h2 Quantity
-        %p
-          = @product.get_quantity
-      - unless @product.colors.nil?
+        - if @product.unlimited_quantity
+          %input{ :type => 'number', :placeholder => 'Enter a Quantity' }
+        - else
+          %select
+            - (1..@product.quantity.to_i).each do |n|
+              %option{ :value => n }
+                = n
+
+      - unless @product.colors.empty?
         .widget
           %h2 Colors
           %select

@@ -15,11 +15,11 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_images
 
   def photos_array
-    self.product_images.map { |product_image| product_image.url }
+    self.product_images.map { |product_image| product_image.url }.reject { |product_image| product_image.empty? }
   end
 
   def thumbnails_array
-    self.product_images.map { |product_image| product_image.thumbnail }
+    self.product_images.map { |product_image| product_image.thumbnail }.reject { |product_image| product_image.empty? }
   end
 
   def first_product_image
