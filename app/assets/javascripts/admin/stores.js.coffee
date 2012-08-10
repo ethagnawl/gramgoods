@@ -28,7 +28,8 @@ window.render_edit_product_form = (data) ->
 window.render_new_product_form = (data) ->
     update_product_form(data)
     reset_h2()
-    fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
+    unless gon.authenticated is false
+        fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit'
     $ -> ($ '#store_form_wrapper').find('form').validate store_form_options
