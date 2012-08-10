@@ -9,8 +9,10 @@ $ ->
                 required: true
                 number: true
             'product[quantity]':
-                required: true
                 digits: true
+                required: (element) ->
+                    !($ '#product_unlimited_quantity').prop('checked')
+
             # flatrate_shipping number true if !empty
             # quantity not required if unlimited is on
     $.extend(product_form_options, form_options)
