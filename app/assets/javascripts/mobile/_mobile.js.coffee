@@ -1,5 +1,6 @@
+window.templates = {}
+
 if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signed_in isnt true
-    window.templates = {}
 
     Zepto ($) ->
         # fixes iOS sticky fixed position bug
@@ -45,7 +46,11 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
                     .removeClass('hide')
                     .html(Mustache.render(templates["#{form_id}_template"], {}))
 
-            ($ '.product-price').tap -> show_form('address_form')
+            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 70
+
+            ($ '#show_address_form').tap ->
+                header_fix()
+                show_form('address_form')
 
             ($ document)
                 .on('tap', '.hide-form', ->

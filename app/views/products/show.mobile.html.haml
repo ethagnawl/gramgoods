@@ -2,15 +2,45 @@
 #billing_form.hide
 .product-detail
   .product
-    .product-thumbnail-gallery
-      - @product.photos_array.each_with_index do |product_photo, index|
-        = image_tag("#{product_photo}",
-          :class => index == 0 ? 'product-thumbnail on' : 'product-thumbnail hide',
-          :data => { :index => index })
-      .product-gallery-controls.invisible
+    .product-top.widget
+      .product-thumbnail-gallery
         - @product.photos_array.each_with_index do |product_photo, index|
-          %a.product-gallery-control{ :href => 'javascript: void(0);', :class => index == 0 ? 'on' : nil, :data => { :index => index } }
-    %h1.product-name
-      = @product.name
-    .product-price
-      Buy Now #{number_to_currency(@product.price)}
+          = image_tag("#{product_photo}",
+            :class => index == 0 ? 'product-thumbnail on' : 'product-thumbnail hide',
+            :data => { :index => index })
+        .product-gallery-controls.invisible
+          - @product.photos_array.each_with_index do |product_photo, index|
+            %a.product-gallery-control{ :href => 'javascript: void(0);', :class => index == 0 ? 'on' : nil, :data => { :index => index } }
+      %h1.product-name
+        = @product.name
+      .product-price
+        Buy Now #{number_to_currency(@product.price)}
+    .product-bottom.widget
+      .widget
+        %h2 Description
+        %p
+          = @product.description
+      .widget
+        %h2 Instagram Tags
+        %ul
+        - @product.instagram_tag.split(',').each do |instagram_tag|
+          %li #{instagram_tag}
+
+      .widget
+        %h2 Quantity
+        %p
+          = @product.get_quantity
+      - unless @product.colors.nil?
+        .widget
+          %h2 Colors
+          %select
+            - @product.colors.split(',').each do |color|
+              %option{ :value => color }
+                = color
+      - unless @product.flatrate_shipping_cost.nil?
+        .widget
+          %h2 Flat Rate Shipping Cost
+          %p
+            = number_to_currency(@product.flatrate_shipping_cost)
+      .widget
+        %a#show_address_form{ :href => 'javascript: void(0);' } Let's go! - TODO
