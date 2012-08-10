@@ -22,12 +22,6 @@
         %p
           = @product.description
       .widget
-        %h2 Instagram Tags
-        %ul
-        - @product.instagram_tag.split(',').each do |instagram_tag|
-          %li #{instagram_tag}
-
-      .widget
         %h2 Quantity
         - if @product.unlimited_quantity
           %input{ :type => 'number', :placeholder => 'Enter a Quantity' }
@@ -36,7 +30,6 @@
             - (1..@product.quantity.to_i).each do |n|
               %option{ :value => n }
                 = n
-
       - unless @product.colors.empty?
         .widget
           %h2 Colors
@@ -44,7 +37,6 @@
             - @product.colors.split(',').each do |color|
               %option{ :value => color }
                 = color
-
       - unless @product.sizes.empty?
         .widget
           %h2 Sizes
@@ -52,8 +44,6 @@
             - @product.sizes.split(',').each do |size|
               %option{ :value => size }
                 = size
-
-
       - unless @product.flatrate_shipping_cost.nil?
         .widget
           %h2 Flat Rate Shipping Cost
