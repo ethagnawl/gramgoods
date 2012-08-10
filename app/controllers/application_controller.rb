@@ -75,8 +75,8 @@ class ApplicationController < ActionController::Base
       json.active product.status == 'Active'
       json.out_of_stock product.status == 'Out of Stock'
       json.raw_product_photo_count product.product_images.length
-      json.product_photo_count "#{product.product_images.length} #{(product.product_images.length == 0 || product.product_images.length > 1 ? 'Photos' : 'Photo')}"
-      json.product_photo product.product_images.length > 0 ? product.product_images.first.url : ''
+      json.product_photo_count "#{product.product_images.length} #{'Photo'.pluralize(product.product_images.length)}"
+      json.product_photo product.first_product_image
       json.product_photos product.product_images.map { |product_image| render_user_photo_template(product, product_image) }
       json.product_photo_gallery_scroll product.product_images.length > 5 ? 'product-photos-gallery-scroll' : nil
     end
