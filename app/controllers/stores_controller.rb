@@ -39,18 +39,20 @@ class StoresController < ApplicationController
     @products = @store.products
     gon.store_slug = @store.slug
     gon.store_id = @store.id
-    gon.product_widgets = @store.products.map do |product|
+    gon.product_widgets = @products.map do |product|
       render_product_widget_template(@store, product)
     end
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     if @current_user_owns_store
       if params[:layout] == 'mobile'
+        @products = @store.displayable_products
         render 'stores/show.mobile.html.haml', :layout => 'mobile'
       else
         @product = @store.products.new
         render :layout => 'admin'
       end
     else
+      @products = @store.displayable_products
       render 'stores/show.mobile.html.haml', :layout => 'mobile'
     end
   end
