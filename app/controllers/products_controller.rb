@@ -82,7 +82,12 @@ class ProductsController < ApplicationController
         render :json => render_product_widget_template(@store, @product)
       }
       format.html {
-        render 'products/show.mobile.html.haml', :layout => 'mobile' }
+        unless @product.status == 'Draft'
+          render 'products/show.mobile.html.haml', :layout => 'mobile'
+        else
+          redirect_to("/#{@store.slug}")
+        end
+      }
     end
   end
 

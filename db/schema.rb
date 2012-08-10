@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803173026) do
+ActiveRecord::Schema.define(:version => 20120810003933) do
 
   create_table "authentications", :force => true do |t|
     t.timestamp "created_at",   :null => false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120803173026) do
     t.string   "instagram_id"
     t.string   "url"
     t.string   "tags"
+    t.string   "thumbnail"
   end
 
   add_index "product_images", ["product_id"], :name => "index_product_imagess_on_product_id"

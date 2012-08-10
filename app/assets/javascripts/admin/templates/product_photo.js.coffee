@@ -1,5 +1,11 @@
 templates.product_photo_template = """
-    <div data-url="{{url}}" data-instagram-id="{{instagram_id}}" data-tags="{{tags}}" class="product-photo {{selected}}">
+    <div
+        data-url="{{url}}"
+        data-instagram-id="{{instagram_id}}"
+        data-tags="{{tags}}"
+        data-thumbnail="{{thumbnail}}"
+        class="product-photo {{selected}}">
+
         <img src="{{url}}" />
         <div class="btn {{btnClass}}">
             <i class="icon-plus-sign"></i>

@@ -41,11 +41,12 @@ class ApplicationController < ActionController::Base
   def render_user_photo_template(product = nil, photo)
     selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
     {
+      :thumbnail => (defined?(photo[:images][:thumbnail])).nil? ? nil : photo[:images][:thumbnail][:url],
       :url => photo.url ||= view_context.product_photo_url(photo),
-      :instagram_id => photo.id,
       :tags => photo.tags.split(',').join(' '),
       :selected => selected ? 'selected' : nil,
-      :btnClass => selected ? 'btn-success' : 'btn-inverse'
+      :btnClass => selected ? 'btn-success' : 'btn-inverse',
+      :instagram_id => photo.id
     }
   end
 

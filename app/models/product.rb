@@ -18,6 +18,10 @@ class Product < ActiveRecord::Base
     self.product_images.map { |product_image| product_image.url }
   end
 
+  def thumbnails_array
+    self.product_images.map { |product_image| product_image.thumbnail }
+  end
+
   def first_product_image
     if self.product_images.length > 0
       self.product_images.first.url

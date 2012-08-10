@@ -18,8 +18,7 @@
       %i.icon-white.icon-plus-sign
   %form.hide
 #product_count.btn.btn-success.float-left
-  = pluralize(@store.products.length, 'Product', 'Products')
-
+  Loading Products...
 .product-widgets
   - unless @store.products.empty?
     %h2
