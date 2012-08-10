@@ -99,7 +99,7 @@ class ApplicationController < ActionController::Base
     gon.page = "#{params[:controller]}_#{params[:action]}"
     gon.user_signed_in = user_signed_in?
     gon.environment = ENV['RAILS_ENV']
-    gon.authenticated = !current_user.authentication.nil? ? true : false
+    gon.authenticated = user_signed_in? && !current_user.authentication.nil? ? true : false
   end
 
   def clear_gon
