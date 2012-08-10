@@ -120,7 +120,7 @@ if gon.page is 'stores_show'
                 if response.status is 'success'
                     callback()
                     update_notice(response.notice) if response.notice?
-
+                    reset_product_form()
     $ ->
         render_product_widgets(gon.product_widgets)
 
