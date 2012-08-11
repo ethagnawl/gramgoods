@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810211004) do
+ActiveRecord::Schema.define(:version => 20120811054114) do
 
   create_table "authentications", :force => true do |t|
     t.timestamp "created_at",   :null => false
@@ -35,10 +35,26 @@ ActiveRecord::Schema.define(:version => 20120810211004) do
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
-  create_table "orders", :force => true do |t|
+  create_table "line_items", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.string   "size"
+    t.string   "color"
+    t.decimal  "price"
+    t.decimal  "total"
+  end
+
+  add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"
+  add_index "line_items", ["product_id"], :name => "index_line_items_on_product_id"
+
+  create_table "orders", :force => true do |t|
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.integer  "store_id"
+    t.string   "status",     :default => "pending"
   end
 
   add_index "orders", ["store_id"], :name => "index_orders_on_store_id"
@@ -76,6 +92,22 @@ ActiveRecord::Schema.define(:version => 20120810211004) do
 
   add_index "products", ["slug"], :name => "index_products_on_slug"
   add_index "products", ["store_id"], :name => "index_products_on_store_id"
+
+  create_table "recipients", :force => true do |t|
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "order_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email_address"
+    t.string   "street_address_one"
+    t.string   "street_address_two"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+  end
+
+  add_index "recipients", ["order_id"], :name => "index_recipients_on_order_id"
 
   create_table "stores", :force => true do |t|
     t.datetime "created_at",                   :null => false

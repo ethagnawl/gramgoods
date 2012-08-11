@@ -21,7 +21,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 998;
 
     h1 {
         color: $white;
@@ -30,12 +30,13 @@ body {
     }
 }
 
-#address_form, #billing_form {
+#order_form {
     background-color: $blue;
     left: 0;
     position: absolute;
     top: 0;
     width: 100%;
+    z-index: 999;
 
     .hide-form {
         background-color: $white;
@@ -53,16 +54,29 @@ body {
         text-align: center;
     }
 
-    fieldset {
+    h1 {
+        color: $white;
+        font-size: 1.5em;
+        font-weight: normal;
+        margin: 0 auto 2%;
+        text-align: center;
+        width: 50%;
+    }
+
+    a {
+        color: $medium-grey;
+    }
+
+    p, label {
+        @include widget;
+        margin-bottom: 2%;
+
+        color: $white;
+    }
+
+    div, fieldset {
         margin: 0 auto 2%;
         width: 50%;
-
-        label {
-            @include widget;
-            margin-bottom: 2%;
-
-            color: $white;
-        }
     }
 }
 

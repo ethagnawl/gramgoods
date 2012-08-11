@@ -42,24 +42,68 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
 
             hide_form = (form_id) -> ($ "##{form_id}").addClass('hide').empty()
             show_form = (form_id) ->
+                data =
+                    product_name: gon.product_name
+                    quantity: $.trim(($ '#quantity').val()) or 1
+                    color: $.trim(($ '#color').val())
+                    size: $.trim(($ '#size').val())
+                    price: gon.price
+                    total: +($.trim(($ '#quantity').val()) or 1) * gon.price
+
                 ($ "##{form_id}")
                     .removeClass('hide')
-                    .html(Mustache.render(templates["#{form_id}_template"], {}))
+                    .html(Mustache.render(templates["#{form_id}_template"], data))
 
             ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 70
 
-            ($ '#show_address_form').tap ->
+            ($ '#show_order_form').tap ->
                 header_fix()
-                show_form('address_form')
+                show_form('order_form')
+
+            ($ '#show_order_form').click ->
+                header_fix()
+                show_form('order_form')
+
+            stripeResponseHandler = (status, response) ->
+                if response.error
+                    alert response.error.message
+                else
+                    form$ = $(".order-form")
+                    token = response['id']
+                    form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>")
+                    submit_order_form(form$.serialize())
 
             ($ document)
+                .on('tap', '.edit-quantity', ->
+                    hide_form('order_form')
+                    scrollTo(0, ($ '#quantity').offset().top))
+                .on('tap', '.edit-color', ->
+                    hide_form('order_form')
+                    scrollTo(0, ($ '#color').offset().top))
+                .on('tap', '.edit-size', ->
+                    hide_form('order_form')
+                    scrollTo(0, ($ '#size').offset().top))
                 .on('tap', '.hide-form', ->
                     hide_form(($ @).closest('form').attr('id')))
 
-                .on('submit', '.address-form', (e) ->
+                .on('submit', '.order-form', (e) ->
                     e.preventDefault()
-                    hide_form('address_form')
-                    show_form('billing_form'))
+                    Stripe.createToken({
+                        number: $('#credit_card_number').val(),
+                        exp_month: $('#credit_card_expiration_month').val(),
+                        exp_year: $('#credit_card_expiration_year').val()
+                    }, stripeResponseHandler)
+
+                submit_order_form = (data) ->
+                    $.post("/stores/#{gon.store_slug}/orders", data, (response) ->
+                        response_json = JSON.parse response # why the hell is this necessary?
+                        if response_json.status is 'success'
+                            hide_form('order_form')
+                            ($ 'body').html(
+                                Mustache.render(
+                                    templates.order_success_template, {}))
+                        else
+                            alert 'Something went wrong...'))
 
                 .on('submit', '.billing-form', (e) ->
                     e.preventDefault()

@@ -77,6 +77,9 @@ class ProductsController < ApplicationController
   def show
     @store = Store.find(params[:store_id])
     @product = @store.products.find(params[:id])
+    gon.price = number_with_precision(@product.price, :precision => 2)
+    gon.product_name = @product.name
+    gon.store_slug = @store.slug
     respond_to do |format|
       format.json {
         render :json => render_product_widget_template(@store, @product)

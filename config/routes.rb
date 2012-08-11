@@ -8,6 +8,10 @@ Gramgoods::Application.routes.draw do
   root :to => 'static#index'
 
   resources :stores do
+    resources :orders do
+      resources :line_items
+      resources :recipients
+    end
     resources :products do
       resources :product_images
     end

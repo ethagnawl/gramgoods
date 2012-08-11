@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery_ujs
+//= require ./common/rails
 //= require twitter/bootstrap
 //= require ./admin/jquery.validation
 //= require ./admin/form_options

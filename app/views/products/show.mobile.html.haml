@@ -1,5 +1,5 @@
-#address_form.hide
-#billing_form.hide
+#order_form.hide
+#success_screen.hide
 .product-detail
   .product
     .product-top.widget
@@ -27,23 +27,23 @@
       .widget
         %h2 Quantity
         - if @product.unlimited_quantity
-          %input{ :type => 'number', :placeholder => 'Enter a Quantity' }
+          %input#quantity{ :type => 'number', :placeholder => 'Enter a Quantity' }
         - else
-          %select
+          %select#quantity
             - (1..@product.quantity.to_i).each do |n|
               %option{ :value => n }
                 = n
       - unless @product.colors.empty?
         .widget
           %h2 Colors
-          %select
+          %select#color
             - @product.colors.split(',').each do |color|
               %option{ :value => color }
                 = color
       - unless @product.sizes.empty?
         .widget
           %h2 Sizes
-          %select
+          %select#size
             - @product.sizes.split(',').each do |size|
               %option{ :value => size }
                 = size
@@ -53,4 +53,4 @@
           %p
             = number_to_currency(@product.flatrate_shipping_cost)
       .widget
-        %a#show_address_form{ :href => 'javascript: void(0);' } Let's go! - TODO
+        %a#show_order_form{ :href => 'javascript: void(0);' } Let's go! - TODO

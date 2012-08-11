@@ -21,6 +21,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'rails-behaviors'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'devise'
