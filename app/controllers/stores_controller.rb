@@ -15,7 +15,7 @@ class StoresController < ApplicationController
 
   def index
     @user = current_user
-    @stores = @user.stores
+    @stores = @user.stores if user_signed_in?
     render_conditional_layout(params[:layout])
   end
 
