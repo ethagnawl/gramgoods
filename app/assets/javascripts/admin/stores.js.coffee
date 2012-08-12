@@ -141,7 +141,7 @@ if gon.page is 'stores_show'
                     instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
                     ($ '#product_instagram_tag').val('')
                     ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
-                    photos_with_tags = $product_form_wrapper.find(".photo-feed div[data-tags~='#{instagram_tag}']")
+                    photos_with_tags = $product_form_wrapper.find(".photo-feed div[data-tags~='#{instagram_tag}']").not('.selected')
                     if photos_with_tags.length > 0
                         photos_with_tags.each -> select_photo(($ @))
                         pluralized_photo = if photos_with_tags.length is 1 then 'photo' else 'photos'
