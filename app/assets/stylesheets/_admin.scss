@@ -162,12 +162,14 @@ label.error {
         }
 
         .product-image-wrapper {
+            height: 250px;
             position: relative;
 
             .product-photo {
                 border: none;
                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
                 display: block;
+                height: 100%;
                 margin: 0 auto;
             }
 
