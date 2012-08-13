@@ -52,9 +52,12 @@ body {
 
         background-color: $blue;
         color: $white;
-        padding: 4% 0;
-        text-align: center;
+        padding: 4% 2%;
         width: 100%;
+
+        &#billing_information_legend {
+            background: image-url('lock.png') no-repeat 46% 40% $blue;
+        }
     }
 
     h1 {

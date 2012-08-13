@@ -134,7 +134,7 @@ window.templates.order_form_template = """
     </div>
 
     <div>
-    	<legend>Billing Information</legend>
+    	<legend id='billing_information_legend'>Billing Information</legend>
         <fieldset>
             <input id="credit_card_number" type="tel" placeholder="Credit Card Number*" />
         </fieldset>
