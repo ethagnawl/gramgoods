@@ -50,7 +50,8 @@
       - unless @product.flatrate_shipping_cost.nil?
         .widget
           %h2 Flat Rate Shipping Cost
-          %p
+          -# using hypens in data-attr to satiate zepto's .data() methed
+          %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
             = number_to_currency(@product.flatrate_shipping_cost)
       .widget
         %a#show_order_form{ :href => 'javascript: void(0);' } Let's go! - TODO

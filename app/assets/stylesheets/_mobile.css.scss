@@ -31,7 +31,7 @@ body {
 }
 
 #order_form {
-    background-color: $blue;
+    background-color: $white;
     left: 0;
     position: absolute;
     top: 0;
@@ -50,8 +50,11 @@ body {
         @include widget;
         margin-bottom: 3%;
 
+        background-color: $blue;
         color: $white;
+        padding: 4% 0;
         text-align: center;
+        width: 100%;
     }
 
     h1 {
@@ -70,19 +73,21 @@ body {
     p, label {
         @include widget;
         margin-bottom: 2%;
-
-        color: $white;
     }
 
     div, fieldset {
         margin: 0 auto 2%;
-        width: 50%;
+    }
+
+    fieldset {
+        padding: 0 2%;
     }
 }
 
 // *shared* denotes styles shared
 // between stores#show and products#show
 // wrapped by products and product-detail, respectively
+// TODO break shared styles into generic namespace
 .products,
 .product-detail {
     /* shared */

@@ -1,6 +1,9 @@
 window.templates = {}
 
-if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signed_in isnt true
+if gon.page is 'stores_show' or gon.page is 'products_show'
+    dirty_commas = (num) ->
+        String(num).replace /^\d+(?=\.|$)/, (int) ->
+            int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
 
     Zepto ($) ->
         # fixes iOS sticky fixed position bug
@@ -9,14 +12,14 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
 
-        if gon.page is 'stores_show' and gon.user_signed_in isnt true
+        if gon.page is 'stores_show'
             header_fix()
             navigate_to = (store_slug, product_slug) ->
                 window.location.href = window.location.origin + '/' + store_slug + '/' + product_slug
 
             ($ '.product').tap -> navigate_to(gon.store_slug, ($ @).data('slug'))
 
-        if gon.page is 'products_show' and gon.user_signed_in isnt true
+        if gon.page is 'products_show'
             header_fix()
             $('.product-gallery-controls').css('width', $('.product-gallery-controls').width()).removeClass('invisible').addClass('display-block')
             ($ '.product-thumbnail').swipeLeft ->
@@ -44,11 +47,18 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
             show_form = (form_id) ->
                 data =
                     product_name: gon.product_name
-                    quantity: $.trim(($ '#quantity').val()) or 1
+                    quantity: (+($.trim(($ '#quantity').val()))) or 1
                     color: $.trim(($ '#color').val())
                     size: $.trim(($ '#size').val())
-                    price: gon.price
-                    total: +($.trim(($ '#quantity').val()) or 1) * gon.price
+                    flatrate_shipping_cost: +($('#flatrate_shipping_cost').data('flatrate-shipping-cost'))
+                    price: +(parseFloat(gon.price).toFixed(2))
+                    total: +(parseFloat(gon.price).toFixed(2))
+
+                if data.quantity > 1
+                    data.total = data.price * data.quantity
+
+                if data.flatrate_shipping_cost?
+                    data.total = data.total + data.flatrate_shipping_cost
 
                 ($ "##{form_id}")
                     .removeClass('hide')
@@ -58,11 +68,10 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
 
             ($ '#show_order_form').tap ->
                 header_fix()
-                show_form('order_form')
-
-            ($ '#show_order_form').click ->
-                header_fix()
-                show_form('order_form')
+                # avoid taps on newly rendered elements
+                setTimeout ->
+                    show_form('order_form')
+                , 110
 
             stripeResponseHandler = (status, response) ->
                 if response.error
@@ -104,9 +113,3 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
                                     templates.order_success_template, {}))
                         else
                             alert 'Something went wrong...'))
-
-                .on('submit', '.billing-form', (e) ->
-                    e.preventDefault()
-                    hide_form('billing_form')
-                    alert('cha-ching'))
-
