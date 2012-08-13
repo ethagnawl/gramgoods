@@ -82,6 +82,10 @@ body {
     fieldset {
         padding: 0 2%;
     }
+
+    input, select, option {
+        width: 100%;
+    }
 }
 
 // *shared* denotes styles shared
