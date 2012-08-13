@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   layout 'admin'
   #before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!, :except => [:show]
   before_filter :except => [:create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
