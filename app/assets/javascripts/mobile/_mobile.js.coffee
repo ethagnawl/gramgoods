@@ -54,7 +54,7 @@ if (gon.page is 'stores_show' or gon.page is 'products_show') and gon.user_signe
                     .removeClass('hide')
                     .html(Mustache.render(templates["#{form_id}_template"], data))
 
-            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 70
+            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 56
 
             ($ '#show_order_form').tap ->
                 header_fix()

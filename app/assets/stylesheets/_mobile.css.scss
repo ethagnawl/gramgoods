@@ -17,7 +17,7 @@ body {
     border-bottom: 1px solid $medium-grey;
     color: $white;
     left: 0;
-    padding: 5% 0;
+    padding: 4% 0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -87,7 +87,6 @@ body {
 .product-detail {
     /* shared */
     margin-bottom: 0;
-    padding-top: 19%;
 
     .product-thumbnail {
         /* shared */
@@ -113,6 +112,10 @@ body {
         font-weight: bold;
         padding: 1% 4%;
         text-align: center;
+    }
+
+    &.products {
+        padding-top: 16%;
     }
 
     .product {
@@ -156,7 +159,7 @@ body {
 }
 
 .product-detail {
-    padding: 22% 4% 0;
+    padding: 20% 4% 0;
 
     .product {
         border-bottom: none;
@@ -193,21 +196,18 @@ body {
 
         .product-name {
             font-weight: normal;
-            margin: 0% 0% 4%;
+            margin-bottom: 0;
             text-align: center;
         }
 
         .product-like-count {
             background: image-url('like.png') no-repeat 0 0;
-            left: 4%;
             padding-left: 8%;
-            position: absolute;
-            bottom: 20%;
         }
 
         .product-price {
             font-size: 1.2em;
-            margin: 2% auto 0;
+            margin: 1% auto 0;
             padding: 3% 3% 4%;
             width: 100%;
         }
