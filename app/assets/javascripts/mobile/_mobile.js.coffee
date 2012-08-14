@@ -43,44 +43,22 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 ($ '.product-thumbnail.on').addClass('hide').removeClass('on')
                 ($ ".product-thumbnail[data-index='#{index}']").removeClass('hide').addClass('on')
 
-            hide_form = (form_id) -> ($ "##{form_id}").addClass('hide').empty()
-            show_form = (form_id) ->
+            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 56
+
+            redirect_to_order_form = ->
                 data =
-                    product_name: gon.product_name
+                    product_id: gon.product_id
                     quantity: (+($.trim(($ '#quantity').val()))) or 1
                     color: $.trim(($ '#color').val())
                     size: $.trim(($ '#size').val())
-                    flatrate_shipping_cost: +($('#flatrate_shipping_cost').data('flatrate-shipping-cost'))
-                    price: +(parseFloat(gon.price).toFixed(2))
-                    total: +(parseFloat(gon.price).toFixed(2))
 
-                if data.quantity > 1
-                    data.total = data.price * data.quantity
+                window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
-                if data.flatrate_shipping_cost?
-                    data.total = data.total + data.flatrate_shipping_cost
+            ($ '#redirect_to_order_form').tap -> redirect_to_order_form()
 
-                ($ "##{form_id}")
-                    .removeClass('hide')
-                    .html(Mustache.render(templates["#{form_id}_template"], data))
+            # DEBUG
+            ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
 
-            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 56
-
-            ($ '#show_order_form').tap ->
-                header_fix()
-                # avoid taps on newly rendered elements
-                setTimeout ->
-                    show_form('order_form')
-                , 110
-
-            stripeResponseHandler = (status, response) ->
-                if response.error
-                    alert response.error.message
-                else
-                    form$ = $(".order-form")
-                    token = response['id']
-                    form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>")
-                    submit_order_form(form$.serialize())
 
             ($ document)
                 .on('tap', '.edit-quantity', ->
@@ -95,21 +73,57 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 .on('tap', '.hide-form', ->
                     hide_form(($ @).closest('form').attr('id')))
 
-                .on('submit', '.order-form', (e) ->
-                    e.preventDefault()
-                    Stripe.createToken({
-                        number: $('#credit_card_number').val(),
-                        exp_month: $('#credit_card_expiration_month').val(),
-                        exp_year: $('#credit_card_expiration_year').val()
-                    }, stripeResponseHandler)
+if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
+    stripeResponseHandler = (status, response) ->
+        if response.error
+            alert response.error.message
+        else
+            form$ = $(".order-form")
+            token = response['id']
+            form$.append("<input type='hidden' name='stripeToken' value='#{token}'/>")
+            form$.get(0).submit()
 
-                submit_order_form = (data) ->
-                    $.post("/stores/#{gon.store_slug}/orders", data, (response) ->
-                        response_json = JSON.parse response # why the hell is this necessary?
-                        if response_json.status is 'success'
-                            hide_form('order_form')
-                            ($ 'body').html(
-                                Mustache.render(
-                                    templates.order_success_template, {}))
-                        else
-                            alert 'Something went wrong...'))
+    $ ->
+        ($ "#order_form")
+            .submit((e) ->
+                e.preventDefault()
+                Stripe.createToken({
+                    number: $('#credit_card_number').val(),
+                    exp_month: $('#credit_card_expiration_month').val(),
+                    exp_year: $('#credit_card_expiration_year').val()
+                }, stripeResponseHandler))
+            .isHappy
+                fields:
+                    '#order_recipient_attributes_first_name':
+                        message: 'First Name is required.'
+                        required: true
+                    '#order_recipient_attributes_last_name':
+                        message: 'Last Name is required.'
+                        required: true
+                    '#order_recipient_attributes_email_address':
+                        message: 'Email Address is required.'
+                        required: true
+                        test: happy.email
+                    '#order_recipient_attributes_street_address_one':
+                        message: 'Street Address is required.'
+                        required: true
+                    '#order_recipient_attributes_city':
+                        message: 'City is required.'
+                        required: true
+                    '#order_recipient_attributes_state':
+                        message: 'State is required.'
+                        required: true
+                    '#order_recipient_attributes_postal_code':
+                        message: 'Postal Code is required.'
+                        required: true
+                    '#credit_card_number':
+                        message: 'Credit Card Number is required.'
+                        required: true
+                        # TODO valid CC regex
+                    '#credit_card_expiration_month':
+                        message: 'Credit Card Expiration Month is required.'
+                        required: true
+                    '#credit_card_expiration_year':
+                        message: 'Credit Card Expiration Year is required.'
+                        required: true
+

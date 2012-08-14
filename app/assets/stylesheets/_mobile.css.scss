@@ -1,6 +1,8 @@
 @import './reset';
 @import './gramgoods_common';
 
+$red: #f10026;
+
 * {
     -moz-box-sizing: border-box; /*Firefox 1-3*/
     -webkit-box-sizing: border-box; /* Safari */
@@ -79,6 +81,7 @@ body {
     }
 
     div, fieldset {
+        clear: both;
         margin: 0 auto 2%;
     }
 
@@ -86,8 +89,19 @@ body {
         padding: 0 2%;
     }
 
+    .unhappyMessage {
+        color: $red;
+    }
+
     input, select, option {
         width: 100%;
+        &.unhappy {
+            border: 1px solid $red;
+
+            &::-webkit-input-placeholder {
+                color: $red;
+            }
+        }
     }
 }
 
@@ -225,4 +239,10 @@ body {
         }
     }
 
+}
+
+.mobile-layout.orders-new {
+    .store-header {
+        display: none;
+    }
 }

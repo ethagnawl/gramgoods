@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120811054114) do
+ActiveRecord::Schema.define(:version => 20120814022635) do
 
   create_table "authentications", :force => true do |t|
     t.timestamp "created_at",   :null => false
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20120811054114) do
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "line_items", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.integer  "order_id"
     t.integer  "product_id"
     t.integer  "quantity"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20120811054114) do
     t.string   "color"
     t.decimal  "price"
     t.decimal  "total"
+    t.decimal  "flatrate_shipping_cost"
   end
 
   add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"

@@ -54,4 +54,4 @@
           %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
             = number_to_currency(@product.flatrate_shipping_cost)
       .widget
-        %a#show_order_form{ :href => 'javascript: void(0);' } Let's go! - TODO
+        = link_to('Place Order', 'javascript: void(0);', :id => 'redirect_to_order_form')

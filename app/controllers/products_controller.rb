@@ -79,7 +79,9 @@ class ProductsController < ApplicationController
     @product = @store.products.find(params[:id])
     gon.price = number_with_precision(@product.price, :precision => 2)
     gon.product_name = @product.name
+    gon.product_id = @product.id
     gon.store_slug = @store.slug
+    gon.create_order_url = "/stores/#{@store.slug}/orders/new"
     respond_to do |format|
       format.json {
         render :json => render_product_widget_template(@store, @product)
