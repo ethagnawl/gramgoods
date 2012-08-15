@@ -60,7 +60,13 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 ($ ".product-thumbnail[data-index='#{index}']")
                     .removeClass('hide').addClass('on')
 
-            ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 56
+            # setTimeout is required because
+            # tap was clicking the purchase
+            # link after scrollTo
+            ($ '.product-details').tap ->
+                setTimeout =>
+                    scrollTo 0, ($ @).offset().top - 56
+                , 100
 
             redirect_to_order_form = ->
                 data =
