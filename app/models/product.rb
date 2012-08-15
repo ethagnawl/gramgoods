@@ -14,6 +14,17 @@ class Product < ActiveRecord::Base
 
   accepts_nested_attributes_for :product_images
 
+  def update_status(status)
+    self.update_attributes :status => status
+  end
+
+  def deduct_from_quantity(quantity)
+    unless self.unlimited_quantity == true
+      self.update_attributes :quantity => (self.quantity -= quantity)
+      update_status('Out of Stock') if self.quantity == 0
+    end
+  end
+
   def photos_array
     self.product_images.map { |product_image| product_image.url }.reject { |product_image| product_image.empty? }
   end
