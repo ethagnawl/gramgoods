@@ -72,8 +72,11 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 data =
                     product_id: gon.product_id
                     quantity: (+($.trim(($ '#quantity').val()))) or 1
-                    color: $.trim(($ '#color').val())
-                    size: $.trim(($ '#size').val())
+                if ($ '#color').length > 0
+                    data.color = $.trim(($ '#color').val())
+                if ($ '#size').length > 0
+                    data.size = $.trim(($ '#size').val())
+
 
                 window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
