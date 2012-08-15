@@ -17,8 +17,8 @@
       - if @product.like_count > 0
         .product-like-count
           #{@product.like_count} likes
-      .product-price
-        Buy Now #{number_to_currency(@product.price)}
+      .product-button.product-details
+        See Product Details
     .product-bottom.widget
       .widget
         %h2 Description
@@ -53,5 +53,8 @@
           -# using hypens in data-attr to satiate zepto's .data() methed
           %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
             = number_to_currency(@product.flatrate_shipping_cost)
-      .widget
-        = link_to('Place Order', 'javascript: void(0);', :id => 'redirect_to_order_form')
+      - unless @product.status == 'Out of Stock'
+        = link_to("Buy Now #{number_to_currency(@product.price)}", 'javascript: void(0);', :id => 'redirect_to_order_form', :class => 'product-button product-purchase')
+      - else
+        .widget
+          %h2 This product is currently out of stock.
