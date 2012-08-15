@@ -36,7 +36,7 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find(params[:id])
-    @products = @store.products
+    @products = @store.products.includes(:product_images)
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     gon.product_widgets = @products.map do |product|
