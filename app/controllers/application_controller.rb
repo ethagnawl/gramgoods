@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
       }
     else
       product_photos = user_feed.map do |photo|
-        logger.info "!!!! #{photo.likes[:count]}"
         render_user_photo_template(product, photo)
       end
       unless product.nil?
