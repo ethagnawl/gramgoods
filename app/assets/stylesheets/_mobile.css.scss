@@ -127,7 +127,7 @@ body {
         margin-bottom: 4%;
     }
 
-    .product-price {
+    .product-button {
         /* shared */
 
         @include gramgoods_box_shadow;
@@ -135,9 +135,11 @@ body {
         background-color: $blue;
         border-radius: 2px;
         color: $white;
+        display: inline-block;
         font-weight: bold;
         padding: 1% 4%;
         text-align: center;
+        text-decoration: none;
     }
 
     &.products {
@@ -191,6 +193,13 @@ body {
         border-bottom: none;
     }
 
+    .product-button {
+        font-size: 1.2em;
+        margin: 1% auto 0;
+        padding: 3% 3% 4%;
+        width: 100%;
+    }
+
     .product-top {
         position: relative;
 
@@ -230,15 +239,7 @@ body {
             background: image-url('like.png') no-repeat 0 0;
             padding-left: 8%;
         }
-
-        .product-price {
-            font-size: 1.2em;
-            margin: 1% auto 0;
-            padding: 3% 3% 4%;
-            width: 100%;
-        }
     }
-
 }
 
 .mobile-layout.orders-new {
