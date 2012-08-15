@@ -133,10 +133,11 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                     '#order_recipient_attributes_postal_code':
                         message: 'Postal Code is required.'
                         required: true
+                        test: happy.postal_code
                     '#credit_card_number':
                         message: 'Credit Card Number is required.'
                         required: true
-                        # TODO valid CC regex
+                        test: happy.credit_card_number
                     '#credit_card_expiration_month':
                         message: 'Credit Card Expiration Month is required.'
                         required: true
