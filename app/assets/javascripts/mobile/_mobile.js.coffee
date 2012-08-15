@@ -76,6 +76,8 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                     data.color = $.trim(($ '#color').val())
                 if ($ '#size').length > 0
                     data.size = $.trim(($ '#size').val())
+                if gon.layout is 'mobile'
+                    data.layout = 'mobile'
 
 
                 window.location = "#{gon.create_order_url}?#{$.param(data)}"

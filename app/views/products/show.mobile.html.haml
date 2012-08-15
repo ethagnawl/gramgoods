@@ -53,7 +53,7 @@
           -# using hypens in data-attr to satiate zepto's .data() methed
           %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
             = number_to_currency(@product.flatrate_shipping_cost)
-      - unless @product.status == 'Out of Stock'
+      - unless @product.unlimited_quantity == 0 && @product.status == 'Out of Stock'
         = link_to("Buy Now #{number_to_currency(@product.price)}", 'javascript: void(0);', :id => 'redirect_to_order_form', :class => 'product-button product-purchase')
       - else
         .widget
