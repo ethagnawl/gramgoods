@@ -10,4 +10,5 @@
           = number_to_currency(product.price)
       .product-right
         .product-link
-          = link_to('', "#{@store.slug}/#{product.slug}", :title => "View #{product.name}")
+          - url = conditional_layout_link(params, @store.slug + '/' + product.slug)
+          = link_to('', url, :title => "View #{product.name}")

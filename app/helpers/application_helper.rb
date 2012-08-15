@@ -6,17 +6,13 @@ module ApplicationHelper
     end
   end
 
-  ## TODO move into jbuilder partial
-  #def render_user_photo_template(product = nil, photo)
-  #  selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
-  #  {
-  #    :url => photo.url ||= view_context.product_photo_url(photo),
-  #    :instagram_id => photo.id,
-  #    :tags => photo.tags.join(' '),
-  #    :selected => selected ? 'selected' : nil,
-  #    :btnClass => selected ? 'btn-success' : 'btn-inverse'
-  #  }
-  #end
+  def conditional_layout_link(params, url)
+    if !params[:layout].nil? && params[:layout] == 'mobile'
+      url + '?layout=mobile'
+    else
+      url
+    end
+  end
 
   def get_instagram_photo_feed_for_user(user, max_id = nil)
     begin
