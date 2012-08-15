@@ -33,7 +33,12 @@ class OrdersController < ApplicationController
         :card => token,
         :description => "GramGoods purchase test"
       )
+
       @order.update_attributes({ :status => 'success' })
+
+      product = Product.find(@order.line_item.product_id)
+      product.deduct_from_quantity(@order.line_item.quantity)
+
       respond_to do |format|
         format.json {
           render :json => { :status => "success" }
