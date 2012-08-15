@@ -19,10 +19,6 @@ class OrdersController < ApplicationController
       @flatrate_shipping_cost = @product.flatrate_shipping_cost
       @total += @flatrate_shipping_cost
     end
-
-    @product_name = @product.name
-    @product_slug = @product.slug
-    @store_slug = @store.slug
   end
 
   def create
