@@ -25,6 +25,39 @@ module ApplicationHelper
     end
   end
 
+  def credit_card_months
+    [
+      ['Expiration Month', nil],
+      ["01 - January", "01"],
+      ["02 - February", "02"],
+      ["03 - March", "03"],
+      ["04 - April", "04"],
+      ["05 - May", "05"],
+      ["06 - June", "06"],
+      ["07 - July", "07"],
+      ["08 - August", "08"],
+      ["09 - September", "09"],
+      ["10 - October", "10"],
+      ["11 - November", "11"],
+      ["12 - December", "12"]
+    ]
+  end
+
+  def credit_card_years
+    [
+      ['Expiration Year', nil],
+      [2012, 2012],
+      [2013, 2013],
+      [2014, 2014],
+      [2015, 2015],
+      [2016, 2016],
+      [2017, 2017],
+      [2018, 2018],
+      [2019, 2019],
+      [2020, 2020]
+    ]
+  end
+
   def us_states
     [
       ['Alabama', 'AL'],
