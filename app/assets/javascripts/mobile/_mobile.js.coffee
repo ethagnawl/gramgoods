@@ -15,33 +15,50 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
         if gon.page is 'stores_show'
             header_fix()
             navigate_to = (store_slug, product_slug) ->
-                window.location.href = window.location.origin + '/' + store_slug + '/' + product_slug
+                destination = "#{store_slug}/#{product_slug}"
+                # add mobile layout param for desktop
+                destination += '?layout=mobile' if gon.layout is 'mobile'
+                location.href = destination
 
-            ($ '.product').tap -> navigate_to(gon.store_slug, ($ @).data('slug'))
+            navigate_to_store = (product_slug) ->
+                navigate_to(gon.store_slug, product_slug)
+
+            ($ '.products')
+                .on('tap', '.product', ->
+                    navigate_to_store(($ @).data('slug')))
+                .on('click', '.product', ->
+                    navigate_to_store(($ @).data('slug')))
 
         if gon.page is 'products_show'
             header_fix()
-            $('.product-gallery-controls').css('width', $('.product-gallery-controls').width()).removeClass('invisible').addClass('display-block')
+
+            $('.product-gallery-controls')
+                .css('width', $('.product-gallery-controls').width())
+                .removeClass('invisible').addClass('display-block')
+
             ($ '.product-thumbnail').swipeLeft ->
                 next_index = ($ @).next().data('index')
                 if next_index?
                     ($ @).addClass('hide')
                     ($ @).next().removeClass('hide')
-                    ($ '.product-gallery-control.on').removeClass('on').next().addClass('on')
+                    ($ '.product-gallery-control.on')
+                        .removeClass('on').next().addClass('on')
 
             ($ '.product-thumbnail').swipeRight ->
                 previous_index = ($ @).prev().data('index')
                 if previous_index?
                     ($ @).addClass('hide')
                     ($ @).prev().removeClass('hide')
-                    ($ '.product-gallery-control.on').removeClass('on').prev().addClass('on')
+                    ($ '.product-gallery-control.on')
+                        .removeClass('on').prev().addClass('on')
 
             ($ '.product-gallery-control').click ->
                 index = ($ @).data('index')
                 ($ '.product-gallery-control.on').removeClass('on')
                 ($ @).addClass('on')
                 ($ '.product-thumbnail.on').addClass('hide').removeClass('on')
-                ($ ".product-thumbnail[data-index='#{index}']").removeClass('hide').addClass('on')
+                ($ ".product-thumbnail[data-index='#{index}']")
+                    .removeClass('hide').addClass('on')
 
             ($ '.product-price').tap -> scrollTo 0, ($ @).offset().top - 56
 
@@ -56,22 +73,8 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
 
             ($ '#redirect_to_order_form').tap -> redirect_to_order_form()
 
-            # DEBUG
+            # for desktop users
             ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
-
-
-            ($ document)
-                .on('tap', '.edit-quantity', ->
-                    hide_form('order_form')
-                    scrollTo(0, ($ '#quantity').offset().top))
-                .on('tap', '.edit-color', ->
-                    hide_form('order_form')
-                    scrollTo(0, ($ '#color').offset().top))
-                .on('tap', '.edit-size', ->
-                    hide_form('order_form')
-                    scrollTo(0, ($ '#size').offset().top))
-                .on('tap', '.hide-form', ->
-                    hide_form(($ @).closest('form').attr('id')))
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     stripeResponseHandler = (status, response) ->
@@ -80,7 +83,9 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
         else
             form$ = $(".order-form")
             token = response['id']
-            form$.append("<input type='hidden' name='stripeToken' value='#{token}'/>")
+            form$
+                .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
+            #TODO chain above and below?
             form$.get(0).submit()
 
     $ ->
@@ -93,6 +98,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                     exp_year: $('#credit_card_expiration_year').val()
                 }, stripeResponseHandler))
             .isHappy
+                # TODO move into rules file
                 fields:
                     '#order_recipient_attributes_first_name':
                         message: 'First Name is required.'
