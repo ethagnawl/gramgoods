@@ -44,6 +44,7 @@ class ProductsController < ApplicationController
     product_images = params[:product][:product_images_attributes]
     product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
     @product.status = 'Draft' if product_photos_is_empty
+    @product.status = 'Out of Stock' if @product.quantity.to_i == 0
     if @product.save
       if product_photos_is_empty
         flash[:alert] = product_photos_empty_message(@product.name)
@@ -108,6 +109,7 @@ class ProductsController < ApplicationController
     product_images = params[:product][:product_images_attributes]
     product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
     params[:product][:status] = 'Draft' if product_photos_is_empty
+    params[:product][:status] = 'Out of Stock' if params[:product][:quantity].to_i == 0
     @product.product_images.destroy_all
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
