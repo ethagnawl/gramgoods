@@ -6,7 +6,7 @@
       .product-middle
         .product-name
           = truncate(product.name, :length => 20)
-        .product-price
+        .product-button.product-price
           = number_to_currency(product.price)
       .product-right
         .product-link
