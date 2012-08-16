@@ -242,8 +242,13 @@ body {
     }
 }
 
-.mobile-layout.orders-new {
+.mobile-layout.orders-new,
+.mobile-layout.orders-create {
     .store-header {
         display: none;
     }
+}
+
+.order-details {
+    padding: 0 4%;
 }

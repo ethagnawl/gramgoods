@@ -3,6 +3,9 @@ class OrdersController < ApplicationController
   layout 'mobile'
   respond_to :html, :json
 
+  def show
+  end
+
   def new
     @order = Order.new
     @recipient = @order.build_recipient
@@ -24,6 +27,19 @@ class OrdersController < ApplicationController
   def create
     @store = Store.find(params[:store_id])
     @order = @store.orders.new(params[:order])
+    @recipient = params[:recipient_attributes]
+    @line_item = params[:line_item_attributes]
+    @product = @store.products.find(params[:order][:line_item_attributes][:product_id])
+    @quantity = params[:order][:line_item_attributes][:quantity].to_i
+    @color = params[:order][:line_item_attributes][:color]
+    @size = params[:order][:line_item_attributes][:size]
+    @price = @product.price
+    @total = @quantity * @price
+    unless @product.flatrate_shipping_cost.nil?
+      @flatrate_shipping_cost = @product.flatrate_shipping_cost
+      @total += @flatrate_shipping_cost
+    end
+
     if @order.save
       total = @order.line_item.total * 100
       token = params[:stripeToken]
@@ -45,6 +61,7 @@ class OrdersController < ApplicationController
           render :json => { :status => "success" }
         }
         format.html {
+          @product = product
           render 'show'
         }
       end

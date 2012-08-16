@@ -109,7 +109,7 @@ class ProductsController < ApplicationController
     product_images = params[:product][:product_images_attributes]
     product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
     params[:product][:status] = 'Draft' if product_photos_is_empty
-    params[:product][:status] = 'Out of Stock' if params[:product][:quantity].to_i == 0
+    params[:product][:status] = 'Out of Stock' if params[:product][:quantity].to_i == 0 && params[:product][:unlimited_quantity] == 0
     @product.product_images.destroy_all
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
