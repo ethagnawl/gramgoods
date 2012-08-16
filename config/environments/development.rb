@@ -38,4 +38,15 @@ Gramgoods::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
   config.serve_static_assets = false
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.disable_browser_cache = true
+  end
+
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 end
