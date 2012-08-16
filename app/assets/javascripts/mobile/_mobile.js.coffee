@@ -52,14 +52,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                     ($ '.product-gallery-control.on')
                         .removeClass('on').prev().addClass('on')
 
-            ($ '.product-gallery-control').click ->
-                index = ($ @).data('index')
-                ($ '.product-gallery-control.on').removeClass('on')
-                ($ @).addClass('on')
-                ($ '.product-thumbnail.on').addClass('hide').removeClass('on')
-                ($ ".product-thumbnail[data-index='#{index}']")
-                    .removeClass('hide').addClass('on')
-
             # setTimeout is required because
             # tap was clicking the purchase
             # link after scrollTo
