@@ -14,20 +14,9 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
 
         if gon.page is 'stores_show'
             header_fix()
-            navigate_to = (store_slug, product_slug) ->
-                destination = "#{store_slug}/#{product_slug}"
-                # add mobile layout param for desktop
-                destination += '?layout=mobile' if gon.layout is 'mobile'
-                location.href = destination
 
-            navigate_to_store = (product_slug) ->
-                navigate_to(gon.store_slug, product_slug)
-
-            ($ '.products')
-                .on('tap', '.product', ->
-                    navigate_to_store(($ @).data('slug')))
-                .on('click', '.product', ->
-                    navigate_to_store(($ @).data('slug'))) if gon.layout is 'mobile'
+            ($ '.products').on('tap', '.product', ->
+                location.href = "#{gon.store_slug}/#{($ @).data('slug')}")
 
         if gon.page is 'products_show'
             header_fix()
