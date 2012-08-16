@@ -27,7 +27,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 .on('tap', '.product', ->
                     navigate_to_store(($ @).data('slug')))
                 .on('click', '.product', ->
-                    navigate_to_store(($ @).data('slug')))
+                    navigate_to_store(($ @).data('slug'))) if gon.layout is 'mobile'
 
         if gon.page is 'products_show'
             header_fix()
