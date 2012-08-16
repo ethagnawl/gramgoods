@@ -21,7 +21,10 @@ class Product < ActiveRecord::Base
   def deduct_from_quantity(quantity)
     unless self.unlimited_quantity == true
       self.update_attributes :quantity => (self.quantity -= quantity)
-      update_status('Out of Stock') if self.quantity == 0
+
+      # the quantity *should* never be less than 0
+      # but just in case...
+      update_status('Out of Stock') if self.quantity <= 0
     end
   end
 
