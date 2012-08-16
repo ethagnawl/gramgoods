@@ -6,4 +6,5 @@ class Order < ActiveRecord::Base
   attr_accessible :line_item_attributes, :recipient_attributes, :status
 
   accepts_nested_attributes_for :line_item, :recipient
+  validates_associated :line_item
 end
