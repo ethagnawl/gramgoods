@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   include ActionView::Helpers::NumberHelper
   layout 'mobile'
   respond_to :html, :json
+  force_ssl
 
   def show
   end
