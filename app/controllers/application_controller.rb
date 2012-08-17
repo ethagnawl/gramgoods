@@ -107,10 +107,4 @@ class ApplicationController < ActionController::Base
   def clear_gon
     gon.clear
   end
-
-  def basic_authentication
-    authenticate_or_request_with_http_basic do |username, password|
-      username == "GramG00ds" && password == "0ct@n3"
-    end
-  end
 end
