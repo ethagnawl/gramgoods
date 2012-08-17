@@ -73,12 +73,11 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
         if response.error
             alert response.error.message
         else
-            form$ = $(".order-form")
             token = response['id']
-            form$
+            $(".order-form")
                 .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
-            #TODO chain above and below?
-            form$.get(0).submit()
+                .get(0)
+                    .submit()
 
     $ ->
         ($ "#order_form")
