@@ -59,5 +59,7 @@
     %p.widget
       %a{ :href => 'mailto: admin@gramgoods.com' } Gram Goods
 
-%script
-  $('body').attr('class')
+  .widget
+    %h2 Return Policy
+    %p
+      = @order.store.return_policy
