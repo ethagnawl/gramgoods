@@ -64,7 +64,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
                 if gon.layout is 'mobile'
                     data.layout = 'mobile'
 
-
                 window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
             ($ '#redirect_to_order_form').tap -> redirect_to_order_form()
