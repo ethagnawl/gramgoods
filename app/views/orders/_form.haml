@@ -37,11 +37,11 @@
       %fieldset
         %p Flat Rate Shipping Cost: #{number_to_currency(@flatrate_shipping_cost)}
 
-      %fieldset
-        %p Price: #{number_to_currency(@price)}
+    %fieldset
+      %p Price: #{number_to_currency(@price)}
 
-      %fieldset
-        %p Total: #{number_to_currency(@total)}
+    %fieldset
+      %p Total: #{number_to_currency(@total)}
 
   %div
     = form.fields_for :recipient do |recipient|
