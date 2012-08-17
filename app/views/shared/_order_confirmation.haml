@@ -1,0 +1,65 @@
+.order-details
+  .widget
+    %h1 Thanks for your order!
+
+  .widget
+    %h2 Order Information
+
+    %p.widget
+      Order Number: #{@order.id}
+
+    %p.widget
+      Product: #{@product.name}
+
+    %p.widget
+      Quantity: #{@order.line_item.quantity}
+
+    - unless @order.line_item.size.nil?
+      %p.widget
+        Size: #{@order.line_item.size}
+
+    - unless @order.line_item.color.nil?
+      %p.widget
+        Color: #{@order.line_item.color}
+
+    - unless @order.line_item.flatrate_shipping_cost.nil?
+      %p.widget
+        Flat Rate Shipping Cost: #{number_to_currency(@order.line_item.flatrate_shipping_cost)}
+
+    %p.widget
+      Price: #{number_to_currency(@order.line_item.price)}
+
+    %p.widget
+      Total: #{number_to_currency(@order.line_item.total)}
+
+  .widget
+    %h2 Recipient Information
+    %p.widget
+      First Name: #{@order.recipient.first_name}
+    %p.widget
+      Last Name: #{@order.recipient.last_name}
+    %p.widget
+      Email Address: #{@order.recipient.email_address}
+    %p.widget
+      Street Address One: #{@order.recipient.street_address_one}
+    - unless @order.recipient.street_address_two.nil?
+      %p.widget
+        Street Address Two: #{@order.recipient.street_address_two}
+    %p.widget
+      City: #{@order.recipient.city}
+    %p.widget
+      State: #{@order.recipient.state}
+    %p.widget
+      Postal Code: #{@order.recipient.postal_code}
+
+  .widget
+    %h2 Contact
+    %p.widget
+      %a{ :href => "mailto: #{@order.store.user.email}"} #{@order.store.name}
+    %p.widget
+      %a{ :href => 'mailto: admin@gramgoods.com' } Gram Goods
+
+  .widget
+    %h2 Return Policy
+    %p
+      = @order.store.return_policy
