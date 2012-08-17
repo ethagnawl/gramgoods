@@ -10,8 +10,15 @@ class LineItem < ActiveRecord::Base
 
   def line_item_quantity_must_be_less_than_or_equal_to_product_quantity
     product = Product.find(product_id)
-    if quantity > product.quantity && product.unlimited_quantity == false
-      errors.add(:quantity, 'must be less than or equal to product quantity')
+    unless product.quantity.nil?
+      if quantity > product.quantity && product.unlimited_quantity == false
+        errors.add(:quantity, 'must be less than or equal to product quantity')
+      end
+    else
+      # this should *never* happen, but just in case
+      if product.unlimited_quantity == false
+        errors.add(:quantity, 'must be less than or equal to product quantity')
+      end
     end
   end
 
