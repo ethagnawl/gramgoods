@@ -54,7 +54,7 @@ class OrdersController < ApplicationController
 
       product = Product.find(@order.line_item.product_id)
       product.deduct_from_quantity(@order.line_item.quantity)
-      #OrderMailer.order_confirmation(@order.recipient.email_address).deliver
+      OrderMailer.order_confirmation(@order, product).deliver
 
       respond_to do |format|
         format.json {
