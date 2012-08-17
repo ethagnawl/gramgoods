@@ -16,14 +16,18 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
             header_fix()
 
             ($ '.products').on('tap', '.product', ->
-                location.href = "#{gon.store_slug}/#{($ @).data('slug')}")
+                destination = ($ @).find('.product-link > a').attr('href')
+                location.href = destination)
 
         if gon.page is 'products_show'
             header_fix()
 
-            $('.product-gallery-controls')
-                .css('width', $('.product-gallery-controls').width())
-                .removeClass('invisible').addClass('display-block')
+            # only reveal product gallery controls if there
+            # is more than one product image
+            if ($ '.product-gallery-control').length > 1
+                $('.product-gallery-controls')
+                    .css('width', ($ @).width())
+                    .removeClass('invisible').addClass('display-block')
 
             ($ '.product-thumbnail').swipeLeft ->
                 next_index = ($ @).next().data('index')
