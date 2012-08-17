@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
     if Rails.env.production?
       gon.create_order_url = "#{ENV['SECURE_HEROKU_APP_URL']}/stores/#{@store.slug}/orders/new"
     else
-      gon.create_order_url = "http://localhost:3000/stores/#{@store.slug}/orders/new"
+      gon.create_order_url = "/stores/#{@store.slug}/orders/new"
     end
 
     respond_to do |format|
