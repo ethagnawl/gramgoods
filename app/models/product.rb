@@ -14,6 +14,14 @@ class Product < ActiveRecord::Base
 
   accepts_nested_attributes_for :product_images
 
+  def is_orderable
+    if self.quantity.nil?
+      self.unlimited_quantity == true && self.status == 'Active'
+    else
+      (self.quantity > 0 || self.unlimited_quantity == true) && self.status == 'Active'
+    end
+  end
+
   def update_status(status)
     self.update_attributes :status => status
   end
