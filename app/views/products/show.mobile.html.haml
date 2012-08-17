@@ -37,14 +37,14 @@
                   = n
         - unless @product.colors.empty?
           .widget
-            %h2 Colors
+            %h2 Color
             %select#color
               - @product.colors.split(',').each do |color|
                 %option{ :value => color }
                   = color
         - unless @product.sizes.empty?
           .widget
-            %h2 Sizes
+            %h2 Size
             %select#size
               - @product.sizes.split(',').each do |size|
                 %option{ :value => size }
