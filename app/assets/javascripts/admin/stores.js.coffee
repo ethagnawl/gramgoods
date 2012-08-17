@@ -150,16 +150,26 @@ if gon.page is 'stores_show'
                         update_notice("#{photos_with_tags.length} #{pluralized_photo} from your feed #{pluralized_has} been linked.")
 
             .on 'click', '.add-size', ->
-                size = ($ '#product_sizes').val()
-                if size
-                    ($ '#product_sizes').val('')
-                    ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: size, name: 'size'}))
+                _sizes = ($ '#product_sizes').val()
+                return unless _sizes
+                ($ '#product_sizes').val('')
+                for size in _sizes.split(',')
+                    ($ @).closest('.control-group')
+                        .append(Mustache.render(
+                                templates.product_form_label_template, {
+                                    value: size,
+                                    name: 'size'}))
 
             .on 'click', '.add-color', ->
-                size = ($ '#product_colors').val()
-                if size
-                    ($ '#product_colors').val('')
-                    ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: size, name: 'color'}))
+                _colors = ($ '#product_colors').val()
+                return unless _colors
+                ($ '#product_colors').val('')
+                for color in _colors.split(',')
+                    ($ @).closest('.control-group')
+                        .append(Mustache.render(
+                                templates.product_form_label_template, {
+                                    value: color,
+                                    name: 'color'}))
 
             .on 'click', '.remove-label', ->
                 ($ @).parent().remove()
