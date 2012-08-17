@@ -14,3 +14,4 @@
 /log/*.log
 /tmp
 *.DS_Store
+/config/stripe_config.yml
