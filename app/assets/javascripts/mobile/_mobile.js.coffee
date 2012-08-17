@@ -26,7 +26,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
             # is more than one product image
             if ($ '.product-gallery-control').length > 1
                 $('.product-gallery-controls')
-                    .css('width', ($ @).width())
+                    .css('width', $('.product-gallery-controls').width())
                     .removeClass('invisible').addClass('display-block')
 
             ($ '.product-thumbnail').swipeLeft ->
