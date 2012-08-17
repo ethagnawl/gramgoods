@@ -21,17 +21,17 @@
         Quantity: #{@quantity}
         %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#quantity" } edit
 
-    - unless @size.nil?
-      %fieldset
-        %p
-          Size: #{@size}
-          %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#size" } edit
-
     - unless @color.nil?
       %fieldset
         %p
           Color: #{@color}
           %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#color" } edit
+
+    - unless @size.nil?
+      %fieldset
+        %p
+          Size: #{@size}
+          %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#size" } edit
 
     - unless @flatrate_shipping_cost.nil?
       %fieldset
