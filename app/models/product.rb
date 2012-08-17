@@ -14,6 +14,12 @@ class Product < ActiveRecord::Base
 
   accepts_nested_attributes_for :product_images
 
+  before_save :normalize_quantity
+
+  def normalize_quantity
+    self.quantity = 0 if self.quantity.nil?
+  end
+
   def is_orderable
     if self.quantity.nil?
       self.unlimited_quantity == true && self.status == 'Active'
