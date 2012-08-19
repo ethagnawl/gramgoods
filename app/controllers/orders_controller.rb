@@ -1,11 +1,11 @@
 class OrdersController < ApplicationController
-  layout 'mobile', :except => [:index]
-  layout 'admin', :only => [:index]
+  layout 'mobile'
   force_ssl
   before_filter :authenticate_user!, :only => [:index]
 
   def index
     @store = Store.find(params[:store_id])
+    render :layout => 'admin'
   end
 
   def show
