@@ -9,6 +9,7 @@ class OrdersController < ApplicationController
   end
 
   def show
+    render 'orders/show.mobile.html.haml'
   end
 
   def new
@@ -27,6 +28,7 @@ class OrdersController < ApplicationController
       @flatrate_shipping_cost = @product.flatrate_shipping_cost
       @total += @flatrate_shipping_cost
     end
+    render 'orders/new.mobile.html.haml'
   end
 
   def create
@@ -60,9 +62,9 @@ class OrdersController < ApplicationController
       @order.line_item.product.deduct_from_quantity(@order.line_item.quantity)
       OrderMailer.order_confirmation(@order).deliver
 
-      render 'show'
+      render 'orders/show.mobile.html.haml'
     else
-      render 'new'
+      render 'orders/new.mobile.html.haml'
     end
   end
 end
