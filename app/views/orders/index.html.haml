@@ -1,0 +1,36 @@
+.widget
+  - @store.orders.each do |order|
+    .widget
+      %h2 Order ##{order.id}
+      .widget
+        %p Name: #{order.line_item.product.name}
+        %p Status: #{order.status}
+      .widget
+        %h3 Order Details
+        %p
+          Quantity: #{order.line_item.quantity}
+        - unless order.line_item.color.nil?
+          %p
+            Color: #{order.line_item.color}
+        - unless order.line_item.size.nil?
+          %p
+            Size: #{order.line_item.size}
+        %p Price: #{number_to_currency(order.line_item.price)}
+        - unless order.line_item.flatrate_shipping_cost.nil?
+          %p Flat Rate Shipping Cost: #{number_to_currency(order.line_item.flatrate_shipping_cost)}
+        %p Total: #{number_to_currency(order.line_item.total)}
+      .widget
+        %h3 Recipient Details
+        %p First Name: #{order.recipient.first_name}
+        %p Last Name: #{order.recipient.last_name}
+        %p
+          Email Address:
+          %a{ :href => "mailto: #{order.recipient.email_address}" }
+            = order.recipient.email_address
+        %p Street Address: #{order.recipient.street_address_one}
+        - unless order.recipient.street_address_two.empty?
+          %p Street Address Two: #{order.recipient.street_address_two}
+
+        %p City: #{order.recipient.city}
+        %p State: #{order.recipient.state}
+        %p Postal Code: #{order.recipient.postal_code}

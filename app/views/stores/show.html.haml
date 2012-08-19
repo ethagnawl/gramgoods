@@ -1,3 +1,5 @@
+= link_to "View Orders", store_orders_path(@store)
+
 .float-right
   %a.btn.btn-primary.btn-large{ :href => "http://#{request.env["HTTP_HOST"]}/#{@store.slug}?layout=mobile", :target => '_blank'}
     Your Store's Unique URL:
