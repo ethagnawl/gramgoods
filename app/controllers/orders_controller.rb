@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
   layout 'mobile'
-  respond_to :html, :json
   force_ssl
 
   def show
@@ -56,19 +55,10 @@ class OrdersController < ApplicationController
       product.deduct_from_quantity(@order.line_item.quantity)
       OrderMailer.order_confirmation(@order, product).deliver
 
-      respond_to do |format|
-        format.json {
-          render :json => { :status => "success" }
-        }
-        format.html {
-          @product = product
-          render 'show'
-        }
-      end
+      @product = product
+      render 'show'
     else
-      respond_to do |format|
-        format.html { render 'new' }
-      end
+      render 'new'
     end
   end
 end
