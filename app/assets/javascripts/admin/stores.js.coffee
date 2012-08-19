@@ -154,6 +154,8 @@ if gon.page is 'stores_show'
                 return unless _sizes
                 ($ '#product_sizes').val('')
                 for size in _sizes.split(',')
+                    return unless size
+                    size = $.trim(size)
                     ($ @).closest('.control-group')
                         .append(Mustache.render(
                                 templates.product_form_label_template, {
@@ -165,6 +167,8 @@ if gon.page is 'stores_show'
                 return unless _colors
                 ($ '#product_colors').val('')
                 for color in _colors.split(',')
+                    return unless color
+                    color = $.trim(color)
                     ($ @).closest('.control-group')
                         .append(Mustache.render(
                                 templates.product_form_label_template, {
