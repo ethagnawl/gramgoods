@@ -40,10 +40,10 @@ class OrdersController < ApplicationController
     end
 
     if @order.save
-      total = @order.line_item.total * 100
+      total = (@order.line_item.total * 100).to_i
       token = params[:stripeToken]
       charge = Stripe::Charge.create(
-        :amount => 1000,
+        :amount => total,
         :currency => "usd",
         :card => token,
         :description => "GramGoods purchase test"
