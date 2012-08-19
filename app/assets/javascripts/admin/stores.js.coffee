@@ -187,6 +187,7 @@ if gon.page is 'stores_show'
 
             .on 'submit', 'form', (e) ->
                 e.preventDefault()
+                ($ @).addClass(hide)
 
                 verb = if @id is 'new_product' then 'created' else 'updated'
                 $.ajax
@@ -201,5 +202,6 @@ if gon.page is 'stores_show'
                             reset_product_form()
                             fetch_and_render_product_widgets()
                         else
+                            ($ @).removeClass(hide)
                             ($ '.form-errors-wrapper').html(Mustache.render(templates.form_error_template, {errors: response.errors}))
                             $window.scrollTop(($ '.form-errors-wrapper'))
