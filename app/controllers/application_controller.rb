@@ -72,6 +72,7 @@ class ApplicationController < ActionController::Base
       json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
       json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : product.flatrate_shipping_cost
       json.status product.status
+      json._status product.status.gsub(' ', '-').downcase
       json.draft product.status == 'Draft'
       json.active product.status == 'Active'
       json.out_of_stock product.status == 'Out of Stock'

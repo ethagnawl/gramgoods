@@ -195,6 +195,20 @@ label.error {
             text-align: center;
         }
 
+        .product-status span {
+            &.active {
+                color: lightgreen;
+            }
+
+            &.out-of-stock {
+                color: sienna;
+            }
+
+            &.draft {
+                color: lightyellow;
+            }
+        }
+
         .gramgoods-tooltip {
             position: absolute;
             top: 4px;

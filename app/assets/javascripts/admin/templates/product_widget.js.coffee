@@ -24,7 +24,7 @@ templates.product_widget_template = """
         {{#sizes}}
         <p class="product-sizes">Sizes: {{sizes}}</p>
         {{/sizes}}
-        <p class="product-status">Status: {{status}}</p>
+        <p class="product-status">Status: <span class='{{_status}}'>{{status}}</span></p>
         <a title="Edit {{name}}" class="gramgoods-tooltip edit-product" href="javascript: void(0);"><i class="icon-cog"></i></a>
         <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' href="javascript: void(0);"><i class='icon-remove-sign'></i></a>
         <a
