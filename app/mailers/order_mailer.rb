@@ -2,9 +2,8 @@ class OrderMailer < ActionMailer::Base
   default :from => "admin@gramgoods.com",
           :reply_to => 'admin@gramgoods.com'
 
-  def order_confirmation(order, product)
+  def order_confirmation(order)
     @order = order
-    @product = product
 
     mail( :to => order.recipient.email_address,
           :cc => [order.store.user.email, 'admin@gramgoods.com'],

@@ -1,6 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :store
   has_many :product_images
+  has_many :line_items
   extend FriendlyId
 
   friendly_id :name, :use => [:slugged, :history]

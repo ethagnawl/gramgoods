@@ -51,11 +51,9 @@ class OrdersController < ApplicationController
 
       @order.update_attributes({ :status => 'success' })
 
-      product = Product.find(@order.line_item.product_id)
-      product.deduct_from_quantity(@order.line_item.quantity)
-      OrderMailer.order_confirmation(@order, product).deliver
+      @order.line_item.product.deduct_from_quantity(@order.line_item.quantity)
+      OrderMailer.order_confirmation(@order).deliver
 
-      @product = product
       render 'show'
     else
       render 'new'

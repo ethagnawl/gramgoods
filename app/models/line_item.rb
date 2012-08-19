@@ -1,5 +1,6 @@
 class LineItem < ActiveRecord::Base
   belongs_to :order
+  belongs_to :product
 
   attr_accessible :quantity, :color, :size, :price, :total, :flatrate_shipping_cost,
     :product_id
