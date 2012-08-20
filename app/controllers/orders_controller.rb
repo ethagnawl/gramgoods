@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    render 'orders/show.mobile.html.haml'
+    render 'orders/show.mobile'
   end
 
   def new
@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
       @flatrate_shipping_cost = @product.flatrate_shipping_cost
       @total += @flatrate_shipping_cost
     end
-    render 'orders/new.mobile.html.haml'
+    render 'orders/new.mobile'
   end
 
   def create
@@ -48,9 +48,9 @@ class OrdersController < ApplicationController
     end
 
     if @order.charge(params[:stripeToken]) && @order.save
-      render 'orders/show.mobile.html.haml'
+      render 'orders/show.mobile'
     else
-      render 'orders/new.mobile.html.haml'
+      render 'orders/new.mobile'
     end
   end
 end

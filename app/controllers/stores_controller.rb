@@ -47,14 +47,14 @@ class StoresController < ApplicationController
     if @current_user_owns_store
       if params[:layout] == 'mobile'
         @products = @store.displayable_products
-        render 'stores/show.mobile.html.haml', :layout => 'mobile'
+        render 'stores/show.mobile', :layout => 'mobile'
       else
         @product = @store.products.new
         render :layout => 'admin'
       end
     else
       @products = @store.displayable_products
-      render 'stores/show.mobile.html.haml', :layout => 'mobile'
+      render 'stores/show.mobile', :layout => 'mobile'
     end
   end
 

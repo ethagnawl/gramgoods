@@ -92,7 +92,7 @@ class ProductsController < ApplicationController
         if @product.status == 'Draft' && !user_signed_in?
           redirect_to("/#{@store.slug}")
         else
-          render 'products/show.mobile.html.haml', :layout => 'mobile'
+          render 'products/show.mobile', :layout => 'mobile'
         end
       }
     end
