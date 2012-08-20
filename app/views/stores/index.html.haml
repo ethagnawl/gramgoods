@@ -1,13 +1,13 @@
 - if @stores.length > 0
   .page-header
     %h1 Your Stores
+  .widget
+    = link_to new_store_path, :class => 'btn btn-success btn-large' do
+      Add a New Store
+      %i.icon-white.icon-plus-sign
   - @stores.each do |store|
     .widget
       = link_to store.slug, :class => 'btn btn-primary btn-large' do
         = store.name
         %i.icon-white.icon-circle-arrow-right
 
-.widget
-  = link_to new_store_path, :class => 'btn btn-success btn-large' do
-    Add a New Store
-    %i.icon-white.icon-plus-sign
