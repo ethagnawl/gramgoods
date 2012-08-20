@@ -7,21 +7,26 @@ if gon.page is 'stores_show'
     product_photos_gallery_displayed = 'product-photos-gallery-displayed'
 
     reset_product_form = (data) ->
-        $product_form_wrapper.find('form')
-            .replaceWith($('<form />'))
+        $product_form_wrapper.find('form').replaceWith($('<form />'))
         $window.scrollTop($product_form_wrapper)
         update_h2(Mustache.render(templates.stores_h2_add_template, {}))
 
     update_product_form = (data) ->
+        product_form_label_template = templates.product_form_label_template
         $product_form_wrapper.find('form')
-            .replaceWith(Mustache.render(templates.product_form_template, data, {product_form_label_template: templates.product_form_label_template}))
+            .replaceWith(
+                Mustache.render(
+                    templates.product_form_template, data, {
+                        product_form_label_template }))
         $product_form_wrapper.find('form').validate(product_form_options)
         $window.scrollTop($product_form_wrapper)
 
     render_edit_product_form = (data) ->
         if data.rawInstagramTags
-            data.instagram_tags = $.map(data.rawInstagramTags.split(', '), (instagram_tag) ->
-                {value: instagram_tag, name: 'instagram-tag'})
+            data.instagram_tags = $.map(
+                data.rawInstagramTags.split(', '), (instagram_tag) -> {
+                        value: instagram_tag,
+                        name: 'instagram-tag' })
         if data.sizes
             data.sizes = $.map(data.sizes.split(','), (size) ->
                 {value: size, name: 'size'})
@@ -29,15 +34,17 @@ if gon.page is 'stores_show'
             data.colors = $.map(data.colors.split(','), (color) ->
                 {value: color, name: 'color'})
         update_product_form(data)
-        update_h2(Mustache.render(templates.stores_h2_edit_template, {name: data.name}))
+        update_h2(
+            Mustache.render(
+                templates.stores_h2_edit_template, { name: data.name }))
         render_user_photos {product_photos: data.productPhotos}
-        fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
+        fetch_user_photos(render_user_photo_feed, { product_slug: data.slug })
 
     render_new_product_form = (data) ->
         update_product_form(data)
         reset_h2()
         unless gon.authenticated is false
-            fetch_user_photos(render_user_photo_feed, {product_slug: data.slug})
+            fetch_user_photos(render_user_photo_feed, { product_slug: data.slug })
 
     # build csv of label data
     # i.e. size: small,medium,large
@@ -65,7 +72,8 @@ if gon.page is 'stores_show'
         $window.scrollTop(0)
 
     expire_alert_and_notice_in = (seconds) ->
-        clearTimeout(clear_alert_and_notice_timeout) if clear_alert_and_notice_timeout?
+        if clear_alert_and_notice_timeout?
+            clearTimeout(clear_alert_and_notice_timeout)
         clear_alert_and_notice()
         window.clear_alert_and_notice_timeout = setTimeout ->
             clear_alert_and_notice()
@@ -108,17 +116,25 @@ if gon.page is 'stores_show'
     window.update_user_photos = (user_photos) ->
         container = $('<div />')
         for user_photo in user_photos.product_photos
-            container.append(Mustache.render(templates.product_photo_template, user_photo))
+            container.append(
+                Mustache.render(
+                    templates.product_photo_template, user_photo))
         $product_form_wrapper.find('.product-photo:last').after(container)
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
         $product_form_wrapper.find('.product-photos')
-            .replaceWith(Mustache.render(templates.product_photos_template, user_photos, product_photo: templates.product_photo_template))
+            .replaceWith(
+                Mustache.render(
+                    templates.product_photos_template, user_photos, {
+                        product_photo: templates.product_photo_template }))
 
     window.render_user_photo_feed = (user_photos) ->
         $product_form_wrapper.find('.photo-feed')
-            .replaceWith(Mustache.render(templates.user_photo_feed_template, user_photos, product_photo: templates.product_photo_template))
+            .replaceWith(
+                Mustache.render(
+                    templates.user_photo_feed_template, user_photos, {
+                        product_photo: templates.product_photo_template }))
 
     window.fetch_user_photos = (callback = render_user_photos, options = {}) ->
         $.ajax
@@ -169,6 +185,7 @@ if gon.page is 'stores_show'
                 data = ($ @).closest('.product-widget').data()
                 data.put = true
                 render_edit_product_form(data)
+
             .on 'click', '.delete-product', ->
                 data = ($ @).closest('.product-widget').data()
                 if confirm("Are you sure you want to delete #{data.name}?")
@@ -238,20 +255,21 @@ if gon.page is 'stores_show'
             .on 'click', '.hide-product-form', ->
                 reset_product_form()
 
+            .on 'change', '.product-unlimited-quantity', ->
+                status = if ($ @).prop('checked') then true else false
+                ($ '#product_quantity').prop('disabled', status).val('')
+
             .on 'click', '.product-photo', ->
                 select_photo(($ @))
 
             .on 'click', '.fetch-more-user-photos', ->
                 fetch_user_photos(update_user_photos, {max_id: ($ @).data('maxId')})
 
-            .on 'change', '.product-unlimited-quantity', ->
-                status = if ($ @).prop('checked') then true else false
-                ($ '#product_quantity').prop('disabled', status).val('')
-
             .on 'submit', 'form', (e) ->
                 e.preventDefault()
-                ($ @).addClass(hide)
 
+                # hide form to conceal input manipulation
+                ($ @).addClass(hide)
 
                 # construct fields_for product_images
                 # comprised of photos that are already associated
@@ -277,10 +295,11 @@ if gon.page is 'stores_show'
                 ($ '#product_instagram_tag').val(map_label_values('instagram-tag'))
 
                 verb = if @id is 'new_product' then 'created' else 'updated'
+
                 $.ajax
                     url: ($ @).prop('action')
-                    data: ($ @).serialize()
                     type: 'post'
+                    data: ($ @).serialize()
                     success: (response) =>
                         if response.status isnt 'error'
                             expire_alert_and_notice_in(6000)
@@ -290,5 +309,8 @@ if gon.page is 'stores_show'
                             fetch_and_render_product_widgets()
                         else
                             ($ @).removeClass(hide)
-                            ($ '.form-errors-wrapper').html(Mustache.render(templates.form_error_template, {errors: response.errors}))
+                            ($ '.form-errors-wrapper').html(
+                                Mustache.render(
+                                    templates.form_error_template, {
+                                        errors: response.errors}))
                             $window.scrollTop(($ '.form-errors-wrapper'))
