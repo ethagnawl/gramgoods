@@ -32,3 +32,7 @@ $ ->
         return this.optional(element) || postal_code.match(/(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXYabceghjklmnpstvxy]{1}\d{1}[A-Za-z]{1} ?\d{1}[A-Za-z]{1}\d{1})$/)
     , "Please specify a valid postal code")
 
+    $.validator.addMethod("decimalTwo", (value, element) ->
+        this.optional(element) or /^(\d{1,3})(\.\d{1,2})?$/.test(value) && value > 0
+    , "Must be in US currency format 0.99")
+
