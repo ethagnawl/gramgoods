@@ -87,6 +87,8 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
             .isHappy(order_form_validation_rules)
             .submit((e) ->
                 e.preventDefault()
+
+                # this is really hacky, but it's all happy.js gives us to work with
                 unless ($ @).find('.unhappy').length
                     Stripe.createToken({
                         number: $('#credit_card_number').val(),
