@@ -51,6 +51,12 @@ if gon.page is 'stores_show'
     map_label_values = (name) -> $.map(($ ".label-#{name}"), (e) ->
         ($ e).data('value')).join(',')
 
+    trigger_process_csv = ($input) ->
+        if $input.val()?
+            $input
+                .parent()
+                    .find('.add-product-form-label').trigger('click')
+
     # hide open product-widget photo galleries
     reset_product_photo_galleries = ->
         ($ ".#{product_photos_gallery_displayed}").each ->
@@ -270,6 +276,13 @@ if gon.page is 'stores_show'
 
                 # hide form to conceal input manipulation
                 ($ @).addClass(hide)
+
+                # process values left in instagram tag, color and size inputs
+                # i.e. user entered #hat, #shirt but didn't click the add buton
+                for input in [($ '#product_colors'),
+                    ($ '#product_sizes'),
+                    ($ '#product_instagram_tag')]
+                    trigger_process_csv(input)
 
                 # construct fields_for product_images
                 # comprised of photos that are already associated

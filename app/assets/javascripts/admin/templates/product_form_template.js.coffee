@@ -28,7 +28,7 @@ templates.product_form_template = """
                         <span class="add-on">#</span>
                         <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
                         <span class="help-inline">
-                            <a class='add-instagram-tag' href="javascript: void(0);" title='Click to link photos from your photo feed'>
+                            <a class='add-instagram-tag add-product-form-label' href="javascript: void(0);" title='Click to link photos from your photo feed'>
                                 <i class='gramgoods-tooltip icon-plus'></i>
                             </a>
                         </span>
@@ -75,7 +75,7 @@ templates.product_form_template = """
                 <div class="controls">
                     <input placeholder='Enter a color and click +' type="text" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
                         <span class="help-inline">
-                            <a class='add-color' href="javascript: void(0);">
+                            <a class='add-color add-product-form-label' href="javascript: void(0);">
                                 <i class='gramgoods-tooltip icon-plus'></i>
                             </a>
                         </span>
@@ -91,7 +91,7 @@ templates.product_form_template = """
                 <div class="controls">
                     <input placeholder='Enter a size and click +' type="text" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
                       <span class="help-inline">
-                          <a class='add-size' href="javascript: void(0);">
+                          <a class='add-size add-product-form-label' href="javascript: void(0);">
                               <i class='gramgoods-tooltip icon-plus'></i>
                           </a>
                       </span>
