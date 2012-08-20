@@ -72,7 +72,11 @@ class ApplicationController < ActionController::Base
       json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
       json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : product.flatrate_shipping_cost
       json.status product.status
-      json._status product.status.gsub(' ', '-').downcase
+
+      # configure Twitter label classes
+      json._status 'warning' if product.status.gsub(' ', '-').downcase == 'draft'
+      json._status 'success' if product.status.gsub(' ', '-').downcase == 'active'
+      json._status 'important' if product.status.gsub(' ', '-').downcase == 'out_of_stock'
       json.draft product.status == 'Draft'
       json.active product.status == 'Active'
       json.out_of_stock product.status == 'Out of Stock'
