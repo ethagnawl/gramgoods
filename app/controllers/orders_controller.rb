@@ -47,13 +47,7 @@ class OrdersController < ApplicationController
       @total += @flatrate_shipping_cost
     end
 
-    stripe_total = (@order.line_item.total * 100).to_i
-    token = params[:stripeToken]
-
-    if @order.save && @order.charge(stripe_total, token)
-      @order.update_attributes({ :status => 'success' })
-      @order.line_item.product.deduct_from_quantity(@order.line_item.quantity)
-      OrderMailer.order_confirmation(@order).deliver
+    if @order.charge(params[:stripeToken]) && @order.save
       render 'orders/show.mobile.html.haml'
     else
       render 'orders/new.mobile.html.haml'
