@@ -6,7 +6,7 @@ class Store < ActiveRecord::Base
 
   friendly_id :name, :use => [:slugged, :history]
 
-  attr_accessible :name, :user_id, :return_policy
+  attr_accessible :name, :return_policy
   validates_presence_of :name, :return_policy
   validates_uniqueness_of :name
 
