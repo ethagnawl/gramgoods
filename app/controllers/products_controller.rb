@@ -146,7 +146,7 @@ class ProductsController < ApplicationController
 
     if user_owns_store?(@store.id)
       @product.destroy
-      notice = "#{@product.name} was successfully deleted."
+      notice = "#{@product.name} has been successfully deleted."
       flash[:notice] = notice
       respond_to do |format|
         format.json {
