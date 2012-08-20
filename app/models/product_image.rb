@@ -3,5 +3,5 @@ class ProductImage < ActiveRecord::Base
 
   attr_accessible :instagram_id, :url, :tags, :thumbnail, :likes
 
-  validates_presence_of :instagram_id, :url, :likes
+  validates_presence_of :instagram_id, :url, :likes, :thumbnail
 end
