@@ -25,7 +25,7 @@ end
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rails-behaviors'
 gem 'twitter-bootstrap-rails'
-gem 'jquery-rails'
+gem 'jquery-rails', "~>2.1.1"
 gem 'devise'
 gem 'haml'
 gem 'omniauth'
