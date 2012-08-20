@@ -172,48 +172,61 @@ if gon.page is 'stores_show'
             .on 'click', '.delete-product', ->
                 data = ($ @).closest('.product-widget').data()
                 if confirm("Are you sure you want to delete #{data.name}?")
-                    destroy_product(data.storeSlug, data.slug, fetch_and_render_product_widgets)
+                    destroy_product(
+                        data.storeSlug, data.slug, fetch_and_render_product_widgets)
+
+        append_to_control_group = ($control_group, hash) ->
+            $control_group.append(Mustache.render(
+                templates.product_form_label_template, hash))
+
+        csv_to_product_form_labels = ($input, name) ->
+            _values = $input.val()
+            return unless _values
+            $input.val('')
+            for value in _values.split(',')
+                value = $.trim(value)
+                return unless value.length
+                append_to_control_group(
+                    $input.closest('.control-group'), { name, value })
 
         $product_form_wrapper
             .on 'click', '.add-instagram-tag', ->
-                instagram_tag = ($ '#product_instagram_tag').val()
-                if instagram_tag
-                    instagram_tag = instagram_tag.split('#')[1] if instagram_tag.indexOf('#') isnt -1
-                    ($ '#product_instagram_tag').val('')
-                    ($ @).closest('.control-group').append(Mustache.render(templates.product_form_label_template, {value: "##{instagram_tag}", name: 'instagram-tag'}))
-                    photos_with_tags = $product_form_wrapper.find(".photo-feed div[data-tags~='#{instagram_tag}']").not('.selected')
-                    if photos_with_tags.length > 0
-                        photos_with_tags.each -> select_photo(($ @))
-                        pluralized_photo = if photos_with_tags.length is 1 then 'photo' else 'photos'
-                        pluralized_has =  if photos_with_tags.length is 1 then 'has' else 'have'
-                        expire_alert_and_notice_in(6000)
-                        update_notice("#{photos_with_tags.length} #{pluralized_photo} from your feed #{pluralized_has} been linked.")
+                _instagram_tags = ($ '#product_instagram_tag').val()
+                ($ '#product_instagram_tag').val('')
+                tagged_photo_count = 0
+
+                if _instagram_tags
+                    for instagram_tag in _instagram_tags.split(',')
+                        instagram_tag = $.trim(instagram_tag)
+                        return unless instagram_tag.length
+                        if instagram_tag.indexOf('#') isnt -1
+                            instagram_tag = instagram_tag.split('#')[1]
+
+                        append_to_control_group(($ @).closest('.control-group'), {
+                            value: "##{instagram_tag}",
+                            name: 'instagram-tag'})
+
+                        photos_with_tags = $product_form_wrapper
+                            .find(".photo-feed div[data-tags~='#{instagram_tag}']")
+                            .not('.selected')
+
+                        if photos_with_tags.length > 0
+                            photos_with_tags.each -> select_photo(($ @))
+                            tagged_photo_count += photos_with_tags.length
+
+                    pluralized_photo = if tagged_photo_count is 1 then 'photo' else 'photos'
+                    pluralized_has =  if tagged_photo_count is 1 then 'has' else 'have'
+                    expire_alert_and_notice_in(6000)
+                    update_notice("""
+                        #{tagged_photo_count} #{pluralized_photo} from your feed
+                        ##{pluralized_has} been linked.
+                    """)
 
             .on 'click', '.add-size', ->
-                _sizes = ($ '#product_sizes').val()
-                return unless _sizes
-                ($ '#product_sizes').val('')
-                for size in _sizes.split(',')
-                    return unless size
-                    size = $.trim(size)
-                    ($ @).closest('.control-group')
-                        .append(Mustache.render(
-                                templates.product_form_label_template, {
-                                    value: size,
-                                    name: 'size'}))
+                csv_to_product_form_labels(($ '#product_sizes'), 'size')
 
             .on 'click', '.add-color', ->
-                _colors = ($ '#product_colors').val()
-                return unless _colors
-                ($ '#product_colors').val('')
-                for color in _colors.split(',')
-                    return unless color
-                    color = $.trim(color)
-                    ($ @).closest('.control-group')
-                        .append(Mustache.render(
-                                templates.product_form_label_template, {
-                                    value: color,
-                                    name: 'color'}))
+                csv_to_product_form_labels(($ '#product_colors'), 'color')
 
             .on 'click', '.remove-label', ->
                 ($ @).parent().remove()
