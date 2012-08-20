@@ -63,14 +63,14 @@ class ApplicationController < ActionController::Base
       json.description truncate(product.description, :length => 45)
       json.raw_description product.description
       json.price number_to_currency(product.price)
-      json.raw_price product.price
+      json.raw_price number_with_precision(product.price, :precision => 2)
       json.quantity product.get_quantity
       json.raw_quantity product.quantity
       json.unlimited_quantity product.unlimited_quantity
       json.colors product.colors ||= nil
       json.sizes product.sizes ||= nil
       json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
-      json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : product.flatrate_shipping_cost
+      json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_with_precision(product.flatrate_shipping_cost, :precision => 2)
       json.status product.status
 
       # configure Twitter label classes
