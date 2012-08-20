@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820201818) do
+ActiveRecord::Schema.define(:version => 20120820212718) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -36,16 +36,16 @@ ActiveRecord::Schema.define(:version => 20120820201818) do
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
   create_table "line_items", :force => true do |t|
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
     t.integer  "order_id"
     t.integer  "product_id"
     t.integer  "quantity"
     t.string   "size"
     t.string   "color"
-    t.decimal  "price"
+    t.decimal  "price",                  :precision => 10, :scale => 2
     t.decimal  "total"
-    t.decimal  "flatrate_shipping_cost"
+    t.decimal  "flatrate_shipping_cost", :precision => 10, :scale => 2
   end
 
   add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"
@@ -80,14 +80,14 @@ ActiveRecord::Schema.define(:version => 20120820201818) do
     t.string   "colors"
     t.string   "sizes"
     t.string   "instagram_tag"
-    t.decimal  "price"
-    t.decimal  "flatrate_shipping_cost"
+    t.decimal  "price",                  :precision => 10, :scale => 2
+    t.decimal  "flatrate_shipping_cost", :precision => 10, :scale => 2
     t.integer  "quantity"
     t.integer  "store_id"
     t.string   "slug"
     t.boolean  "unlimited_quantity"
-    t.datetime "updated_at",             :null => false
-    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.datetime "created_at",                                            :null => false
   end
 
   add_index "products", ["slug"], :name => "index_products_on_slug"
