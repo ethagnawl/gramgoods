@@ -237,13 +237,14 @@ if gon.page is 'stores_show'
                             photos_with_tags.each -> select_photo(($ @))
                             tagged_photo_count += photos_with_tags.length
 
-                    pluralized_photo = if tagged_photo_count is 1 then 'photo' else 'photos'
-                    pluralized_has =  if tagged_photo_count is 1 then 'has' else 'have'
-                    expire_alert_and_notice_in(6000)
-                    update_notice("""
-                        #{tagged_photo_count} #{pluralized_photo} from your feed
-                        ##{pluralized_has} been linked.
-                    """)
+                    if tagged_photo_count > 0
+                        pluralized_photo = if tagged_photo_count is 1 then 'photo' else 'photos'
+                        pluralized_has =  if tagged_photo_count is 1 then 'has' else 'have'
+                        expire_alert_and_notice_in(6000)
+                        update_notice("""
+                            #{tagged_photo_count} #{pluralized_photo} from your feed
+                            ##{pluralized_has} been linked.
+                        """)
 
             .on 'click', '.add-size', ->
                 csv_to_product_form_labels(($ '#product_sizes'), 'size')
