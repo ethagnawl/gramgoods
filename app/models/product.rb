@@ -9,9 +9,13 @@ class Product < ActiveRecord::Base
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :colors, :sizes, :flatrate_shipping_cost, :instagram_tag, :photos,
   :unlimited_quantity, :product_images_attributes
+
   validates_presence_of :name, :price, :description, :instagram_tag
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
+  validates_numericality_of :price, :greater_than => 0.00
+  validates_numericality_of :flatrate_shipping_cost, :greater_than => 0.00,
+    :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
 
   accepts_nested_attributes_for :product_images
 
