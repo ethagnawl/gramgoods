@@ -10,23 +10,21 @@ class LineItem < ActiveRecord::Base
   validate :line_item_order_product_status_must_be_active
 
   def line_item_quantity_must_be_less_than_or_equal_to_product_quantity
-    product = Product.find(product_id)
-    unless product.quantity.nil?
-      if quantity > product.quantity && product.unlimited_quantity == false
+    unless self.product.quantity.nil?
+      if self.quantity > self.product.quantity && self.product.unlimited_quantity == false
         errors.add(:quantity, 'must be less than or equal to product quantity')
       end
     else
       # this should *never* happen, but just in case
-      if product.unlimited_quantity == false
+      if self.product.unlimited_quantity == false
         errors.add(:quantity, 'must be less than or equal to product quantity')
       end
     end
   end
 
   def line_item_order_product_status_must_be_active
-    product = Product.find(product_id)
-    if product.status != 'Active'
-      errors[:base] << 'You cannot purchase a product whose status is not active.'
+    unless self.product.status == 'Active'
+      errors.add(:quantity, 'You cannot purchase a product whose status is not active.')
     end
   end
 end
