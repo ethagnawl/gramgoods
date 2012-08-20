@@ -7,12 +7,13 @@ $ ->
                 maxlength: 500
             'product[price]':
                 required: true
-                number: true
+                decimalTwo: true
             'product[quantity]':
                 digits: true
                 required: (element) ->
                     !($ '#product_unlimited_quantity').prop('checked')
+            'product[flatrate_shipping_cost]':
+                decimalTwo: true
+                required: (element) -> element.value isnt ''
 
-            # flatrate_shipping number true if !empty
-            # quantity not required if unlimited is on
     $.extend(product_form_options, form_options)
