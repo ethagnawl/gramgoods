@@ -1,6 +1,7 @@
 window.form_options =
+    unhighlight: (label) ->
+        $(label).closest('.control-group').removeClass('error')
     highlight: (label) ->
         $(label).closest('.control-group').addClass('error')
     success: (label) ->
-        if ($ label).closest('.control-group').hasClass('error')
-            $(label).closest('.control-group').removeClass('error')
+        $(label).closest('.control-group').removeClass('error')
