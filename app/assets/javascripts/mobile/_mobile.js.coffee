@@ -84,47 +84,13 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
 
     $ ->
         ($ "#order_form")
+            .isHappy(order_form_validation_rules)
             .submit((e) ->
                 e.preventDefault()
-                Stripe.createToken({
-                    number: $('#credit_card_number').val(),
-                    exp_month: $('#credit_card_expiration_month').val(),
-                    exp_year: $('#credit_card_expiration_year').val()
-                }, stripeResponseHandler))
-            .isHappy
-                # TODO move into rules file
-                fields:
-                    '#order_recipient_attributes_first_name':
-                        message: 'First Name is required.'
-                        required: true
-                    '#order_recipient_attributes_last_name':
-                        message: 'Last Name is required.'
-                        required: true
-                    '#order_recipient_attributes_email_address':
-                        message: 'Email Address is required.'
-                        required: true
-                        test: happy.email
-                    '#order_recipient_attributes_street_address_one':
-                        message: 'Street Address is required.'
-                        required: true
-                    '#order_recipient_attributes_city':
-                        message: 'City is required.'
-                        required: true
-                    '#order_recipient_attributes_state':
-                        message: 'State is required.'
-                        required: true
-                    '#order_recipient_attributes_postal_code':
-                        message: 'Postal Code is required.'
-                        required: true
-                        test: happy.postal_code
-                    '#credit_card_number':
-                        message: 'Credit Card Number is required.'
-                        required: true
-                        test: happy.credit_card_number
-                    '#credit_card_expiration_month':
-                        message: 'Credit Card Expiration Month is required.'
-                        required: true
-                    '#credit_card_expiration_year':
-                        message: 'Credit Card Expiration Year is required.'
-                        required: true
+                unless ($ @).find('.unhappy').length
+                    Stripe.createToken({
+                        number: $('#credit_card_number').val(),
+                        exp_month: $('#credit_card_expiration_month').val(),
+                        exp_year: $('#credit_card_expiration_year').val()
+                    }, stripeResponseHandler))
 
