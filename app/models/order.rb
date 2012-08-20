@@ -33,6 +33,6 @@ class Order < ActiveRecord::Base
   end
 
   def deliver_order_confirmation
-    OrderMailer.order_confirmation(@order).deliver
+    OrderMailer.order_confirmation(self).deliver
   end
 end
