@@ -28,6 +28,7 @@ class StoresController < ApplicationController
     @user = current_user
     @store = @user.stores.new(params[:store])
     if @store.save
+      flash[:notice] = "#{@store.name} has been created successfully."
       redirect_to store_path(@store)
     else
       render 'new'
@@ -66,7 +67,7 @@ class StoresController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:id])
     if @store.update_attributes(params[:store])
-      flash[:notice] = "#{@store.name} was successfully updated."
+      flash[:notice] = "#{@store.name} has been updated successfully."
       redirect_to(@store)
     else
       render 'edit'
