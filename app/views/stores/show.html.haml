@@ -14,15 +14,18 @@
     %small
       = link_to('Edit', edit_store_path(@store))
 
-#product_form_wrapper.widget
-  %h2.widget
-    %a.render-new-product-form.btn.btn-primary.btn-large{ :href => "javascript: void(0);" }
-      Add Product
-      %i.icon-white.icon-plus-sign
-  %form.hide
-#product_count.btn.btn-success.float-left
-  Loading Products...
-.product-widgets
-  - unless @store.products.empty?
-    %h2
-      Loading Products...
+- if current_user.authentication.nil?
+  %h2 You'll need to authenticate using Instagram before creating products.
+- else
+  #product_form_wrapper.widget
+    %h2.widget
+      %a.render-new-product-form.btn.btn-primary.btn-large{ :href => "javascript: void(0);" }
+        Add Product
+        %i.icon-white.icon-plus-sign
+    %form.hide
+  #product_count.btn.btn-success.float-left
+    Loading Products...
+  .product-widgets
+    - unless @store.products.empty?
+      %h2
+        Loading Products...
