@@ -72,4 +72,4 @@
     %fieldset
       = select_tag("credit_card_expiration_year", options_for_select(credit_card_years))
     %fieldset
-      = form.submit
+      = form.submit 'Create Order', :id => 'order_form_submit'

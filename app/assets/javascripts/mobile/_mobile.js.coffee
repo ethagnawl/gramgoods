@@ -75,6 +75,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
     stripeResponseHandler = (status, response) ->
         if response.error
             alert response.error.message
+            ($ '#order_form_submit').attr('disabled', false)
         else
             token = response['id']
             $(".order-form")
@@ -90,6 +91,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
 
                 # this is really hacky, but it's all happy.js gives us to work with
                 unless ($ @).find('.unhappy').length
+                    ($ '#order_form_submit').attr('disabled', true)
                     Stripe.createToken({
                         number: $('#credit_card_number').val(),
                         exp_month: $('#credit_card_expiration_month').val(),
