@@ -29,7 +29,7 @@
                 %li.divider-vertical
                 - if current_user.authentication.nil?
                   %li
-                    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.</a>
+                    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.
                     %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
                 - else
                   %li
