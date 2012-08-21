@@ -27,7 +27,7 @@ module ApplicationHelper
 
   def credit_card_months
     [
-      ['Expiration Month', nil],
+      ['Expiration Month*', nil],
       ["01 - January", "01"],
       ["02 - February", "02"],
       ["03 - March", "03"],
@@ -45,7 +45,7 @@ module ApplicationHelper
 
   def credit_card_years
     [
-      ['Expiration Year', nil],
+      ['Expiration Year*', nil],
       [2012, 2012],
       [2013, 2013],
       [2014, 2014],
@@ -60,7 +60,7 @@ module ApplicationHelper
 
   def us_states
     [
-      ['State', ''],
+      ['State*', ''],
       ['Alabama', 'AL'],
       ['Alaska', 'AK'],
       ['Arizona', 'AZ'],
