@@ -33,6 +33,6 @@ $ ->
     , "Please specify a valid postal code")
 
     $.validator.addMethod("decimalTwo", (value, element) ->
-        this.optional(element) or /^(\d{1,3})(\.\d{1,2})?$/.test(value) && value > 0
+        this.optional(element) or /^(\d+)(\.\d{1,2})?$/.test(value) && value > 0
     , "Must be in US currency format 0.99")
 
