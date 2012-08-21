@@ -9,6 +9,23 @@ class RegistrationsController < Devise::RegistrationsController
     ##session[:omniauth] = nil
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    # this is such a hack...
+    # https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-edit-their-account-without-providing-a-password
+    @user = User.find(current_user.id)
+    if @user.update_without_password(params[:user])
+      sign_in @user, :bypass => true
+      flash[:notice] = 'Your account has been updated successfully.'
+      redirect_to stores_path
+    else
+      render "edit"
+    end
+  end
+
   private
 
   def build_resource(*args)
