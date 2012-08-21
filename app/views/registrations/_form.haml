@@ -10,17 +10,19 @@
 
       .control-group
         = f.label :password, :class => 'control-label'
-        - if locals[:method] == :put
-          leave blank if not changing
         .controls
           = f.password_field :password
+          - if locals[:method] == :put
+            %span.help-inline
+              Leave this field blank if you are not changing your password.
 
       .control-group
         = f.label :password_confirmation, :class => 'control-label'
-        - if locals[:method] == :put
-          leave blank if not changing
         .controls
           = f.password_field :password_confirmation
+          - if locals[:method] == :put
+            %span.help-inline
+              Leave this field blank if you are not changing your password.
 
       .control-group
         = f.label :business_name, :class => 'control-label'
