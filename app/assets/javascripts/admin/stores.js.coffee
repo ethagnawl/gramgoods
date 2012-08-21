@@ -167,7 +167,7 @@ if gon.page is 'stores_show'
 
         ($ '.product-widgets')
             # show/hide product image gallery
-            .on 'click', '.product-image-wrapper', ->
+            .on 'click', '.product-photo-wrapper', ->
                 # .product-photos-gallery is shown/hidden
                 # by css based on .products-gallery-displayed
                 product_widget = ($ @).closest('.product-widget')
