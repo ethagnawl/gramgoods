@@ -73,7 +73,10 @@
           = f.text_field :postal_code
 
       .form-actions
-        = f.submit "Sign up", :class => 'btn btn-primary'
+        - if locals[:method] == :put
+          = f.submit "Update", :class => 'btn btn-primary'
+        - else
+          = f.submit "Sign up", :class => 'btn btn-primary'
 
   - if locals[:method] == :put
     %h3 Cancel my account
