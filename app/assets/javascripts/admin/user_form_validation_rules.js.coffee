@@ -6,12 +6,12 @@ $ ->
                 email: true
                 maxlength: 250
             'user[password]':
-                required: true
                 maxlength: 16
+                required: -> gon.page isnt "registrations_edit"
             'user[password_confirmation]':
-                required: true
                 maxlength: 16
                 equalTo: '#user_password'
+                required: -> gon.page isnt "registrations_edit"
             'user[business_name]':
                 required: true
                 maxlength: 250
