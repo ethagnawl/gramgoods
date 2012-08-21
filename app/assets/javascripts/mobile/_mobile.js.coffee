@@ -72,11 +72,18 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
             ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
+    $credit_card_number = $('#credit_card_number')
+    $credit_card_expiration_month = $('#credit_card_expiration_month')
+    $credit_card_expiration_year = $('#credit_card_expiration_year')
+
     stripeResponseHandler = (status, response) ->
         if response.error
             alert response.error.message
             ($ '#order_form_submit').attr('disabled', false)
         else
+            $credit_card_number.val('')
+            $credit_card_expiration_month.val('')
+            $credit_card_expiration_year.val('')
             token = response['id']
             $(".order-form")
                 .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
@@ -93,8 +100,8 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                 unless ($ @).find('.unhappy').length
                     ($ '#order_form_submit').attr('disabled', true)
                     Stripe.createToken({
-                        number: $('#credit_card_number').val(),
-                        exp_month: $('#credit_card_expiration_month').val(),
-                        exp_year: $('#credit_card_expiration_year').val()
+                        number: $credit_card_number.val(),
+                        exp_month: $credit_card_expiration_month.val(),
+                        exp_year: $credit_card_expiration_year.val()
                     }, stripeResponseHandler))
 
