@@ -68,8 +68,8 @@
     %fieldset
       %input#credit_card_number{ :type => "tel", :placeholder => "Credit Card Number*" }
     %fieldset
-      = select_tag("credit_card_expiration_month", options_for_select(credit_card_months))
+      = select_tag(nil, options_for_select(credit_card_months), :id => 'credit_card_expiration_month')
     %fieldset
-      = select_tag("credit_card_expiration_year", options_for_select(credit_card_years))
+      = select_tag(nil, options_for_select(credit_card_years), :id => 'credit_card_expiration_year')
     %fieldset
       = form.submit 'Create Order', :id => 'order_form_submit'
