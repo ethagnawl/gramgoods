@@ -67,7 +67,7 @@
       .control-group
         = f.label :state, :class => 'control-label'
         .controls
-          = f.select :state, options_for_select(us_states)
+          = f.select :state, options_for_select(us_states, :selected => @user.state)
 
       .control-group
         = f.label :postal_code, :class => 'control-label'
