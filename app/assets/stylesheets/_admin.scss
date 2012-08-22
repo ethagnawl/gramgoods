@@ -128,8 +128,10 @@ label.error {
 }
 
 .product-widgets {
+    float: left;
     margin: 0 auto;
-    width: 918px;
+    margin-left: 18px;
+    width: 936px;
 
     .product-widget {
         @include rounded_corners(10px);
