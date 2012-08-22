@@ -6,6 +6,32 @@ if gon.page is 'stores_show'
     #config
     product_photos_gallery_displayed = 'product-photos-gallery-displayed'
 
+    product_form_submission_error_callback = (self, response) ->
+        if response.errors?
+            errors = response.errors
+        else if response.status is 500 and response.statusText?
+            errors = [{error: "#{response.statusText} - Please review your information and try submitting the form again."}]
+        else
+            errors = null
+
+        # this is criminal, but it'll have to do for now...
+        # inputs are populated with CSVs when the form is submitted, but
+        # form-label-buttons already exist in the dom,
+        # so we clear the inputs to prevent double entry
+        ($ '#product_instagram_tag').val('')
+        ($ '#product_colors').val('')
+        ($ '#product_sizes').val('')
+
+        ($ self).removeClass(hide)
+
+        ($ '.form-errors-wrapper').html(
+            if errors?
+                Mustache.render(
+                    templates.form_error_template, {
+                        errors: errors }))
+        $window.scrollTop(($ '.form-errors-wrapper'))
+
+
     reset_product_form = (data) ->
         $product_form_wrapper.find('form').replaceWith($('<form />'))
         $window.scrollTop($product_form_wrapper)
@@ -310,10 +336,13 @@ if gon.page is 'stores_show'
 
                 verb = if @id is 'new_product' then 'created' else 'updated'
 
+
                 $.ajax
                     url: ($ @).prop('action')
                     type: 'post'
                     data: ($ @).serialize()
+                    error: (response) =>
+                        product_form_submission_error_callback(@, response)
                     success: (response) =>
                         if response.status isnt 'error'
                             expire_alert_and_notice_in(6000)
@@ -322,9 +351,4 @@ if gon.page is 'stores_show'
                             reset_product_form()
                             fetch_and_render_product_widgets()
                         else
-                            ($ @).removeClass(hide)
-                            ($ '.form-errors-wrapper').html(
-                                Mustache.render(
-                                    templates.form_error_template, {
-                                        errors: response.errors}))
-                            $window.scrollTop(($ '.form-errors-wrapper'))
+                            product_form_submission_error_callback(@, response)
