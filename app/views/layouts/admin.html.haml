@@ -22,9 +22,11 @@
                 %li
                   %p.navbar-text
                     Logged into GramGoods as #{current_user.email}
-                    = link_to edit_user_registration_path, :class => 'gramgoods-tooltip' do
+                    = link_to secure_url(edit_user_registration_path),
+                      :class => 'gramgoods-tooltip' do
                       %i.icon-cog
-                    = link_to destroy_user_session_path, :method => :delete, :class => 'gramgoods-tooltip' do
+                    = link_to secure_url(destroy_user_session_path),
+                      :method => :delete, :class => 'gramgoods-tooltip' do
                       %i.icon-remove-sign
                 %li.divider-vertical
                 - if current_user.authentication.nil?

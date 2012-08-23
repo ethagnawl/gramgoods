@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  force_ssl
+
   def create
     super
     #@user.update_attributes({
