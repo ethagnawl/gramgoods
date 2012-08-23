@@ -82,7 +82,7 @@ class ProductsController < ApplicationController
     gon.product_name = @product.name
     gon.product_id = @product.id
     gon.store_slug = @store.slug
-    gon.create_order_url = new_store_order_conditional_url(@store)
+    gon.create_order_url = secure_url(new_store_order_path(@store))
 
     respond_to do |format|
       format.json {
@@ -165,11 +165,6 @@ class ProductsController < ApplicationController
   end
 
   private
-
-  def new_store_order_conditional_url(store)
-    url = new_store_order_path(store)
-    Rails.env.production? ? ENV['SECURE_HEROKU_APP_URL'] + url : url
-  end
 
   def product_photos_empty_message(name)
     "You will need to attach at least one image to '#{name}' before setting Status to Active."

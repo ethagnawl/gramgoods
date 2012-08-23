@@ -42,10 +42,10 @@
                     = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
               - else
                 %li
-                  = link_to "Sign In", new_user_session_path
+                  = link_to "Sign In", secure_url(new_user_session_path)
                 %li.divider-vertical
                 %li
-                  = link_to "Sign Up", new_user_registration_path
+                  = link_to "Sign Up", secure_url(new_user_registration_path)
 
             %ul.nav.pull-right
               %li.dropdown

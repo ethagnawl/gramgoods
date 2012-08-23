@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :clear_gon
   before_filter :set_gon
   before_filter :ensure_proper_protocol
+  helper_method :secure_url
 
   def after_sign_in_path_for(resource)
     stores_path
@@ -122,5 +123,9 @@ class ApplicationController < ActionController::Base
     if request.ssl? && !ssl_allowed_action?
       redirect_to "http://" + request.host + request.fullpath
     end
+  end
+
+  def secure_url(url)
+    Rails.env.production? ? ENV['SECURE_HEROKU_APP_URL'] + url : url
   end
 end
