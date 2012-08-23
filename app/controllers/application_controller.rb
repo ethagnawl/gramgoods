@@ -115,8 +115,8 @@ class ApplicationController < ActionController::Base
   end
 
   def ssl_allowed_action?
-    params[:controller] == 'orders'
-    # todo add || users
+    params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
+    params[:controller] == 'registrations'
   end
 
   def ensure_proper_protocol
