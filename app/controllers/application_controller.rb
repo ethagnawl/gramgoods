@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :clear_gon
   before_filter :set_gon
+  before_filter :ensure_proper_protocol
 
   def after_sign_in_path_for(resource)
     stores_path
@@ -110,5 +111,16 @@ class ApplicationController < ActionController::Base
 
   def clear_gon
     gon.clear
+  end
+
+  def ssl_allowed_action?
+    params[:controller] == 'orders'
+    # todo add || users
+  end
+
+  def ensure_proper_protocol
+    if request.ssl? && !ssl_allowed_action?
+      redirect_to "http://" + request.host + request.fullpath
+    end
   end
 end
