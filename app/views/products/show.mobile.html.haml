@@ -1,3 +1,7 @@
+- content_for(:header) do
+  %a{ :href => "/#{@store.slug}" } #{@store.name}
+  \&nbsp;/&nbsp;#{@product.name}
+
 #order_form.hide
 #success_screen.hide
 .product-detail

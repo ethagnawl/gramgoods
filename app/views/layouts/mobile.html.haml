@@ -14,7 +14,10 @@
     - if defined? @store
       .store-header
         %h1
-          = @store.name
+          - if content_for?(:header)
+            = yield :header
+          - else
+            = @store.name
     = yield
     = include_gon
     = javascript_include_tag "https://js.stripe.com/v1/"
