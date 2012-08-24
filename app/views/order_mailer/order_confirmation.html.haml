@@ -3,5 +3,6 @@
   %head
     %meta{ :charset => "utf-8" }
   %body
-    = render 'shared/order_confirmation', :locals => { :order => @order }
+    = render 'shared/order_confirmation', :locals => { :order => @order,
+      :context => :end_user }
 

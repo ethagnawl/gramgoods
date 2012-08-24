@@ -1,6 +1,10 @@
 .order-details
-  .widget
-    %h1 Thanks for your order!
+
+    - if locals[:context] == :end_user
+    .widget
+      %h1 Order Confirmation
+      .widget
+        %p Your order has been submitted successfully.
 
   .widget
     %h2 Order Information
@@ -55,14 +59,19 @@
     %p.widget
       Postal Code: #{@order.recipient.postal_code}
 
-  .widget
-    %h2 Contact
-    %p.widget
-      %a{ :href => "mailto: #{@order.store.user.email}"} #{@order.store.name}
-    %p.widget
-      %a{ :href => 'mailto: admin@gramgoods.com' } Gram Goods
+  - if locals[:context] == :end_user
+    .widget
+      %h2 Contact
+      %p.widget
+        %a{ :href => "mailto: #{@order.store.user.email}"} #{@order.store.name}
+      %p.widget
+        %a{ :href => 'mailto: admin@gramgoods.com' } Gram Goods
 
-  .widget
-    %h2 Return Policy
-    %p
-      = @order.store.return_policy
+    .widget
+      %h2 Return Policy
+      %p
+        = @order.store.return_policy
+
+    .widget
+      %a{ :href => store_path(@order.store) } Back to #{@order.store.name}
+      %a{ :href => '/todo' } Back to GramGoods
