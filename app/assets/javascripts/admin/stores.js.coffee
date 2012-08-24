@@ -286,7 +286,12 @@ if gon.page is 'stores_show'
                 update_h2(Mustache.render(templates.stores_h2_remove_template, {}))
 
             .on 'click', '.hide-new-product-form, .hide-product-form', ->
-                reset_product_form()
+                if confirm("""
+                    Are you sure you want to close this form?
+                    \n
+                    Any changes will be lost.
+                """)
+                    reset_product_form()
 
             .on 'change', '.product-unlimited-quantity', ->
                 status = if ($ @).prop('checked') then true else false
