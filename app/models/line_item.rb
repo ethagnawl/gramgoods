@@ -1,9 +1,10 @@
 class LineItem < ActiveRecord::Base
   belongs_to :order
 
+  # freezes product attributes in case product name, price, etc. changes
   attr_accessible :quantity, :color, :size, :price, :total, :flatrate_shipping_cost,
-    :product_id
-  validates_presence_of :quantity, :price, :total, :product_id
+    :product_id, :product_name
+  validates_presence_of :quantity, :price, :total, :product_id, :product_name
 
   validate :line_item_quantity_must_be_less_than_or_equal_to_product_quantity
   validate :line_item_order_product_status_must_be_active
