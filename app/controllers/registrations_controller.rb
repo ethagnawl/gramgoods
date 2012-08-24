@@ -3,12 +3,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     super
-    #@user.update_attributes({
-    ##  :name => session[:omniauth][:info][:name],
-    ##  :website => session[:omniauth][:info][:website],
-    #  :thumbnail => session[:omniauth][:info][:thumbnail]
-    #})
-    ##session[:omniauth] = nil
   end
 
   def edit
@@ -19,7 +13,17 @@ class RegistrationsController < Devise::RegistrationsController
     # this is such a hack...
     # https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-edit-their-account-without-providing-a-password
     @user = User.find(current_user.id)
-    if @user.update_without_password(params[:user])
+    email_changed = @user.email != params[:user][:email]
+    password_changed = !params[:user][:password].empty?
+    successfully_updated = if email_changed or password_changed
+                             @user.update_with_password(params[:user])
+                           else
+                             params[:user].delete(:current_password)
+                             @user.update_without_password(params[:user])
+                           end
+
+    if successfully_updated
+      # Sign in the user bypassing validation in case his password changed
       sign_in @user, :bypass => true
       flash[:notice] = 'Your account has been updated successfully.'
       redirect_to stores_path
