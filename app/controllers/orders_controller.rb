@@ -4,7 +4,8 @@ class OrdersController < ApplicationController
   before_filter :authenticate_user!, :only => [:index]
 
   def index
-    @store = Store.find(params[:store_id])
+    @store = Store.find(params[:store_id], :include => {
+                                              :orders => [:line_item, :recipient]})
     render :layout => 'admin'
   end
 
