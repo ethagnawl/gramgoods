@@ -34,7 +34,6 @@ class OrdersController < ApplicationController
 
   def create
     @store = Store.find(params[:store_id])
-    @order = @store.orders.new(params[:order])
     @recipient = params[:recipient_attributes]
     @line_item = params[:line_item_attributes]
     @product = @store.products.find(params[:order][:line_item_attributes][:product_id])
@@ -47,6 +46,13 @@ class OrdersController < ApplicationController
       @flatrate_shipping_cost = @product.flatrate_shipping_cost
       @total += @flatrate_shipping_cost
     end
+    params[:order][:line_item_attributes][:product_name] = @product.name
+    params[:order][:line_item_attributes][:price] = @price
+    params[:order][:line_item_attributes][:total] = @total
+    unless @flatrate_shipping_cost.nil?
+      params[:order][:line_item_attributes][:flatrate_shipping_cost] = @flatrate_shipping_cost
+    end
+    @order = @store.orders.new(params[:order])
 
     if @order.charge(params[:stripeToken]) && @order.save
       render 'orders/show.mobile'
