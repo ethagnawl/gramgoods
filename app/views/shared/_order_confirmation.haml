@@ -9,7 +9,10 @@
       Order Number: #{@order.id}
 
     %p.widget
-      Product: #{@order.line_item.product.name}
+      Product Name: #{@order.line_item.product_name}
+
+    %p.widget
+      Product ID: #{@order.line_item.product_id}
 
     %p.widget
       Quantity: #{@order.line_item.quantity}
