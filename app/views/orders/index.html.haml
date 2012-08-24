@@ -3,7 +3,8 @@
     .widget
       %h2 Order ##{order.id}
       .widget
-        %p Name: #{order.line_item.product.name}
+        %p Product Name: #{order.line_item.product_name}
+        %p Product ID: #{order.line_item.product_id}
         %p Status: #{order.status}
       .widget
         %h3 Order Details
