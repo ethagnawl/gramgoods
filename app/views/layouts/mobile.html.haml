@@ -5,7 +5,7 @@
     %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
     %meta{ :name => 'viewport', :content => 'user-scalable=no, width=320' }
     %meta{ :name => "stripe-key", :content => "#{STRIPE_CONFIG['PUBLIC_KEY']}" }
-    %title Gramgoods
+    %title GramGoods
     = stylesheet_link_tag 'mobile', :media => "all"
     = csrf_meta_tags
   %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }

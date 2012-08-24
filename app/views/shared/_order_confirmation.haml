@@ -1,6 +1,6 @@
 .order-details
 
-    - if locals[:context] == :end_user
+  - if locals[:context] == 'end_user'
     .widget
       %h1 Order Confirmation
       .widget
@@ -10,68 +10,72 @@
     %h2 Order Information
 
     %p.widget
-      Order Number: #{@order.id}
+      Order Number: #{locals[:order].id}
 
     %p.widget
-      Product Name: #{@order.line_item.product_name}
+      Product Name: #{locals[:order].line_item.product_name}
 
     %p.widget
-      Product ID: #{@order.line_item.product_id}
+      Product ID: #{locals[:order].line_item.product_id}
 
     %p.widget
-      Quantity: #{@order.line_item.quantity}
+      Quantity: #{locals[:order].line_item.quantity}
 
-    - unless @order.line_item.size.nil?
+    - unless locals[:order].line_item.size.nil?
       %p.widget
-        Size: #{@order.line_item.size}
+        Size: #{locals[:order].line_item.size}
 
-    - unless @order.line_item.color.nil?
+    - unless locals[:order].line_item.color.nil?
       %p.widget
-        Color: #{@order.line_item.color}
+        Color: #{locals[:order].line_item.color}
 
-    - unless @order.line_item.flatrate_shipping_cost.nil?
+    - unless locals[:order].line_item.flatrate_shipping_cost.nil?
       %p.widget
-        Flat Rate Shipping Cost: #{number_to_currency(@order.line_item.flatrate_shipping_cost)}
+        Flat Rate Shipping Cost: #{number_to_currency(locals[:order].line_item.flatrate_shipping_cost)}
 
     %p.widget
-      Price: #{number_to_currency(@order.line_item.price)}
+      Price: #{number_to_currency(locals[:order].line_item.price)}
 
     %p.widget
-      Total: #{number_to_currency(@order.line_item.total)}
+      Total: #{number_to_currency(locals[:order].line_item.total)}
 
   .widget
     %h2 Recipient Information
     %p.widget
-      First Name: #{@order.recipient.first_name}
+      First Name: #{locals[:order].recipient.first_name}
     %p.widget
-      Last Name: #{@order.recipient.last_name}
+      Last Name: #{locals[:order].recipient.last_name}
     %p.widget
-      Email Address: #{@order.recipient.email_address}
+      Email Address: #{locals[:order].recipient.email_address}
     %p.widget
-      Street Address One: #{@order.recipient.street_address_one}
-    - unless @order.recipient.street_address_two.nil?
+      Street Address One: #{locals[:order].recipient.street_address_one}
+    - unless locals[:order].recipient.street_address_two.nil?
       %p.widget
-        Street Address Two: #{@order.recipient.street_address_two}
+        Street Address Two: #{locals[:order].recipient.street_address_two}
     %p.widget
-      City: #{@order.recipient.city}
+      City: #{locals[:order].recipient.city}
     %p.widget
-      State: #{@order.recipient.state}
+      State: #{locals[:order].recipient.state}
     %p.widget
-      Postal Code: #{@order.recipient.postal_code}
+      Postal Code: #{locals[:order].recipient.postal_code}
 
-  - if locals[:context] == :end_user
+  - if locals[:context] == 'end_user'
     .widget
       %h2 Contact
       %p.widget
-        %a{ :href => "mailto: #{@order.store.user.email}"} #{@order.store.name}
+        %a{ :href => "mailto: #{locals[:order].store.user.email}"}
+          #{locals[:order].store.name}
       %p.widget
         %a{ :href => 'mailto: admin@gramgoods.com' } Gram Goods
 
     .widget
       %h2 Return Policy
       %p
-        = @order.store.return_policy
+        = locals[:order].store.return_policy
 
     .widget
-      %a{ :href => store_path(@order.store) } Back to #{@order.store.name}
-      %a{ :href => '/todo' } Back to GramGoods
+      %p.widget
+        %a{ :href => "/#{locals[:order].store.slug}" }
+          Back to #{locals[:order].store.name}
+      %p.widget
+        %a{ :href => '/todo' } Back to GramGoods

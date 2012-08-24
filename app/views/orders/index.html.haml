@@ -1,3 +1,4 @@
 .widget
   - @store.orders.each do |order|
-    = render 'shared/order_confirmation', :locals => { :order => @order, :context => :admin }
+    = render 'shared/order_confirmation', :locals => { :order => order,
+                                                       :context => 'admin' }

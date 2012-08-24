@@ -1,1 +1,3 @@
-= render 'shared/order_confirmation', :locals => { :order => @order, :product => @product }
+= render 'shared/order_confirmation', :locals => { :order => @order,
+                                                   :product => @product,
+                                                   :context => 'end_user' }
