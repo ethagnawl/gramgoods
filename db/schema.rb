@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820212718) do
+ActiveRecord::Schema.define(:version => 20120824161755) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20120820212718) do
     t.decimal  "price",                  :precision => 10, :scale => 2
     t.decimal  "total"
     t.decimal  "flatrate_shipping_cost", :precision => 10, :scale => 2
+    t.string   "product_name"
   end
 
   add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"
