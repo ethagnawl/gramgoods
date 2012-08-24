@@ -29,7 +29,8 @@ class Order < ActiveRecord::Base
   end
 
   def update_product_quantity
-    self.line_item.product.deduct_from_quantity(self.line_item.quantity)
+    product = Product.find(self.line_item.product_id)
+    product.deduct_from_quantity(self.line_item.quantity)
   end
 
   def deliver_order_confirmation
