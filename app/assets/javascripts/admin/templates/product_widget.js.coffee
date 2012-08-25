@@ -14,21 +14,19 @@ templates.product_widget_template = """
         {{/product_photo}}
 
         {{^product_photo}}
-        <div class="product-photo-warning">
+        <div class="product-photo-warning widget">
             <p class='widget'>
                 IMPORTANT: This product has no photos associated with it.
             </p>
             <p class='widget'>
                 Once your photo(s) have been posted to Instagram...
             </p>
-            <p class='widget'>
-                <ol>
-                    <li>Click the "Edit" button in the top-right corner of this card.</li>
-                    <li>Select photos from your Instagram feed you'd like to associate with this product.</li>
-                    <li>Change this product's "Status" to "Active".</li>
-                    <li>Click "Update Product".</li>
-                </ol>
-            </p>
+            <ol class='widget'>
+                <li>Click the "Edit" button in the top-right corner of this card.</li>
+                <li>Select photos from your Instagram feed you'd like to associate with this product.</li>
+                <li>Change this product's "Status" to "Active".</li>
+                <li>Click "Update Product".</li>
+            </ol>
         </div>
         {{/product_photo}}
 
