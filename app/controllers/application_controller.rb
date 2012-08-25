@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   helper_method :secure_url
+  helper_method :render_user_photo_template
 
   def after_sign_in_path_for(resource)
     stores_path
@@ -37,8 +38,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
-
   def render_user_photo_template(product = nil, photo)
     selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
     {
@@ -52,43 +51,34 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  private
+
   def render_product_widget_template(store, product)
     Jbuilder.encode do |json|
       json.name product.name
       json.truncated_name truncate(product.name, :length => 22)
-      json.instagram_tags (product.instagram_tag.split(',').map { |instagram_tag| { :name => 'instagram_tag', :value => instagram_tag}})
-      json.raw_instagram_tags product.instagram_tag
-      json.slug product.slug
+
+      json.instagram_tags product.instagram_tag.split(',').join(', ')
+      json.colors !product.colors.nil? ? product.colors.split(',').join(', ') : nil
+      json.sizes !product.sizes.nil? ? product.sizes.split(',').join(', ') : nil
+
+      json.product_slug product.slug
       json.store_slug store.slug
-      json.store_id store.id
-      json.url "/stores/#{store.slug}/products/#{product.slug}"
-      json.description truncate(product.description, :length => 45)
-      json.raw_description product.description
+      json.truncated_description truncate(product.description, :length => 45)
+      json.description product.description
       json.price number_to_currency(product.price)
-      json.raw_price number_with_precision(product.price, :precision => 2)
       json.quantity product.get_quantity
-      json.raw_quantity product.quantity
-      json.unlimited_quantity product.unlimited_quantity
-      json.colors !product.colors.empty? ? (product.colors.split(',').map { |color| { :name => 'color', :value => color}}) : nil
-      json.sizes !product.sizes.empty? ? (product.sizes.split(',').map { |size| { :name => 'size', :value => size}}) : nil
       json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
-      json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_with_precision(product.flatrate_shipping_cost, :precision => 2)
       json.status product.status
 
       # configure Twitter label classes
       json._status 'warning' if product.status.gsub(' ', '-').downcase == 'draft'
       json._status 'success' if product.status.gsub(' ', '-').downcase == 'active'
       json._status 'important' if product.status.gsub(' ', '-').downcase == 'out_of_stock'
-      json.draft product.status == 'Draft'
-      json.active product.status == 'Active'
-      json.out_of_stock product.status == 'Out of Stock'
-      json.raw_product_photo_count product.product_images.length
       json.product_photo_count "#{product.product_images.length} #{'Photo'.pluralize(product.product_images.length)}"
       json.product_photo !product.first_product_image.empty? ? product.first_product_image : false
       json.product_photos product.product_images.map { |product_image| render_user_photo_template(product, product_image) }
       json.product_photo_gallery_scroll product.product_images.length > 5 ? 'product-photos-gallery-scroll' : nil
-      json.store_owner_instagram store.user.authentication.nickname unless store.user.authentication.nil?
-      json.store_owner_email store.user.email
     end
   end
 

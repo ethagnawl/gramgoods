@@ -53,7 +53,7 @@ if gon.page is 'stores_show'
             update_h2(
                 Mustache.render(
                     templates.stores_h2_edit_template, { name: response.name }))
-            render_user_photos { product_photos: data.product_photos }
+            render_user_photos { product_photos: response.product_photos }
             fetch_user_photos(
                 render_user_photo_feed, { product_slug: response.slug }))
 
@@ -122,10 +122,6 @@ if gon.page is 'stores_show'
             for product_widget in product_widgets
                 _product_widget = JSON.parse(product_widget)
                 _product_widget._product_photos = JSON.stringify _product_widget.product_photos
-                _product_widget.raw_instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> "#{instagram_tag}").join(', ')
-                _product_widget.instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> {instagram_tag: instagram_tag})
-                _product_widget.sizes = _product_widget.sizes.split(',').join(', ') if product_widget.sizes?
-                _product_widget.colors = _product_widget.colors.split(',').join(', ') if product_widget.colors?
                 $wrapper.append(Mustache.render(templates.product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
@@ -148,6 +144,7 @@ if gon.page is 'stores_show'
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
+        console.log user_photos
         $product_form_wrapper.find('.product-photos')
             .replaceWith(
                 Mustache.render(

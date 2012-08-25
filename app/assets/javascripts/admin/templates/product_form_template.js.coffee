@@ -1,10 +1,12 @@
 templates.product_form_template = """
     <form method="post"
+        {{#put}}id="edit_product_{{product_slug}}"{{/put}}
+        {{^put}}id="new_product"{{/put}}
 
-    {{#put}}id="edit_product_{{slug}}"{{/put}}
-    {{^put}}id="new_product"{{/put}}
+        class="well form-horizontal"
+        action="/stores/{{store_slug}}/products/{{product_slug}}"
+    >
 
-    class="well form-horizontal" action="/stores/{{storeSlug}}/products/{{slug}}">
         <a href="javascript: void(0);" class="hide-product-form gramgoods-tooltip" title='hide product form'>
             <i class="icon-remove-sign"></i>
         </a>
@@ -49,7 +51,7 @@ templates.product_form_template = """
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">$</span>
-                        <input type="text" value="{{raw_price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
+                        <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
                     </div>
                 </div>
             </div>
@@ -131,7 +133,7 @@ templates.product_form_template = """
                             value="{{dummy_share_text}}"
                             {{/dummy_share_text}}
                             {{^dummy_share_text}}
-                            value="Buy {{name}} for {{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{slug}}"
+                            value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{product_slug}}"
                             {{/dummy_share_text}}
                         />
                     </div>

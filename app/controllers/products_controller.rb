@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.json {
-        render :json => render_product_widget_template(@store, @product)
+        render 'products/show'
       }
       format.html {
         if @product.status == 'Draft' && !user_signed_in?

@@ -1,11 +1,15 @@
 templates.product_widget_template = """
-    <div class="product-widget well" data-product_slug='{{slug}}' data-store_slug='{{store_slug}}'>
+    <div
+        class="product-widget well"
+        data-product_slug='{{product_slug}}'
+        data-store_slug='{{store_slug}}'
+    >
 
-        <h2 class="product-name">{{truncated_name}}</h2>
+        <h2 class="product-name" title="{{name}}">{{truncated_name}}</h2>
 
         {{#product_photo}}
         <div class="product-photo-wrapper">
-                <img class='product-photo' src='{{product_photo}}' alt='{{name}}' />
+                <img class='product-photo' src='{{product_photo}}' alt='{{truncated_name}}' />
             <span class="product-photo-count" title='click to see product photos'>
                 {{product_photo_count}}
                 <i class='icon-zoom-in'></i>
@@ -31,8 +35,8 @@ templates.product_widget_template = """
         </div>
         {{/product_photo}}
 
-        <p class="product-description">{{description}}</p>
-        <p class="product-instagram-tag">Instagram Tag(s): {{raw_instagram_tags}}</p>
+        <p class="product-description" title='{{description}}'>{{truncated_description}}</p>
+        <p class="product-instagram-tag">Instagram Tag(s): {{instagram_tags}}</p>
         <p class="product-price">Price: {{price}}</p>
         <p class="product-quantity">Quantity: {{quantity}}</p>
         {{#flatrate_shipping_cost}}
@@ -50,11 +54,11 @@ templates.product_widget_template = """
         <a title="Edit {{name}}" class="gramgoods-tooltip edit-product" href="javascript: void(0);"><i class="icon-cog"></i></a>
         <a title='Delete {{name}}' class='gramgoods-tooltip delete-product' href="javascript: void(0);"><i class='icon-remove-sign'></i></a>
         <a
-            href="/{{store_slug}}/{{slug}}?layout=mobile"
+            href="/{{store_slug}}/{{product_slug}}?layout=mobile"
             class="btn btn-primary product-preview"
             target='_blank'
         >
-            View {{slug}}
+            View {{product_slug}}
             <i class="icon-white icon-globe"></i>
         </a>
         <div class="product-photos-gallery {{product_photo_gallery_scroll}}">
