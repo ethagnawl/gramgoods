@@ -140,7 +140,7 @@ label.error {
 
         border: 1px solid $light-grey;
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-        height: 550px;
+        height: 600px;
         margin: {
             right: 8px;
             bottom: 24px;
@@ -162,6 +162,18 @@ label.error {
 
         .product-name a {
             color: $dark-grey;
+        }
+
+
+        .product-photo-warning {
+            background-color: $medium-grey;
+            color: $cream;
+            margin: 12px 0;
+            padding: 14px;
+
+            li {
+                margin-left: 20px;
+            }
         }
 
         .product-photo-wrapper {

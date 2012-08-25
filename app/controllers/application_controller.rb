@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
       json.out_of_stock product.status == 'Out of Stock'
       json.raw_product_photo_count product.product_images.length
       json.product_photo_count "#{product.product_images.length} #{'Photo'.pluralize(product.product_images.length)}"
-      json.product_photo product.first_product_image
+      json.product_photo !product.first_product_image.empty? ? product.first_product_image : false
       json.product_photos product.product_images.map { |product_image| render_user_photo_template(product, product_image) }
       json.product_photo_gallery_scroll product.product_images.length > 5 ? 'product-photos-gallery-scroll' : nil
       json.store_owner_instagram store.user.authentication.nickname unless store.user.authentication.nil?
