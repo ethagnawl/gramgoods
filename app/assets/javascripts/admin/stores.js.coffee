@@ -75,8 +75,9 @@ if gon.page is 'stores_show'
 
     # build csv of label data
     # i.e. size: small,medium,large
-    map_label_values = (name) -> $.map(($ ".label-#{name}"), (e) ->
-        ($ e).data('value')).join(',')
+    map_label_values = (name) ->
+        $.map(($ ".label-#{name}"), (e) ->
+            $.trim(($ e).data('value'))).join(',')
 
     trigger_process_csv = ($input) ->
         if $input.val()?
