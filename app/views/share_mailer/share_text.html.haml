@@ -3,7 +3,7 @@
   %head
     %meta{ :charset => "utf-8" }
   %body
-    %h1 Use the following text to easily share your product.
+    %h1 Use the following text to easily share #{@product.name}.
     %p
       http://gramgoods.com/#{@product.store.slug}/#{@product.slug} Buy #{@product.name} for #{number_to_currency(@product.price)} right now by visiting @#{!@product.store.user.authentication.nickname.nil? ? @product.store.user.authentication.nickname : '' } or clicking the link. #{@product.render_instagram_tags}
     %p
