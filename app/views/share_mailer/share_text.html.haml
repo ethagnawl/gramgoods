@@ -7,5 +7,6 @@
     %p
       http://gramgoods.com/#{@product.store.slug}/#{@product.slug} Buy #{@product.name} for #{number_to_currency(@product.price)} right now by visiting @#{!@product.store.user.authentication.nickname.nil? ? @product.store.user.authentication.nickname : '' } or clicking the link. #{@product.render_instagram_tags}
     %p
-      *Please note, any new photos you take with Instagram will need to be associated with this product. You can login into your account and associate new photos by clicking todo.
+      *Please note, any new photos you take with Instagram will need to be associated with this product. You can login into your account and associate new photos by
+      %a{ :href => "http://gramgoods.com/#{@product.store.slug}/#{@product.slug}" } clicking here.
 
