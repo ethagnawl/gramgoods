@@ -48,23 +48,14 @@ if gon.page is 'stores_show'
         $window.scrollTop($product_form_wrapper)
 
     render_edit_product_form = (data) ->
-        if data.rawInstagramTags
-            data.instagram_tags = $.map(
-                data.rawInstagramTags.split(', '), (instagram_tag) -> {
-                        value: instagram_tag,
-                        name: 'instagram-tag' })
-        if data.sizes
-            data.sizes = $.map(data.sizes.split(','), (size) ->
-                {value: size, name: 'size'})
-        if data.colors
-            data.colors = $.map(data.colors.split(','), (color) ->
-                {value: color, name: 'color'})
-        update_product_form(data)
-        update_h2(
-            Mustache.render(
-                templates.stores_h2_edit_template, { name: data.name }))
-        render_user_photos {product_photos: data.productPhotos}
-        fetch_user_photos(render_user_photo_feed, { product_slug: data.slug })
+        $.getJSON("/#{data.store_slug}/#{data.product_slug}", (response) ->
+            update_product_form(response)
+            update_h2(
+                Mustache.render(
+                    templates.stores_h2_edit_template, { name: response.name }))
+            render_user_photos { product_photos: data.product_photos }
+            fetch_user_photos(
+                render_user_photo_feed, { product_slug: response.slug }))
 
     render_new_product_form = (data) ->
         data.dummy_share_text = 'Ex. Buy Blue Jeans for $50.00 right now by visiting @YourInstagramAccount or clicking this link: http://gramgoods.com/your-new-store/your-new-product'

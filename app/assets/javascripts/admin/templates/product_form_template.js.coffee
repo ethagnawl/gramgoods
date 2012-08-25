@@ -34,11 +34,9 @@ templates.product_form_template = """
                         </span>
                     </div>
                 </div>
-                {{#put}}
-                    {{#instagram_tags}}
-                        {{> product_form_label_template}}
-                    {{/instagram_tags}}
-                {{/put}}
+                {{#instagram_tags}}
+                    {{> product_form_label_template}}
+                {{/instagram_tags}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_description">Description*</label>
@@ -51,7 +49,7 @@ templates.product_form_template = """
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">$</span>
-                        <input type="text" value="{{price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
+                        <input type="text" value="{{raw_price}}" size="30" name="product[price]" id="product_price" class="input-xlarge">
                     </div>
                 </div>
             </div>
@@ -60,14 +58,14 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_quantity">Quantity*</label>
                 <div class="controls">
-                    <input type="text" value="{{^unlimitedQuantity}}{{quantity}}{{/unlimitedQuantity}}" size="30" name="product[quantity]" id="product_quantity" {{#unlimitedQuantity}}disabled="disabled"{{/unlimitedQuantity}} class="input-xlarge">
+                    <input type="text" value="{{^unlimited_quantity}}{{quantity}}{{/unlimited_quantity}}" size="30" name="product[quantity]" id="product_quantity" {{#unlimited_quantity}}disabled="disabled"{{/unlimited_quantity}} class="input-xlarge">
                 </div>
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_unlimited_quantity">Unlimited Quantity</label>
                 <div class="controls">
                     <input type="hidden" value="0" name="product[unlimited_quantity]">
-                    <input type='checkbox' value="1" name="product[unlimited_quantity]" id="product_unlimited_quantity" {{#unlimitedQuantity}} checked='checked' {{/unlimitedQuantity}} class='product-unlimited-quantity'>
+                    <input type='checkbox' value="1" name="product[unlimited_quantity]" id="product_unlimited_quantity" {{#unlimited_quantity}} checked='checked' {{/unlimited_quantity}} class='product-unlimited-quantity'>
                 </div>
             </div>
             <div class="control-group">
@@ -80,11 +78,9 @@ templates.product_form_template = """
                             </a>
                         </span>
                 </div>
-                {{#put}}
-                    {{#colors}}
-                        {{> product_form_label_template}}
-                    {{/colors}}
-                {{/put}}
+                {{#colors}}
+                    {{> product_form_label_template}}
+                {{/colors}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_sizes">Sizes</label>
@@ -96,18 +92,16 @@ templates.product_form_template = """
                           </a>
                       </span>
                 </div>
-                {{#put}}
-                    {{#sizes}}
-                        {{> product_form_label_template}}
-                    {{/sizes}}
-                {{/put}}
+                {{#sizes}}
+                    {{> product_form_label_template}}
+                {{/sizes}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_flatrate_shipping_cost">Flatrate shipping cost</label>
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">$</span>
-                        <input type="text" value="{{flatrateShippingCost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
+                        <input type="text" value="{{raw_flatrate_shipping_cost}}" size="30" name="product[flatrate_shipping_cost]" id="product_flatrate_shipping_cost" class="input-xlarge">
                     </div>
                 </div>
             </div>
@@ -137,7 +131,7 @@ templates.product_form_template = """
                             value="{{dummy_share_text}}"
                             {{/dummy_share_text}}
                             {{^dummy_share_text}}
-                            value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{slug}}"
+                            value="Buy {{name}} for {{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{slug}}"
                             {{/dummy_share_text}}
                         />
                     </div>

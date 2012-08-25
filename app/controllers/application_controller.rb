@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
     Jbuilder.encode do |json|
       json.name product.name
       json.truncated_name truncate(product.name, :length => 22)
-      json.instagram_tags (product.instagram_tag.split(',').map { |instagram_tag| { :instagram_tag => instagram_tag}})
+      json.instagram_tags (product.instagram_tag.split(',').map { |instagram_tag| { :name => 'instagram_tag', :value => instagram_tag}})
       json.raw_instagram_tags product.instagram_tag
       json.slug product.slug
       json.store_slug store.slug
@@ -69,8 +69,8 @@ class ApplicationController < ActionController::Base
       json.quantity product.get_quantity
       json.raw_quantity product.quantity
       json.unlimited_quantity product.unlimited_quantity
-      json.colors product.colors ||= nil
-      json.sizes product.sizes ||= nil
+      json.colors !product.colors.empty? ? (product.colors.split(',').map { |color| { :name => 'color', :value => color}}) : nil
+      json.sizes !product.sizes.empty? ? (product.sizes.split(',').map { |size| { :name => 'size', :value => size}}) : nil
       json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
       json.raw_flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_with_precision(product.flatrate_shipping_cost, :precision => 2)
       json.status product.status
