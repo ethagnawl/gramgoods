@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
-  :colors, :sizes, :flatrate_shipping_cost, :instagram_tag, :photos,
+  :colors, :sizes, :flatrate_shipping_cost, :instagram_tag,
   :unlimited_quantity, :product_images_attributes
 
   validates_presence_of :name, :price, :description, :instagram_tag
@@ -19,6 +19,15 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :product_images
 
   before_save :normalize_quantity
+  after_save :deliver_share_text
+
+  def deliver_share_text
+    @product = self
+    nickname = self.store.user.authentication.nickname
+    @user_instagram = !nickname.nil? ? nickname : ''
+    @store_slug = self.store.slug
+    ShareMailer.share_text(self.store.user.email, @product, @store_slug, @user_instagram).deliver
+  end
 
   def normalize_quantity
     self.quantity = 0 if self.quantity.nil?

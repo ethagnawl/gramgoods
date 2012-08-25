@@ -10,7 +10,7 @@ templates.product_form_template = """
         </a>
 
         {{#put}}
-            <input type="hidden" value="put" name="_method">
+            <input type="hidden" value="put" Name="_method">
         {{/put}}
 
         <div class="form-errors-wrapper"></div>
@@ -114,13 +114,27 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_status">Status</label>
                 <div class="controls">
-                    <select name="product[status]" id="product_status">
+                    <select name="product[status]" id="product_status" class='input-xlarge'>
                     <option {{#draft}}selected="selected"{{/draft}} value="Draft">Draft</option>
                     <option {{#active}}selected="selected"{{/active}} value="Active">Active</option>
                     <option {{#outOfStock}}selected="selected"{{/outOfStock}} value='Out of Stock'>Out of Stock</option>
                     </select>
                 </div>
             </div>
+            </fieldset>
+
+            <fieldset class="widget">
+                    <div class="widget">
+                        <label class='widget' for="share_copy">
+                            The following text will be e-mailed to {{store_owner_email}} for easy mobile sharing.
+                        </label>
+                        <input
+                            class='input-xxlarge uneditable-input widget'
+                            id="share_copy"
+                            type="text"
+                            value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{slug}}"
+                        />
+                    </div>
             </fieldset>
 
             {{#put}}

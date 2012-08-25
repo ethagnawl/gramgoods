@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     @store = Store.find(params[:store_id])
     respond_to do |format|
       format.json {
-        render :json => @store.products.map { |product|
+        render :json => @store.products.includes(:product_images).map { |product|
           render_product_widget_template(@store, product) }
       }
       format.html { redirect_to(store_path(Store.find(params[:store_id]))) }
