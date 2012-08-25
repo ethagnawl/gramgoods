@@ -22,11 +22,7 @@ class Product < ActiveRecord::Base
   after_save :deliver_share_text
 
   def deliver_share_text
-    @product = self
-    nickname = self.store.user.authentication.nickname
-    @user_instagram = !nickname.nil? ? nickname : ''
-    @store_slug = self.store.slug
-    ShareMailer.share_text(self.store.user.email, @product, @store_slug, @user_instagram).deliver
+    ShareMailer.share_text(self.store.user.email, self).deliver
   end
 
   def normalize_quantity

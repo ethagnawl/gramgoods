@@ -4,5 +4,8 @@
     %meta{ :charset => "utf-8" }
   %body
     %h1 Use the following text to easily share your product.
-    Buy #{@product.name} for #{number_to_currency(@product.price)} right now by visiting @#{@user_instagram} or clicking this link: http://gramgoods.com/#{@store_slug}/#{@product.slug}
+    %p
+      http://gramgoods.com/#{@product.store.slug}/#{@product.slug} Buy #{@product.name} for #{number_to_currency(@product.price)} right now by visiting @#{!@product.store.user.authentication.nickname.nil? ? @product.store.user.authentication.nickname : '' } or clicking the link. #{@product.render_instagram_tags}
+    %p
+      *Please note, any new photos you take with Instagram will need to be associated with this product. You can login into your account and associate new photos by clicking todo.
 
