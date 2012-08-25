@@ -133,8 +133,8 @@ if gon.page is 'stores_show'
                 _product_widget._product_photos = JSON.stringify _product_widget.product_photos
                 _product_widget.raw_instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> "#{instagram_tag}").join(', ')
                 _product_widget.instagram_tags = ($.map _product_widget.raw_instagram_tags.split(','), (instagram_tag) -> {instagram_tag: instagram_tag})
-                _product_widget.sizes = _product_widget.sizes.split(',').join(', ')
-                _product_widget.colors = _product_widget.colors.split(',').join(', ')
+                _product_widget.sizes = _product_widget.sizes.split(',').join(', ') if product_widget.sizes?
+                _product_widget.colors = _product_widget.colors.split(',').join(', ') if product_widget.colors?
                 $wrapper.append(Mustache.render(templates.product_widget_template, _product_widget))
             ($ '.product-widgets').html($wrapper)
         update_product_count(product_widgets.length)
