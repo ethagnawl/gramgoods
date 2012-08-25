@@ -39,14 +39,14 @@
               - (1..@product.quantity.to_i).each do |n|
                 %option{ :value => n }
                   = n
-        - unless @product.colors.nil?
+        - unless @product.colors.empty?
           .widget
             %h2 Color
             %select#color
               - @product.colors.split(',').each do |color|
                 %option{ :value => color }
                   = color
-        - unless @product.sizes.nil?
+        - unless @product.sizes.empty?
           .widget
             %h2 Size
             %select#size
