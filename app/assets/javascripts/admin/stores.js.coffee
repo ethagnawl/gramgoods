@@ -144,7 +144,6 @@ if gon.page is 'stores_show'
         ($ '.fetch-more-user-photos').data('maxId', user_photos.max_id)
 
     window.render_user_photos = (user_photos) ->
-        console.log user_photos
         $product_form_wrapper.find('.product-photos')
             .replaceWith(
                 Mustache.render(
@@ -272,7 +271,7 @@ if gon.page is 'stores_show'
                 ($ @).parent().remove()
 
             .on 'click', '.render-new-product-form', ->
-                render_new_product_form({storeSlug: gon.store_slug})
+                render_new_product_form({store_slug: gon.store_slug})
                 update_h2(Mustache.render(templates.stores_h2_remove_template, {}))
 
             .on 'click', '.hide-new-product-form, .hide-product-form', ->
