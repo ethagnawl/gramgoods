@@ -67,6 +67,7 @@ if gon.page is 'stores_show'
         fetch_user_photos(render_user_photo_feed, { product_slug: data.slug })
 
     render_new_product_form = (data) ->
+        data.dummy_share_text = 'Ex. Buy Blue Jeans for $50.00 right now by visiting @YourInstagramAccount or clicking this link: http://gramgoods.com/your-new-store/your-new-product'
         update_product_form(data)
         reset_h2()
         unless gon.authenticated is false

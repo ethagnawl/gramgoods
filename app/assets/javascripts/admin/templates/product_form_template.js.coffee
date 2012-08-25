@@ -126,13 +126,19 @@ templates.product_form_template = """
             <fieldset class="widget">
                     <div class="widget">
                         <label class='widget' for="share_copy">
-                            The following text will be e-mailed to {{store_owner_email}} for easy mobile sharing.
+                            The following text will be e-mailed to you for easy mobile sharing.
                         </label>
                         <input
                             class='input-xxlarge uneditable-input widget'
+                            disabled=disabled
                             id="share_copy"
                             type="text"
+                            {{#dummy_share_text}}
+                            value="{{dummy_share_text}}"
+                            {{/dummy_share_text}}
+                            {{^dummy_share_text}}
                             value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{slug}}"
+                            {{/dummy_share_text}}
                         />
                     </div>
             </fieldset>
