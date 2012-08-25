@@ -1,3 +1,4 @@
+- content_for(:title) { "#{@store.name} | GramGoods" }
 .products.widget
   - @products.each do |product|
     .product{ :data => { :slug => product.slug }}

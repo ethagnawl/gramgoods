@@ -1,3 +1,4 @@
+- content_for(:title) { "#{@product.name} | GramGoods" }
 - content_for(:header) do
   %a{ :href => "/#{@store.slug}" } #{@store.name}
 
@@ -38,14 +39,14 @@
               - (1..@product.quantity.to_i).each do |n|
                 %option{ :value => n }
                   = n
-        - unless @product.colors.empty?
+        - unless @product.colors.nil?
           .widget
             %h2 Color
             %select#color
               - @product.colors.split(',').each do |color|
                 %option{ :value => color }
                   = color
-        - unless @product.sizes.empty?
+        - unless @product.sizes.nil?
           .widget
             %h2 Size
             %select#size
