@@ -84,7 +84,7 @@ class Product < ActiveRecord::Base
   end
 
   def render_instagram_tags
-    self.get_instagram_tags.join(', ')
+    self.get_instagram_tags.join(' ')
   end
 
   def like_count
