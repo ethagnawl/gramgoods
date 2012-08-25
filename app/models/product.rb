@@ -87,6 +87,10 @@ class Product < ActiveRecord::Base
     self.instagram_tag.split(',')
   end
 
+  def render_instagram_tags
+    self.get_instagram_tags.join(', ')
+  end
+
   def like_count
     product_images_with_likes = self.product_images.reject do |product_image|
       !product_image.likes.is_a? Integer
