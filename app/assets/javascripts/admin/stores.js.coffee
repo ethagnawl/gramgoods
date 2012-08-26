@@ -211,7 +211,7 @@ if gon.page is 'stores_show'
                 data = ($ @).closest('.product-widget').data()
                 if confirm("Are you sure you want to delete #{data.name}?")
                     destroy_product(
-                        data.storeSlug, data.slug, fetch_and_render_product_widgets)
+                        gon.store_slug, data.product_slug, fetch_and_render_product_widgets)
 
         append_to_control_group = ($control_group, hash) ->
             $control_group.append(Mustache.render(

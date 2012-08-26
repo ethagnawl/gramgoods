@@ -3,6 +3,7 @@ templates.product_widget_template = """
         class="product-widget well"
         data-product_slug='{{product_slug}}'
         data-store_slug='{{store_slug}}'
+        data-name='{{name}}'
     >
 
         <h2 class="product-name" title="{{name}}">{{truncated_name}}</h2>
