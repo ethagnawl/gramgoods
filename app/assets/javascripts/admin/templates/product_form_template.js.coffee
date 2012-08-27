@@ -133,7 +133,7 @@ templates.product_form_template = """
                             value="{{dummy_share_text}}"
                             {{/dummy_share_text}}
                             {{^dummy_share_text}}
-                            value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{storeSlug}}/{{product_slug}}"
+                            value="Buy {{name}} for ${{price}} right now by visiting @{{store_owner_instagram}} or clicking this link: http://gramgoods.com/{{store_slug}}/{{product_slug}}"
                             {{/dummy_share_text}}
                         />
                     </div>
