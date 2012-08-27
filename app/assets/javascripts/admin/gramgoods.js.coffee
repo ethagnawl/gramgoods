@@ -36,3 +36,7 @@ $ ->
         this.optional(element) or /^(\d+)(\.\d{1,2})?$/.test(value) && value > 0
     , "Must be in US currency format 0.99")
 
+    # override jquery.validation's url method, which requires protocol
+    $.validator.addMethod("url", (value, element) ->
+        this.optional(element) or /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(value)
+    , "Must be a valid URL")
