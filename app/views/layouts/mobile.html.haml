@@ -5,6 +5,7 @@
     %meta{ :name => "viewport", :content => "width=device-width, initial-scale=1.0" }
     %meta{ :name => 'viewport', :content => 'user-scalable=no, width=320' }
     %meta{ :name => "stripe-key", :content => "#{STRIPE_CONFIG['PUBLIC_KEY']}" }
+    = favicon_link_tag
     %title
       - if content_for?(:title)
         = yield :title
