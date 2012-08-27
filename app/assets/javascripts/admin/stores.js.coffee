@@ -213,6 +213,19 @@ if gon.page is 'stores_show'
                     destroy_product(
                         gon.store_slug, data.product_slug, fetch_and_render_product_widgets)
 
+            .on 'click', '.copy-to-clipboard', ->
+                key = if navigator.platform.indexOf('Mac') isnt -1
+                        'Command'
+                      else
+                        'Control'
+                base = window.location.href.split(window.location.pathname)[0]
+                url = ($ @).data('url')
+
+                prompt("""
+                    Copy to Clipboard
+                    #{key} + C, Enter
+                """, "#{base}/#{url}")
+
         append_to_control_group = ($control_group, hash) ->
             $control_group.append(Mustache.render(
                 templates.product_form_label_template, hash))

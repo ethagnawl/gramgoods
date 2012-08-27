@@ -62,6 +62,18 @@ templates.product_widget_template = """
             View {{product_slug}}
             <i class="icon-white icon-globe"></i>
         </a>
+
+        <p class='copy-to-clipboard-wrapper'>
+            Copy URL to Clipboard
+            <a
+                class='gramgoods-tooltip copy-to-clipboard'
+                href='javascript: void(0);'
+                data-url='{{store_slug}}/{{product_slug}}'
+            >
+                <i class='icon-share'></i>
+            </a>
+        </p>
+
         <div class="product-photos-gallery {{product_photo_gallery_scroll}}">
             {{#product_photos}}
                 <img src="{{url}}" alt="{{name}}" class="product-photos-gallery-photo" />

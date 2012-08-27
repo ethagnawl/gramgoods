@@ -300,10 +300,21 @@ label.error {
             }
         }
 
+        .copy-to-clipboard-wrapper {
+            bottom: 44px;
+            position: absolute;
+            right: 10px;
+
+            .gramgoods-tooltip {
+                position: static !important;
+            }
+        }
+
         .product-preview {
             bottom: 10px;
             position: absolute;
             right: 10px;
+
         }
     }
 }
