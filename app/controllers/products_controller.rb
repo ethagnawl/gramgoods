@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   layout 'admin'
-  before_filter :authenticate_user!, :except => [:show]
-  before_filter :except => [:show, :destroy] do |controller|
+  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :except => [:show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find((params[:store_id] || params[:product][:store_id]))
@@ -20,13 +20,17 @@ class ProductsController < ApplicationController
   #end
 
   def index
-    @store = Store.find(params[:store_id])
     respond_to do |format|
       format.json {
+        @store = Store.find(params[:store_id])
         render :json => @store.products.includes(:product_images).map { |product|
           render_product_widget_template(@store, product) }
       }
-      format.html { redirect_to(store_path(Store.find(params[:store_id]))) }
+      format.html {
+        @products = Product.order('created_at DESC').limit(10)
+                      .where(:status => 'Active')
+        render 'products/index.mobile', :layout => 'mobile'
+      }
     end
 
   end
