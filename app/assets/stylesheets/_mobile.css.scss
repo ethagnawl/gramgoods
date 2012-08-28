@@ -243,6 +243,17 @@ body {
     }
 }
 
+.products-index {
+    .products .product .product-middle {
+        margin-top: 2%;
+
+        .store-name {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    }
+}
+
 .mobile-layout.orders-new,
 .mobile-layout.orders-create {
     .store-header {
