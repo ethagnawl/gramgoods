@@ -1,6 +1,6 @@
 window.templates = {}
 
-if gon.page is 'stores_show' or gon.page is 'products_show'
+if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index'
     dirty_commas = (num) ->
         String(num).replace /^\d+(?=\.|$)/, (int) ->
             int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
@@ -12,7 +12,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show'
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
 
-        if gon.page is 'stores_show'
+        if gon.page is 'stores_show' or gon.page is 'products_index'
             header_fix()
 
             ($ '.products').on('tap', '.product', ->
