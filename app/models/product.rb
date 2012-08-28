@@ -38,12 +38,12 @@ class Product < ActiveRecord::Base
   end
 
   def update_status(status)
-    self.update_attributes :status => status
+    update_column(:status, status)
   end
 
   def deduct_from_quantity(quantity)
     unless self.unlimited_quantity == true
-      self.update_attributes :quantity => (self.quantity -= quantity)
+      update_column(:quantity, (self.quantity -= quantity))
 
       # the quantity *should* never be less than 0
       # but just in case...
