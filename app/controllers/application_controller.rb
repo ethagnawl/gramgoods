@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :clear_gon
   before_filter :set_gon
   before_filter :ensure_proper_protocol
+  before_filter :basic_authentication
   helper_method :secure_url
   helper_method :render_user_photo_template
   helper_method :mobile_device?
@@ -106,6 +107,13 @@ class ApplicationController < ActionController::Base
   def clear_gon
     gon.clear
   end
+
+  def basic_authentication
+    authenticate_or_request_with_http_basic do |username, password|
+      username == "GramG00ds" && password == "00000"
+    end
+  end
+
 
   def ssl_allowed_action?
     params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
