@@ -23,7 +23,7 @@
                 %li
                   %p.navbar-text
                     Logged into GramGoods as #{current_user.email}
-                    = link_to(edit_user_registration_path),
+                    = link_to edit_user_registration_path,
                       :class => 'gramgoods-tooltip' do
                       %i.icon-cog
                     = link_to(destroy_user_session_path),
