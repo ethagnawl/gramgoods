@@ -18,6 +18,8 @@
             %ul.nav.pull-left
               %li{ :class => params[:controller] == 'stores' && params[:action] == 'index' ? 'active' : nil }
                 %a{ :href => '/stores' } Stores
+              %li
+                %a{ :href => 'mailto:admin@gramgoods.com' } Help
             %ul.nav.pull-right
               - if user_signed_in?
                 %li
