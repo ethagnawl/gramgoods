@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   before_filter :basic_authentication
-  helper_method :secure_url
   helper_method :render_user_photo_template
   helper_method :mobile_device?
 
@@ -126,10 +125,6 @@ class ApplicationController < ActionController::Base
     if request.ssl? && !ssl_allowed_action?
       redirect_to "http://" + request.host + request.fullpath
     end
-  end
-
-  def secure_url(url)
-    Rails.env.production? ? ENV['SECURE_HEROKU_APP_URL'] + url : url
   end
 
   def mobile_device?

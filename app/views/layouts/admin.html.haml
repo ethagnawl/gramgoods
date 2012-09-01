@@ -23,10 +23,10 @@
                 %li
                   %p.navbar-text
                     Logged into GramGoods as #{current_user.email}
-                    = link_to secure_url(edit_user_registration_path),
+                    = link_to(edit_user_registration_path),
                       :class => 'gramgoods-tooltip' do
                       %i.icon-cog
-                    = link_to secure_url(destroy_user_session_path),
+                    = link_to(destroy_user_session_path),
                       :method => :delete, :class => 'gramgoods-tooltip' do
                       %i.icon-remove-sign
                 %li.divider-vertical
@@ -45,10 +45,10 @@
                     = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
               - else
                 %li
-                  = link_to "Sign In", secure_url(new_user_session_path)
+                  = link_to "Sign In", new_user_session_path
                 %li.divider-vertical
                 %li
-                  = link_to "Sign Up", secure_url(new_user_registration_path)
+                  = link_to "Sign Up", new_user_registration_path
 
             %ul.nav.pull-right
               %li.dropdown

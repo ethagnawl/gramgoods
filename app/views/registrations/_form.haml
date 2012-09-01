@@ -1,5 +1,5 @@
 #registrations_form_wrapper
-  = form_for(resource, :as => resource_name, :url => secure_url(registration_path(resource_name)), :html => { :class => 'well', :method => locals[:method] }) do |f|
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => 'well', :method => locals[:method] }) do |f|
     = devise_error_messages!
 
     %fieldset
@@ -99,7 +99,7 @@
 
   - if locals[:method] == :put
     %h3 Cancel my account
-    %p Unhappy? #{link_to "Cancel my account", secure_url(registration_path(resource_name)), :data => { :confirm => "Are you sure?" }, :method => :delete }.</p>
+    %p Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete }.</p>
     = link_to "Back", :back
   - else
     = render :partial => "devise/shared/links"

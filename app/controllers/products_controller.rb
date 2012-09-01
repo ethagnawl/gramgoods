@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
     gon.product_name = @product.name
     gon.product_id = @product.id
     gon.store_slug = @store.slug
-    gon.create_order_url = secure_url(new_store_order_path(@store))
+    gon.create_order_url = new_store_order_path(@store)
 
     respond_to do |format|
       format.json {
