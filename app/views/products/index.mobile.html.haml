@@ -1,18 +1,3 @@
 - content_for(:title) { "Recent Products | GramGoods" }
 - content_for(:header) { 'Recent Products' }
-.products.widget
-  - @products.each do |product|
-    .product{ :data => { :slug => product.slug }}
-      .product-left
-        = image_tag("#{product.photos_array.first}", :class => 'product-thumbnail')
-      .product-middle
-        .store-name
-          = product.store.name
-        .product-name
-          = truncate(product.name, :length => 20)
-        .product-button.product-price
-          = number_to_currency(product.price)
-      .product-right
-        .product-link
-          - url = conditional_layout_link(params, product.store.slug + '/' + product.slug)
-          = link_to('', url, :title => "View #{product.name}")
+= render 'shared/products', :locals => { :products => @products, :show_store_name => true }
