@@ -17,9 +17,9 @@ body {
 
 .store-header {
     background-color: $blue;
-    border-bottom: 1px solid $medium-grey;
     color: $white;
     left: 0;
+    max-height: 45px;
     padding: 4% 0;
     position: fixed;
     top: 0;
@@ -144,7 +144,7 @@ body {
     }
 
     &.products {
-        padding-top: 16%;
+        padding-top: 44px;
     }
 
     .product {
