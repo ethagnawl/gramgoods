@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :business_name, :website,
     :street_address_1, :city, :state, :postal_code, :phone_number
 
-  validates_format_of :website, :with => URI::regexp
+  validates_format_of :website, :with => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/
   validates_format_of :postal_code, :message => 'must be a valid Postal Code.', :with => /^([0-9]{5}(?:-[0-9]{4})?)*$/
   validates_format_of :phone_number, :message => "must be a valid telephone number.", :with => /^[\(\)0-9\- \+\.]{10,20}$/
 
