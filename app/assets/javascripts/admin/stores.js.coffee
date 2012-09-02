@@ -64,9 +64,9 @@ if gon.page is 'stores_show'
         unless gon.authenticated is false
             fetch_user_photos(render_user_photo_feed, { product_slug: data.slug })
 
-    # build csv of label data
+    # build fields_for instagram_tag, color and size
     # i.e. size: small,medium,large
-    _map_label_values = (name, $context) ->
+    map_label_values = (name, $context) ->
         container = $('<div />').attr('class', 'hide')
         ($ ".label-#{name}").each (i, label) ->
             data =
@@ -337,9 +337,8 @@ if gon.page is 'stores_show'
                             product_image_n: i))
                 ($ @).append(container)
 
-                # query instagram tag, color and sizes labels and
-                # update appropriate input with csv
-                _map_label_values(input, ($ @)) for input in multiple_value_inputs
+                # build nested attribute inputs for instagram_tag, color and size
+                map_label_values(input, ($ @)) for input in multiple_value_inputs
 
                 verb = if @id is 'new_product' then 'created' else 'updated'
 
