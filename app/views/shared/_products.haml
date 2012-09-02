@@ -15,3 +15,6 @@
         .product-link
           - url = conditional_layout_link(params, product.store.slug + '/' + product.slug)
           = link_to('', url, :title => "View #{product.name}")
+  %a.widget.desktop-link{ :href => '/?layout=desktop' } Looking for the desktop version of GramGoods?
+
+
