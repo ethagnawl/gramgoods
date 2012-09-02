@@ -1,5 +1,6 @@
 class StaticController < ApplicationController
-  layout 'admin'
+  layout 'static'
+  logger.info 'WHAT THE FUCK'
   def index
     # TODO move this into a before_filter in ApplicationController
     redirect_to(products_path) if mobile_device? && params[:layout] != 'desktop'
