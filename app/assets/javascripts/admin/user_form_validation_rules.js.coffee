@@ -43,5 +43,7 @@ $ ->
                 required: true
                 postalCode: true
                 maxlength: 16
+            'user[tos]':
+                required: true
 
     $.extend(user_form_options, form_options)

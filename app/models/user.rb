@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation,
     :remember_me, :first_name, :last_name, :website,
     :business_name, :street_address_1, :street_address_2, :city, :state,
-    :postal_code, :phone_number
+    :postal_code, :phone_number, :tos
 
   validates_presence_of :first_name, :last_name, :business_name, :website,
     :street_address_1, :city, :state, :postal_code, :phone_number
@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   validates_format_of :website, :with => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/
   validates_format_of :postal_code, :message => 'must be a valid Postal Code.', :with => /^([0-9]{5}(?:-[0-9]{4})?)*$/
   validates_format_of :phone_number, :message => "must be a valid telephone number.", :with => /^[\(\)0-9\- \+\.]{10,20}$/
+
+  validates_acceptance_of :tos, :on => :create, :accept => true
 
   def apply_omniauth(omniauth)
     authentications.build(

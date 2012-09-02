@@ -91,6 +91,16 @@
         .controls
           = f.text_field :postal_code
 
+      - unless locals[:method] == :put
+        .control-group
+          = f.label :tos, 'Terms of Service', :class => 'control-label'
+          .controls
+            = f.check_box :tos
+            %span.help-inline
+              I agree to the
+              %a{ :href => '/tos', :target => '_blank' }
+                GramGoods Terms of Service.
+
       .form-actions
         - if locals[:method] == :put
           = f.submit "Update", :class => 'btn btn-primary'
