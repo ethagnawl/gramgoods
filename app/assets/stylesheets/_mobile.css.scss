@@ -152,6 +152,7 @@ body {
 
         border-bottom: 1px solid $medium-grey;
         margin-bottom: 0;
+        position: relative;
 
         .product-left {
             float: left;
@@ -171,16 +172,14 @@ body {
         }
 
         .product-right {
-            float: right;
-            margin-top: 12%;
-            margin-right: 4%;
-            width: 10%;
-
             .product-link {
                 a {
                     background: image-url('forward_arrow.png') no-repeat 0 0;
+                    display: inline-block;
                     height: 35px;
-                    float: right;
+                    position: absolute;
+                    right: 4%;
+                    top: 38px;
                     width: 35px;
                 }
             }
