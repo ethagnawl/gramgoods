@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.json {
         @store = Store.find(params[:store_id])
-        render :json => @store.products.includes(:product_images).map { |product|
+        render :json => @store.products.includes([:product_images, :instagram_tags]).map { |product|
           render_product_widget_template(@store, product) }
       }
       format.html {
@@ -116,6 +116,9 @@ class ProductsController < ApplicationController
     params[:product][:status] = 'Draft' if product_photos_is_empty
     params[:product][:status] = 'Out of Stock' if params[:product][:quantity].to_i == 0 && params[:product][:unlimited_quantity] == 0
     @product.product_images.destroy_all
+    @product.instagram_tags.destroy_all
+    @product.colors.destroy_all
+    @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
       if product_photos_is_empty
         flash[:alert] = product_photos_empty_message(@product.name)

@@ -43,16 +43,16 @@
           .widget
             %h2 Color
             %select#color
-              - @product.colors.split(',').each do |color|
-                %option{ :value => color }
-                  = color
+              - @product.colors.each do |color|
+                %option{ :value => color.color }
+                  = color.color
         - unless @product.sizes.empty?
           .widget
             %h2 Size
             %select#size
-              - @product.sizes.split(',').each do |size|
-                %option{ :value => size }
-                  = size
+              - @product.sizes.each do |size|
+                %option{ :value => size.size }
+                  = size.size
 
       - unless @product.flatrate_shipping_cost.nil?
         .widget

@@ -1,22 +1,26 @@
 class Product < ActiveRecord::Base
   belongs_to :store
   has_many :product_images
+  has_many :instagram_tags
+  has_many :colors
+  has_many :sizes
   extend FriendlyId
 
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
-  :colors, :sizes, :flatrate_shipping_cost, :instagram_tag,
-  :unlimited_quantity, :product_images_attributes
+  :flatrate_shipping_cost, :unlimited_quantity, :product_images_attributes,
+  :instagram_tags_attributes, :colors_attributes, :sizes_attributes
 
-  validates_presence_of :name, :price, :description, :instagram_tag
+  validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
   validates_numericality_of :flatrate_shipping_cost, :greater_than => 0.00,
     :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
+  validate :require_instagram_tag
 
-  accepts_nested_attributes_for :product_images
+  accepts_nested_attributes_for :product_images, :instagram_tags, :colors, :sizes
 
   before_save :normalize_quantity
   after_save :deliver_share_text
@@ -79,12 +83,18 @@ class Product < ActiveRecord::Base
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
 
-  def get_instagram_tags
-    self.instagram_tag.split(',')
+  def get_instagram_tags(separator = ', ')
+    self.instagram_tags.map { |instagram_tag|
+      instagram_tag.instagram_tag
+    }.join(separator)
   end
 
-  def render_instagram_tags
-    self.get_instagram_tags.join(' ')
+  def get_colors
+    self.colors.map { |color| color.color }.join(', ')
+  end
+
+  def get_sizes
+    self.sizes.map { |size| size.size }.join(', ')
   end
 
   def like_count
@@ -92,5 +102,11 @@ class Product < ActiveRecord::Base
       !product_image.likes.is_a? Integer
     end
     product_images_with_likes.inject(0) {|sum, product_image| sum + product_image.likes }
+  end
+
+  def require_instagram_tag
+    if instagram_tags.length < 1
+      errors.add(:base, 'You must provide at least one Instagram tag.')
+    end
   end
 end

@@ -1,9 +1,18 @@
+
 if gon.page is 'stores_new' or gon.page is 'stores_edit'
     $ -> ($ '#store_form_wrapper').find('form').validate store_form_options
 
 if gon.page is 'stores_show'
 
     #config
+    multiple_value_inputs = [
+        # each input has a 'product_' prefix and a 's' suffix
+        # i.e. 'product_instagram_tags'
+        'instagram_tag'
+        'color'
+        'size'
+    ]
+
     product_photos_gallery_displayed = 'product-photos-gallery-displayed'
 
     product_form_submission_error_callback = (self, response) ->
@@ -14,14 +23,6 @@ if gon.page is 'stores_show'
         else
             errors = null
 
-        # this is criminal, but it'll have to do for now...
-        # inputs are populated with CSVs when the form is submitted, but
-        # form-label-buttons already exist in the dom,
-        # so we clear the inputs to prevent double entry
-        ($ '#product_instagram_tag').val('')
-        ($ '#product_colors').val('')
-        ($ '#product_sizes').val('')
-
         ($ self).removeClass(hide)
 
         ($ '.form-errors-wrapper').html(
@@ -30,7 +31,6 @@ if gon.page is 'stores_show'
                     templates.form_error_template, {
                         errors: errors }))
         $window.scrollTop(($ '.form-errors-wrapper'))
-
 
     reset_product_form = (data) ->
         $product_form_wrapper.find('form').replaceWith($('<form />'))
@@ -66,9 +66,17 @@ if gon.page is 'stores_show'
 
     # build csv of label data
     # i.e. size: small,medium,large
-    map_label_values = (name) ->
-        $.map(($ ".label-#{name}"), (e) ->
-            $.trim(($ e).data('value'))).join(',')
+    _map_label_values = (name, $context) ->
+        container = $('<div />').attr('class', 'hide')
+        ($ ".label-#{name}").each (i, label) ->
+            data =
+                n: i
+                name: name
+                value: ($ label).data('value')
+            container.append(
+                Mustache.render(
+                    templates.product_form_nested_resource_input_template, data))
+        $context.append(container)
 
     trigger_process_csv = ($input) ->
         if $input.val()?
@@ -187,10 +195,6 @@ if gon.page is 'stores_show'
                 # by css based on .products-gallery-displayed
                 product_widget = ($ @).closest('.product-widget')
 
-                # zoom in/out hidden if 0 or 1 in css
-                return if +(product_widget.data('rawProductPhotoCount')) is 0
-                return if +(product_widget.data('rawProductPhotoCount')) is 1
-
                 if product_widget.hasClass(product_photos_gallery_displayed)
                     product_widget.removeClass(product_photos_gallery_displayed)
                 else
@@ -242,8 +246,8 @@ if gon.page is 'stores_show'
 
         $product_form_wrapper
             .on 'click', '.add-instagram-tag', ->
-                _instagram_tags = ($ '#product_instagram_tag').val()
-                ($ '#product_instagram_tag').val('')
+                _instagram_tags = ($ '#product_instagram_tags').val()
+                ($ '#product_instagram_tags').val('')
                 tagged_photo_count = 0
 
                 if _instagram_tags
@@ -255,7 +259,7 @@ if gon.page is 'stores_show'
 
                         append_to_control_group(($ @).closest('.control-group'), {
                             value: "##{instagram_tag}",
-                            name: 'instagram-tag'})
+                            name: 'instagram_tag'})
 
                         photos_with_tags = $product_form_wrapper
                             .find(".photo-feed div[data-tags~='#{instagram_tag}']")
@@ -313,10 +317,8 @@ if gon.page is 'stores_show'
 
                 # process values left in instagram tag, color and size inputs
                 # i.e. user entered #hat, #shirt but didn't click the add buton
-                for input in [($ '#product_colors'),
-                    ($ '#product_sizes'),
-                    ($ '#product_instagram_tag')]
-                    trigger_process_csv(input)
+                for input in multiple_value_inputs
+                    trigger_process_csv(($ "#product_#{input}s"))
 
                 # construct fields_for product_images
                 # comprised of photos that are already associated
@@ -337,12 +339,9 @@ if gon.page is 'stores_show'
 
                 # query instagram tag, color and sizes labels and
                 # update appropriate input with csv
-                ($ '#product_sizes').val(map_label_values('size'))
-                ($ '#product_colors').val(map_label_values('color'))
-                ($ '#product_instagram_tag').val(map_label_values('instagram-tag'))
+                _map_label_values(input, ($ @)) for input in multiple_value_inputs
 
                 verb = if @id is 'new_product' then 'created' else 'updated'
-
 
                 $.ajax
                     url: ($ @).prop('action')

@@ -59,9 +59,9 @@ class ApplicationController < ActionController::Base
       json.name product.name
       json.truncated_name truncate(product.name, :length => 22)
 
-      json.instagram_tags product.instagram_tag.split(',').join(', ')
-      json.colors !product.colors.nil? ? product.colors.split(',').join(', ') : nil
-      json.sizes !product.sizes.nil? ? product.sizes.split(',').join(', ') : nil
+      json.instagram_tags product.get_instagram_tags
+      json.colors !product.colors.empty? ? product.get_colors : nil
+      json.sizes !product.sizes.empty? ? product.get_sizes : nil
 
       json.product_slug product.slug
       json.store_slug store.slug

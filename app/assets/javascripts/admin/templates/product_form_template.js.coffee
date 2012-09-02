@@ -24,11 +24,11 @@ templates.product_form_template = """
                 </div>
             </div>
             <div class="control-group">
-                <label class='control-label' for="product_instagram_tag">Instagram Tag*</label>
+                <label class='control-label' for="product_instagram_tags">Instagram Tag*</label>
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">#</span>
-                        <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" name="product[instagram_tag]" id="product_instagram_tag" class="input-xlarge">
+                        <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" id="product_instagram_tags" class="input-xlarge">
                         <span class="help-inline">
                             <a class='add-instagram-tag add-product-form-label' href="javascript: void(0);" title='Click to link photos from your photo feed'>
                                 <i class='gramgoods-tooltip icon-plus'></i>
@@ -73,7 +73,7 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_colors">Colors</label>
                 <div class="controls">
-                    <input placeholder='Enter a color and click +' type="text" size="30" name="product[colors]" id="product_colors" class="input-xlarge">
+                    <input placeholder='Enter a color and click +' type="text" size="30" id="product_colors" class="input-xlarge">
                         <span class="help-inline">
                             <a class='add-color add-product-form-label' href="javascript: void(0);">
                                 <i class='gramgoods-tooltip icon-plus'></i>
@@ -87,7 +87,7 @@ templates.product_form_template = """
             <div class="control-group">
                 <label class='control-label' for="product_sizes">Sizes</label>
                 <div class="controls">
-                    <input placeholder='Enter a size and click +' type="text" size="30" name="product[sizes]" id="product_sizes" class="input-xlarge">
+                    <input placeholder='Enter a size and click +' type="text" size="30" id="product_sizes" class="input-xlarge">
                       <span class="help-inline">
                           <a class='add-size add-product-form-label' href="javascript: void(0);">
                               <i class='gramgoods-tooltip icon-plus'></i>

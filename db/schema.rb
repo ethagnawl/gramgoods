@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824161755) do
+ActiveRecord::Schema.define(:version => 20120902023057) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20120824161755) do
     t.string   "thumbnail"
   end
 
+  create_table "colors", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "product_id"
+    t.string   "color"
+  end
+
+  add_index "colors", ["product_id"], :name => "index_colors_on_product_id"
+
   create_table "friendly_id_slugs", :force => true do |t|
     t.string   "slug",                         :null => false
     t.integer  "sluggable_id",                 :null => false
@@ -34,6 +43,15 @@ ActiveRecord::Schema.define(:version => 20120824161755) do
   add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
+
+  create_table "instagram_tags", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "product_id"
+    t.string   "instagram_tag"
+  end
+
+  add_index "instagram_tags", ["product_id"], :name => "index_instagram_tags_on_product_id"
 
   create_table "line_items", :force => true do |t|
     t.datetime "created_at",                                            :null => false
@@ -109,6 +127,15 @@ ActiveRecord::Schema.define(:version => 20120824161755) do
   end
 
   add_index "recipients", ["order_id"], :name => "index_recipients_on_order_id"
+
+  create_table "sizes", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "product_id"
+    t.string   "size"
+  end
+
+  add_index "sizes", ["product_id"], :name => "index_sizes_on_product_id"
 
   create_table "stores", :force => true do |t|
     t.datetime "created_at",    :null => false
