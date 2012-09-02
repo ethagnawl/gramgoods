@@ -21,6 +21,10 @@ input[type=text], input[type=password], input[type=email] {
     height: 28px !important;
 }
 
+.navbar-inner {
+    @include rounded_corners(0);
+}
+
 .input-prepend {
     .add-on {
         height: 28px;
