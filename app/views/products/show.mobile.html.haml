@@ -20,7 +20,7 @@
         = @product.name
       - if @product.like_count > 0
         .product-like-count
-          #{@product.like_count} likes
+          #{pluralize(@product.like_count, 'like')}
       .product-button.product-details
         See Product Details
     .product-bottom.widget
