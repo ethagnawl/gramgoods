@@ -108,13 +108,12 @@ class ApplicationController < ActionController::Base
   end
 
   def basic_authentication
-    if ENV['use_basic_authentication'] == 'true'
+    if ENV['USE_BASIC_AUTHENTICATION'] == 'true'
       authenticate_or_request_with_http_basic do |username, password|
         username == "GramG00ds" && password == "00000"
       end
     end
   end
-
 
   def ssl_allowed_action?
     params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
