@@ -3,7 +3,7 @@ Gramgoods::Application.routes.draw do
   resources :products
   resources :authentications
 
-  devise_for :users, :controllers => { :registrations => 'registrations' }
+  devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
   root :to => 'static#index'
   match '/tos' => 'static#tos'
@@ -18,7 +18,6 @@ Gramgoods::Application.routes.draw do
     end
   end
   resources :users
-  match '/auth/:provider/callback' => 'authentications#create'
   match 'get_instagram_feed_for_current_user' => 'application#_get_instagram_photo_feed_for_user'
   match '/:id' => 'stores#show'
   match '/:id/edit' => 'stores#edit'

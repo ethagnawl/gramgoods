@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
       json.name product.name
       json.truncated_name truncate(product.name, :length => 22)
 
-      json.instagram_tags product.get_instagram_tags
+      json.instagram_tag product.get_instagram_tag
       json.colors !product.colors.empty? ? product.get_colors : nil
       json.sizes !product.sizes.empty? ? product.get_sizes : nil
 
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
 
   def set_gon
     gon.page = "#{params[:controller]}_#{params[:action]}"
-    gon.authenticated = user_signed_in? && !current_user.authentication.nil? ? true : false
+    gon.authenticated = user_signed_in?
     gon.layout = params[:layout]
   end
 

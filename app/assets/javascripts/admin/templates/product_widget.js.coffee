@@ -37,7 +37,7 @@ templates.product_widget_template = """
         {{/product_photo}}
 
         <p class="product-description" title='{{description}}'>{{truncated_description}}</p>
-        <p class="product-instagram-tag">Instagram Tag(s): {{instagram_tags}}</p>
+        <p class="product-instagram-tag">Instagram Tag: \#{{instagram_tag}}</p>
         <p class="product-price">Price: {{price}}</p>
         <p class="product-quantity">Quantity: {{quantity}}</p>
         {{#flatrate_shipping_cost}}

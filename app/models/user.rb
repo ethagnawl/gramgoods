@@ -1,36 +1,42 @@
 class User < ActiveRecord::Base
   has_many :stores
-  has_one :authentication
 
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :omniauthable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :first_name, :last_name, :website,
-    :business_name, :street_address_1, :street_address_2, :city, :state,
-    :postal_code, :phone_number, :tos
+  #validates_acceptance_of :tos, :on => :create, :accept => true
 
-  validates_presence_of :first_name, :last_name, :business_name, :website,
-    :street_address_1, :city, :state, :postal_code, :phone_number
-
-  validates_format_of :website, :with => /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/
-  validates_format_of :postal_code, :message => 'must be a valid Postal Code.', :with => /^([0-9]{5}(?:-[0-9]{4})?)*$/
-  validates_format_of :phone_number, :message => "must be a valid telephone number.", :with => /^[\(\)0-9\- \+\.]{10,20}$/
-
-  validates_acceptance_of :tos, :on => :create, :accept => true
-
-  def apply_omniauth(omniauth)
-    authentications.build(
-      :provider => omniauth['provider'],
-      :uid => omniauth['uid'],
-      :access_token => omniauth['credentials']['token'])
-  end
-
-  def password_required?
-    super
+  def self.from_omniauth(auth)
+    where(auth.slice(:uid, :provider)).first_or_create do |user|
+      user.uid = auth.uid
+      user.provider = auth.provider
+      user.username = auth.info.nickname
+      user.thumbnail = auth.info.image
+      user.access_token = auth.credentials.token
+      user.email = "hoge_#{Time.now.seconds_since_midnight.floor}@hoge.com"
+    end
   end
 
   def store_ids
     Store.find_all_by_user_id(self.id).map { |store| store.id }
+  end
+
+  def self.new_with_session(params, session)
+    if devise_attributes = session['devise.user_attributes']
+      new(devise_attributes, :without_protection => true) do |user|
+        user.attributes = params
+        user.valid?
+      end
+    else
+      super
+    end
+  end
+
+  def password_required?
+    super && provider.blank?
+  end
+
+  def email_required?
+    super && provider.blank?
   end
 end

@@ -8,10 +8,11 @@ if gon.page is 'stores_show'
     multiple_value_inputs = [
         # each input has a 'product_' prefix and a 's' suffix
         # i.e. 'product_instagram_tags'
-        'instagram_tag'
         'color'
         'size'
     ]
+
+    dummy_share_text = 'Ex. Buy Blue Jeans for $50.00 right now by visiting @YourInstagramAccount or clicking this link: http://gramgoods.com/your-new-store/your-new-product'
 
     product_photos_gallery_displayed = 'product-photos-gallery-displayed'
 
@@ -58,7 +59,7 @@ if gon.page is 'stores_show'
                 render_user_photo_feed, { product_slug: response.slug }))
 
     render_new_product_form = (data) ->
-        data.dummy_share_text = 'Ex. Buy Blue Jeans for $50.00 right now by visiting @YourInstagramAccount or clicking this link: http://gramgoods.com/your-new-store/your-new-product'
+        data.dummy_share_text = dummy_share_text
         update_product_form(data)
         reset_h2()
         unless gon.authenticated is false

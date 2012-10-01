@@ -1,7 +1,7 @@
 class Product < ActiveRecord::Base
   belongs_to :store
   has_many :product_images
-  has_many :instagram_tags
+  has_one :instagram_tag
   has_many :colors
   has_many :sizes
   extend FriendlyId
@@ -10,7 +10,7 @@ class Product < ActiveRecord::Base
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :flatrate_shipping_cost, :unlimited_quantity, :product_images_attributes,
-  :instagram_tags_attributes, :colors_attributes, :sizes_attributes
+  :instagram_tag_attributes, :colors_attributes, :sizes_attributes
 
   validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
@@ -20,7 +20,7 @@ class Product < ActiveRecord::Base
     :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
   validate :require_instagram_tag
 
-  accepts_nested_attributes_for :product_images, :instagram_tags, :colors, :sizes
+  accepts_nested_attributes_for :product_images, :instagram_tag, :colors, :sizes
 
   before_save :normalize_quantity
   after_save :deliver_share_text
@@ -83,10 +83,8 @@ class Product < ActiveRecord::Base
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
 
-  def get_instagram_tags(separator = ', ')
-    self.instagram_tags.map { |instagram_tag|
-      instagram_tag.instagram_tag
-    }.join(separator)
+  def get_instagram_tag
+    self.instagram_tag.instagram_tag
   end
 
   def get_colors
@@ -105,7 +103,7 @@ class Product < ActiveRecord::Base
   end
 
   def require_instagram_tag
-    if instagram_tags.length < 1
+    if instagram_tag.nil?
       errors.add(:base, 'You must provide at least one Instagram tag.')
     end
   end

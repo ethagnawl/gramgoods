@@ -25,26 +25,17 @@
               - if user_signed_in?
                 %li
                   %p.navbar-text
-                    Logged into GramGoods as #{current_user.email}
+                    Signed in as
+                    %strong #{current_user.username}
                     = link_to edit_user_registration_path,
                       :class => 'gramgoods-tooltip' do
                       %i.icon-cog
-                    = link_to destroy_user_session_path, :class => 'gramgoods-tooltip' do
+
+                    = link_to destroy_user_session_path, :class => 'gramgoods-tooltip remove' do
                       %i.icon-remove-sign
-                %li.divider-vertical
-                - if current_user.authentication.nil?
-                  %li
-                    %a{ :href => "/auth/instagram" } Authenticate your account using Instagram.
-                    %iframe.hide{ :src => "https://instagram.com/accounts/logout/" }
-                - else
-                  %li
-                    %p.navbar-text
-                      Authenticated with Instagram as #{current_user.authentication.nickname}
-                      = link_to current_user.authentication, :method => :delete, :class => "gramgoods-tooltip remove" do
-                        %i.icon-remove-sign
 
                   %li
-                    = image_tag(current_user.authentication.thumbnail, :class => 'user-thumbnail' )
+                    = image_tag(current_user.thumbnail, :class => 'user-thumbnail' )
               - else
                 %li
                   = link_to "Sign In", new_user_session_path

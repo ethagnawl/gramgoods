@@ -28,17 +28,9 @@ templates.product_form_template = """
                 <div class="controls">
                     <div class="input-prepend">
                         <span class="add-on">#</span>
-                        <input placeholder='Enter tag and click + to link your photos' type="text" value="{{instagramTag}}" size="30" id="product_instagram_tags" class="input-xlarge">
-                        <span class="help-inline">
-                            <a class='add-instagram-tag add-product-form-label' href="javascript: void(0);" title='Click to link photos from your photo feed'>
-                                <i class='gramgoods-tooltip icon-plus'></i>
-                            </a>
-                        </span>
+                        <input name="product[instagram_tag_attributes][instagram_tag]" type="text" value="{{instagram_tag}}" size="30" id="product_instagram_tags" class="input-xlarge">
                     </div>
                 </div>
-                {{#instagram_tags}}
-                    {{> product_form_label_template}}
-                {{/instagram_tags}}
             </div>
             <div class="control-group">
                 <label class='control-label' for="product_description">Description*</label>

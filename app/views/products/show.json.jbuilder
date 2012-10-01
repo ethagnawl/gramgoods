@@ -1,5 +1,5 @@
 json.name @product.name
-json.instagram_tags (@product.instagram_tags.map { |instagram_tag| { :name => 'instagram_tag', :value => instagram_tag.instagram_tag}})
+json.instagram_tag @product.get_instagram_tag
 json.product_slug @product.slug
 json.store_slug @product.store.slug
 json.description @product.description
@@ -16,5 +16,5 @@ json.out_of_stock @product.status == 'Out of Stock'
 
 json.product_photos @product.product_images.map { |product_image| render_user_photo_template(@product, product_image) }
 
-json.store_owner_instagram @product.store.user.authentication.nickname unless @product.store.user.authentication.nil?
+json.store_owner_instagram @product.store.user.username
 json.put true
