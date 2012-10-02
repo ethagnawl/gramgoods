@@ -1,0 +1,10 @@
+- content_for(:title) { "Create Product | GramGoods" }
+- content_for(:header) do
+  %h1
+    Create Product
+    %br
+    = link_to 'Logout', destroy_user_session_path
+    %br
+    = link_to "Back to #{@product.store.name}", store_path(@product.store)
+
+
