@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_owns_store?(store_id)
-    current_user.store_ids.include?(store_id)
+    !current_user.nil? && current_user.store_ids.include?(store_id)
   end
 
   def render_conditional_layout(layout = nil)
