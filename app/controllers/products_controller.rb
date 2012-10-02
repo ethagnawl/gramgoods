@@ -32,13 +32,15 @@ class ProductsController < ApplicationController
         render 'products/index.mobile', :layout => 'mobile'
       }
     end
-
   end
 
   def new
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.new
+    if mobile_device?
+      render 'products/new.mobile', :layout => 'mobile'
+    end
   end
 
   def create
