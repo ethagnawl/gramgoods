@@ -1,6 +1,14 @@
 - content_for(:title) { "#{@product.name} | GramGoods" }
 - content_for(:header) do
-  %a{ :href => "/#{@store.slug}" } #{@store.name}
+  %h1
+    %a{ :href => "/#{@store.slug}" } #{@store.name}
+    %br
+
+    - unless user_signed_in?
+      = render 'shared/force_instagram_logout_iframe'
+      %a{ :href => '/users/auth/instagram' } Login using Instagram
+    - else
+      = link_to 'Logout', destroy_user_session_path
 
 #order_form.hide
 #success_screen.hide
