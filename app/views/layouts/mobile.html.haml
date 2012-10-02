@@ -15,9 +15,7 @@
     = csrf_meta_tags
   %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
     .store-header
-      - if content_for?(:header)
-        %h1
-          = yield :header
+      = content_for :header if content_for?(:header)
     = yield
     = include_gon
     = javascript_include_tag "https://js.stripe.com/v1/"
