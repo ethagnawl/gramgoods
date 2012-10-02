@@ -12,7 +12,11 @@ class ApplicationController < ActionController::Base
   helper_method :user_owns_store?
 
   def after_sign_in_path_for(resource)
-    stores_path
+    if mobile_device?
+      store_path (current_user.stores.first)
+    else
+      stores_path
+    end
   end
 
   def _get_instagram_feed_for_user_and_filter_by_tag
