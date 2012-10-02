@@ -1,3 +1,14 @@
 - content_for(:title) { "#{@store.name} | GramGoods" }
-- content_for(:header) { @store.name }
+- content_for(:header) do
+  %h1
+    #{@store.name}
+    %br
+    - unless user_signed_in?
+      = render 'shared/force_instagram_logout_iframe'
+      %a{ :href => '/users/auth/instagram' } Login using Instagram
+    - else
+      = link_to 'Create Product', new_store_product_path(@store.slug)
+      %br
+      = link_to 'Logout', destroy_user_session_path
+
 = render 'shared/products', :locals => { :products => @products }
