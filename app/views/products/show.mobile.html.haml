@@ -5,17 +5,10 @@
 #order_form.hide
 #success_screen.hide
 .product-detail
-  .product
+  .product{ :data => { :'instagram-tag' => @product.get_instagram_tag }}
     .product-top.widget
       .product-thumbnail-gallery
-        - @product.photos_array.each_with_index do |product_photo, index|
-          = image_tag("#{product_photo}",
-            :class => index == 0 ? 'product-thumbnail on' : 'product-thumbnail hide',
-            :data => { :index => index })
-        .product-gallery-controls.invisible
-          - @product.photos_array.each_with_index do |product_photo, index|
-            %a.product-gallery-control{ :href => 'javascript: void(0);', |
-            :class => index == 0 ? 'on' : nil, :data => { :index => index } }
+        Loading...
       %h1.product-name
         = @product.name
       - if @product.like_count > 0

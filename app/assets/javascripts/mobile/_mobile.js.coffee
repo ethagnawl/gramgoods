@@ -1,9 +1,75 @@
 window.templates = {}
 
 if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index'
+    # only reveal product gallery controls if there
+    # is more than one product image
+    render_product_gallery_controls = ->
+        if ($ '.product-gallery-control').length > 1
+            $('.product-gallery-controls')
+                .css('width', $('.product-gallery-controls').width())
+                .removeClass('invisible').addClass('display-block')
+
     dirty_commas = (num) ->
         String(num).replace /^\d+(?=\.|$)/, (int) ->
             int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
+
+    render_single_product_image = ($self, photos) ->
+        product_image = photos[0]
+        product_image_template = """
+        <img class='product-thumbnail' src='{{product_image}}' alt='' />
+        """
+        $self.find('.product-left').html(
+            Mustache.render product_image_template, { product_image }
+        )
+
+    render_multiple_product_images = ($self, product_images) ->
+        $product_gallery_wrapper = $('<div />')
+        product_thumbnail_gallery_image_template = """
+        <img src="{{product_image}}" data-index="{{index}}" class="{{classes}}" alt="{{product_name}}">
+        """
+
+        product_thumbnail_gallery_control_template = """
+        <a href="javascript: void(0);" data-index="{{index}}" class="{{classes}}"></a>
+        """
+
+        $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
+
+        for product_image, i in product_images
+            product_gallery_data =
+                index: i
+                classes: "product-thumbnail #{(if i is 0 then 'on' else 'hide')}"
+                product_name: gon.product_name
+                product_image: product_image
+
+            $product_gallery_wrapper.append Mustache.render(
+                product_thumbnail_gallery_image_template, product_gallery_data)
+
+            product_gallery_control_data =
+                classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
+                index: i
+
+             $product_gallery_controls_wrapper.append Mustache.render(
+                product_thumbnail_gallery_control_template, product_gallery_control_data)
+
+        $self.find('.product-thumbnail-gallery')
+            .html($product_gallery_wrapper)
+            .append($product_gallery_controls_wrapper)
+
+        render_product_gallery_controls()
+
+    fetch_product_images = ($self, callback) ->
+        tag = $self.data('instagram-tag')
+        $.ajax
+            dataType: 'json'
+            url: '/get_instagram_feed_for_user_and_filter_by_tag'
+            data:
+                tag: tag
+                store_slug: gon.store_slug
+            success: (response) =>
+                if response.status is 'error'
+                    alert 'i don\'t know what to do yet'
+                else
+                    callback($self, response.product_images)
 
     Zepto ($) ->
         # fixes iOS sticky fixed position bug
@@ -11,6 +77,10 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # products/show the header would stick
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
+
+        if gon.page is 'stores_show'
+            $('.product').each ->
+                fetch_product_images(($ @), render_single_product_image)
 
         if gon.page is 'stores_show' or gon.page is 'products_index'
             header_fix()
@@ -22,12 +92,9 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         if gon.page is 'products_show'
             header_fix()
 
-            # only reveal product gallery controls if there
-            # is more than one product image
-            if ($ '.product-gallery-control').length > 1
-                $('.product-gallery-controls')
-                    .css('width', $('.product-gallery-controls').width())
-                    .removeClass('invisible').addClass('display-block')
+            fetch_product_images($('.product'), render_multiple_product_images)
+
+
 
             ($ '.product-thumbnail').swipeLeft ->
                 next_index = ($ @).next().data('index')

@@ -19,6 +19,7 @@ Gramgoods::Application.routes.draw do
   end
   resources :users
   match 'get_instagram_feed_for_current_user' => 'application#_get_instagram_photo_feed_for_user'
+  match 'get_instagram_feed_for_user_and_filter_by_tag' => 'application#_get_instagram_feed_for_user_and_filter_by_tag'
   match '/:id' => 'stores#show'
   match '/:id/edit' => 'stores#edit'
   match '/:store_id/:id' => 'products#show'

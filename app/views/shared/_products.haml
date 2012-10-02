@@ -1,8 +1,8 @@
 .products.widget
   - @products.each do |product|
-    .product{ :data => { :slug => product.slug }}
+    .product{ :data => { :slug => product.slug, :"instagram-tag" => product.get_instagram_tag }}
       .product-left
-        = image_tag("#{product.photos_array.first}", :class => 'product-thumbnail')
+        Loading...
       .product-middle
         - if locals[:show_store_name] == true
           .store-name

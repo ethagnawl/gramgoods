@@ -14,6 +14,24 @@ class ApplicationController < ActionController::Base
     stores_path
   end
 
+  def _get_instagram_feed_for_user_and_filter_by_tag
+    tag = params[:tag]
+    store = params[:store_slug]
+    user = Store.find(store).user
+    user_feed = view_context.get_instagram_feed_for_user_and_filter_by_tag(user, tag)
+    if user_feed && user_feed.length > 0
+      render :json => {
+        :status => 'success',
+        :product_images => user_feed
+      }
+    else
+      render :json => {
+        :status => 'error',
+        :alert => 'Sorry, there don\'t seem to be any more photos available.'
+      }
+    end
+  end
+
   def _get_instagram_photo_feed_for_user
     max_id = params[:max_id]
     product = params[:product_slug] == '' ? nil : Product.find_by_slug(params[:product_slug])

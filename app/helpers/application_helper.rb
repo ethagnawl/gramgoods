@@ -25,6 +25,21 @@ module ApplicationHelper
     end
   end
 
+  def get_instagram_feed_for_user_and_filter_by_tag(user, tag)
+    begin
+      configure_instagram(user.uid, user.access_token)
+      #user_photo_feed = Instagram.tag_recent_media(tag).data.find_all { |item|
+      #  item.user.username == user.username
+      user_photo_feed = Instagram.user_recent_media.find_all { |item|
+        item.tags.member? tag
+      }.map { |item| item.images.standard_resolution.url }
+      Instagram.reset
+      user_photo_feed
+    rescue
+      puts 'Instagram Connection Error'
+    end
+  end
+
   def credit_card_months
     [
       ['Expiration Month*', nil],
