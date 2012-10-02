@@ -108,6 +108,9 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
+    if mobile_device?
+      render 'products/edit.mobile', :layout => 'mobile'
+    end
   end
 
   def update
