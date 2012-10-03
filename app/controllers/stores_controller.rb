@@ -6,7 +6,7 @@ class StoresController < ApplicationController
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
-        redirect_to(store_path(store)) unless user_owns_store?(store.id)
+        redirect_to(custom_store_path(store)) unless user_owns_store?(store.id)
       else
         redirect_to(root_path)
       end
@@ -29,7 +29,7 @@ class StoresController < ApplicationController
     @store = @user.stores.new(params[:store])
     if @store.save
       flash[:notice] = "#{@store.name} has been created successfully."
-      redirect_to store_path(@store)
+      redirect_to custom_store_path(@store)
     else
       render 'new'
     end
@@ -71,7 +71,7 @@ class StoresController < ApplicationController
     @store = @user.stores.find(params[:id])
     if @store.update_attributes(params[:store])
       flash[:notice] = "#{@store.name} has been updated successfully."
-      redirect_to(@store)
+      redirect_to custom_store_path(@store)
     else
       render 'edit'
     end
