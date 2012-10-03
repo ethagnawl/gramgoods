@@ -39,4 +39,8 @@
     = form.text_field :flatrate_shipping_cost
 
   %fieldset
+    = form.label :status
+    = form.select :status, options_for_select(['Draft', 'Active', 'Out of Stock'])
+
+  %fieldset
     = form.submit
