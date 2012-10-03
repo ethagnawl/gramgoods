@@ -2,31 +2,41 @@
   %fieldset
     = form.label :name
     = form.text_field :name
-  %fieldset
-    = form.label :instagram_tag
-    = form.text_field :instagram_tag
+
+  = form.fields_for(:instagram_tag) do |instagram_tag_form|
+    %fieldset
+      = instagram_tag_form.label :instagram_tag
+      = instagram_tag_form.text_field :instagram_tag
+
   %fieldset
     = form.label :description
     = form.text_area :description
+
   %fieldset
     = form.label :price
     = form.text_field :price
+
   %fieldset
     = form.label :quantity
     = form.text_field :quantity
+
+  = form.fields_for(:colors) do |colors_form|
+    %fieldset
+      = colors_form.label :color
+      = colors_form.text_field :color
+
+  = form.fields_for(:sizes) do |sizes_form|
+    %fieldset
+      = sizes_form.label :size
+      = sizes_form.text_field :size
+
   %fieldset
     = form.label :unlimited_quantity
     = form.check_box :unlimited_quantity
-  %fieldset
-    = form.label :colors
-    = form.text_field :colors
-  %fieldset
-    = form.label :sizes
-    = form.text_field :sizes
+
   %fieldset
     = form.label :flatrate_shipping_cost
     = form.text_field :flatrate_shipping_cost
+
   %fieldset
     = form.submit
-
-

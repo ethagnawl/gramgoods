@@ -10,7 +10,8 @@ class Product < ActiveRecord::Base
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :flatrate_shipping_cost, :unlimited_quantity, :product_images_attributes,
-  :instagram_tag_attributes, :colors_attributes, :sizes_attributes
+  :instagram_tag_attributes, :colors_attributes, :sizes_attributes, :instagram_tag,
+  :colors, :sizes
 
   validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,

@@ -37,7 +37,10 @@ class ProductsController < ApplicationController
   def new
     @user = current_user
     @store = @user.stores.find(params[:store_id])
-    @product = @store.products.new
+    @product = @store.products.new({
+                                     :instagram_tag => InstagramTag.new,
+                                     :colors => [Color.new],
+                                     :sizes => [Size.new]})
     if mobile_device?
       render 'products/new.mobile', :layout => 'mobile'
     end
