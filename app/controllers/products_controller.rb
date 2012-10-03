@@ -119,22 +119,11 @@ class ProductsController < ApplicationController
   def update
     @store = current_user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
-    product_images = params[:product][:product_images_attributes]
-    product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
-    params[:product][:status] = 'Draft' if product_photos_is_empty
-    params[:product][:status] = 'Out of Stock' if params[:product][:quantity].to_i == 0 && params[:product][:unlimited_quantity] == 0
-    @product.product_images.destroy_all
-    @product.colors.destroy_all
-    @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
-      if product_photos_is_empty
-        flash[:alert] = product_photos_empty_message(@product.name)
-      end
       respond_to do |format|
         format.json {
           render :json => {
-            :product => @product,
-            :alert => (product_photos_is_empty ? product_photos_empty_message(@product.name) : nil)
+            :product => @product
           }
         }
         format.html { redirect_to(store_product_path(@store, @product)) }
