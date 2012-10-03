@@ -59,7 +59,7 @@ class ProductsController < ApplicationController
           }
         }
         format.html {
-          redirect_to(store_product_path(@store, @product))
+          redirect_to(custom_product_path(@store, @product))
         }
       end
     else
@@ -92,7 +92,7 @@ class ProductsController < ApplicationController
       }
       format.html {
         if @product.status == 'Draft' && !user_signed_in?
-          redirect_to("/#{@store.slug}")
+          redirect_to(custom_store_path(@store.slug))
         else
           render 'products/show.mobile', :layout => 'mobile'
         end
@@ -119,7 +119,7 @@ class ProductsController < ApplicationController
             :product => @product
           }
         }
-        format.html { redirect_to(store_product_path(@store, @product)) }
+        format.html { redirect_to(custom_product_path(@store, @product)) }
       end
     else
       respond_to do |format|
@@ -152,7 +152,7 @@ class ProductsController < ApplicationController
           }
         }
         format.html {
-          redirect_to(store_path(@store))
+          redirect_to(custom_store_path(@store))
         }
       end
     else
