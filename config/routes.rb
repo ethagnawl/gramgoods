@@ -23,4 +23,5 @@ Gramgoods::Application.routes.draw do
   match '/:id' => 'stores#show'
   match '/:id/edit' => 'stores#edit'
   match '/:store_id/:id' => 'products#show'
+  match '/:store_id/:id/edit' => 'products#edit'
 end
