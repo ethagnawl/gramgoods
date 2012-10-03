@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     Store.find_all_by_user_id(self.id).map { |store| store.id }
   end
 
+  def first_store
+    self.stores.first
+  end
+
   def self.new_with_session(params, session)
     if devise_attributes = session['devise.user_attributes']
       new(devise_attributes, :without_protection => true) do |user|
