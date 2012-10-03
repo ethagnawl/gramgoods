@@ -50,19 +50,12 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.new(params[:product])
-    product_images = params[:product][:product_images_attributes]
-    product_photos_is_empty = !product_images.nil? && product_images.length != 0 ? false : true
-    @product.status = 'Draft' if product_photos_is_empty
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
     if @product.save
-      if product_photos_is_empty
-        flash[:alert] = product_photos_empty_message(@product.name)
-      end
       respond_to do |format|
         format.json {
           render :json => {
-            :product => @product,
-            :alert => (product_photos_is_empty ? product_photos_empty_message(@product.name) : nil)
+            :product => @product
           }
         }
         format.html {
