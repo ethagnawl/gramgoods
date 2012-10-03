@@ -1,0 +1,31 @@
+= form_for([@store, @product]) do |form|
+  %fieldset
+    = form.label :name
+    = form.text_field :name
+  %fieldset
+    = form.label :instagram_tag
+    = form.text_field :instagram_tag
+  %fieldset
+    = form.label :description
+    = form.text_area :description
+  %fieldset
+    = form.label :price
+    = form.text_field :price
+  %fieldset
+    = form.label :quantity
+    = form.text_field :quantity
+  %fieldset
+    = form.label :unlimited_quantity
+    = form.check_box :unlimited_quantity
+  %fieldset
+    = form.label :colors
+    = form.text_field :colors
+  %fieldset
+    = form.label :sizes
+    = form.text_field :sizes
+  %fieldset
+    = form.label :flatrate_shipping_cost
+    = form.text_field :flatrate_shipping_cost
+
+
+
