@@ -1,46 +1,48 @@
-= form_for([@store, @product]) do |form|
+= form_for([@store, @product]) do |product_form|
   %fieldset
-    = form.label :name
-    = form.text_field :name
+    = product_form.label :name
+    = product_form.text_field :name
 
-  = form.fields_for(:instagram_tag) do |instagram_tag_form|
+  = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
     %fieldset
       = instagram_tag_form.label :instagram_tag
       = instagram_tag_form.text_field :instagram_tag
 
   %fieldset
-    = form.label :description
-    = form.text_area :description
+    = product_form.label :description
+    = product_form.text_area :description
 
   %fieldset
-    = form.label :price
-    = form.text_field :price
+    = product_form.label :price
+    = product_form.text_field :price
 
   %fieldset
-    = form.label :quantity
-    = form.text_field :quantity
+    = product_form.label :quantity
+    = product_form.text_field :quantity
 
-  = form.fields_for(:colors) do |colors_form|
+  = product_form.fields_for(:colors) do |colors_form|
     %fieldset
       = colors_form.label :color
       = colors_form.text_field :color
 
-  = form.fields_for(:sizes) do |sizes_form|
+  = product_form.fields_for(:sizes) do |sizes_form|
     %fieldset
       = sizes_form.label :size
       = sizes_form.text_field :size
 
   %fieldset
-    = form.label :unlimited_quantity
-    = form.check_box :unlimited_quantity
+    = product_form.label :unlimited_quantity
+    = product_form.check_box :unlimited_quantity
 
   %fieldset
-    = form.label :flatrate_shipping_cost
-    = form.text_field :flatrate_shipping_cost
+    = product_form.label :flatrate_shipping_cost
+    = product_form.text_field :flatrate_shipping_cost
 
   %fieldset
-    = form.label :status
-    = form.select :status, options_for_select(['Draft', 'Active', 'Out of Stock'])
+    = product_form.label :status
+    = product_form.select :status,
+                          options_for_select(['Draft', 'Active', 'Out of Stock'],
+                                             @product.status)
 
   %fieldset
-    = form.submit
+    = product_form.submit
