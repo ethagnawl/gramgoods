@@ -72,7 +72,13 @@ class ProductsController < ApplicationController
             end
           }
         }
-        format.html { render 'new' }
+        format.html {
+          if mobile_device?
+            render 'new.mobile', :layout => 'mobile'
+          else
+            render 'new'
+          end
+        }
       end
     end
   end
@@ -131,7 +137,14 @@ class ProductsController < ApplicationController
             end
           }
         }
-        format.html { render 'edit' }
+        format.html {
+          if mobile_device?
+            render 'edit.mobile', :layout => 'mobile'
+          else
+            render 'edit'
+          end
+        }
+
       end
     end
   end
