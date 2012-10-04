@@ -14,7 +14,7 @@
       .controls
         = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
     .form-actions
-      = form.submit :class => 'btn btn-primary'
+      %a#sign_up_and_create_store{ :href => 'javascript: void(0);' } Sign Up and Create Store
 
 .widget
   - if params[:action] == 'edit'
