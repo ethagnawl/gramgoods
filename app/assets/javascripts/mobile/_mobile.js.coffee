@@ -1,6 +1,6 @@
 window.templates = {}
 
-if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index'
+if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index' or gon.page is 'stores_new'
     # only reveal product gallery controls if there
     # is more than one product image
     render_product_gallery_controls = ->
@@ -77,6 +77,12 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # products/show the header would stick
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
+
+        if gon.page is 'stores_new'
+            ($ '#sign_up_and_create_store').click ->
+                form_data = ($ '#new_store').serialize()
+                auth_url = gon.auth_url
+                window.location = "#{auth_url}?#{form_data}"
 
         if gon.page is 'stores_show'
             $('.product').each ->
