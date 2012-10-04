@@ -6,15 +6,21 @@ class User < ActiveRecord::Base
 
   #validates_acceptance_of :tos, :on => :create, :accept => true
 
-  def self.from_omniauth(auth)
-    where(auth.slice(:uid, :provider)).first_or_create do |user|
+  def self.from_omniauth(auth, store_params)
+    new_user = false
+    user = where(auth.slice(:uid, :provider)).first_or_create do |user|
+      new_user = true
       user.uid = auth.uid
       user.provider = auth.provider
       user.username = auth.info.nickname
       user.thumbnail = auth.info.image
       user.access_token = auth.credentials.token
       user.email = "hoge_#{Time.now.seconds_since_midnight.floor}@hoge.com"
-    end
+    end.tap { |u| u.create_store store_params if new_user }
+  end
+
+  def create_store(store_params)
+    self.stores.create store_params
   end
 
   def store_ids
