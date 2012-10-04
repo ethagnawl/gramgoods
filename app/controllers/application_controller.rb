@@ -10,19 +10,6 @@ class ApplicationController < ActionController::Base
   helper_method :render_user_photo_template
   helper_method :mobile_device?
   helper_method :user_owns_store?
-  helper_method :custom_store_path
-  helper_method :custom_product_path
-
-  def custom_store_path(store)
-    "/#{store.slug}"
-  end
-
-  def custom_product_path(store, product, suffix = nil)
-    store_path = custom_store_path(store)
-    product_path = store_path << "/#{product.slug}"
-    product_path << "/#{suffix}" unless suffix.nil?
-    product_path
-  end
 
   def after_sign_in_path_for(resource)
     custom_store_path(current_user.first_store)
