@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   layout 'admin'
   #before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :new]
   before_filter :except => [:create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
@@ -20,8 +20,11 @@ class StoresController < ApplicationController
   end
 
   def new
-    @user = current_user
-    @store = @user.stores.new
+    gon.auth_url = '/users/auth/instagram'
+    @store = Store.new
+    if mobile_device? or params[:layout] == 'mobile'
+      render 'new.mobile', :layout => 'mobile'
+    end
   end
 
   def create
