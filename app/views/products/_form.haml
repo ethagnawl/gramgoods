@@ -1,4 +1,7 @@
 = form_for([@store, @product]) do |product_form|
+  .form-errors-wrapper
+    = render 'shared/form_errors', :target => @product
+
   %fieldset
     = product_form.label :name
     = product_form.text_field :name
