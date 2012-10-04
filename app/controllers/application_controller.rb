@@ -12,7 +12,11 @@ class ApplicationController < ActionController::Base
   helper_method :user_owns_store?
 
   def after_sign_in_path_for(resource)
-    custom_store_path(current_user.first_store)
+    unless current_user.first_store.nil?
+      custom_store_path(current_user.first_store)
+    else
+      new_store_path
+    end
   end
 
   def _get_instagram_feed_for_user_and_filter_by_tag
