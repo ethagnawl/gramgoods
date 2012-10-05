@@ -59,12 +59,13 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
 
     fetch_product_images = ($self, callback) ->
         tag = $self.data('instagram-tag')
+        store_slug = $self.data('store-slug')
         $.ajax
             dataType: 'json'
             url: '/get_instagram_feed_for_user_and_filter_by_tag'
             data:
                 tag: tag
-                store_slug: gon.store_slug
+                store_slug: store_slug
             success: (response) =>
                 if response.status is 'error'
                     alert 'i don\'t know what to do yet'
