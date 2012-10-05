@@ -15,7 +15,8 @@
 #order_form.hide
 #success_screen.hide
 .product-detail
-  .product{ :data => { :'instagram-tag' => @product.get_instagram_tag }}
+  .product{ :data => {  :'store-slug' => @product.store.slug, |
+                        :'instagram-tag' => @product.get_instagram_tag }}
     .product-top.widget
       .product-thumbnail-gallery
         Loading...
