@@ -174,10 +174,10 @@ if gon.page is 'stores_show'
                 else
                     update_alert(response.alert)
 
-    destroy_product = (store_slug, product_slug, callback) ->
+    destroy_product = (store_id, id, callback) ->
         $.ajax
             url: "/products/#{product_slug}"
-            data: {store_slug, product_slug}
+            data: { store_id, id }
             type: 'delete'
             success: (response) ->
                 if response.status is 'success'

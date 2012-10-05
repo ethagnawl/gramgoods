@@ -150,8 +150,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @store = Store.find(params[:store_slug])
-    @product = @store.products.find(params[:product_slug])
+    @store = Store.find(params[:store_id])
+    @product = @store.products.find(params[:id])
 
     if user_owns_store?(@store.id)
       @product.destroy
