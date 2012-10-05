@@ -68,7 +68,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 store_slug: store_slug
             success: (response) =>
                 if response.status is 'error'
-                    alert 'i don\'t know what to do yet'
+                    #alert 'i don\'t know what to do yet'
                 else
                     callback($self, response.product_images)
 
