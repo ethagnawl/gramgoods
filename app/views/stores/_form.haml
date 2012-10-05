@@ -13,6 +13,11 @@
       = form.label :return_policy, :class => 'control-label'
       .controls
         = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
+    .control-group
+      = check_box :store, :terms_of_service
+      = label :store, :terms_of_service do
+        I agree to the GramGoods
+        %a{ :href => '/tos', :target => '_blank' } Terms of Service
     .form-actions
       %a#sign_up_and_create_store{ :href => 'javascript: void(0);' } Sign Up and Create Store
 
