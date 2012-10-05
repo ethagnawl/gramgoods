@@ -32,6 +32,10 @@ body {
     }
 }
 
+.mobile-layout-inner {
+    padding-top: 70px;
+}
+
 #order_form {
     background-color: $white;
     left: 0;
@@ -140,10 +144,6 @@ body {
         padding: 1% 4%;
         text-align: center;
         text-decoration: none;
-    }
-
-    &.products {
-        padding-top: 14%;
     }
 
     .product {
