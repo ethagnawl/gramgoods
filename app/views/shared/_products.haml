@@ -1,6 +1,8 @@
 .products.widget
   - @products.each do |product|
-    .product{ :data => { :slug => product.slug, :"instagram-tag" => product.get_instagram_tag }}
+    .product{ :data => {  :"store-slug" => product.store.slug, |
+                          :"instagram-tag" => product.get_instagram_tag, |
+                          :"product-slug" => product.slug }}
       .product-left
         Loading...
       .product-middle
