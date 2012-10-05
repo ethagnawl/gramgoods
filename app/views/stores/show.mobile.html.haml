@@ -7,8 +7,8 @@
       = render 'shared/force_instagram_logout_iframe'
       %a{ :href => '/users/auth/instagram' } Login using Instagram
     - else
-      = link_to 'Create Product', new_store_product_path(@store.slug)
-      %br
       = link_to 'Logout', destroy_user_session_path
+      |
+      = link_to 'Create Product', new_store_product_path(@store.slug)
 
 = render 'shared/products', :locals => { :products => @products }
