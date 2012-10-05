@@ -92,6 +92,10 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         if gon.page is 'stores_show' or gon.page is 'products_index'
             header_fix()
 
+            $('.product').each ->
+                fetch_product_images(($ @), render_single_product_image)
+
+
             ($ '.products').on('tap', '.product', ->
                 destination = ($ @).find('.product-link > a').attr('href')
                 location.href = destination)
