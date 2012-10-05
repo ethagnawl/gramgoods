@@ -1,4 +1,12 @@
-.page-header
-  %h1 Create New Store
+- content_for(:title) { "Sign Up and Create Store | GramGoods" }
+- content_for(:header) do
+  %h1
+    Sign Up and Create Store
+    %br
+      = render 'shared/force_instagram_logout_iframe'
+      %a{ :href => '/stores/new' } Sign Up
+      |
+      %a{ :href => '/users/auth/instagram' } Sign In
+
 #store_form_wrapper
   = render 'form'
