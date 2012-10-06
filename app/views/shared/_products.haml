@@ -18,7 +18,7 @@
                                                 custom_product_path(product.store,
                                                                     product))
         - if user_owns_store? product.store_id
-          = link_to 'Show', custom_product_path(product.store, product)
+          = link_to 'View', custom_product_path(product.store, product)
           = link_to 'Edit', custom_product_edit_path(product.store, product)
           = link_to 'Destroy', store_product_path(product.store.slug, product.slug), :method => :delete, :confirm => "Are you sure you want to delete #{product.name}?"
         - else
