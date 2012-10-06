@@ -3,7 +3,7 @@
     = render 'shared/form_errors', :target => @store
   %fieldset.float-left
     .control-group
-      = form.label :name, :class => 'control-label'
+      = form.label :name, 'Store Name', :class => 'control-label'
       .controls
         = form.text_field :name, :class => 'input-xlarge', :disabled => (true if params[:action] == 'edit')
         - if params[:action] == 'edit'
