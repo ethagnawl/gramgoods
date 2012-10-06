@@ -3,12 +3,12 @@
     = render 'shared/form_errors', :target => @product
 
   %fieldset
-    = product_form.label :name
+    = product_form.label :name, 'Product Name'
     = product_form.text_field :name
 
   = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
     %fieldset
-      = instagram_tag_form.label :instagram_tag
+      = instagram_tag_form.label :instagram_tag, :instagram_tag.to_s.titleize
       = instagram_tag_form.text_field :instagram_tag
 
   %fieldset
@@ -23,6 +23,10 @@
     = product_form.label :quantity
     = product_form.text_field :quantity
 
+  %fieldset
+    = product_form.label :unlimited_quantity, :unlimited_quantity.to_s.titleize
+    = product_form.check_box :unlimited_quantity
+
   = product_form.fields_for(:colors) do |colors_form|
     %fieldset
       = colors_form.label :color
@@ -34,11 +38,7 @@
       = sizes_form.text_field :size
 
   %fieldset
-    = product_form.label :unlimited_quantity
-    = product_form.check_box :unlimited_quantity
-
-  %fieldset
-    = product_form.label :flatrate_shipping_cost
+    = product_form.label :flatrate_shipping_cost, :flatrate_shipping_cost.to_s.titleize
     = product_form.text_field :flatrate_shipping_cost
 
   %fieldset
