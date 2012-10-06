@@ -14,7 +14,7 @@
       .controls
         = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
     .control-group
-      = check_box :store, :terms_of_service
+      = check_box :store, :terms_of_service, :checked => true
       = label :store, :terms_of_service do
         I agree to the GramGoods
         %a{ :href => '/tos', :target => '_blank' } Terms of Service
