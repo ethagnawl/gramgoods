@@ -10,7 +10,7 @@
           %span.help-inline You cannot change your store's name.
 
     .control-group
-      = form.label :return_policy, :class => 'control-label'
+      = form.label :return_policy, :return_policy.to_s.titleize, :class => 'control-label'
       .controls
         = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
     .control-group
