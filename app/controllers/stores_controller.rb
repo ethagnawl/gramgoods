@@ -20,8 +20,7 @@ class StoresController < ApplicationController
 
   def proxy
     @store = Store.new params[:store]
-    instagram_auth_url = '/users/auth/instagram'
-    instagram_auth_url_with_params = "#{instagram_auth_url}?" << params.to_query
+    instagram_auth_url_with_params = "#{INSTAGRAM_CONFIG['AUTH_URL']}?" << params.to_query
 
     if @store.valid?
       redirect_to instagram_auth_url_with_params

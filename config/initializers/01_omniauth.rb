@@ -12,3 +12,5 @@ else
   hash = File.open("#{Rails.root}/config/instagram.yml") do |f| YAML::load(f) end
   INSTAGRAM_CONFIG = hash[Rails.env.to_s]
 end
+
+INSTAGRAM_CONFIG['AUTH_URL'] = '/users/auth/instagram'

@@ -6,7 +6,7 @@
       = render 'shared/force_instagram_logout_iframe'
       %a{ :href => '/stores/new' } Sign Up
       |
-      %a{ :href => '/users/auth/instagram' } Sign In
+      %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
 
 #store_form_wrapper
   = render 'form'
