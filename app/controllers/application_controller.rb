@@ -149,8 +149,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def mobile_device_is_iOS_6?
-    mobile_device? && request.user_agent =~ /iPhone OS 6+/
+  def mobile_device_is_iOS?
+    mobile_device? && request.user_agent =~ /iPhone|iPad|iPod/
   end
 
   def mobile_device?
