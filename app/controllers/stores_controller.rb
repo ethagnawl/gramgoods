@@ -19,15 +19,18 @@ class StoresController < ApplicationController
   end
 
   def proxy
-    if mobile_device_is_iOS_6?
-      instagram_auth_url = '/users/auth/instagram'
-      instagram_auth_url_with_params = "#{instagram_auth_url}?" << params.to_query
+    @store = Store.new params[:store]
+    instagram_auth_url = '/users/auth/instagram'
+    instagram_auth_url_with_params = "#{instagram_auth_url}?" << params.to_query
+
+    if @store.valid?
       redirect_to instagram_auth_url_with_params
+    else
+      render 'new.mobile', :layout => 'mobile'
     end
   end
 
   def new
-    gon.auth_url = '/users/auth/instagram'
     @store = Store.new
     if mobile_device? or params[:layout] == 'mobile'
       render 'new.mobile', :layout => 'mobile'
