@@ -1,8 +1,7 @@
 class StoresController < ApplicationController
   layout 'admin'
-  #before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :authenticate_user!, :except => [:show, :new]
-  before_filter :except => [:create, :new, :show, :index, :destroy] do |controller|
+  before_filter :authenticate_user!, :except => [:show, :new, :proxy]
+  before_filter :except => [:proxy, :create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
@@ -17,6 +16,14 @@ class StoresController < ApplicationController
     @user = current_user
     @stores = @user.stores if user_signed_in?
     render_conditional_layout(params[:layout])
+  end
+
+  def proxy
+    if mobile_device_is_iOS_6?
+      instagram_auth_url = '/users/auth/instagram'
+      instagram_auth_url_with_params = "#{instagram_auth_url}?" << params.to_query
+      redirect_to instagram_auth_url_with_params
+    end
   end
 
   def new
