@@ -13,7 +13,9 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     unless current_user.first_store.nil?
-      custom_store_path(current_user.first_store)
+      store = current_user.first_store
+      flash[:notice] = "#{store.name} has been created successfully."
+      new_store_product_path(store)
     else
       new_store_path
     end
