@@ -1,25 +1,24 @@
 = form_for @store, :url => stores_proxy_path do |form|
   .form-errors-wrapper
     = render 'shared/form_errors', :target => @store
-  %fieldset.float-left
-    .control-group
-      = form.label :name, 'Store Name', :class => 'control-label'
-      .controls
-        = form.text_field :name, :class => 'input-xlarge', :disabled => (true if params[:action] == 'edit')
-        - if params[:action] == 'edit'
-          %span.help-inline You cannot change your store's name.
+  %fieldset
+    = form.text_field :name, :placeholder => 'Store Name', |
+                             :class => 'input-xlarge', |
+                             :disabled => (true if params[:action] == 'edit')
+    - if params[:action] == 'edit'
+      %span.help-inline You cannot change your store's name.
 
-    .control-group
-      = form.label :return_policy, :return_policy.to_s.titleize, :class => 'control-label'
-      .controls
-        = form.text_area :return_policy, :class => 'input-xlarge', :rows => 5
-    .control-group
-      = check_box :store, :terms_of_service, :checked => true
-      = label :store, :terms_of_service do
-        By signing up you agree to the GramGoods
-        %a{ :href => '/tos', :target => '_blank' } Terms of Service
-    .form-actions
-      %a#sign_up_and_create_store{ :href => 'javascript: void(0);' } Sign Up and Create Store
+  %fieldset
+    = form.text_area :return_policy, :placeholder => :return_policy.to_s.titleize, :class => 'input-xlarge', :rows => 5
+
+  %fieldset
+    = check_box :store, :terms_of_service, :checked => true
+    = label :store, :terms_of_service do
+      By signing up you agree to the GramGoods
+      %a{ :href => '/tos', :target => '_blank' } Terms of Service
+
+  %fieldset
+    = form.submit
 
 .widget
   - if params[:action] == 'edit'
