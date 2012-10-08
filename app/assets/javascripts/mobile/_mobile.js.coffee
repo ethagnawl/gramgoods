@@ -79,12 +79,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
 
-        if gon.page is 'stores_new'
-            ($ '#sign_up_and_create_store').click ->
-                form_data = ($ '#new_store').serialize()
-                auth_url = gon.auth_url
-                window.location = "#{auth_url}?#{form_data}"
-
         if gon.page is 'stores_show'
             $('.product').each ->
                 fetch_product_images(($ @), render_single_product_image)
