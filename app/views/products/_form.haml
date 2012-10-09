@@ -1,4 +1,5 @@
 - edit_view = locals[:action] == 'Edit'
+- post_to_instagram_prefix = locals[:action] == 'Edit' ? 'Update' : 'Create'
 
 = form_for([@store, @product], :html => { :class => 'mobile-form' }) do |product_form|
   .form-errors-wrapper
@@ -65,4 +66,4 @@
 
     - if mobile_device_is_iOS?
       %fieldset
-        = product_form.submit 'Create Product and Post to Instagram'
+        = product_form.submit "#{post_to_instagram_prefix} Product and Post to Instagram"
