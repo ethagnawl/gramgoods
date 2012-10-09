@@ -1,53 +1,68 @@
-= form_for([@store, @product]) do |product_form|
+- edit_view = locals[:action] == 'Edit'
+
+= form_for([@store, @product], :html => { :class => 'mobile-form' }) do |product_form|
   .form-errors-wrapper
     = render 'shared/form_errors', :target => @product
 
-  %fieldset
-    = product_form.text_field :name, :placeholder => :name.titleize
+    %legend
+      #{locals[:action]} Product
 
-  = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
     %fieldset
-      = instagram_tag_form.text_field :instagram_tag, |
-                                      :placeholder => :instagram_tag.titleize
+      - if edit_view
+        = product_form.label :name, :placeholder => :name.titleize
+      = product_form.text_field :name, :placeholder => :name.titleize
 
-  %fieldset
-    = product_form.text_area :description, :placeholder => :description.titleize
+    = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
+      %fieldset
+        - if edit_view
+          = instagram_tag_form.label :instagram_tag, :instagram_tag.titleize
+        = instagram_tag_form.text_field :instagram_tag, |
+                                        :placeholder => :instagram_tag.titleize
 
-  %fieldset
-    = product_form.text_field :price, :placeholder => :price.titleize
-
-  %fieldset
-    = product_form.text_field :quantity, :placeholder => :quantity.titleize
-
-  %fieldset
-    = product_form.check_box :unlimited_quantity, |
-                             :placeholder => :unlimited_quantity.titleize
-    = product_form.label :unlimited_quantity, :unlimited_quantity.titleize
-
-  = product_form.fields_for(:colors) do |colors_form|
     %fieldset
-      = colors_form.text_field :color, :placeholder => :color.titleize
+      - if edit_view
+        = product_form.label :description
+      = product_form.text_area :description, :placeholder => :description.titleize
 
-  = product_form.fields_for(:sizes) do |sizes_form|
     %fieldset
-      = sizes_form.text_field :size, :placeholder => :size.titleize
+      - if edit_view
+        = product_form.label :price
+      = product_form.text_field :price, :placeholder => :price.titleize
 
-  %fieldset
-    = product_form.text_field :flatrate_shipping_cost, |
-                              :placeholder => :flatrate_shipping_cost.titleize
+    %fieldset
+      - if edit_view
+        = product_form.label :quantity
+      = product_form.text_field :quantity, :placeholder => :quantity.titleize
 
-  %fieldset
-    = product_form.select :status,
-                          options_for_select(Product.order_status_array,
-                                             @product.status ||= 'Active')
-    = product_form.label :status, "Product #{:status.titleize}"
+    %fieldset
+      = product_form.label :unlimited_quantity, :unlimited_quantity.titleize
+      = product_form.check_box :unlimited_quantity, |
+                               :placeholder => :unlimited_quantity.titleize
 
-  %fieldset
-    - if mobile_device_is_iOS?
-      .widget
-        = product_form.submit
-        or
-      .widget
-        = product_form.submit 'Create Product and Post to Instagram'
-    - else
+    = product_form.fields_for(:colors) do |colors_form|
+      %fieldset
+        = colors_form.label :color
+        = colors_form.text_field :color, :placeholder => :color.titleize
+
+    = product_form.fields_for(:sizes) do |sizes_form|
+      %fieldset
+        = sizes_form.label :size
+        = sizes_form.text_field :size, :placeholder => :size.titleize
+
+    %fieldset
+      = product_form.label :flatrate_shipping_cost
+      = product_form.text_field :flatrate_shipping_cost, |
+                                :placeholder => :flatrate_shipping_cost.titleize
+
+    %fieldset
+      = product_form.label :status, "Product #{:status.titleize}"
+      = product_form.select :status,
+                            options_for_select(Product.order_status_array,
+                                               @product.status ||= 'Active')
+
+    %fieldset
       = product_form.submit
+
+    - if mobile_device_is_iOS?
+      %fieldset
+        = product_form.submit 'Create Product and Post to Instagram'
