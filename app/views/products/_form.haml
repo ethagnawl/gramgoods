@@ -40,6 +40,7 @@
     = product_form.select :status,
                           options_for_select(Product.order_status_array,
                                              @product.status ||= 'Active')
+    = product_form.label :status, "Product #{:status.titleize}"
 
   %fieldset
     - if mobile_device_is_iOS?
