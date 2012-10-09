@@ -6,6 +6,7 @@
     .form-errors-wrapper
       = render 'shared/form_errors', :target => @product
 
+  %div
     %legend
       #{locals[:action]} Product
 
@@ -43,21 +44,24 @@
 
     = product_form.fields_for(:colors) do |colors_form|
       %fieldset
-        = colors_form.label :color
+        - if edit_view
+          = colors_form.label :color
         = colors_form.text_field :color, :placeholder => :color.titleize
 
     = product_form.fields_for(:sizes) do |sizes_form|
       %fieldset
-        = sizes_form.label :size
+        - if edit_view
+          = sizes_form.label :size
         = sizes_form.text_field :size, :placeholder => :size.titleize
 
     %fieldset
-      = product_form.label :flatrate_shipping_cost
+      - if edit_view
+        = product_form.label :flatrate_shipping_cost, :flatrate_shipping_cost.titleize
       = product_form.text_field :flatrate_shipping_cost, |
                                 :placeholder => :flatrate_shipping_cost.titleize
 
     %fieldset
-      = product_form.label :status, "Product #{:status.titleize}"
+      = product_form.label :status, :status.titleize
       = product_form.select :status,
                             options_for_select(Product.order_status_array,
                                                @product.status ||= 'Active')
