@@ -19,10 +19,11 @@ class StoresController < ApplicationController
   end
 
   def proxy
+    @user = User.new params[:user]
     @store = Store.new params[:store]
     instagram_auth_url_with_params = "#{INSTAGRAM_CONFIG['AUTH_URL']}?" << params.to_query
 
-    if @store.valid?
+    if @user.valid? && @store.valid?
       redirect_to instagram_auth_url_with_params
     else
       render 'new.mobile', :layout => 'mobile'
@@ -30,6 +31,7 @@ class StoresController < ApplicationController
   end
 
   def new
+    @user = User.new
     @store = Store.new
     if mobile_device? or params[:layout] == 'mobile'
       render 'new.mobile', :layout => 'mobile'

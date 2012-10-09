@@ -1,21 +1,28 @@
-= form_for @store, :url => stores_proxy_path do |form|
+= form_for [@user, @store], :url => stores_proxy_path do |form|
   .form-errors-wrapper
+    = render 'shared/form_errors', :target => @user
     = render 'shared/form_errors', :target => @store
-  %fieldset
-    = form.text_field :name, :placeholder => 'Store Name', |
-                             :class => 'input-xlarge', |
-                             :disabled => (true if params[:action] == 'edit')
-    - if params[:action] == 'edit'
-      %span.help-inline You cannot change your store's name.
 
-  %fieldset
-    = form.text_area :return_policy, :placeholder => :return_policy.to_s.titleize, :class => 'input-xlarge', :rows => 5
+  = fields_for :user do |user_form|
+    %fieldset
+      = user_form.text_field :email, :placeholder => :email.to_s.titleize
 
-  %fieldset
-    = check_box :store, :terms_of_service, :checked => true
-    = label :store, :terms_of_service do
-      By signing up you agree to the GramGoods
-      %a{ :href => '/tos', :target => '_blank' } Terms of Service
+  = fields_for :store do |store_form|
+    %fieldset
+      = store_form.text_field :name, :placeholder => 'Store Name', |
+                               :class => 'input-xlarge', |
+                               :disabled => (true if params[:action] == 'edit')
+      - if params[:action] == 'edit'
+        %span.help-inline You cannot change your store's name.
+
+    %fieldset
+      = store_form.text_area :return_policy, :placeholder => :return_policy.to_s.titleize, :class => 'input-xlarge', :rows => 5
+
+    %fieldset
+      = check_box :store, :terms_of_service, :checked => true
+      = label :store, :terms_of_service do
+        By signing up you agree to the GramGoods
+        %a{ :href => '/tos', :target => '_blank' } Terms of Service
 
   %fieldset
     = form.submit

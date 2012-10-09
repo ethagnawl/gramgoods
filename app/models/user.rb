@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  #validates_acceptance_of :tos, :on => :create, :accept => true
+  attr_accessible :email
 
-  def self.from_omniauth(auth, store_params)
+  def self.from_omniauth(auth, user_params, store_params)
     new_user = false
     user = where(auth.slice(:uid, :provider)).first_or_create do |user|
       new_user = true
@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
       user.username = auth.info.nickname
       user.thumbnail = auth.info.image
       user.access_token = auth.credentials.token
-      user.email = "hoge_#{Time.now.seconds_since_midnight.floor}@hoge.com"
+      user.email = user_params['email']
     end.tap { |u| u.create_store store_params if new_user }
   end
 
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    super && provider.blank?
+    false
   end
 
   def email_required?
