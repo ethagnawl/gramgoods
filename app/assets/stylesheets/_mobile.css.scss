@@ -36,7 +36,7 @@ body {
     padding-top: 70px;
 }
 
-#order_form {
+#order_form, .mobile-form {
     background-color: $white;
     left: 0;
     position: absolute;
@@ -97,7 +97,7 @@ body {
         color: $red;
     }
 
-    input, select, option {
+    input, select, option, textarea {
         width: 100%;
         &.unhappy {
             border: 1px solid $red;
