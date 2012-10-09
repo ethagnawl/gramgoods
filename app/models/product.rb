@@ -26,6 +26,10 @@ class Product < ActiveRecord::Base
   before_save :normalize_quantity
   after_save :deliver_share_text
 
+  def self.order_status_array
+    ['Draft', 'Active', 'Out of Stock']
+  end
+
   def deliver_share_text
     ShareMailer.share_text(self.store.user.email, self).deliver
   end

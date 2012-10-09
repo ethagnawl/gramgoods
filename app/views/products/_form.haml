@@ -38,8 +38,8 @@
 
   %fieldset
     = product_form.select :status,
-                          options_for_select(['Draft', 'Active', 'Out of Stock'],
-                                             @product.status)
+                          options_for_select(Product.order_status_array,
+                                             @product.status ||= 'Active')
 
   %fieldset
     .widget
