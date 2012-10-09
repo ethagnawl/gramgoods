@@ -42,4 +42,8 @@
                                              @product.status)
 
   %fieldset
-    = product_form.submit
+    .widget
+      = product_form.submit
+      or
+    .widget
+      = product_form.submit 'Create Product and Post to Instagram'
