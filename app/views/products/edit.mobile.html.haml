@@ -1,4 +1,3 @@
 - content_for(:title) { "Edit #{@product.name} | GramGoods" }
 
-#product_form_wrapper
-  = render 'form', :locals => { :action => 'Edit' }
+= render 'form', :locals => { :action => 'Edit' }
