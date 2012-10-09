@@ -28,6 +28,12 @@
         - else
           .product-link
             = link_to('', product_url, :title => "View #{product.name}")
-  %a.widget.desktop-link{ :href => '/?layout=desktop' } Looking for the desktop version of GramGoods?
+  - unless user_signed_in?
+    .widget.products-footer
+      = render 'shared/force_instagram_logout_iframe'
+      %a{ :href => '/stores/new' } Sign Up
+      |
+      %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
+
 
 
