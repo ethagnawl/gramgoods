@@ -42,8 +42,11 @@
                                              @product.status ||= 'Active')
 
   %fieldset
-    .widget
+    - if mobile_device_is_iOS?
+      .widget
+        = product_form.submit
+        or
+      .widget
+        = product_form.submit 'Create Product and Post to Instagram'
+    - else
       = product_form.submit
-      or
-    .widget
-      = product_form.submit 'Create Product and Post to Instagram'

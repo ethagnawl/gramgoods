@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :basic_authentication
   helper_method :render_user_photo_template
   helper_method :mobile_device?
+  helper_method :mobile_device_is_iOS?
   helper_method :user_owns_store?
 
   def after_sign_in_path_for(resource)
