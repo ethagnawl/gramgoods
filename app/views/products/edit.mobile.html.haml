@@ -1,11 +1,4 @@
 - content_for(:title) { "Edit #{@product.name} | GramGoods" }
-- content_for(:header) do
-  %h1
-    Edit #{@product.name}
-    %br
-    = link_to 'Logout', destroy_user_session_path
-    |
-    = link_to "Back to #{@product.store.name}", custom_store_path(@product.store)
 
 #product_form_wrapper
-  = render 'form'
+  = render 'form', :locals => { :action => 'Edit' }
