@@ -59,7 +59,13 @@ class ProductsController < ApplicationController
           }
         }
         format.html {
-          redirect_to(custom_product_path(@store, @product))
+          product_path = custom_product_path(@store, @product)
+          querystring = '?'
+          if !params[:post_to_instagram].nil?
+            querystring << "redirect_to_instagram=true"
+          end
+          product_path_with_querystring = product_path << querystring
+          redirect_to(product_path_with_querystring)
         }
       end
     else
@@ -91,6 +97,9 @@ class ProductsController < ApplicationController
     gon.product_id = @product.id
     gon.store_slug = @store.slug
     gon.create_order_url = new_store_order_path(@store)
+    unless params[:redirect_to_instagram].nil?
+      gon.instagram_url_with_params = "instagram://camera&tag?name=#{URI.escape(@product.get_instagram_tag)}&caption=#{URI.escape(@product.description)}"
+    end
 
     respond_to do |format|
       format.json {
