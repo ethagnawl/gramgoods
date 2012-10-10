@@ -2,7 +2,7 @@
 - content_for(:header) do
   %h1
     #{@store.name}
-    - if user_signed_in? && user_owns_store?(@store.id)
+    - if @current_user_owns_store
       %br
       = link_to 'Logout', destroy_user_session_path
       |
