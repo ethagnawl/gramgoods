@@ -14,56 +14,57 @@
 
     %fieldset
       - if edit_view
-        = product_form.label :name, :placeholder => :name.titleize
-      = product_form.text_field :name, :placeholder => :name.titleize
+        = product_form.label :name, (form_label(:name))
+      = product_form.text_field :name, :placeholder => (form_label(:name))
 
     = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
       %fieldset
         - if edit_view
-          = instagram_tag_form.label :instagram_tag, :instagram_tag.titleize
+          = instagram_tag_form.label :instagram_tag, (form_label(:instagram_tag))
         = instagram_tag_form.text_field :instagram_tag, |
-                                        :placeholder => :instagram_tag.titleize
+                                        :placeholder => (form_label(:instagram_tag))
 
     %fieldset
       - if edit_view
-        = product_form.label :description
-      = product_form.text_area :description, :placeholder => :description.titleize
+        = product_form.label :description, (form_label(:description))
+      = product_form.text_area :description, |
+                               :placeholder => (form_label(:description)),
+                               :rows => 5
 
     %fieldset
       - if edit_view
-        = product_form.label :price
-      = product_form.text_field :price, :placeholder => :price.titleize
+        = product_form.label :price, (form_label(:price))
+      = product_form.text_field :price, :placeholder => (form_label(:price))
 
     %fieldset
       - if edit_view
-        = product_form.label :quantity
-      = product_form.text_field :quantity, :placeholder => :quantity.titleize
+        = product_form.label :quantity, (form_label(:quantity, false))
+      = product_form.text_field :quantity, :value => (@product.unlimited_quantity ? nil : nil), :placeholder => (form_label(:quantity, false)), :disalbed => (@product.unlimited_quantity ? true : nil)
 
     %fieldset
-      = product_form.label :unlimited_quantity, :unlimited_quantity.titleize
-      = product_form.check_box :unlimited_quantity, |
-                               :placeholder => :unlimited_quantity.titleize
+      = product_form.label :unlimited_quantity, (form_label(:unlimited_quantity, false))
+      = product_form.check_box :unlimited_quantity
 
     = product_form.fields_for(:colors) do |colors_form|
       %fieldset
         - if edit_view
-          = colors_form.label :color
-        = colors_form.text_field :color, :placeholder => :color.titleize
+          = colors_form.label :color, (form_label(:color, false))
+        = colors_form.text_field :color, :placeholder => (form_label(:color, false))
 
     = product_form.fields_for(:sizes) do |sizes_form|
       %fieldset
         - if edit_view
-          = sizes_form.label :size
-        = sizes_form.text_field :size, :placeholder => :size.titleize
+          = sizes_form.label :size, (form_label(:size, false))
+        = sizes_form.text_field :size, :placeholder => (form_label(:size, false))
 
     %fieldset
       - if edit_view
-        = product_form.label :flatrate_shipping_cost, :flatrate_shipping_cost.titleize
+        = product_form.label :flatrate_shipping_cost, (form_label(:flatrate_shipping_cost, false))
       = product_form.text_field :flatrate_shipping_cost, |
-                                :placeholder => :flatrate_shipping_cost.titleize
+                                :placeholder => (form_label(:flatrate_shipping_cost, false))
 
     %fieldset
-      = product_form.label :status, :status.titleize
+      = product_form.label :status, (form_label(:status))
       = product_form.select :status,
                             options_for_select(Product.order_status_array,
                                                @product.status ||= 'Active')
