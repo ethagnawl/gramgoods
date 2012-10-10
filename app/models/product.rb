@@ -2,10 +2,10 @@ class Product < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
 
   belongs_to :store
-  has_many :product_images
-  has_one :instagram_tag
-  has_many :colors
-  has_many :sizes
+  has_many :product_images, :dependent => :destroy
+  has_one :instagram_tag, :dependent => :destroy
+  has_many :colors, :dependent => :destroy
+  has_many :sizes, :dependent => :destroy
   extend FriendlyId
 
   friendly_id :name, :use => [:slugged, :history]
