@@ -32,9 +32,14 @@ class StoresController < ApplicationController
 
   def new
     @user = User.new
-    @store = Store.new
-    if mobile_device? or params[:layout] == 'mobile'
-      render 'new.mobile', :layout => 'mobile'
+
+    unless current_user.first_store.nil?
+      redirect_to(custom_store_path(current_user.first_store))
+    else
+      @store = Store.new
+      if mobile_device? or params[:layout] == 'mobile'
+        render 'new.mobile', :layout => 'mobile'
+      end
     end
   end
 
