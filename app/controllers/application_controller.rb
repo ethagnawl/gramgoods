@@ -15,8 +15,15 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     unless current_user.first_store.nil?
       store = current_user.first_store
-      flash[:notice] = "#{store.name} has been created successfully. - TODO: only show after store creation."
-      new_store_product_path(store)
+
+      if current_user.is_a_new_user?
+        notice = "#{store.name} has been created successfully. <br /> Be sure to add http://gramgoods.com/#{store.slug} to your Instagram profile.".html_safe
+        new_store_product_path(store)
+      else
+        notice = "Signed in successfully as #{current_user.username}."
+        custom_store_path(store)
+      end
+      flash[:notice] = notice
     else
       new_store_path
     end
