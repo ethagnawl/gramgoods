@@ -1,41 +1,47 @@
 - edit_view = params[:action] == 'edit'
-= form_for [@user, @store], :url => stores_proxy_path do |form|
-  .form-errors-wrapper
-    = render 'shared/form_errors', :target => @user
-    = render 'shared/form_errors', :target => @store
+= form_for [@user, @store], :url => stores_proxy_path, :html => {:class => 'mobile-form'} do |form|
+  = alert
+  = notice
+  - if @user.errors.any? || @store.errors.any?
+    .form-errors-wrapper
+      - if @user.errors.any?
+        = render 'shared/form_errors', :target => @user
+      - if @store.errors.any?
+        = render 'shared/form_errors', :target => @store
 
-  = fields_for :user do |user_form|
-    %fieldset
-      - if edit_view
-        = user_form.label :email, (form_label(:email))
-      = user_form.text_field :email, :placeholder => (form_label(:email))
-
-  = fields_for :store do |store_form|
-    %fieldset
-      - if edit_view
-        = store_form.label :name, (form_label('Store Name'))
-      = store_form.text_field :name, :placeholder => (form_label('Store Name')), |
-                               :class => 'input-xlarge', |
-                               :disabled => (true if params[:action] == 'edit')
+  %div
+    %legend
       - if params[:action] == 'edit'
-        %span.help-inline You cannot change your store's name.
+        Edit #{@store.name}
+      - else
+        Create Store
+
+    = fields_for :user do |user_form|
+      %fieldset
+        - if edit_view
+          = user_form.label :email, (form_label(:email))
+        = user_form.text_field :email, :placeholder => (form_label(:email))
+
+    = fields_for :store do |store_form|
+      %fieldset
+        - if edit_view
+          = store_form.label :name, (form_label('Store Name'))
+        = store_form.text_field :name, :placeholder => (form_label('Store Name')), |
+                                 :class => 'input-xlarge', |
+                                 :disabled => (true if params[:action] == 'edit')
+        - if params[:action] == 'edit'
+          %span.help-inline You cannot change your store's name.
+
+      %fieldset
+        - if edit_view
+          = store_form.label :return_policy, (form_label(:return_policy))
+        = store_form.text_area :return_policy, :placeholder => (form_label(:return_policy)), :class => 'input-xlarge', :rows => 5
+
+      %fieldset
+        = label :store, :terms_of_service do
+          By signing up you agree to the GramGoods
+          %a{ :href => '/tos', :target => '_blank' } Terms of Service
+        = check_box :store, :terms_of_service, :checked => true
 
     %fieldset
-      - if edit_view
-        = store_form.label :return_policy, (form_label(:return_policy))
-      = store_form.text_area :return_policy, :placeholder => (form_label(:return_policy)), :class => 'input-xlarge', :rows => 5
-
-    %fieldset
-      = check_box :store, :terms_of_service, :checked => true
-      = label :store, :terms_of_service do
-        By signing up you agree to the GramGoods
-        %a{ :href => '/tos', :target => '_blank' } Terms of Service
-
-  %fieldset
-    = form.submit
-
-.widget
-  - if params[:action] == 'edit'
-    = link_to('Back to Store', store_path(@store))
-  - else
-    = link_to('Back to Stores', stores_path())
+      = form.submit
