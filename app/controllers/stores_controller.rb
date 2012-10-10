@@ -65,7 +65,6 @@ class StoresController < ApplicationController
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     if @current_user_owns_store
       if params[:layout] == 'mobile'
-        @products = @store.displayable_products
         render 'stores/show.mobile', :layout => 'mobile'
       elsif mobile_device?
         @products = @store.products
