@@ -98,8 +98,8 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         if gon.page is 'products_show'
             header_fix()
 
-            if gon.authenticated and gon.instagram_url_with_params?
-                window.location = gon.instagram_url_with_params
+            if gon.authenticated and gon.instagram_protocol_with_params?
+                window.location = gon.instagram_protocol_with_params
 
             fetch_product_images($('.product'), render_multiple_product_images)
 
