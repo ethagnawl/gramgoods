@@ -1,3 +1,4 @@
+- edit_view = params[:action] == 'edit'
 = form_for [@user, @store], :url => stores_proxy_path do |form|
   .form-errors-wrapper
     = render 'shared/form_errors', :target => @user
@@ -5,18 +6,24 @@
 
   = fields_for :user do |user_form|
     %fieldset
-      = user_form.text_field :email, :placeholder => :email.to_s.titleize
+      - if edit_view
+        = user_form.label :email, (form_label(:email))
+      = user_form.text_field :email, :placeholder => (form_label(:email))
 
   = fields_for :store do |store_form|
     %fieldset
-      = store_form.text_field :name, :placeholder => 'Store Name', |
+      - if edit_view
+        = store_form.label :name, (form_label('Store Name'))
+      = store_form.text_field :name, :placeholder => (form_label('Store Name')), |
                                :class => 'input-xlarge', |
                                :disabled => (true if params[:action] == 'edit')
       - if params[:action] == 'edit'
         %span.help-inline You cannot change your store's name.
 
     %fieldset
-      = store_form.text_area :return_policy, :placeholder => :return_policy.to_s.titleize, :class => 'input-xlarge', :rows => 5
+      - if edit_view
+        = store_form.label :return_policy, (form_label(:return_policy))
+      = store_form.text_area :return_policy, :placeholder => (form_label(:return_policy)), :class => 'input-xlarge', :rows => 5
 
     %fieldset
       = check_box :store, :terms_of_service, :checked => true
