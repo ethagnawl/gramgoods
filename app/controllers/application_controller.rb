@@ -17,13 +17,12 @@ class ApplicationController < ActionController::Base
       store = current_user.first_store
 
       if current_user.is_a_new_user?
-        notice = "#{store.name} has been created successfully. <br /> Be sure to add http://gramgoods.com/#{store.slug} to your Instagram profile.".html_safe
+        flash[:notice] = "#{store.name} has been created successfully. <br /> Be sure to add http://gramgoods.com/#{store.slug} to your Instagram profile.".html_safe
         new_store_product_path(store)
       else
-        notice = "Signed in successfully as #{current_user.username}."
+        flash[:notice] = "Signed in successfully as #{current_user.username}."
         custom_store_path(store)
       end
-      flash[:notice] = notice
     else
       new_store_path
     end
