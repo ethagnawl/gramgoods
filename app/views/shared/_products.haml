@@ -11,6 +11,9 @@
         - if locals[:show_store_name] == true
           .store-name
             = product.store.name
+        - if user_owns_store
+          .product-status
+            Status: #{product.status}
         .product-name
           = product.name
         .product-button.product-price
