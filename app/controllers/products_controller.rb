@@ -94,10 +94,8 @@ class ProductsController < ApplicationController
     gon.store_slug = @store.slug
     gon.create_order_url = new_store_order_path(@store)
     unless params[:redirect_to_instagram].nil?
-      instagram_params = {
-        :caption => @product.get_instagram_caption
-      }.to_query
-      gon.instagram_protocol_with_params = "instagram://camera?" << instagram_params
+      instagram_params = URI.encode("?caption=#{@product.get_instagram_caption}")
+      gon.instagram_protocol_with_params = "instagram://camera" << instagram_params
     end
 
     respond_to do |format|
