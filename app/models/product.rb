@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :store
   has_many :product_images
   has_one :instagram_tag
@@ -98,6 +100,17 @@ class Product < ActiveRecord::Base
 
   def get_sizes
     self.sizes.map { |size| size.size }.join(', ')
+  end
+
+  def get_instagram_caption
+    product = self
+    caption = ''
+    caption << "http://gramgoods.com/#{product.store.slug}/#{product.slug}"
+    caption << " Buy #{product.name} for #{number_to_currency(product.price)} by"
+    caption << " visiting @#{product.store.user.username} and clicking the link in our profile."
+    caption << " Sizes: #{product.get_sizes}" unless product.get_sizes.empty?
+    caption << " Colors: #{product.get_colors}" unless product.get_colors.empty?
+    caption << " ##{product.get_instagram_tag}"
   end
 
   def like_count
