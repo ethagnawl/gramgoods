@@ -1,6 +1,6 @@
 class Store < ActiveRecord::Base
   belongs_to :user
-  has_many :products, :order => 'updated_at DESC'
+  has_many :products, :order => 'updated_at DESC', :dependent => :destroy
   has_many :orders, :order => 'updated_at DESC'
   extend FriendlyId
 
