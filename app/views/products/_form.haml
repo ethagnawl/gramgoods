@@ -10,7 +10,10 @@
 
   %div
     %legend
-      #{locals[:action]} Product
+      - if locals[:action] == 'Edit'
+        Edit #{@product.name}
+      - else
+        Create Product
 
     %fieldset
       - if edit_view
