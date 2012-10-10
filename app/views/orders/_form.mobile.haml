@@ -1,4 +1,4 @@
-= form_for([@store, @order], :html => { :id => 'order_form', :class => 'order-form' }) do |form|
+= form_for([@store, @order], :html => { :id => 'order_form', :class => 'order-form mobile-form' }) do |form|
   - if @order.errors.any?
     .form-errors-wrapper
       = render 'shared/form_errors', :target => @order
