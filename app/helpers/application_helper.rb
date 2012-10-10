@@ -1,4 +1,16 @@
 module ApplicationHelper
+
+  def required_form_label(name)
+    name << '*'
+  end
+
+  def form_label(name, required_field = true, message = nil)
+    _label = name.titleize
+    _label = required_form_label(_label) unless required_field == false
+    _label << message unless message.nil?
+    _label
+  end
+
   def configure_instagram(client_key, access_token)
     Instagram.configure do |config|
       config.client_id = client_key
