@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     end.tap { |u| u.create_store store_params if new_user }
   end
 
+  def is_a_new_user?
+    self.sign_in_count == 1
+  end
+
   def create_store(store_params)
     self.stores.create store_params
   end
