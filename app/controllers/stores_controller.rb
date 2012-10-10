@@ -33,7 +33,7 @@ class StoresController < ApplicationController
   def new
     @user = User.new
 
-    unless current_user.first_store.nil?
+    if !current_user.nil? && !current_user.first_store.nil?
       redirect_to(custom_store_path(current_user.first_store))
     else
       @store = Store.new
