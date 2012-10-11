@@ -103,12 +103,12 @@ class Product < ActiveRecord::Base
   end
 
   def get_instagram_caption
-    caption = "http://gramgoods.com/#{product.store.slug}/#{product.slug}.html"
-    caption << " Buy #{product.name} for #{number_to_currency(product.price)} by"
-    caption << " visiting @#{product.store.user.username} and clicking the link in our profile."
-    caption << " Sizes: #{product.get_sizes}" unless product.get_sizes.empty?
-    caption << " Colors: #{product.get_colors}" unless product.get_colors.empty?
-    caption << " ##{product.get_instagram_tag}"
+    caption = "http://gramgoods.com/#{self.store.slug}/#{self.slug}.html"
+    caption << " Buy #{self.name} for #{number_to_currency(self.price)} by"
+    caption << " visiting @#{self.store.user.username} and clicking the link in our profile."
+    caption << " Sizes: #{self.get_sizes}" unless self.get_sizes.empty?
+    caption << " Colors: #{self.get_colors}" unless self.get_colors.empty?
+    caption << " ##{self.get_instagram_tag}"
   end
 
   def like_count
