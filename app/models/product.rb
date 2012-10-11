@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
   end
 
   def normalize_quantity
-    self.quantity = 0 if self.quantity.nil?
+    self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
   end
 
   def is_orderable
