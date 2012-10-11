@@ -82,6 +82,9 @@ class StoresController < ApplicationController
   def edit
     @user = current_user
     @store = @user.stores.find(params[:id])
+    if mobile_device? or params[:layout] == 'mobile'
+      render 'edit.mobile', :layout => 'mobile'
+    end
   end
 
   def update
@@ -91,7 +94,11 @@ class StoresController < ApplicationController
       flash[:notice] = "#{@store.name} has been updated successfully."
       redirect_to custom_store_path(@store)
     else
-      render 'edit'
+      if mobile_device? or params[:layout] == 'mobile'
+        render 'edit.mobile', :layout => 'mobile'
+      else
+        render 'edit'
+      end
     end
   end
 

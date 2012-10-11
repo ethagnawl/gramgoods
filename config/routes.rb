@@ -17,7 +17,9 @@ Gramgoods::Application.routes.draw do
       resources :product_images
     end
   end
-  resources :users
+  resources :users do
+    resources :stores
+  end
   match 'get_instagram_feed_for_current_user' => 'application#_get_instagram_photo_feed_for_user'
   match 'get_instagram_feed_for_user_and_filter_by_tag' => 'application#_get_instagram_feed_for_user_and_filter_by_tag'
   match 'stores_proxy' => 'stores#proxy'

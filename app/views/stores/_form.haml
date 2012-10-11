@@ -1,5 +1,5 @@
 - edit_view = params[:action] == 'edit'
-= form_for [@user, @store], :url => stores_proxy_path, :html => {:class => 'mobile-form'} do |form|
+= form_for [@user, @store], :url => (params[:action] == 'edit' ? nil : stores_proxy_path), :html => {:class => 'mobile-form'} do |form|
   = alert
   = notice
   - if @user.errors.any? || @store.errors.any?
@@ -20,7 +20,11 @@
       %fieldset
         - if edit_view
           = user_form.label :email, (form_label(:email))
-        = user_form.text_field :email, :placeholder => (form_label(:email))
+        = user_form.text_field :email, :placeholder => (form_label(:email)), |
+                               :disabled => (true if params[:action] == 'edit')
+        - if params[:action] == 'edit'
+          %span.help-inline You cannot change your email address.
+
 
     = fields_for :store do |store_form|
       %fieldset
@@ -37,11 +41,13 @@
           = store_form.label :return_policy, (form_label(:return_policy))
         = store_form.text_area :return_policy, :placeholder => (form_label(:return_policy)), :class => 'input-xlarge', :rows => 5
 
-      %fieldset
-        = label :store, :terms_of_service do
-          By signing up you agree to the GramGoods
-          %a{ :href => '/tos', :target => '_blank' } Terms of Service
-        = check_box :store, :terms_of_service, :checked => true
+
+      - unless edit_view
+        %fieldset
+          = label :store, :terms_of_service do
+            By signing up you agree to the GramGoods
+            %a{ :href => '/tos', :target => '_blank' } Terms of Service
+          = check_box :store, :terms_of_service, :checked => true
 
     %fieldset
       = form.submit

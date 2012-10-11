@@ -1,0 +1,11 @@
+- content_for(:title) { "Edit #{@store.name}| GramGoods" }
+- content_for(:header) do
+  %h1
+    Edit #{@store.name}
+    %br
+      = link_to 'Logout', destroy_user_session_path
+      |
+      = link_to 'Create Product', new_store_product_path(current_user.first_store.slug)
+
+#store_form_wrapper
+  = render 'form'

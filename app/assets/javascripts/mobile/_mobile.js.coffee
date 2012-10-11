@@ -145,6 +145,12 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
             # for desktop users
             ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
 
+if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy'
+    $ -> ($ '.mobile-form')
+        .isHappy(store_form_validation_rules)
+        .submit((e) ->
+            e.preventDefault() if ($ @).find('.unhappy').length)
+
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $credit_card_number = $('#credit_card_number')
     $credit_card_expiration_month = $('#credit_card_expiration_month')
@@ -164,7 +170,6 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                 .get(0)
                     .submit()
 
-    $ ->
         ($ "#order_form")
             .isHappy(order_form_validation_rules)
             .submit((e) ->
