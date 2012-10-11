@@ -44,7 +44,7 @@
       - if edit_view
         = product_form.label :quantity, (form_label(:quantity, false))
       = product_form.text_field :quantity, :type => 'tel', |
-        :disalbed => (@product.unlimited_quantity ? true : nil), |
+        :disabled => (@product.unlimited_quantity ? 'disabled' : nil), |
         :placeholder => (form_label(:quantity, false))
 
     %fieldset
