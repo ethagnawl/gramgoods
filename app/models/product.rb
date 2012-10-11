@@ -103,9 +103,7 @@ class Product < ActiveRecord::Base
   end
 
   def get_instagram_caption
-    product = self
-    caption = ''
-    caption << "http://gramgoods.com/#{product.store.slug}/#{product.slug}"
+    caption = "http://gramgoods.com/#{product.store.slug}/#{product.slug}.html"
     caption << " Buy #{product.name} for #{number_to_currency(product.price)} by"
     caption << " visiting @#{product.store.user.username} and clicking the link in our profile."
     caption << " Sizes: #{product.get_sizes}" unless product.get_sizes.empty?
