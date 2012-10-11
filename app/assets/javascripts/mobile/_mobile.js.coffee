@@ -187,8 +187,18 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
         ($ '#product_unlimited_quantity').change ->
-            disabled = if ($ @).prop('checked') then 'disabled' else ''
-            ($ '#product_quantity').prop('disabled', disabled)
+            if ($ @).prop('checked')
+                val = ($ '#product_quantity').val()
+                ($ '#product_quantity')
+                    .data('val', val)
+                    .prop('disabled', 'disabled')
+                    .val('')
+            else
+                val = ($ '#product_quantity').data('val')
+                ($ '#product_quantity')
+                    .prop('disabled', '')
+                    .val(val)
+
 
         ($ '.mobile-form').isHappy(product_form_validation_rules)
 
