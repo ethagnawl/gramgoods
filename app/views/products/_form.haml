@@ -25,7 +25,7 @@
         - if edit_view
           = instagram_tag_form.label :instagram_tag, (form_label(:instagram_tag))
         = instagram_tag_form.text_field :instagram_tag, |
-                                        :placeholder => (form_label(:instagram_tag))
+                                        :placeholder => (form_label(:instagram_tag, true, ' (e.g. #blue_jeans)'))
 
     %fieldset
       - if edit_view
@@ -37,13 +37,18 @@
     %fieldset
       - if edit_view
         = product_form.label :price, (form_label(:price))
-      = product_form.text_field :price, :placeholder => (form_label(:price))
+      = product_form.text_field :price, :type => 'number', |
+                                :placeholder => (form_label(:price, true, ' (e.g. $9.99)'))
 
     %fieldset
       - if edit_view
         = product_form.label :quantity, (form_label(:quantity, false))
-      = product_form.text_field :quantity, :value => (@product.unlimited_quantity ? nil : nil), :placeholder => (form_label(:quantity, false)), :disalbed => (@product.unlimited_quantity ? true : nil)
+      = product_form.text_field :quantity, :type => 'tel', |
+        :disalbed => (@product.unlimited_quantity ? true : nil), |
+        :placeholder => (form_label(:quantity, false))
 
+    %fieldset
+      %span *Quantity is required unless Unlimited Quantity has been selected.
     %fieldset
       = product_form.label :unlimited_quantity, (form_label(:unlimited_quantity, false))
       = product_form.check_box :unlimited_quantity
@@ -64,7 +69,8 @@
       - if edit_view
         = product_form.label :flatrate_shipping_cost, (form_label(:flatrate_shipping_cost, false))
       = product_form.text_field :flatrate_shipping_cost, |
-                                :placeholder => (form_label(:flatrate_shipping_cost, false))
+                                :type => 'number',
+                                :placeholder => (form_label(:flatrate_shipping_cost, false, ' (e.g. $9.99)'))
 
     %fieldset
       = product_form.label :status, (form_label(:status))

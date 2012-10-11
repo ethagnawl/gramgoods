@@ -145,7 +145,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
             # for desktop users
             ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
 
-if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy'
+if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy' or gon.page is 'stores_create' or gon.page is 'stores_update'
     $ -> ($ '.mobile-form')
         .isHappy(store_form_validation_rules)
         .submit((e) ->
@@ -183,4 +183,8 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                         exp_month: $credit_card_expiration_month.val(),
                         exp_year: $credit_card_expiration_year.val()
                     }, stripeResponseHandler))
+
+if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
+    $ ->
+        ($ '.mobile-form').isHappy(product_form_validation_rules)
 

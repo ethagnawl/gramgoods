@@ -36,5 +36,14 @@ var happy = {
 
     is_checked: function (val, el) {
         return $(el).prop('checked') === true;
+    },
+
+    is_price: function (val) {
+        return /^\$?[0-9]+\.?[0-9]?[0-9]?$/.test(val);
+    },
+
+    is_valid_quantity: function (val) {
+        // first character is 1-9 followed by zero or more 0-9s
+        return /^[1-9]{1}[0-9]*$/.test(val);
     }
 };
