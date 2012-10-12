@@ -31,6 +31,8 @@
         = instagram_tag_form.text_field :instagram_tag, |
                                         :value => instagram_value, |
                                         :placeholder => instagram_tag_custom_label
+        %span.inline-help
+          *The Instagram Hashtag will be used to link photos from your feed with this product.
 
     %fieldset
       - if edit_view
@@ -56,8 +58,8 @@
                                            :disabled => quantity_disabled, |
                                            :placeholder => quantity_placeholder
 
-    %fieldset
-      %span *Quantity is required unless Unlimited Quantity has been selected.
+      %span.inline-help
+        *Quantity is required unless Unlimited Quantity has been selected.
     %fieldset
       = product_form.label :unlimited_quantity, (form_label(:unlimited_quantity, false))
       = product_form.check_box :unlimited_quantity

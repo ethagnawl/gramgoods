@@ -92,6 +92,10 @@ body {
 
     fieldset {
         padding: 0 2%;
+
+        .inline-help {
+            font-size: .7em;
+        }
     }
 
     .unhappyMessage {
