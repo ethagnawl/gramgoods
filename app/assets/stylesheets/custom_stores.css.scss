@@ -24,3 +24,11 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
 .product.custom-merchant-fivestory-product .product-middle .product-button {
     background-color: $fivestory-store-color;
 }
+
+.custom-merchant-fivestory #order_form legend {
+    background-color: $fivestory-store-color;
+
+    &#billing_information_legend {
+        background-color: $fivestory-store-color;
+    }
+}
