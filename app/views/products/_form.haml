@@ -46,11 +46,15 @@
                                 :placeholder => (form_label(:price, true, ' (e.g. $9.99)'))
 
     %fieldset
+      - quantity_placeholder = form_label(:quantity, false)
+      - quantity_disabled = @product.unlimited_quantity ? 'disabled' : nil
+      - quantity_value = @product.quantity.nil? || @product.quantity == 0 ? nil : @product.quantity
       - if edit_view
         = product_form.label :quantity, (form_label(:quantity, false))
       = product_form.text_field :quantity, :type => 'tel', |
-        :disabled => (@product.unlimited_quantity ? 'disabled' : nil), |
-        :placeholder => (form_label(:quantity, false))
+                                           :value => quantity_value, |
+                                           :disabled => quantity_disabled, |
+                                           :placeholder => quantity_placeholder
 
     %fieldset
       %span *Quantity is required unless Unlimited Quantity has been selected.
