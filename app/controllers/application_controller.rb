@@ -161,6 +161,7 @@ class ApplicationController < ActionController::Base
   end
 
   def mobile_device?
+    return true if params[:layout] == 'mobile'
     request.user_agent =~ /Mobile|webOS/
   end
 end
