@@ -166,6 +166,7 @@ eos
   end
 
   def is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
+    return false if !defined?(MERCHANTS_WITH_CUSTOM_STORE_SLUGS) || MERCHANTS_WITH_CUSTOM_STORE_SLUGS.nil?
     MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? store_slug
   end
 
