@@ -75,11 +75,12 @@
         = sizes_form.text_field :size, :placeholder => (form_label(:size, false))
 
     %fieldset
+      - flatrate_shipping_label = form_label(:flatrate_shipping_cost, false)
       - if edit_view
-        = product_form.label :flatrate_shipping_cost, (form_label(:flatrate_shipping_cost, false))
+        = product_form.label :flatrate_shipping_cost, flatrate_shipping_label
       = product_form.text_field :flatrate_shipping_cost, |
                                 :type => 'number',
-                                :placeholder => (form_label(:flatrate_shipping_cost, false, ' (e.g. $9.99)'))
+                                :placeholder => flatrate_shipping_label
 
     %fieldset
       = product_form.label :status, (form_label(:status))
