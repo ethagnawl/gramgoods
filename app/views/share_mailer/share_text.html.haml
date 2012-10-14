@@ -4,5 +4,4 @@
     %meta{ :charset => "utf-8" }
   %body
     %h1 Use the following text to easily share #{@product.name}.
-    %p
-      http://gramgoods.com/#{@product.store.slug}/#{@product.slug}.html Buy #{@product.name} for #{number_to_currency(@product.price)} right now by visiting @#{!@product.store.user.username.nil? ? @product.store.user.username : '' } or clicking the link. #{@product.get_instagram_tag}
+    %p #{@product.get_instagram_caption}
