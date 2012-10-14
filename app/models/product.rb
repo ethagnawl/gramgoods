@@ -23,7 +23,14 @@ class Product < ActiveRecord::Base
     :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
   validate :require_instagram_tag
 
-  accepts_nested_attributes_for :product_images, :instagram_tag, :colors, :sizes
+  accepts_nested_attributes_for :product_images, :instagram_tag
+  accepts_nested_attributes_for :colors, :reject_if => lambda { |attrs|
+    attrs.all? { |key, value| value.blank? }
+  }
+  accepts_nested_attributes_for :sizes, :reject_if => lambda { |attrs|
+    attrs.all? { |key, value| value.blank? }
+  }
+
 
   before_save :normalize_quantity
   after_save :deliver_share_text
