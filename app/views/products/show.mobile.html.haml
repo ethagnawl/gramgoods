@@ -48,17 +48,23 @@
         - unless @product.colors.empty?
           .widget
             %h2 Color
-            %select#color
-              - @product.colors.each do |color|
-                %option{ :value => color.color }
-                  = color.color
+            - if @product.colors.length == 1
+              %p #{@product.colors.first.color}
+            - else
+              %select#color
+                - @product.colors.each do |color|
+                  %option{ :value => color.color }
+                    = color.color
         - unless @product.sizes.empty?
           .widget
             %h2 Size
-            %select#size
-              - @product.sizes.each do |size|
-                %option{ :value => size.size }
-                  = size.size
+            - if @product.sizes.length == 1
+              %p #{@product.sizes.first.size}
+            - else
+              %select#size
+                - @product.sizes.each do |size|
+                  %option{ :value => size.size }
+                    = size.size
 
       - unless @product.flatrate_shipping_cost.nil?
         .widget
