@@ -24,12 +24,17 @@ class Product < ActiveRecord::Base
   validate :require_instagram_tag
 
   accepts_nested_attributes_for :product_images, :instagram_tag
-  accepts_nested_attributes_for :colors, :reject_if => lambda { |attrs|
-    attrs.all? { |key, value| value.blank? }
-  }
-  accepts_nested_attributes_for :sizes, :reject_if => lambda { |attrs|
-    attrs.all? { |key, value| value.blank? }
-  }
+  accepts_nested_attributes_for :colors,
+    :reject_if => lambda { |attrs|
+      attrs.all? { |key, value| value.blank? }
+    },
+    :allow_destroy => true
+
+  accepts_nested_attributes_for :sizes,
+    :reject_if => lambda { |attrs|
+      attrs.all? { |key, value| puts value; value.blank? }
+    },
+    :allow_destroy => true
 
 
   before_save :normalize_quantity

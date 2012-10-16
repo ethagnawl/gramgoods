@@ -184,8 +184,45 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                         exp_year: $credit_card_expiration_year.val()
                     }, stripeResponseHandler))
 
+render_nested_product_attribute_input = ($el) ->
+    attribute = $el.data('attribute')
+    fieldset = $el.closest('fieldset')
+    input = fieldset.find('input[type=text]')
+    value = input.val()
+    data =
+        n: (new Date().getTime())
+        name: attribute
+        value: value
+
+    unless value is ''
+        input.val('')
+        fieldset.find('.attrs').append("""
+        <span>
+            #{value}
+            <a class='remove-attribute' href='javascript: void;'>x</a>
+            #{Mustache.render(
+                templates.product_form_nested_resource_input_template, data)}
+        </span>
+        """)
+
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
+        ($ '.mobile-form')
+            .on 'tap', '.add-button', (e) ->
+                return
+            .on 'click', '.add-button', (e) ->
+                e.preventDefault()
+                render_nested_product_attribute_input ($ @)
+
+            .on 'tap', '.remove-attribute', (e) ->
+                return
+            .on 'click', '.remove-attribute', (e) ->
+                id = ($ @).data('id')
+                attribute = ($ @).data('attribute')
+
+                if confirm "Are you sure you want to remove #{attribute}?"
+                    ($ "##{id}").remove()
+
         ($ '#product_unlimited_quantity').change ->
             if ($ @).prop('checked')
                 val = ($ '#product_quantity').val()

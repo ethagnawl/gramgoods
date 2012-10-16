@@ -104,6 +104,11 @@ body {
 
     input, select, option, textarea {
         width: 100%;
+
+        &.width-90 {
+            width: 82%;
+        }
+
         &.unhappy {
             border: 1px solid $red;
 
@@ -111,6 +116,13 @@ body {
                 color: $red;
             }
         }
+    }
+
+    .add-button {
+        float: right;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
     }
 }
 

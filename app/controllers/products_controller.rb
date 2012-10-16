@@ -124,6 +124,8 @@ class ProductsController < ApplicationController
   def update
     @store = current_user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
+    @product.colors.destroy_all
+    @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
       respond_to do |format|
         format.json {
