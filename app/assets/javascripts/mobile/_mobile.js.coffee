@@ -1,5 +1,8 @@
 window.templates = {}
 
+window.pluralize_like_count = (like_count) ->
+    if like_count is 1 then 'like' else 'likes'
+
 if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index' or gon.page is 'stores_new'
     # only reveal product gallery controls if there
     # is more than one product image
@@ -13,16 +16,26 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         String(num).replace /^\d+(?=\.|$)/, (int) ->
             int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
 
-    render_single_product_image = ($self, photos) ->
+   render_like_count = ($product, like_count) ->
+       likes = pluralize_like_count(like_count)
+       $product
+           .find('.product-like-count').text("#{like_count} #{likes}")
+           .removeClass('hide')
+
+    render_single_product_image = ($self, photos, like_count) ->
         product_image = photos[0]
         product_image_template = """
         <img class='product-thumbnail' src='{{product_image}}' alt='' />
         """
-        $self.find('.product-left').html(
-            Mustache.render product_image_template, { product_image }
-        )
+        $self
+            .find('.product-left').html(
+                Mustache.render product_image_template, { product_image })
 
-    render_multiple_product_images = ($self, product_images) ->
+        render_like_count($self, like_count) if +(like_count) > 0
+
+    render_multiple_product_images = ($self, product_images, like_count) ->
+        render_like_count($self, like_count) if +(like_count) > 0
+
         $product_gallery_wrapper = $('<div />')
         product_thumbnail_gallery_image_template = """
         <img src="{{product_image}}" data-index="{{index}}" class="{{classes}}" alt="{{product_name}}">
@@ -70,7 +83,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 if response.status is 'error'
                     #alert 'i don\'t know what to do yet'
                 else
-                    callback($self, response.product_images)
+                    callback($self, response.product_images, response.like_count)
 
     Zepto ($) ->
         # fixes iOS sticky fixed position bug
@@ -78,10 +91,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # products/show the header would stick
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
-
-        if gon.page is 'stores_show'
-            $('.product').each ->
-                fetch_product_images(($ @), render_single_product_image)
 
         if gon.page is 'stores_show' or gon.page is 'products_index'
             header_fix()

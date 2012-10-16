@@ -24,9 +24,7 @@
         Loading...
       %h1.product-name
         = @product.name
-      - if @product.like_count > 0
-        .product-like-count
-          #{pluralize(@product.like_count, 'like')}
+      .product-like-count.hide
       .product-button.product-details
         See Product Details
     .product-bottom.widget

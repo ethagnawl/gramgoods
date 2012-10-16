@@ -59,7 +59,11 @@ module ApplicationHelper
           }.find_all { |item|
             item.tags.member? tag
           }.map { |item|
-            item.images.standard_resolution.url })
+            {
+              :like_count => item.likes[:count],
+              :url => item.images.standard_resolution.url
+            }
+          })
         r.call(r, last_id) if i < media_count
       }.tap { |r| r.call(r) }
       Instagram.reset

@@ -36,7 +36,8 @@ class ApplicationController < ActionController::Base
     if user_feed && user_feed.length > 0
       render :json => {
         :status => 'success',
-        :product_images => user_feed
+        :product_images => user_feed.map { |image| image[:url] },
+        :like_count => user_feed.inject(0) { |sum, image| image[:like_count] }
       }
     else
       render :json => {
