@@ -4,8 +4,8 @@ class Product < ActiveRecord::Base
   belongs_to :store
   has_many :product_images, :dependent => :destroy
   has_one :instagram_tag, :dependent => :destroy
-  has_many :colors, :dependent => :destroy
-  has_many :sizes, :dependent => :destroy
+  has_many :colors, :dependent => :destroy, :before_add => :set_nest
+  has_many :sizes, :dependent => :destroy, :before_add => :set_nest
   extend FriendlyId
 
   friendly_id :name, :use => [:slugged, :history]
@@ -134,5 +134,11 @@ class Product < ActiveRecord::Base
     if instagram_tag.nil?
       errors.add(:base, 'You must provide at least one Instagram tag.')
     end
+  end
+
+  # allow nested attributes to use x.product before product has been saved
+  # http://stackoverflow.com/questions/2611459
+  def set_nest(item)
+    item.product ||= self
   end
 end
