@@ -1,7 +1,10 @@
 - edit_view = locals[:action] == 'Edit'
 - post_to_instagram_prefix = locals[:action] == 'Edit' ? 'Update' : 'Create'
 
-= form_for([@store, @product], :html => { :class => 'mobile-form' }) do |product_form|
+= form_for([@store, @product], |
+          :html => { :class => 'mobile-form', |
+                     :autocorrect => 'off', |
+                     :autocapitalize => 'off' }) do |product_form|
   = alert
   = notice
   - if @product.errors.any?
