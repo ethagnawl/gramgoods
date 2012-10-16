@@ -1,5 +1,7 @@
 - edit_view = params[:action] == 'edit'
-= form_for [@user, @store], :url => (params[:action] == 'edit' ? nil : stores_proxy_path), :html => {:class => 'mobile-form'} do |form|
+= form_for [@user, @store], :url => (params[:action] == 'edit' ? nil : stores_proxy_path), :html => {:class => 'mobile-form', |
+                :autocorrect => 'off', |
+                :autocapitalize => 'off' } do |form|
   = alert
   = notice
   - if @user.errors.any? || @store.errors.any?
