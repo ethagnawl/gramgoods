@@ -24,27 +24,18 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
 
     render_single_product_image = ($self, photos, like_count) ->
         product_image = photos[0]
-        product_image_template = """
-        <img class='product-thumbnail' src='{{product_image}}' alt='' />
-        """
+        product_name = gon.product_name
         $self
             .find('.product-left').html(
-                Mustache.render product_image_template, { product_image })
+                Mustache.render templates.product_image_template, {
+                    product_name,
+                    product_image })
 
         render_like_count($self, like_count) if +(like_count) > 0
 
     render_multiple_product_images = ($self, product_images, like_count) ->
         render_like_count($self, like_count) if +(like_count) > 0
-
         $product_gallery_wrapper = $('<div />')
-        product_thumbnail_gallery_image_template = """
-        <img src="{{product_image}}" data-index="{{index}}" class="{{classes}}" alt="{{product_name}}">
-        """
-
-        product_thumbnail_gallery_control_template = """
-        <a href="javascript: void(0);" data-index="{{index}}" class="{{classes}}"></a>
-        """
-
         $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
 
         for product_image, i in product_images
@@ -55,14 +46,14 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 product_image: product_image
 
             $product_gallery_wrapper.append Mustache.render(
-                product_thumbnail_gallery_image_template, product_gallery_data)
+                templates.product_thumbnail_gallery_image_template, product_gallery_data)
 
             product_gallery_control_data =
                 classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
                 index: i
 
              $product_gallery_controls_wrapper.append Mustache.render(
-                product_thumbnail_gallery_control_template, product_gallery_control_data)
+                templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
 
         $self.find('.product-thumbnail-gallery')
             .html($product_gallery_wrapper)
