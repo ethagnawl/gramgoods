@@ -216,9 +216,9 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
             .on 'tap', '.remove-attribute', (e) ->
                 return
-            .on 'click', '.remove-attribute', (e) ->
-                id = ($ @).data('id')
-                attribute = ($ @).data('attribute')
+            .on 'click', '.attribute-wrapper', (e) ->
+                id = ($ @).find('.remove-attribute').data('id')
+                attribute = ($ @).find('.remove-attribute').data('attribute')
 
                 if confirm "Are you sure you want to remove #{attribute}?"
                     ($ "##{id}").remove()

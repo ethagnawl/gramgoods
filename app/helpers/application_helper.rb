@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def random_number
+    random = Random.new.rand(20..30)
+    Time.now.seconds_since_midnight.floor * random
+  end
 
   def required_form_label(name)
     name << '*'

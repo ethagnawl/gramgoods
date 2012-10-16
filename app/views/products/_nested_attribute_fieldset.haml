@@ -1,16 +1,15 @@
 %fieldset
   %input.width-90{ :type => 'text', |
-    :name => nil, |
-    :placeholder => locals[:attribute].titleize }
+    :placeholder => locals[:placeholder], |
+    :name => "product[#{locals[:attribute].pluralize}_attributes][#{random_number}][#{locals[:attribute]}]" }
   %button.add-button{ :data => { :attribute => locals[:attribute].to_s} } +
   %div.attrs
     - unless locals[:collection].nil?
       - locals[:collection].each do |_attribute|
         - attribute = _attribute[locals[:attribute]]
-        - random = Random.new.rand(20..30)
-        - n = Time.now.seconds_since_midnight.floor * random
+        - n = random_number
         - name = "product[#{locals[:attribute].pluralize}_attributes][#{n}][#{locals[:attribute]}]"
-        %span{ :id => n }
+        %span.attribute-wrapper{ :id => n, :style => 'background-color: yellow; border: 1px solid pink; display: inline-block; padding: 2px;' }
           = attribute
           %a.remove-attribute{ :href => 'javascript: void;', |
             :data => { :attribute => attribute, :id => n }} X
