@@ -82,7 +82,7 @@
     - else
       = product_form.fields_for(:sizes) do |sizes_form|
         %fieldset
-          = sizes_form.text_field :sizes, :class => 'width-90', |
+          = sizes_form.text_field :size, :class => 'width-90', |
                                            :placeholder => (form_label(:size, false))
           %button.add-button{ :data => { :attribute => :size.to_s} } +
           %div.attrs
