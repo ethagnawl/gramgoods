@@ -98,7 +98,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
             $('.product').each ->
                 fetch_product_images(($ @), render_single_product_image)
 
-
             ($ '.products').on('tap', '.product', ->
                 return if ($ @).data('user-owns-store') is 'true'
                 destination = ($ @).find('.product-link > a').attr('href')
@@ -112,21 +111,24 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
 
             fetch_product_images($('.product'), render_multiple_product_images)
 
-            ($ '.product-thumbnail').swipeLeft ->
-                next_index = ($ @).next().data('index')
-                if next_index?
-                    ($ @).addClass('hide')
-                    ($ @).next().removeClass('hide')
-                    ($ '.product-gallery-control.on')
-                        .removeClass('on').next().addClass('on')
 
-            ($ '.product-thumbnail').swipeRight ->
-                previous_index = ($ @).prev().data('index')
-                if previous_index?
-                    ($ @).addClass('hide')
-                    ($ @).prev().removeClass('hide')
-                    ($ '.product-gallery-control.on')
-                        .removeClass('on').prev().addClass('on')
+            ($ '.product-thumbnail-gallery')
+                .on('swipeLeft', (e) ->
+                    $this = ($ e.target)
+                    next_index = $this.next().data('index')
+                    if next_index?
+                        $this.addClass('hide')
+                        $this.next().removeClass('hide')
+                        ($ '.product-gallery-control.on')
+                            .removeClass('on').next().addClass('on'))
+                .on('swipeRight', (e) ->
+                    $this = ($ e.target)
+                    previous_index = $this.prev().data('index')
+                    if previous_index?
+                        $this.addClass('hide')
+                        $this.prev().removeClass('hide')
+                        ($ '.product-gallery-control.on')
+                            .removeClass('on').prev().addClass('on'))
 
             # setTimeout is required because
             # tap was clicking the purchase
