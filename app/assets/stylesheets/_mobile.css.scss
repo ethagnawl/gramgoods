@@ -244,15 +244,16 @@ body {
 
         .product-gallery-controls {
             display: inline-block;
-            margin: 0 auto;
+            margin: .4em auto 0;
 
             .product-gallery-control {
                 background-color: $medium-grey;
                 border-radius: 10px;
                 display: inline-block;
-                height: .4em;
+                height: .6em;
+                margin: 0 .2em;
                 text-align: center;
-                width: .4em;
+                width: .6em;
 
                 &.on {
                     background-color: $dark-grey;
