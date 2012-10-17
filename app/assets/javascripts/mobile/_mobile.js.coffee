@@ -5,7 +5,7 @@ window.templates = {}
 $ ->
     if @is_standalone_iOS_app
         $('a').click ->
-            return if ($ @).data('js_handle') is 'true'
+            return if ($ @).data('js-handle') is 'true'
             location.href = ($ @).attr('href')
             false
 
