@@ -79,7 +79,7 @@ class StoresController < ApplicationController
         render :layout => 'admin'
       end
     else
-      @products = @store.displayable_products
+      @products = @store.displayable_products(10)
       render 'stores/show.mobile', :layout => 'mobile'
     end
   end

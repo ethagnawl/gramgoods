@@ -11,7 +11,7 @@ class Store < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_acceptance_of :terms_of_service, :on => :create
 
-  def displayable_products
-    self.products.reject { |product| product.status == 'Draft' }
+  def displayable_products(limit = nil)
+    self.products.where(:status => ['Active', 'Out of Stock']).limit(limit)
   end
 end
