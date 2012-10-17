@@ -98,7 +98,7 @@ class Product < ActiveRecord::Base
   end
 
   def get_instagram_tag
-    self.instagram_tag.instagram_tag
+    '#' << self.instagram_tag.instagram_tag
   end
 
   def get_colors
