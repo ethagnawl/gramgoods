@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'admin'
+  before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
@@ -13,11 +14,6 @@ class ProductsController < ApplicationController
   end
 
   respond_to :html, :json
-
-  # redirect old urls to new urls
-  #if request.path != store_path(@store)
-  #  redirect_to(@store, :status => :moved_permanently)
-  #end
 
   def index
     respond_to do |format|
@@ -182,8 +178,14 @@ class ProductsController < ApplicationController
   end
 
   private
+    def redirect_to_current_slug
+      @product = Product.find(params[:id])
+      if request.path != custom_product_path(@product.store, @product)
+        redirect_to custom_product_path(@product.store, @product), status: :moved_permanently
+      end
+    end
 
-  def product_photos_empty_message(name)
-    "You will need to attach at least one image to '#{name}' before setting Status to Active."
-  end
+    def product_photos_empty_message(name)
+      "You will need to attach at least one image to '#{name}' before setting Status to Active."
+    end
 end

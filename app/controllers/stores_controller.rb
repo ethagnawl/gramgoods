@@ -1,5 +1,6 @@
 class StoresController < ApplicationController
   layout 'admin'
+  before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :new, :proxy]
   before_filter :except => [:proxy, :create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
@@ -54,8 +55,12 @@ class StoresController < ApplicationController
     end
   end
 
+
   def show
     @store = Store.find(params[:id])
+
+    redirect_to_current_slug
+
     @products = @store.products.includes([:store, :product_images, :instagram_tag])
     gon.store_slug = @store.slug
     gon.store_id = @store.id
@@ -105,4 +110,13 @@ class StoresController < ApplicationController
   def destroy
     Raise 'You can\'t destroy a store. (Yet.)'
   end
+
+  private
+
+    def redirect_to_current_slug
+      @store = Store.find(params[:id])
+      if request.path != custom_store_path(@store)
+        redirect_to custom_store_path(@store), status: :moved_permanently
+      end
+    end
 end

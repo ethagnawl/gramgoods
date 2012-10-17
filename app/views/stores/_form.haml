@@ -33,8 +33,7 @@
         - if edit_view
           = store_form.label :name, (form_label('Store Name'))
         = store_form.text_field :name, :placeholder => (form_label('Store Name')), |
-                                 :class => 'input-xlarge', |
-                                 :disabled => (true if params[:action] == 'edit')
+                                 :class => 'input-xlarge'
         - if params[:action] == 'edit'
           %span.help-inline You cannot change your store's name.
 
