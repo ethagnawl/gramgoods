@@ -154,23 +154,24 @@ if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_
             e.preventDefault() if ($ @).find('.unhappy').length)
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
-    $credit_card_number = $('#credit_card_number')
-    $credit_card_expiration_month = $('#credit_card_expiration_month')
-    $credit_card_expiration_year = $('#credit_card_expiration_year')
+    $ ->
+        $credit_card_number = $('#credit_card_number')
+        $credit_card_expiration_month = $('#credit_card_expiration_month')
+        $credit_card_expiration_year = $('#credit_card_expiration_year')
 
-    stripeResponseHandler = (status, response) ->
-        if response.error
-            alert response.error.message
-            ($ '#order_form_submit').attr('disabled', false)
-        else
-            $credit_card_number.val('')
-            $credit_card_expiration_month.val('')
-            $credit_card_expiration_year.val('')
-            token = response['id']
-            $(".order-form")
-                .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
-                .get(0)
-                    .submit()
+        stripeResponseHandler = (status, response) ->
+            if response.error
+                alert response.error.message
+                ($ '#order_form_submit').attr('disabled', false)
+            else
+                $credit_card_number.val('')
+                $credit_card_expiration_month.val('')
+                $credit_card_expiration_year.val('')
+                token = response['id']
+                $(".order-form")
+                    .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
+                    .get(0)
+                        .submit()
 
         ($ "#order_form")
             .isHappy(order_form_validation_rules)
