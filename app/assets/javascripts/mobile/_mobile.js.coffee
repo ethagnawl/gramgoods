@@ -196,17 +196,13 @@ render_nested_product_attribute_input = ($el) ->
         n: (new Date().getTime())
         name: attribute
         value: value
+    span_template = templates.product_form_nested_attribute_span_template
+    hidden_input_template = templates.product_form_nested_resource_input_template
 
     unless value is ''
         input.val('')
-        fieldset.find('.attrs').append("""
-        <span>
-            #{value}
-            <a class='remove-attribute' href='javascript: void;'>x</a>
-            #{Mustache.render(
-                templates.product_form_nested_resource_input_template, data)}
-        </span>
-        """)
+        fieldset.find('.attrs').append(
+            Mustache.render(span_template, data, {hidden_input_template}))
 
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
