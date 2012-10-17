@@ -32,6 +32,10 @@
         %h2 Description
         %p
           = @product.description
+      .widget
+        %h2 Instagram Hashtag
+        %p
+          = @product.get_instagram_tag
 
       - if @product.is_orderable
         .widget
