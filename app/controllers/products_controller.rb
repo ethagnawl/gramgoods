@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
       }
       format.html {
         @products = Product.order('created_at DESC').limit(10)
-                      .where(:status => 'Active')
+                      .where(:status => 'Active').includes([:store, :instagram_tag])
         render 'products/index.mobile', :layout => 'mobile'
       }
     end
