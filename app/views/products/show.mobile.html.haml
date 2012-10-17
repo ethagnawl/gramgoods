@@ -35,7 +35,7 @@
       .widget
         %h2 Instagram Hashtag
         %p
-          = @product.get_instagram_tag
+          = @product.get_instagram_tag(true)
 
       - if @product.is_orderable
         .widget

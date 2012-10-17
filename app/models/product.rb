@@ -97,8 +97,10 @@ class Product < ActiveRecord::Base
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
 
-  def get_instagram_tag
-    '#' << self.instagram_tag.instagram_tag
+  def get_instagram_tag(with_hash = false)
+    instagram_tag = self.instagram_tag.instagram_tag
+    instagram_tag = '#' << instagram_tag if with_hash == true
+    instagram_tag
   end
 
   def get_colors
@@ -115,7 +117,7 @@ class Product < ActiveRecord::Base
     caption << " visiting @#{self.store.user.username} and clicking the link in our profile."
     caption << " Sizes: #{self.get_sizes}" unless self.get_sizes.empty?
     caption << " Colors: #{self.get_colors}" unless self.get_colors.empty?
-    caption << " ##{self.get_instagram_tag}"
+    caption << " #{self.get_instagram_tag(true)}"
   end
 
   def like_count
