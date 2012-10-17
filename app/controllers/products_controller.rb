@@ -23,8 +23,7 @@ class ProductsController < ApplicationController
           render_product_widget_template(@store, product) }
       }
       format.html {
-        @products = Product.order('created_at DESC').limit(10)
-                      .where(:status => 'Active').includes([:store, :instagram_tag])
+        @products = Product.recent_active_products
         render 'products/index.mobile', :layout => 'mobile'
       }
     end

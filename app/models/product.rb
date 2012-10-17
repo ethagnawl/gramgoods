@@ -8,6 +8,14 @@ class Product < ActiveRecord::Base
   has_many :sizes, :dependent => :destroy, :before_add => :set_nest
   extend FriendlyId
 
+  scope :recent_active_products, Proc.new { |limit|
+    limit ||= 10
+    where(:status => 'Active').
+      limit(limit).
+      order('updated_at DESC').
+      includes([:store, :instagram_tag])
+  }
+
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
