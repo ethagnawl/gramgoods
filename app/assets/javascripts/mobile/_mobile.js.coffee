@@ -1,5 +1,14 @@
 window.templates = {}
 
+@is_standalone_iOS_app = window.navigator.standalone? && window.navigator.standalone
+
+$ ->
+    if @is_standalone_iOS_app
+        $('a').click ->
+            return if ($ @).data('js_handle') is 'true'
+            location.href = ($ @).attr('href')
+            false
+
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
 

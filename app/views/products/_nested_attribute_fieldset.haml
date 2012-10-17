@@ -11,8 +11,9 @@
         - name = "product[#{locals[:attribute].pluralize}_attributes][#{n}][#{locals[:attribute]}]"
         %span.attribute-wrapper{ :id => n, :style => 'background-color: yellow; border: 1px solid pink; display: inline-block; padding: 2px;' }
           = attribute
-          %a.remove-attribute{ :href => 'javascript: void;', |
-            :data => { :attribute => attribute, :id => n }} X
+          %a.remove-attribute{ :href => 'javascript: void;',
+            :data => { :'js-handle' => 'true', :attribute => attribute, :id => n }}
+            X
           %input{ :name => name, |
                   :type => 'hidden', |
                   :value => attribute }

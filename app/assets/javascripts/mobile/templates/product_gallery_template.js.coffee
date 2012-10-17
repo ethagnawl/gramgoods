@@ -9,6 +9,6 @@ templates.product_thumbnail_gallery_image_template = """
 """
 
 templates.product_thumbnail_gallery_control_template = """
-<a href="javascript: void(0);" data-index="{{index}}" class="{{classes}}"></a>
+<a href="javascript: void(0);" data-js-handle='true' data-index="{{index}}" class="{{classes}}"></a>
 """
 

@@ -76,7 +76,11 @@
             = number_to_currency(@product.flatrate_shipping_cost)
 
       - if @product.is_orderable
-        = link_to("Buy Now #{number_to_currency(@product.price)}", 'javascript: void(0);', :id => 'redirect_to_order_form', :class => 'product-button product-purchase')
+        - price = number_to_currency(@product.price)
+        = link_to("Buy Now #{price}", 'javascript: void(0);', |
+          :id => 'redirect_to_order_form', |
+          :class => 'product-button product-purchase', |
+          :data => { :'js-handle' => 'true' })
       - else
         .widget
           %h2 This product is currently out of stock.
