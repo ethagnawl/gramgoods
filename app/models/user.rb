@@ -2,9 +2,11 @@ class User < ActiveRecord::Base
   has_many :stores, :dependent => :destroy
 
   devise :database_authenticatable, :registerable, :omniauthable,
-    :recoverable, :rememberable, :trackable, :validatable
+    :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
 
   attr_accessible :email
+
+  before_save :ensure_authentication_token
 
   def self.from_omniauth(auth, user_params, store_params)
     new_user = false
