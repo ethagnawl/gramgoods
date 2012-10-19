@@ -1,7 +1,6 @@
 - content_for(:title) { "#{@store.name} | GramGoods" }
 - content_for(:header) do
-  %h1
-    #{@store.name}
+  #{@store.name}
 
 = render 'shared/products', :locals => { :products => @products }
 = render 'shared/footer.mobile'
