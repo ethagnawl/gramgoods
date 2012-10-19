@@ -12,6 +12,9 @@ class Store < ActiveRecord::Base
   validates_acceptance_of :terms_of_service, :on => :create
 
   def displayable_products(limit = nil)
-    self.products.where(:status => ['Active', 'Out of Stock']).limit(limit)
+    self.products.
+      where(:status => ['Active', 'Out of Stock']).
+      limit(limit).
+      includes([:store, :product_images, :instagram_tag])
   end
 end
