@@ -9,11 +9,11 @@
         - attribute = _attribute[locals[:attribute]]
         - n = random_number
         - name = "product[#{locals[:attribute].pluralize}_attributes][#{n}][#{locals[:attribute]}]"
-        %span.attribute-wrapper{ :id => n, :style => 'background-color: yellow; border: 1px solid pink; display: inline-block; padding: 2px;' }
+        %span.attribute-wrapper.label{ :id => n }
           = attribute
           %a.remove-attribute{ :href => 'javascript: void;',
             :data => { :'js-handle' => 'true', :attribute => attribute, :id => n }}
-            X
+            %i.icon-remove-sign
           %input{ :name => name, |
                   :type => 'hidden', |
                   :value => attribute }

@@ -161,6 +161,29 @@ body {
         text-align: center;
         text-decoration: none;
     }
+
+    .attribute-wrapper {
+        display: inline-block;
+        margin-bottom: 2px;
+        margin-left: 2px;
+        position: relative;
+
+
+        &:first-of-type {
+            margin: 0;
+        }
+
+        .remove-attribute {
+            padding-right: 10px;
+            text-decoration: none;
+
+            .icon-remove-sign {
+                position: absolute;
+                right: 3px;
+                top: 2px;
+            }
+        }
+    }
 }
 
 // *shared* denotes styles shared
