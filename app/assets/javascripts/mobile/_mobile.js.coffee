@@ -20,6 +20,9 @@ $ ->
             location.href = ($ @).attr('href')
             false
 
+$ ->
+    ($ '#menu_button').click -> ($ '#menu').toggle()
+
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
 
