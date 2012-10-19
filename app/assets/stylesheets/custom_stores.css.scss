@@ -1,5 +1,6 @@
 @import './gramgoods_common';
 
+// fivestory
 $fivestory-store-color: $black;
 $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
 
@@ -30,5 +31,33 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
 
     &#billing_information_legend {
         background-color: $fivestory-store-color;
+    }
+}
+
+// wink
+$wink-store-color: #D30547;
+
+.custom-merchant-wink {
+    .store-header,
+    .products .product-button, .product-detail .product-button {
+       background-color: $wink-store-color;
+   }
+
+   .products.products,
+   .product-detail.products {
+       padding-top: 17%;
+   }
+}
+
+.custom-merchant-wink .products .product-button,
+.product.custom-merchant-wink-product .product-middle .product-button {
+    background-color: $wink-store-color;
+}
+
+.custom-merchant-wink #order_form legend {
+    background-color: $wink-store-color;
+
+    &#billing_information_legend {
+        background-color: $wink-store-color;
     }
 }
