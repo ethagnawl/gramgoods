@@ -6,29 +6,27 @@
                           :"instagram-tag" => product.get_instagram_tag, |
                           :'user-owns-store' => user_owns_store ? 'true' : 'false' }}
       .product-left
-        Loading...
+        %p.loading Loading...
       .product-middle
-        - if locals[:show_store_name] == true
-          .store-name
-            = product.store.name
-        - if user_owns_store
-          .product-status
-            Status: #{product.status}
+        .store-name
+          = product.store.name
         .product-name
           = product.name
-        .product-like-count.hide
         .product-button.product-price
           = number_to_currency(product.price)
+        .product-like-count.hide
       .product-right
-        - product_url = conditional_layout_link(params,
-                                                custom_product_path(product.store,
-                                                                    product))
         - if user_owns_store
-          = link_to 'View', custom_product_path(product.store, product)
-          = link_to 'Edit', custom_product_edit_path(product.store, product)
-          = link_to 'Delete', store_product_path(product.store.slug, product.slug),
-                    :method => :delete,
-                    :confirm => "Are you sure you want to delete #{product.name}?"
+          .owner-action
+            = link_to 'View', custom_product_path(product.store, product)
+          .owner-action
+            = link_to 'Edit', custom_product_edit_path(product.store, product)
+          .owner-action
+            = link_to 'Delete', store_product_path(product.store.slug, product.slug),
+                      :method => :delete,
+                      :confirm => "Are you sure you want to delete #{product.name}?"
+          .owner-action
+            = product.status
         - else
           .product-link
-            = link_to('', product_url, :title => "View #{product.name}")
+            = link_to('', custom_product_path(product.store, product), :title => "View #{product.name}")
