@@ -10,7 +10,8 @@
                         :'instagram-tag' => @product.get_instagram_tag }}
     .product-top.widget
       .product-thumbnail-gallery
-        Loading...
+        .loading
+          Loading...
       %h1.product-name
         = @product.name
       .product-like-count.hide
