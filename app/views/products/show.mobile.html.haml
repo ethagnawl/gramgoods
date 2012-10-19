@@ -11,18 +11,17 @@
       .product-thumbnail-gallery
         %h2.loading
           Loading...
-      %h1.product-name
-        = @product.name
-      .product-like-count.hide
+      %h3
+        .product-like-count.hide
       .product-button.product-details
         See Product Details
     .product-bottom.widget
       .widget
-        %h2 Description
+        %h3 Description
         %p
           = @product.description
       .widget
-        %h2 Instagram Hashtag
+        %h3 Instagram Hashtag
         %p
           = @product.get_instagram_tag(true)
 
@@ -31,42 +30,42 @@
           %input#quantity{ :type => 'hidden', :value => 1 }
         - else
           .widget
-            %h2 Quantity
+            %h3 Quantity
             - if @product.unlimited_quantity
-              %input#quantity{ :type => 'number', :placeholder => 'Enter a Quantity' }
+              %input.input-xxlarge#quantity{ :type => 'tel', :placeholder => 'Enter a Quantity' }
             - else
-              %select#quantity
+              %select.input-xxlarge#quantity
                 - (1..@product.quantity.to_i).each do |n|
                   %option{ :value => n }
                     = n
         - unless @product.colors.empty?
           .widget
-            %h2 Color
+            %h3 Color
             - if @product.colors.length == 1
               %p #{@product.colors.first.color}
               %input#color{ :type => 'hidden', |
                             :value => @product.colors.first.color }
             - else
-              %select#color
+              %select.input-xxlarge#color
                 - @product.colors.each do |color|
                   %option{ :value => color.color }
                     = color.color
         - unless @product.sizes.empty?
           .widget
-            %h2 Size
+            %h3 Size
             - if @product.sizes.length == 1
               %p #{@product.sizes.first.size}
               %input#size{ :type => 'hidden', |
                             :value => @product.sizes.first.size }
             - else
-              %select#size
+              %select.input-xxlarge#size
                 - @product.sizes.each do |size|
                   %option{ :value => size.size }
                     = size.size
 
       - unless @product.flatrate_shipping_cost.nil?
         .widget
-          %h2 Flat Rate Shipping Cost
+          %h3 Flat Rate Shipping Cost
           -# using hypens in data-attr to satiate zepto's .data() methed
           %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
             = number_to_currency(@product.flatrate_shipping_cost)
@@ -79,4 +78,4 @@
           :data => { :'js-handle' => 'true' })
       - else
         .widget
-          %h2 This product is currently out of stock.
+          %h3 This product is currently out of stock.
