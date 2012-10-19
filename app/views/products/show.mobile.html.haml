@@ -38,20 +38,25 @@
           = @product.get_instagram_tag(true)
 
       - if @product.is_orderable
-        .widget
-          %h2 Quantity
-          - if @product.unlimited_quantity
-            %input#quantity{ :type => 'number', :placeholder => 'Enter a Quantity' }
-          - else
-            %select#quantity
-              - (1..@product.quantity.to_i).each do |n|
-                %option{ :value => n }
-                  = n
+        - if (@product.unlimited_quantity != true) && (@product.quantity == 1)
+          %input#quantity{ :type => 'hidden', :value => 1 }
+        - else
+          .widget
+            %h2 Quantity
+            - if @product.unlimited_quantity
+              %input#quantity{ :type => 'number', :placeholder => 'Enter a Quantity' }
+            - else
+              %select#quantity
+                - (1..@product.quantity.to_i).each do |n|
+                  %option{ :value => n }
+                    = n
         - unless @product.colors.empty?
           .widget
             %h2 Color
             - if @product.colors.length == 1
               %p #{@product.colors.first.color}
+              %input#color{ :type => 'hidden', |
+                            :value => @product.colors.first.color }
             - else
               %select#color
                 - @product.colors.each do |color|
@@ -62,6 +67,8 @@
             %h2 Size
             - if @product.sizes.length == 1
               %p #{@product.sizes.first.size}
+              %input#size{ :type => 'hidden', |
+                            :value => @product.sizes.first.size }
             - else
               %select#size
                 - @product.sizes.each do |size|
