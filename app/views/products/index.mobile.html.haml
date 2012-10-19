@@ -2,17 +2,6 @@
 - content_for(:header) do
   %h1
     Recent Products
-    %br
-
-    - unless user_signed_in?
-      = render 'shared/force_instagram_logout_iframe'
-      %a{ :href => '/stores/new' } Sign Up
-      |
-      %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
-    - else
-      = link_to 'Logout', destroy_user_session_path
-      |
-      = link_to 'Create Product', new_store_product_path(current_user.first_store.slug)
 
 = render 'shared/products', :locals => { :products => @products, |
                                          :show_store_name => true }
