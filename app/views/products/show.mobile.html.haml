@@ -1,7 +1,6 @@
 - content_for(:title) { "#{@product.name} | GramGoods" }
 - content_for(:header) do
-  %h1
-    %a{ :href => "/#{@store.slug}" } #{@store.name}
+  #{@product.name}
 
 #order_form.hide
 #success_screen.hide
