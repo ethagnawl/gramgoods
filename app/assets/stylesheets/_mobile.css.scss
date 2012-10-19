@@ -15,11 +15,11 @@ body {
     position: relative;
 }
 
-.store-header {
+.mobile-header {
     background-color: $blue;
     color: $white;
     left: 0;
-    padding: 4% 0;
+    padding: 4%;
     position: fixed;
     top: 0;
     width: 100%;
@@ -27,13 +27,46 @@ body {
 
     h1, h1 a {
         color: $white;
+        float: left;
         font-size: 1em;
-        text-align: center;
+    }
+
+    #menu_button {
+        color: #bada55;
+        display: inline-block;
+        float: right;
+    }
+
+    #menu {
+        float: left;
+        font-size: .9em;
+        list-style-type: none;
+        margin-top: 6%;
+        width: 100%;
+
+        li {
+            &.active,
+            &:active {
+                background-color: $light-grey;
+                border-radius: 2px;
+
+                a {
+                    color: $dark-grey;
+                }
+            }
+
+            a {
+                color: $white;
+                display: inline-block;
+                padding: 2%;
+                width: 100%;
+            }
+        }
     }
 }
 
 .mobile-layout-inner {
-    padding-top: 70px;
+    padding-top: 60px;
 }
 
 .mobile-form {
@@ -287,7 +320,7 @@ body {
 
 .mobile-layout.orders-new,
 .mobile-layout.orders-create {
-    .store-header {
+    .mobile-header {
         display: none;
     }
 }
