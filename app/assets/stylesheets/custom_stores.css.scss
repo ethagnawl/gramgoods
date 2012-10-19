@@ -38,7 +38,10 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
 $wink-store-color: #D30547;
 
 .custom-merchant-wink {
-    .store-header,
+    .store-header {
+        background-color: #fff;
+    }
+
     .products .product-button, .product-detail .product-button {
        background-color: $wink-store-color;
    }
