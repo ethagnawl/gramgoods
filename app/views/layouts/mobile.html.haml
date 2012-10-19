@@ -20,8 +20,7 @@
     = stylesheet_link_tag 'mobile', :media => "all"
     = csrf_meta_tags
   %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
-    .store-header
-      = content_for :header if content_for?(:header)
+    = render 'shared/mobile_header'
     .mobile-layout-inner
       = notice
       = alert

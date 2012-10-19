@@ -1,0 +1,32 @@
+.mobile-header
+  - if content_for?(:header)
+    = content_for :header
+    .btn-group
+      %button.btn#menu_button
+        %i.icon-align-justify
+    %ul#menu{ :style => 'display: none;' }
+      - if user_signed_in? && user_owns_store?(@store.id)
+        %li
+          = link_to current_user.first_store.name, custom_store_path(current_user.first_store)
+        %li
+          = link_to 'Create Product', new_store_product_path(current_user.first_store)
+        - if "#{params[:controller]}_#{params[:action]}" == 'products_show'
+          %li
+            = link_to "Edit #{@product.name}", edit_store_product_path(@product.store, @product)
+          %li
+            = link_to "Delete #{@product.name}", store_product_path(@product.store.slug, @product.slug),
+              :method => :delete,
+              :confirm => "Are you sure you want to delete #{@product.name}?"
+
+
+        %li
+          = link_to 'Sign Out', destroy_user_session_path
+      - else
+        = render 'shared/force_instagram_logout_iframe'
+        %li
+          = link_to 'Home', root_path
+        %li
+          %a{ :href => '/stores/new' } Sign Up
+        %li
+          %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
+
