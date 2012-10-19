@@ -2,13 +2,6 @@
 - content_for(:header) do
   %h1
     #{@store.name}
-    - if @current_user_owns_store
-      %br
-      = link_to 'Logout', destroy_user_session_path
-      |
-      = link_to 'Edit', custom_store_edit_path(@store)
-      |
-      = link_to 'Create Product', new_store_product_path(@store.slug)
 
 = render 'shared/products', :locals => { :products => @products }
 = render 'shared/footer.mobile'
