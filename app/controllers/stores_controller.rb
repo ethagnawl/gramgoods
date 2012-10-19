@@ -61,7 +61,12 @@ class StoresController < ApplicationController
 
     redirect_to_current_slug
 
-    @products = @store.products.includes([:store, :product_images, :instagram_tag])
+    @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
+    @products = if @current_user_owns_store
+                  @store.products.includes([:store, :product_images, :instagram_tag])
+                else
+                  @store.displayable_products
+                end
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     gon.product_widgets = @products.map do |product|
@@ -72,14 +77,12 @@ class StoresController < ApplicationController
       if params[:layout] == 'mobile'
         render 'stores/show.mobile', :layout => 'mobile'
       elsif mobile_device?
-        @products = @store.products
         render 'stores/show.mobile', :layout => 'mobile'
       else
         @product = @store.products.new
         render :layout => 'admin'
       end
     else
-      @products = @store.displayable_products(10)
       render 'stores/show.mobile', :layout => 'mobile'
     end
   end
