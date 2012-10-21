@@ -5,8 +5,7 @@
           :html => { :class => 'mobile-form', |
                      :autocorrect => 'off', |
                      :autocapitalize => 'off' }) do |product_form|
-  = alert
-  = notice
+
   - if @product.errors.any?
     .form-errors-wrapper
       = render 'shared/form_errors', :target => @product
