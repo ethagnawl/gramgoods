@@ -1,3 +1,4 @@
 - content_for(:title) { "Edit #{@product.name} | GramGoods" }
+- content_for(:header) { "Edit #{@product.name}" }
 
 = render 'form', :locals => { :action => 'Edit' }
