@@ -2,22 +2,13 @@
 = form_for [@user, @store], :url => (params[:action] == 'edit' ? nil : stores_proxy_path), :html => {:class => 'mobile-form', |
                 :autocorrect => 'off', |
                 :autocapitalize => 'off' } do |form|
-  = alert
-  = notice
-  - if @user.errors.any? || @store.errors.any?
-    .form-errors-wrapper
-      - if @user.errors.any?
-        = render 'shared/form_errors', :target => @user
-      - if @store.errors.any?
-        = render 'shared/form_errors', :target => @store
+
+  - if @user.errors.any?
+    = render 'shared/form_errors', :target => @user
+  - if @store.errors.any?
+    = render 'shared/form_errors', :target => @store
 
   %div
-    %legend
-      - if params[:action] == 'edit'
-        Edit #{@store.name}
-      - else
-        Create Store
-
     = fields_for :user do |user_form|
       %fieldset
         - if edit_view
