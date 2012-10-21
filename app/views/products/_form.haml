@@ -7,8 +7,7 @@
                      :autocapitalize => 'off' }) do |product_form|
 
   - if @product.errors.any?
-    .form-errors-wrapper
-      = render 'shared/form_errors', :target => @product
+    = render 'shared/form_errors', :target => @product
 
   %div
     %legend
