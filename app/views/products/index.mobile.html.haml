@@ -4,4 +4,9 @@
 
 = render 'shared/products', :locals => { :products => @products, |
                                          :show_store_name => true }
+.widget.mobile-footer
+  = will_paginate @products,
+    :renderer => BootstrapPagination::Rails,
+    :page_links => false
+
 = render 'shared/footer.mobile'

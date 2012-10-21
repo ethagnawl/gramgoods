@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
           render_product_widget_template(@store, product) }
       }
       format.html {
-        @products = Product.recent_active_products
+        @products = Product.recent_active_products.page(params[:page]).per_page(5)
         render 'products/index.mobile', :layout => 'mobile'
       }
     end
