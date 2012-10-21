@@ -11,13 +11,8 @@
   %div
     = fields_for :user do |user_form|
       %fieldset
-        - if edit_view
-          = user_form.label :email, (form_label(:email))
-        = user_form.text_field :email, :placeholder => (form_label(:email)), |
-                               :disabled => (true if params[:action] == 'edit')
-        - if params[:action] == 'edit'
-          %span.help-inline You cannot change your email address.
-
+        = user_form.label :email, (form_label(:email))
+        = user_form.text_field :email, :placeholder => (form_label(:email))
 
     = fields_for :store do |store_form|
       %fieldset
