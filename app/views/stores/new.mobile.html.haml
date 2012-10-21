@@ -1,12 +1,4 @@
 - content_for(:title) { "Sign Up and Create Store | GramGoods" }
-- content_for(:header) do
-  %h1
-    Sign Up and Create Store
-    %br
-      = render 'shared/force_instagram_logout_iframe'
-      %a{ :href => '/stores/new' } Sign Up
-      |
-      %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
+- content_for(:header) { 'Create Store' }
 
-#store_form_wrapper
-  = render 'form'
+= render 'form'
