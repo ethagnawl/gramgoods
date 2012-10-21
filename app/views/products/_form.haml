@@ -10,12 +10,6 @@
     = render 'shared/form_errors', :target => @product
 
   %div
-    %legend
-      - if locals[:action] == 'Edit'
-        Edit #{@product.name}
-      - else
-        Create Product
-
     %fieldset
       - if edit_view
         = product_form.label :name, (form_label(:name))
