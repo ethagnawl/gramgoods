@@ -66,7 +66,7 @@ class StoresController < ApplicationController
                   @store.products.includes([:store, :product_images, :instagram_tag])
                 else
                   @store.displayable_products
-                end
+                end.page(params[:page]).per_page(5)
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     gon.product_widgets = @products.map do |product|
@@ -119,7 +119,9 @@ class StoresController < ApplicationController
     def redirect_to_current_slug
       @store = Store.find(params[:id])
       if request.path != custom_store_path(@store)
-        redirect_to custom_store_path(@store), status: :moved_permanently
+        redirect_to custom_store_path(@store,
+                                      :page => params[:page]),
+                                      :status => :moved_permanently
       end
     end
 end
