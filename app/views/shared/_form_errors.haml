@@ -1,6 +1,5 @@
 - if target.errors.any?
-  .widget
-    - target.errors.full_messages.each do |message|
-      .widget
-        = message
+  - target.errors.full_messages.each do |message|
+    .alert.alert-error
+      = message
 
