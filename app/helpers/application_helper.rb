@@ -44,32 +44,34 @@ module ApplicationHelper
 
   def get_instagram_feed_for_user_and_filter_by_tag(user, tag)
     tag.downcase!
-    begin
-      configure_instagram(user.uid, user.access_token)
-      media_count = (Instagram.user.counts.media).to_i
-      last_id = nil
-      i = 0
-      max_id = nil
-      user_photo_feed = []
-      lambda { |r, max_id = nil|
-        user_photo_feed.concat(
-          Instagram.user_recent_media(:max_id => max_id).tap { |items|
-            i += items.length
-            last_id = items.last.id
-          }.find_all { |item|
-            item.tags.member? tag
-          }.map { |item|
-            {
-              :like_count => item.likes[:count],
-              :url => item.images.standard_resolution.url
-            }
-          })
-        r.call(r, last_id) if i < media_count
-      }.tap { |r| r.call(r) }
-      Instagram.reset
-      user_photo_feed
-    rescue
-      puts 'Instagram Connection Error'
+    Rails.cache.fetch("#{user.uid}_#{tag}", :expires_in => 5.minutes) do
+      begin
+        configure_instagram(user.uid, user.access_token)
+        media_count = (Instagram.user.counts.media).to_i
+        last_id = nil
+        i = 0
+        max_id = nil
+        user_photo_feed = []
+        lambda { |r, max_id = nil|
+          user_photo_feed.concat(
+            Instagram.user_recent_media(:max_id => max_id).tap { |items|
+              i += items.length
+              last_id = items.last.id
+            }.find_all { |item|
+              item.tags.member? tag
+            }.map { |item|
+              {
+                :like_count => item.likes[:count],
+                :url => item.images.standard_resolution.url
+              }
+            })
+          r.call(r, last_id) if i < media_count
+        }.tap { |r| r.call(r) }
+        Instagram.reset
+        user_photo_feed
+      rescue
+        puts 'Instagram Connection Error'
+      end
     end
   end
 
