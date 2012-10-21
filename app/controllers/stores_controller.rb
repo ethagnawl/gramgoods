@@ -119,9 +119,7 @@ class StoresController < ApplicationController
     def redirect_to_current_slug
       @store = Store.find(params[:id])
       if request.path != custom_store_path(@store)
-        redirect_to custom_store_path(@store,
-                                      :page => params[:page]),
-                                      :status => :moved_permanently
+        redirect_to custom_store_path(@store, params), :status => :moved_permanently
       end
     end
 end
