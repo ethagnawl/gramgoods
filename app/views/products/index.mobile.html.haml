@@ -1,12 +1,6 @@
 - content_for(:title) { "Recent Products | GramGoods" }
-- content_for(:header) do
-  Recent Products
+- content_for(:header) { 'Recent Products' }
 
 = render 'shared/products', :locals => { :products => @products, |
                                          :show_store_name => true }
-.widget.mobile-footer
-  = will_paginate @products,
-    :renderer => BootstrapPagination::Rails,
-    :page_links => false
-
 = render 'shared/footer.mobile'

@@ -30,3 +30,9 @@
         - else
           .product-link
             = link_to('', custom_product_path(product.store, product), :title => "View #{product.name}")
+
+.widget.mobile-footer
+  = will_paginate @products,
+    :renderer => BootstrapPagination::Rails,
+    :page_links => false
+
