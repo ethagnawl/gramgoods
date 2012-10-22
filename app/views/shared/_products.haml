@@ -8,18 +8,18 @@
       .product-left
         %p.loading Loading...
       .product-middle
-        .store-name
-          .mobile-wrapper
-            = product.store.name
-          .desktop-wrapper
-            %a{ :href => custom_store_path(product.store) }
-              = product.store.name
         .product-name
           .mobile-wrapper
             = product.name
           .desktop-wrapper
             %a{ :href => custom_product_path(product.store, product) }
               = product.name
+        .store-name
+          .mobile-wrapper
+            = product.store.name
+          .desktop-wrapper
+            %a{ :href => custom_store_path(product.store) }
+              = product.store.name
         .product-button.product-price
           = number_to_currency(product.price)
         .product-like-count.hide
