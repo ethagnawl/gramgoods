@@ -9,9 +9,17 @@
         %p.loading Loading...
       .product-middle
         .store-name
-          = product.store.name
+          .mobile-wrapper
+            = product.store.name
+          .desktop-wrapper
+            %a{ :href => custom_store_path(product.store) }
+              = product.store.name
         .product-name
-          = product.name
+          .mobile-wrapper
+            = product.name
+          .desktop-wrapper
+            %a{ :href => custom_product_path(product.store, product) }
+              = product.name
         .product-button.product-price
           = number_to_currency(product.price)
         .product-like-count.hide
@@ -31,8 +39,9 @@
           .product-link
             = render_show_product_link(product, '')
 
-.widget.mobile-footer
-  = will_paginate @products,
-    :renderer => BootstrapPagination::Rails,
-    :page_links => false
+- if @products.length >= 5
+  .widget.mobile-footer
+    = will_paginate @products,
+      :renderer => BootstrapPagination::Rails,
+      :page_links => false
 

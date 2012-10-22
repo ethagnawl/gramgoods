@@ -21,7 +21,7 @@ $ ->
             false
 
 $ ->
-    window.has_touch_events = ($ 'body').hasClass('no-touch')
+    window.has_touch_events = !($ 'html').hasClass('no-touch')
     toggle_menu = -> ($ '#menu').toggle()
 
     if has_touch_events

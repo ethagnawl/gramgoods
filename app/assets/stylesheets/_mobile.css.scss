@@ -30,17 +30,13 @@ input[type=text], input[type=tel], input[type=password], input[type=email], inpu
 
 body {
     position: relative;
+    margin: 0 auto;
+    max-width: 960px;
 }
 
 .mobile-header {
     background-color: $blue;
     color: $white;
-    left: 0;
-    padding: 4%;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 998;
 
     h1, h1 a, h3 {
         color: $white;
@@ -52,7 +48,6 @@ body {
         display: inline-block;
         float: right;
         margin-left: 6px;
-        padding: 8px 14px;
     }
 
     #menu {
@@ -80,6 +75,108 @@ body {
                 color: $white;
             }
         }
+    }
+}
+
+html.touch {
+    .mobile-header {
+        left: 0;
+        padding: 4%;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 998;
+    }
+}
+
+// desktop overrides
+// !importants are very bad and the shared styles will need to be modular-ized
+// in a future iteration
+
+.desktop-wrapper {
+    display: none;
+}
+
+html.no-touch {
+    .mobile-layout-outer {
+        box-shadow: 0 0 12px $medium-grey;
+        float: left;
+        margin: 12px 0;
+    }
+
+    .mobile-layout-inner {
+        padding-top: 0 !important;
+    }
+
+    a {
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+
+    .desktop-wrapper {
+        display: block;
+    }
+
+    .mobile-wrapper {
+        display: none;
+    }
+
+    .mobile-header {
+        float: left;
+        max-width: 960px;
+        padding: 20px 20px;
+        width: 100%;
+    }
+
+    .product-left {
+        .loading {
+            font-size: 28px !important;
+            font-weight: bold !important;
+            padding-top: 76px !important;
+        }
+    }
+
+    .product-middle {
+        padding-top: 30px;
+
+        & > div {
+            margin-bottom: 6% !important;
+        }
+
+        .store-name {
+            font-size: 28px;
+        }
+
+        .product-name {
+            font-size: 34px;
+        }
+
+        .product-price {
+            font-size: 32px;
+            margin: 0 !important;
+            margin-bottom: 6% !important;
+            padding: 20px 36px !important;
+        }
+
+        .product-like-count {
+            background: image-url('like_desktop.png') no-repeat 0 4px;
+            background-size: 30px;
+            font-size: 32px;
+            font-weight: bold;
+            padding: 12px 0 12px 10%;
+        }
+    }
+
+    .product-link {
+        display: none;
+    }
+
+    .mobile-footer {
+        font-size: 18px;
+        padding: 16px 0;
     }
 }
 
