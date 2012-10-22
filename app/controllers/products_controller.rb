@@ -36,9 +36,7 @@ class ProductsController < ApplicationController
                                      :instagram_tag => InstagramTag.new,
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
-    if mobile_device?
-      render 'products/new.mobile', :layout => 'mobile'
-    end
+    render 'products/new.mobile', :layout => 'mobile'
   end
 
   def create
