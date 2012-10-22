@@ -1,12 +1,17 @@
 .mobile-header
   - if content_for?(:header)
-    %h3
-      = content_for :header
-    .btn-group
-      %button.btn#menu_button
-        %i.icon-align-justify
-    %ul#menu{ :style => 'display: none;' }
-      %li this is a work in progress
+    - header_content_length = content_for(:header).length
+    - if header_content_length <= 26
+      %h3
+        = content_for :header
+        %button.btn#menu_button
+          %i.icon-align-justify
+    - else
+      %h5
+        = content_for :header
+        %button.btn#menu_button
+          %i.icon-align-justify
+    %ul#menu
       - if user_signed_in?
         - store = current_user.first_store
         %li
