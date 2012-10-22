@@ -10,9 +10,18 @@
       - if user_signed_in?
         - store = current_user.first_store
         %li
-          = link_to "View #{store.name}", custom_store_path(current_user.first_store)
-        %li
-          = link_to "Edit #{store.name}", custom_store_edit_path(current_user.first_store)
+          = link_to store.name, custom_store_path(current_user.first_store)
+          %span
+            |
+          = link_to "Edit", custom_store_edit_path(current_user.first_store)
+        - if defined?(@product) && @product.persisted?
+          %li
+            = link_to @product.name, |
+              custom_product_path(@product.store, @product)
+            %span
+              |
+            = link_to "Edit", |
+              custom_product_edit_path(@product.store, @product)
         %li
           = link_to 'Create Product', new_store_product_path(current_user.first_store)
 
