@@ -22,7 +22,9 @@ $ ->
 
 $ ->
     toggle_menu = -> ($ '#menu').toggle()
-    ($ '#menu_button').tap(-> toggle_menu())
+    ($ '#menu_button').tap((e) ->
+        e.preventDefault()
+        toggle_menu())
 
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
