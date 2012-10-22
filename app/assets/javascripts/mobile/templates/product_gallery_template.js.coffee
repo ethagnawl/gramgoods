@@ -5,7 +5,7 @@ templates.product_image_template = """
 """
 
 templates.product_thumbnail_gallery_image_template = """
-<img src="{{product_image}}" data-index="{{index}}" class="{{classes}}" alt="{{product_name}}">
+<img id='product_gallery_image_{{index}}' src="{{product_image}}" data-index="{{index}}" class="{{class}}" alt="{{product_name}}">
 """
 
 templates.product_thumbnail_gallery_control_template = """
