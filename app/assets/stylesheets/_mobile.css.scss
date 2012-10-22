@@ -129,18 +129,48 @@ html.no-touch {
         max-width: 960px;
         padding: 20px 20px;
         width: 100%;
+
+        h3, h5 {
+            font-size: 32px;
+        }
+
+        #menu_button {
+            margin-top: -4px;
+        }
+
+        #menu {
+            margin-top: 40px;
+
+            li a {
+                color: $white;
+                font-size: 16px;
+                padding: 0 0 8px;
+            }
+        }
+    }
+
+    .product-button {
+        font-size: 28px;
+    }
+
+    .product-like-count {
+        background: image-url('like_desktop.png') no-repeat 0 4px !important;
+        background-size: 30px !important;
+        font-size: 32px !important;
+        font-weight: bold !important;
+        padding: 8px 0 12px 40px !important;
     }
 
     .product-left {
         .loading {
             font-size: 28px !important;
             font-weight: bold !important;
-            padding-top: 76px !important;
+            padding-top: 86px !important;
         }
     }
 
     .product-middle {
-        padding-top: 30px;
+        padding-top: 40px;
 
         & > div {
             margin-bottom: 6% !important;
@@ -162,11 +192,16 @@ html.no-touch {
         }
 
         .product-like-count {
-            background: image-url('like_desktop.png') no-repeat 0 4px;
-            background-size: 30px;
-            font-size: 32px;
-            font-weight: bold;
-            padding: 12px 0 12px 10%;
+            padding-top: 12px !important;
+        }
+    }
+
+    .product-right {
+        padding-top: 40px;
+
+        & > div {
+            font-size: 20px;
+            margin-bottom: 2% !important;
         }
     }
 
@@ -177,6 +212,27 @@ html.no-touch {
     .mobile-footer {
         font-size: 18px;
         padding: 16px 0;
+    }
+
+    .products-show {
+
+        .product-detail {
+
+            .product-thumbnail {
+                max-width: 612px;
+            }
+
+            .product-gallery-controls {
+                margin-top: 20px;
+
+                .product-gallery-control {
+                    border-radius: 30px;
+                    height: 30px;
+                    margin: 6px;
+                    width: 30px;
+                }
+            }
+        }
     }
 }
 
@@ -430,9 +486,13 @@ html.no-touch {
         .product-thumbnail {
             @include gramgoods_box_shadow;
 
-            display: block;
+            display: none;
             margin: 0 auto;
             width: 82%;
+
+            &.on {
+                display: block;
+            }
         }
 
         .product-gallery-controls {
