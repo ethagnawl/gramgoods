@@ -21,7 +21,8 @@ $ ->
             false
 
 $ ->
-    ($ '#menu_button').click -> ($ '#menu').toggle()
+    toggle_menu = -> ($ '#menu').toggle()
+    ($ '#menu_button').tap(-> toggle_menu())
 
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
@@ -124,7 +125,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 window.location = gon.instagram_protocol_with_params
 
             fetch_product_images($('.product'), render_multiple_product_images)
-
 
             ($ '.product-thumbnail-gallery')
                 .on('swipeLeft', (e) ->
