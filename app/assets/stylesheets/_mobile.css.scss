@@ -11,6 +11,18 @@ $red: #f10026;
     color: $dark-grey;
 }
 
+a {
+    @include transition(.2s);
+
+    text-decoration: none;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
 // Twitter Bootstrap overrides
 input[type=text], input[type=tel], input[type=password], input[type=email], input[type=number] {
     height: 28px !important;
@@ -33,37 +45,38 @@ body {
     h1, h1 a, h3 {
         color: $white;
         float: left;
+        width: 100%;
     }
 
     #menu_button {
         display: inline-block;
         float: right;
+        margin-left: 6px;
     }
 
     #menu {
+        display: none;
         float: left;
-        font-size: .9em;
         list-style-type: none;
         margin-top: 6%;
         text-align: right;
         width: 100%;
 
         li {
-            &.active,
-            &:active {
-                background-color: $light-grey;
-                border-radius: 2px;
-
-                a {
-                    color: $dark-grey;
-                }
-            }
-
             a {
                 color: $white;
                 display: inline-block;
                 padding: 2%;
-                width: 100%;
+
+                &:hover,
+                &:focus,
+                &:active {
+                    color: $medium-grey;
+                }
+            }
+
+            span {
+                color: $white;
             }
         }
     }
@@ -71,6 +84,12 @@ body {
 
 .mobile-layout-inner {
     padding-top: 60px;
+}
+
+.orders-new {
+    .mobile-layout-inner {
+        padding-top: 0;
+    }
 }
 
 .mobile-form {
@@ -95,7 +114,7 @@ body {
         width: 100%;
 
         &#billing_information_legend {
-            background: image-url('lock.png') no-repeat 46% 40% $blue;
+            background: image-url('lock.png') no-repeat 58% 40% $blue;
         }
     }
 
@@ -307,7 +326,7 @@ body {
     }
 
     .product-top {
-        padding-top: 6%;
+        padding-top: 4%;
         position: relative;
 
         .product-thumbnail {
