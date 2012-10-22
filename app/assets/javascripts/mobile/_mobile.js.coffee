@@ -74,7 +74,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         for product_image, i in product_images
             product_gallery_data =
                 index: i
-                classes: "product-thumbnail #{(if i is 0 then 'on' else 'hide')}"
+                class: "product-thumbnail #{(if i is 0 then 'on' else null)}"
                 product_name: gon.product_name
                 product_image: product_image
 
@@ -85,8 +85,10 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
                 index: i
 
-             $product_gallery_controls_wrapper.append Mustache.render(
-                templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
+
+            if product_images.length > 1
+                $product_gallery_controls_wrapper.append Mustache.render(
+                    templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
 
         $self.find('.product-thumbnail-gallery')
             .html($product_gallery_wrapper)
@@ -135,23 +137,39 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
 
             fetch_product_images($('.product'), render_multiple_product_images)
 
-            ($ '.product-thumbnail-gallery')
-                .on('swipeLeft', (e) ->
-                    $this = ($ e.target)
-                    next_index = $this.next().data('index')
-                    if next_index?
-                        $this.addClass('hide')
-                        $this.next().removeClass('hide')
-                        ($ '.product-gallery-control.on')
-                            .removeClass('on').next().addClass('on'))
-                .on('swipeRight', (e) ->
-                    $this = ($ e.target)
-                    previous_index = $this.prev().data('index')
-                    if previous_index?
-                        $this.addClass('hide')
-                        $this.prev().removeClass('hide')
-                        ($ '.product-gallery-control.on')
-                            .removeClass('on').prev().addClass('on'))
+            swipe_left = (e) ->
+                $this = ($ e.target)
+                next_index = $this.next().data('index')
+                if next_index?
+                    $this.removeClass('on')
+                    $this.next().addClass('on')
+                    ($ '.product-gallery-control.on')
+                        .removeClass('on').next().addClass('on')
+
+            swipe_right = (e) ->
+                $this = ($ e.target)
+                previous_index = $this.prev().data('index')
+                if previous_index?
+                    $this.removeClass('on')
+                    $this.prev().addClass('on')
+                    ($ '.product-gallery-control.on')
+                        .removeClass('on').prev().addClass('on')
+
+            if has_touch_events
+                ($ '.product-thumbnail-gallery')
+                    .on('swipeLeft', (e) -> swipe_left(e))
+                    .on('swipeRight', (e) -> swipe_right(e))
+            else
+                ($ '.product-thumbnail-gallery')
+                    .on('click', '.product-gallery-control', ->
+                        index = ($ @).data('index')
+
+                        ($ '.product-gallery-control.on').removeClass('on')
+                        ($ @).addClass('on')
+                        ($ '.product-thumbnail.on').removeClass('on')
+                        ($ "#product_gallery_image_#{index}").addClass('on')
+                    )
+
 
             # setTimeout is required because
             # tap was clicking the purchase
