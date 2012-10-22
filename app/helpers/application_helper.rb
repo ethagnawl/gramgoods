@@ -1,4 +1,18 @@
 module ApplicationHelper
+  def render_show_product_link(product, text = 'View')
+    link_to text, custom_product_path(product.store, product)
+  end
+
+  def render_edit_product_link(product)
+    link_to 'Edit', custom_product_edit_path(product.store, product)
+  end
+
+  def render_delete_product_link(product)
+    link_to 'Delete', store_product_path(product.store.slug, product.slug),
+              :method => :delete,
+              :confirm => "Are you sure you want to delete #{product.name}?"
+  end
+
   def random_number
     random = Random.new.rand(20..30)
     Time.now.seconds_since_midnight.floor * random

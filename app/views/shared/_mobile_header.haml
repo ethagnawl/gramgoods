@@ -21,12 +21,14 @@
           = link_to "Edit", custom_store_edit_path(current_user.first_store)
         - if defined?(@product) && @product.persisted? && user_owns_store?(@product.store.id)
           %li
-            = link_to @product.name, |
-              custom_product_path(@product.store, @product)
+            = render_show_product_link(@product, @product.name)
             %span
               |
-            = link_to "Edit", |
-              custom_product_edit_path(@product.store, @product)
+            = render_edit_product_link(@product)
+            %span
+              |
+            = render_delete_product_link(@product)
+
         %li
           = link_to 'Create Product', new_store_product_path(current_user.first_store)
 
