@@ -11,7 +11,8 @@
   %div
     = fields_for :user do |user_form|
       %fieldset
-        = user_form.label :email, (form_label(:email))
+        - if edit_view
+          = user_form.label :email, (form_label(:email))
         = user_form.text_field :email, :placeholder => (form_label(:email))
 
     = fields_for :store do |store_form|
