@@ -1,6 +1,5 @@
 - content_for(:title) { "Recent Products | GramGoods" }
 - content_for(:header) { 'Recent Products' }
 
-= render 'shared/products', :locals => { :products => @products, |
-                                         :show_store_name => true }
+= render 'shared/products'
 = render 'shared/footer.mobile'
