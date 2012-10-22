@@ -1,6 +1,5 @@
 - content_for(:title) { "#{@product.name} | GramGoods" }
-- content_for(:header) do
-  #{@product.name}
+- content_for(:header) { @product.name }
 
 #order_form.hide
 #success_screen.hide
