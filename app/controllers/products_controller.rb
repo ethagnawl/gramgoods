@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  layout 'admin'
+  layout 'mobile'
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:show, :index, :destroy] do |controller|
@@ -13,19 +13,12 @@ class ProductsController < ApplicationController
     end
   end
 
-  respond_to :html, :json
+  respond_to :html
 
   def index
+    @products = Product.recent_active_products.page(params[:page]).per_page(5)
     respond_to do |format|
-      format.json {
-        @store = Store.find(params[:store_id])
-        render :json => @store.products.includes([:product_images, :instagram_tag]).map { |product|
-          render_product_widget_template(@store, product) }
-      }
-      format.html {
-        @products = Product.recent_active_products.page(params[:page]).per_page(5)
-        render 'products/index.mobile', :layout => 'mobile'
-      }
+      format.html { render 'products/index.mobile' }
     end
   end
 
@@ -36,7 +29,6 @@ class ProductsController < ApplicationController
                                      :instagram_tag => InstagramTag.new,
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
-    render 'products/new.mobile', :layout => 'mobile'
   end
 
   def create
@@ -47,30 +39,11 @@ class ProductsController < ApplicationController
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
     if @product.save
       respond_to do |format|
-        format.json {
-          render :json => {
-            :product => @product
-          }
-        }
         format.html { conditionally_redirect_to_instagram_app @store, @product }
       end
     else
       respond_to do |format|
-        format.json {
-          render :json => {
-            :status => 'error',
-            :errors => @product.errors.full_messages.map do |message|
-              { :error => message }
-            end
-          }
-        }
-        format.html {
-          if mobile_device?
-            render 'new.mobile', :layout => 'mobile'
-          else
-            render 'new'
-          end
-        }
+        format.html { render 'new.mobile' }
       end
     end
   end
@@ -89,14 +62,11 @@ class ProductsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json {
-        render 'products/show'
-      }
       format.html {
         if @product.status == 'Draft' && !user_signed_in?
           redirect_to(custom_store_path(@store.slug))
         else
-          render 'products/show.mobile', :layout => 'mobile'
+          render 'products/show.mobile'
         end
       }
     end
@@ -106,9 +76,7 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
-    if mobile_device?
-      render 'products/edit.mobile', :layout => 'mobile'
-    end
+    render 'products/edit.mobile'
   end
 
   def update
@@ -118,31 +86,11 @@ class ProductsController < ApplicationController
     @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
       respond_to do |format|
-        format.json {
-          render :json => {
-            :product => @product
-          }
-        }
         format.html { conditionally_redirect_to_instagram_app @store, @product }
       end
     else
       respond_to do |format|
-        format.json {
-          render :json => {
-            :status => 'error',
-            :errors => @product.errors.full_messages.map do |message|
-              { :error => message }
-            end
-          }
-        }
-        format.html {
-          if mobile_device?
-            render 'edit.mobile', :layout => 'mobile'
-          else
-            render 'edit'
-          end
-        }
-
+        format.html { render 'edit.mobile' }
       end
     end
   end
@@ -156,15 +104,7 @@ class ProductsController < ApplicationController
       notice = "#{@product.name} has been successfully deleted."
       flash[:notice] = notice
       respond_to do |format|
-        format.json {
-          render :json => {
-            :status => 'success',
-            :notice => notice
-          }
-        }
-        format.html {
-          redirect_to(custom_store_path(@store))
-        }
+        format.html { redirect_to(custom_store_path(@store)) }
       end
     else
       redirect_to(root_path)
@@ -186,9 +126,5 @@ class ProductsController < ApplicationController
         redirect_to custom_product_path(@product.store, @product, params),
           status: :moved_permanently
       end
-    end
-
-    def product_photos_empty_message(name)
-      "You will need to attach at least one image to '#{name}' before setting Status to Active."
     end
 end
