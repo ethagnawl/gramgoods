@@ -1,4 +1,4 @@
-.page-header
-  %h1 Create New Store
-#store_form_wrapper
-  = render 'form'
+- content_for(:title) { "Sign Up and Create Store | GramGoods" }
+- content_for(:header) { 'Create Store' }
+
+= render 'form'

@@ -1,28 +1,5 @@
-- unless @store.orders.empty?
-  = link_to "View Orders", store_orders_path(@store)
+- content_for(:title) { "#{@store.name} | GramGoods" }
+- content_for(:header) { @store.name }
 
-.float-right
-  %a.btn.btn-primary.btn-large{ :href => "http://#{request.env["HTTP_HOST"]}/#{@store.slug}?layout=mobile", :target => '_blank'}
-    Your Store's Unique URL:
-    %br
-    #{request.env["HTTP_HOST"]}/#{@store.slug}
-    %i.icon-white.icon-globe
-
-.page-header
-  %h1
-    #{@store.name}
-    %small
-      = link_to('Edit', edit_store_path(@store))
-
-#product_form_wrapper.widget
-  %h2.widget
-    %a.render-new-product-form.btn.btn-primary.btn-large{ :href => "javascript: void(0);", :data => { :'js-handle' => 'true' } }
-      Add Product
-      %i.icon-white.icon-plus-sign
-  %form.hide
-#product_count.btn.btn-success.float-left
-  Loading Products...
-.product-widgets
-  - unless @store.products.empty?
-    %h2
-      Loading Products...
+= render 'shared/products'
+= render 'shared/footer.mobile'
