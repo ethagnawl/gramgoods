@@ -8,6 +8,7 @@ window.addToHomeConfig =
     returningVisitor: true
 
 if gon.page is 'products_index'
-    addToHome.show()
+    $ ->
+        addToHome.show()
 
 
