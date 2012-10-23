@@ -13,8 +13,8 @@ module ApplicationHelper
     link_to text, custom_product_path(product.store, product)
   end
 
-  def render_edit_product_link(product)
-    link_to 'Edit', custom_product_edit_path(product.store, product)
+  def render_edit_product_link(product, text = 'Edit')
+    link_to text, custom_product_edit_path(product.store, product)
   end
 
   def render_delete_product_link(product)
