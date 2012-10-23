@@ -13,13 +13,8 @@ class ProductsController < ApplicationController
     end
   end
 
-  respond_to :html
-
   def index
     @products = Product.recent_active_products.page(params[:page]).per_page(5)
-    respond_to do |format|
-      format.html { render 'products/index.mobile' }
-    end
   end
 
   def new
@@ -38,13 +33,9 @@ class ProductsController < ApplicationController
     #TODO: move into after_save callback
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
     if @product.save
-      respond_to do |format|
-        format.html { conditionally_redirect_to_instagram_app @store, @product }
-      end
+      conditionally_redirect_to_instagram_app @store, @product
     else
-      respond_to do |format|
-        format.html { render 'new.mobile' }
-      end
+      render 'new'
     end
   end
 
@@ -61,14 +52,10 @@ class ProductsController < ApplicationController
       gon.instagram_protocol_with_params = "instagram://camera" << instagram_params
     end
 
-    respond_to do |format|
-      format.html {
-        if @product.status == 'Draft' && !user_signed_in?
-          redirect_to(custom_store_path(@store.slug))
-        else
-          render 'products/show.mobile'
-        end
-      }
+    if @product.status == 'Draft' && !user_signed_in?
+      redirect_to(custom_store_path(@store.slug))
+    else
+      render 'products'
     end
   end
 
@@ -76,7 +63,6 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
-    render 'products/edit.mobile'
   end
 
   def update
@@ -85,13 +71,9 @@ class ProductsController < ApplicationController
     @product.colors.destroy_all
     @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
-      respond_to do |format|
-        format.html { conditionally_redirect_to_instagram_app @store, @product }
-      end
+      conditionally_redirect_to_instagram_app @store, @product
     else
-      respond_to do |format|
-        format.html { render 'edit.mobile' }
-      end
+      render 'edit'
     end
   end
 
@@ -103,9 +85,7 @@ class ProductsController < ApplicationController
       @product.destroy
       notice = "#{@product.name} has been successfully deleted."
       flash[:notice] = notice
-      respond_to do |format|
-        format.html { redirect_to(custom_store_path(@store)) }
-      end
+      redirect_to(custom_store_path(@store))
     else
       redirect_to(root_path)
     end
