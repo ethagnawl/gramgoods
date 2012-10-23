@@ -1,4 +1,5 @@
 - edit_view = params[:action] == 'edit'
+- verb_and_store = (!edit_view ? 'Create' : 'Update') + ' Store'
 = form_for [@user, @store], :url => (params[:action] == 'edit' ? nil : stores_proxy_path), :html => {:class => 'mobile-form', |
                 :autocorrect => 'off', |
                 :autocapitalize => 'off' } do |form|
@@ -38,4 +39,4 @@
           = check_box :store, :terms_of_service, :checked => true
 
     %fieldset
-      = form.submit
+      = form.submit verb_and_store, :class => 'btn btn-large btn-primary'
