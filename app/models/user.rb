@@ -10,15 +10,24 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth, user_params, store_params)
     new_user = false
-    user = where(auth.slice(:uid, :provider)).first_or_create do |user|
-      new_user = true
-      user.uid = auth.uid
-      user.provider = auth.provider
-      user.username = auth.info.nickname
-      user.thumbnail = auth.info.image
-      user.access_token = auth.credentials.token
-      user.email = user_params['email']
+    user = where(auth.slice(:uid)).first_or_create do |user|
+      unless user_params.nil? && store_params.nil?
+        new_user = true
+        user.uid = auth.uid
+        user.provider = auth.provider
+        user.username = auth.info.nickname
+        user.thumbnail = auth.info.image
+        user.access_token = auth.credentials.token
+        user.email = user_params['email']
+      end
     end.tap { |u| u.create_store store_params if new_user }
+
+    if user_params.nil? && store_params.nil? && user.sign_in_count == 0
+      user.delete
+      false
+    else
+      user
+    end
   end
 
   def is_a_new_user?
