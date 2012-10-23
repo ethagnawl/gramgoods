@@ -31,6 +31,8 @@
         - if defined?(@product) && @product.persisted? && user_owns_store?(@product.store.id)
           %li
             = render_edit_product_link(@product, "Edit #{@product.name}")
+          %li
+            = render_delete_product_link(@product, "Delete #{@product.name}")
 
         %li
           = link_to "Account", custom_store_edit_path(current_user.first_store)
