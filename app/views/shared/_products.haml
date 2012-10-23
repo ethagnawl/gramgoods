@@ -12,13 +12,15 @@
           .mobile-wrapper
             = product.name
           .desktop-wrapper
-            %a{ :href => custom_product_path(product.store, product) }
+            %a{ :href => custom_product_path(product.store, product),
+              :title => product.name }
               = product.name
         .store-name
           .mobile-wrapper
             = product.store.name
           .desktop-wrapper
-            %a{ :href => custom_store_path(product.store) }
+            %a{ :href => custom_store_path(product.store), |
+              :title => product.store.name }
               = product.store.name
         .product-button.product-price
           = number_to_currency(product.price)
