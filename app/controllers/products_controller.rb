@@ -53,9 +53,9 @@ class ProductsController < ApplicationController
     end
 
     if @product.status == 'Draft' && !user_signed_in?
-      redirect_to(custom_store_path(@store.slug))
+      redirect_to(custom_store_path(@store))
     else
-      render 'products'
+      render 'show'
     end
   end
 
