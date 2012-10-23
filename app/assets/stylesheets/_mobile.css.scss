@@ -59,16 +59,22 @@ body {
         width: 100%;
 
         li {
+
+            &.on a,
+            a:hover,
+            a:focus,
+            a:active {
+                // rgba version of light-grey
+                background-color: rgba(238, 238, 238, .2);
+                border-radius: 2px;
+            }
+
             a {
                 color: $white;
                 display: inline-block;
                 padding: 2%;
-
-                &:hover,
-                &:focus,
-                &:active {
-                    color: $medium-grey;
-                }
+                text-decoration: none;
+                width: 100%;
             }
 
             span {
@@ -86,6 +92,12 @@ html.touch {
         top: 0;
         width: 100%;
         z-index: 998;
+
+        #menu {
+            li a {
+                padding: 2% 4%;
+            }
+        }
     }
 
     .product-name {
@@ -153,7 +165,7 @@ html.no-touch {
             li a {
                 color: $white;
                 font-size: 16px;
-                padding: 0 0 8px;
+                padding: 12px;
             }
         }
     }

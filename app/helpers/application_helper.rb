@@ -1,4 +1,20 @@
 module ApplicationHelper
+  def is_edit_product_page(product)
+    request.path == custom_product_edit_path(product.store, product)
+  end
+
+  def is_edit_store_page(store)
+    request.path == custom_store_edit_path(store)
+  end
+
+  def is_create_product_page
+    "#{params[:controller]}_#{params[:action]}" == 'products_new'
+  end
+
+  def is_user_store_page(store)
+      request.path == custom_store_path(store)
+  end
+
   def product_status_class(product)
     if product.status == 'Active'
       'btn-success'

@@ -15,10 +15,12 @@
       - if user_signed_in?
         - store = current_user.first_store
 
-        %li
-          = link_to 'Create Product', new_store_product_path(current_user.first_store)
+        %li{ :class => is_create_product_page ? 'on' : nil }
 
-        %li
+          = link_to 'Create Product',
+            new_store_product_path(current_user.first_store)
+
+        %li{ :class => is_user_store_page(store) ? 'on' : nil }
           = link_to store.name, custom_store_path(current_user.first_store)
 
         %li
@@ -29,13 +31,13 @@
             Help
 
         - if defined?(@product) && @product.persisted? && user_owns_store?(@product.store.id)
-          %li
+          %li{ :class => is_edit_product_page(@product) ? 'on' : nil }
             = render_edit_product_link(@product, "Edit #{@product.name}")
           %li
             = render_delete_product_link(@product, "Delete #{@product.name}")
 
-        %li
-          = link_to "Account", custom_store_edit_path(current_user.first_store)
+        %li{ :class => is_edit_store_page(store) ? 'on' : nil }
+          = link_to "Account", custom_store_edit_path(store)
 
       - else
         = render 'shared/force_instagram_logout_iframe'
