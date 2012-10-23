@@ -60,7 +60,7 @@
         (form_label(:unlimited_quantity, false))
       = product_form.check_box :unlimited_quantity
 
-    - color_placeholder = (form_label("#{:color}(s)", false, ' - input and tap +'))
+    - color_placeholder = (form_label("#{:color}", false, ' - input and tap +'))
     - if edit_view
       = render 'products/nested_attribute_fieldset', |
         { :locals => { :attribute => 'color', |
@@ -74,7 +74,7 @@
           %button.add-button{ :data => { :attribute => :color.to_s} } +
           %div.attrs
 
-    - size_placeholder = (form_label("#{:size}(s)", false, ' - input and tap +'))
+    - size_placeholder = (form_label("#{:size}", false, ' - input and tap +'))
     - if edit_view
       = render 'products/nested_attribute_fieldset', |
         { :locals => { :attribute => 'size', |

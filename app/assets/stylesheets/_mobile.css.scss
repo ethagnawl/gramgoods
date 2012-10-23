@@ -118,6 +118,7 @@ html.no-touch {
         box-shadow: 0 0 12px $medium-grey;
         float: left;
         margin: 12px 0;
+        width: 100%;
     }
 
     .mobile-layout-inner {
@@ -255,6 +256,12 @@ html.no-touch {
             }
         }
     }
+
+    .mobile-form {
+        #billing_information_legend {
+            background-position: 184px 40px !important;
+        }
+    }
 }
 
 .mobile-layout-inner {
@@ -269,8 +276,13 @@ html.no-touch {
 
 .mobile-form {
     background-color: $white;
+    float: left;
     padding-top: 2%;
     width: 100%;
+
+    &.order-form {
+        padding-top: 0;
+    }
 
     .hide-form {
         background-color: $white;
