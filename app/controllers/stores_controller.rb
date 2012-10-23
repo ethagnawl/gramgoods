@@ -1,5 +1,5 @@
 class StoresController < ApplicationController
-  layout 'admin'
+  layout 'mobile'
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :new, :proxy]
   before_filter :except => [:proxy, :create, :new, :show, :index, :destroy] do |controller|
@@ -16,7 +16,6 @@ class StoresController < ApplicationController
   def index
     @user = current_user
     @stores = @user.stores if user_signed_in?
-    render_conditional_layout(params[:layout])
   end
 
   def proxy
@@ -27,26 +26,25 @@ class StoresController < ApplicationController
     if @user.valid? && @store.valid?
       redirect_to instagram_auth_url_with_params
     else
-      render 'new.mobile', :layout => 'mobile'
+      render 'new'
     end
   end
 
   def new
     @user = User.new
+    @store = Store.new
 
     if !current_user.nil? && !current_user.first_store.nil?
       redirect_to(custom_store_path(current_user.first_store))
     else
-      @store = Store.new
-      if mobile_device? or params[:layout] == 'mobile'
-        render 'new.mobile', :layout => 'mobile'
-      end
+      render 'new'
     end
   end
 
   def create
     @user = current_user
     @store = @user.stores.new(params[:store])
+
     if @store.save
       flash[:notice] = "#{@store.name} has been created successfully."
       redirect_to custom_store_path(@store)
@@ -54,7 +52,6 @@ class StoresController < ApplicationController
       render 'new'
     end
   end
-
 
   def show
     @store = Store.find(params[:id])
@@ -73,26 +70,11 @@ class StoresController < ApplicationController
       render_product_widget_template(@store, product)
     end
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
-    if @current_user_owns_store
-      if params[:layout] == 'mobile'
-        render 'stores/show.mobile', :layout => 'mobile'
-      elsif mobile_device?
-        render 'stores/show.mobile', :layout => 'mobile'
-      else
-        @product = @store.products.new
-        render :layout => 'admin'
-      end
-    else
-      render 'stores/show.mobile', :layout => 'mobile'
-    end
   end
 
   def edit
     @user = current_user
     @store = @user.stores.find(params[:id])
-    if mobile_device? or params[:layout] == 'mobile'
-      render 'edit.mobile', :layout => 'mobile'
-    end
   end
 
   def update
@@ -102,11 +84,7 @@ class StoresController < ApplicationController
       flash[:notice] = "#{@store.name} has been updated successfully."
       redirect_to custom_store_path(@store)
     else
-      if mobile_device? or params[:layout] == 'mobile'
-        render 'edit.mobile', :layout => 'mobile'
-      else
-        render 'edit'
-      end
+      render 'edit'
     end
   end
 
