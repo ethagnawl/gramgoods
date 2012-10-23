@@ -210,7 +210,7 @@ html.no-touch {
 
         & > div {
             font-size: 20px;
-            margin-bottom: 2% !important;
+            margin-bottom: 10% !important;
         }
     }
 
@@ -454,6 +454,23 @@ html.no-touch {
         }
 
         .product-right {
+            float: left;
+            padding-top: 2%;
+            width: 14%;
+
+           .owner-action {
+               margin-bottom: 10%;
+               width: 100%;
+
+                .btn {
+                    text-align: center;
+                    width: 100%;
+
+                    a {
+                        color: $white;
+                    }
+                }
+            }
 
             .product-link {
                 a {
