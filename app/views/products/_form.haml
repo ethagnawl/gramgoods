@@ -1,5 +1,5 @@
 - edit_view = locals[:action] == 'Edit'
-- post_to_instagram_prefix = locals[:action] == 'Edit' ? 'Update' : 'Create'
+- verb_and_product = (locals[:action] == 'Edit' ? 'Update' : 'Create') + ' Product'
 
 = form_for([@store, @product], |
           :html => { :class => 'mobile-form', |
@@ -103,8 +103,10 @@
                                                @product.status ||= 'Active')
 
     %fieldset
-      = product_form.submit
+      = product_form.submit verb_and_product, |
+        :class => 'btn btn-large btn-primary'
 
     - if mobile_device_is_iOS?
       %fieldset
-        = product_form.submit "#{post_to_instagram_prefix} Product and Post to Instagram", :name => 'post_to_instagram'
+        = product_form.submit "#{verb_and_product} and Post to Instagram", |
+          :name => 'post_to_instagram', :class => 'btn btn-large btn-primary'
