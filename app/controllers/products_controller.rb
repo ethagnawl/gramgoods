@@ -43,6 +43,7 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.new(params[:product])
+    #TODO: move into after_save callback
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
     if @product.save
       respond_to do |format|
@@ -51,11 +52,7 @@ class ProductsController < ApplicationController
             :product => @product
           }
         }
-        format.html {
-          product_path = custom_product_path(@store, @product)
-          product_path << "?redirect_to_instagram=true" unless params[:post_to_instagram].nil?
-          redirect_to(product_path)
-        }
+        format.html { conditionally_redirect_to_instagram_app @store, @product }
       end
     else
       respond_to do |format|
@@ -126,7 +123,7 @@ class ProductsController < ApplicationController
             :product => @product
           }
         }
-        format.html { redirect_to(custom_product_path(@store, @product)) }
+        format.html { conditionally_redirect_to_instagram_app @store, @product }
       end
     else
       respond_to do |format|
@@ -175,6 +172,14 @@ class ProductsController < ApplicationController
   end
 
   private
+    def conditionally_redirect_to_instagram_app(store, product)
+        product_path = custom_product_path(store, product)
+        unless params[:post_to_instagram].nil?
+          product_path << "?redirect_to_instagram=true"
+        end
+        redirect_to(product_path)
+    end
+
     def redirect_to_current_slug
       @product = Product.find(params[:id])
       if request.path != custom_product_path(@product.store, @product)
