@@ -22,7 +22,7 @@
     = csrf_meta_tags
   %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
     .mobile-layout-outer
-      = render 'shared/mobile_header'
+      = render 'shared/header'
       .mobile-layout-inner
 
         - unless flash[:alert].nil?
