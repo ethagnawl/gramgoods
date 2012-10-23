@@ -1,4 +1,14 @@
 module ApplicationHelper
+  def product_status_class(product)
+    if product.status == 'Active'
+      'btn-success'
+    elsif product.status == 'Draft'
+      'btn-warning'
+    else
+      'btn-danger'
+    end
+  end
+
   def render_show_product_link(product, text = 'View')
     link_to text, custom_product_path(product.store, product)
   end
