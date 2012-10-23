@@ -27,16 +27,20 @@
         .product-like-count.hide
       .product-right
         - if user_owns_store
+          - btn_size_class = !mobile_device? ? 'btn-primary' : 'btn-mini'
           .owner-action
-            = render_show_product_link(product)
+            .btn.btn-primary{ :class => btn_size_class }
+              = render_show_product_link(product)
           .owner-action
-            = render_edit_product_link(product)
+            .btn.btn-primary{ :class => btn_size_class }
+              = render_edit_product_link(product)
           .owner-action
-            = render_delete_product_link(product)
+            .btn.btn-primary{ :class => btn_size_class }
+              = render_delete_product_link(product)
           .owner-action
-            Status:
-            %br.mobile-wrapper
-            = product.status
+            .btn.btn-primary{ :disabled => 'disabled', |
+              :class => "#{product_status_class(product)} #{btn_size_class}" }
+              = product.status
         - else
           .product-link
             = render_show_product_link(product, '')
