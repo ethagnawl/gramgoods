@@ -2,7 +2,7 @@ window.addToHomeConfig =
     expire: 2
     lifespan: 4000
     touchIcon: true
-    autoStart: false
+    autostart: false
     animationIn: 'bubble'
     animationOut: 'drop'
     returningVisitor: true
