@@ -5,6 +5,7 @@ $ ->
     toggle_menu = -> ($ '#menu').toggle()
 
     if has_touch_events
+        ($ '.mobile-layout-inner').css('padding-top', ($ '.mobile-header').height())
         ($ '#menu_button').tap((e) ->
             e.preventDefault()
             toggle_menu())
