@@ -95,3 +95,34 @@ $veda-store-color: #D30547;
         background-color: $veda-store-color;
     }
 }
+
+// soles - not very DRY, but it'll be easier to change when the time comes
+$soles-store-color: #D30547;
+
+.custom-merchant-soles-inc {
+    .store-header {
+        background-color: #fff;
+    }
+
+    .products .product-button, .product-detail .product-button {
+       background-color: $soles-store-color;
+   }
+
+   .products.products,
+   .product-detail.products {
+       padding-top: 17%;
+   }
+}
+
+.custom-merchant-soles-inc .products .product-button,
+.product.custom-merchant-soles-inc-product .product-middle .product-button {
+    background-color: $soles-store-color;
+}
+
+.custom-merchant-soles-inc #order_form legend {
+    background-color: $soles-store-color;
+
+    &#billing_information_legend {
+        background-color: $soles-store-color;
+    }
+}
