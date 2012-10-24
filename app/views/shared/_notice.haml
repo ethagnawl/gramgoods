@@ -1,5 +1,5 @@
 - unless locals[:notice].nil?
   .alert-wrapper
     .alert.alert-info
-      = locals[:notice]
+      = locals[:notice].html_safe
 

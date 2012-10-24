@@ -30,6 +30,10 @@ input[type=text], input[type=tel], input[type=password], input[type=email], inpu
     margin: 1% auto;
     text-align: center;
     width: 98%;
+
+    a {
+        text-decoration: underline;
+    }
 }
 
 // /Twitter Bootstrap overrides

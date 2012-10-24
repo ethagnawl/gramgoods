@@ -1,5 +1,9 @@
 - content_for(:title) { "#{@store.name} | GramGoods" }
 - content_for(:header) { @store.name }
 
-= render 'shared/products'
+
+- if user_owns_store?(@store.id) && @store.products.empty?
+  = render 'shared/notice', :locals => { :notice => "Welcome to GramGoods, get started by <a href='#{new_store_product_path(@store) }'>creating your first product</a>." }
+- else
+  = render 'shared/products'
 = render 'shared/footer'
