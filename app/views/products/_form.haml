@@ -1,5 +1,7 @@
 - edit_view = locals[:action] == 'Edit'
 - verb_and_product = (locals[:action] == 'Edit' ? 'Update' : 'Create') + ' Product'
+- number_input = mobile_device_is_iOS? ? 'number' : 'text'
+- tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
 
 = form_for([@store, @product], |
           :html => { :class => 'mobile-form', |
@@ -39,7 +41,7 @@
     %fieldset
       - if edit_view
         = product_form.label :price, (form_label(:price))
-      = product_form.text_field :price, :type => 'number', |
+      = product_form.text_field :price, :type => number_input, |
                                 :placeholder => (form_label(:price, true, ' (e.g. $9.99)'))
 
     %fieldset
@@ -48,7 +50,7 @@
       - quantity_value = @product.quantity.nil? || @product.quantity == 0 ? nil : @product.quantity
       - if edit_view
         = product_form.label :quantity, (form_label(:quantity, false))
-      = product_form.text_field :quantity, :type => 'tel', |
+      = product_form.text_field :quantity, :type => tel_input, |
                                            :value => quantity_value, |
                                            :disabled => quantity_disabled, |
                                            :placeholder => quantity_placeholder
@@ -93,7 +95,7 @@
       - if edit_view
         = product_form.label :flatrate_shipping_cost, flatrate_shipping_label
       = product_form.text_field :flatrate_shipping_cost, |
-                                :type => 'number',
+                                :type => number_input,
                                 :placeholder => flatrate_shipping_label
 
     %fieldset
