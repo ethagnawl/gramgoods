@@ -238,14 +238,10 @@ render_nested_product_attribute_input = ($el) ->
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
         ($ '.mobile-form')
-            .on 'tap', '.add-button', (e) ->
-                return
             .on 'click', '.add-button', (e) ->
+                # tap submits the form on iOS
                 e.preventDefault()
                 render_nested_product_attribute_input ($ @)
-
-            .on 'tap', '.remove-attribute', (e) ->
-                return
             .on 'click', '.attribute-wrapper', (e) ->
                 id = ($ @).find('.remove-attribute').data('id')
                 attribute = ($ @).find('.remove-attribute').data('attribute')
