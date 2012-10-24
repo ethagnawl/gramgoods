@@ -56,8 +56,6 @@ class StoresController < ApplicationController
   def show
     @store = Store.find(params[:id])
 
-    redirect_to_current_slug
-
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     @products = if @current_user_owns_store
                   @store.products.includes([:store, :product_images, :instagram_tag])
@@ -95,9 +93,18 @@ class StoresController < ApplicationController
   private
 
     def redirect_to_current_slug
-      @store = Store.find(params[:id])
-      if request.path != custom_store_path(@store)
-        redirect_to custom_store_path(@store, params), :status => :moved_permanently
+      @store = begin
+          Store.find(params[:id])
+        rescue
+          nil
+      end
+
+      if @store.nil?
+        redirect_to root_path
+      else
+        if request.path != custom_store_path(@store)
+          redirect_to custom_store_path(@store, params), :status => :moved_permanently
+        end
       end
     end
 end
