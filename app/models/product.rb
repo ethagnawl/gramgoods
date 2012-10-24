@@ -2,7 +2,6 @@ class Product < ActiveRecord::Base
   include ActionView::Helpers::NumberHelper
 
   belongs_to :store
-  has_many :product_images, :dependent => :destroy
   has_one :instagram_tag, :dependent => :destroy
   has_many :colors, :dependent => :destroy, :before_add => :set_nest
   has_many :sizes, :dependent => :destroy, :before_add => :set_nest
@@ -19,7 +18,7 @@ class Product < ActiveRecord::Base
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
-  :flatrate_shipping_cost, :unlimited_quantity, :product_images_attributes,
+  :flatrate_shipping_cost, :unlimited_quantity,
   :instagram_tag_attributes, :colors_attributes, :sizes_attributes, :instagram_tag,
   :colors, :sizes
 
@@ -31,7 +30,7 @@ class Product < ActiveRecord::Base
     :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
   validate :require_instagram_tag
 
-  accepts_nested_attributes_for :product_images, :instagram_tag
+  accepts_nested_attributes_for :instagram_tag
   accepts_nested_attributes_for :colors,
     :reject_if => lambda { |attrs|
       attrs.all? { |key, value| value.blank? }
