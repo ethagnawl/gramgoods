@@ -58,7 +58,7 @@ class StoresController < ApplicationController
 
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     @products = if @current_user_owns_store
-                  @store.products.includes([:store, :product_images, :instagram_tag])
+                  @store.products.includes([:store, :instagram_tag])
                 else
                   @store.displayable_products
                 end.page(params[:page]).per_page(5)

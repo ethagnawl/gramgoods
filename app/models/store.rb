@@ -15,6 +15,6 @@ class Store < ActiveRecord::Base
     self.products.
       where(:status => ['Active', 'Out of Stock']).
       limit(limit).
-      includes([:store, :product_images, :instagram_tag])
+      includes([:store, :instagram_tag])
   end
 end
