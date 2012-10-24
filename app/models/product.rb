@@ -77,10 +77,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def thumbnails_array
-    self.product_images.map { |product_image| product_image.thumbnail }.reject { |product_image| product_image.empty? }
-  end
-
   def get_quantity
     self.unlimited_quantity == true ? 'Unlimited Quantity' : self.quantity
   end
