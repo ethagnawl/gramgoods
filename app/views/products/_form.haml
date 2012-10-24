@@ -40,7 +40,7 @@
     %fieldset
       - if edit_view
         = product_form.label :price, (form_label(:price))
-      = product_form.text_field :price, :type => 'number', |
+      = product_form.text_field :price, :type => 'text', |
                                 :placeholder => (form_label(:price, true, ' (e.g. 9.99)'))
 
     %fieldset
@@ -90,11 +90,11 @@
           %div.attrs
 
     %fieldset
-      - flatrate_shipping_label = form_label(:flatrate_shipping_cost, false, ' (e.g. 9.99)')
+      - flatrate_shipping_label = form_label('Flatrate Shipping Price', false, ' (e.g. 9.99)')
       - if edit_view
         = product_form.label :flatrate_shipping_cost, flatrate_shipping_label
       = product_form.text_field :flatrate_shipping_cost, |
-                                :type => 'number',
+                                :type => 'text',
                                 :placeholder => flatrate_shipping_label
 
     %fieldset
