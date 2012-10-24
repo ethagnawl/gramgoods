@@ -97,15 +97,15 @@ $veda-store-color: $black;
 }
 
 // soles - not very DRY, but it'll be easier to change when the time comes
-$soles-store-color: $black;
+$solesinc-store-color: $black;
 
-.custom-merchant-soles-inc {
+.custom-merchant-solesinc {
     .store-header {
         background-color: #fff;
     }
 
     .products .product-button, .product-detail .product-button {
-       background-color: $soles-store-color;
+       background-color: $solesinc-store-color;
    }
 
    .products.products,
@@ -114,15 +114,15 @@ $soles-store-color: $black;
    }
 }
 
-.custom-merchant-soles-inc .products .product-button,
-.product.custom-merchant-soles-inc-product .product-middle .product-button {
-    background-color: $soles-store-color;
+.custom-merchant-solesinc .products .product-button,
+.product.custom-merchant-solesinc-product .product-middle .product-button {
+    background-color: $solesinc-store-color;
 }
 
-.custom-merchant-soles-inc #order_form legend {
-    background-color: $soles-store-color;
+.custom-merchant-solesinc #order_form legend {
+    background-color: $solesinc-store-color;
 
     &#billing_information_legend {
-        background-color: $soles-store-color;
+        background-color: $solesinc-store-color;
     }
 }
