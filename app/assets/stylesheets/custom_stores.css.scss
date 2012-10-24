@@ -64,3 +64,34 @@ $wink-store-color: #D30547;
         background-color: $wink-store-color;
     }
 }
+
+// veda - not very DRY, but it'll be easier to change when the time comes
+$veda-store-color: #D30547;
+
+.custom-merchant-veda {
+    .store-header {
+        background-color: #fff;
+    }
+
+    .products .product-button, .product-detail .product-button {
+       background-color: $veda-store-color;
+   }
+
+   .products.products,
+   .product-detail.products {
+       padding-top: 17%;
+   }
+}
+
+.custom-merchant-veda .products .product-button,
+.product.custom-merchant-veda-product .product-middle .product-button {
+    background-color: $veda-store-color;
+}
+
+.custom-merchant-veda #order_form legend {
+    background-color: $veda-store-color;
+
+    &#billing_information_legend {
+        background-color: $veda-store-color;
+    }
+}
