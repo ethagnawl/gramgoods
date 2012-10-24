@@ -1,25 +1,5 @@
 window.templates = {}
 
-@is_standalone_iOS_app = window.navigator.standalone? && window.navigator.standalone
-
-$ ->
-    if @is_standalone_iOS_app
-        if gon.auth_token?
-            if gon.auth_token is 'destroy'
-                localStorage.removeItem('auth_token')
-            else
-                localStorage.setItem('auth_token', gon.auth_token)
-
-        auth_token = localStorage.getItem('auth_token')
-
-        if !gon.authenticated and auth_token? and auth_token isnt 'destroy'
-            location.search = "auth_token=#{auth_token}"
-
-        $('a').click ->
-            return if ($ @).data('js-handle') is 'true'
-            location.href = ($ @).attr('href')
-            false
-
 $ ->
     window.has_touch_events = !($ 'html').hasClass('no-touch')
     toggle_menu = -> ($ '#menu').toggle()
