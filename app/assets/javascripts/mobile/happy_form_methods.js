@@ -38,8 +38,8 @@ var happy = {
         return $(el).prop('checked') === true;
     },
 
-    is_price: function (val) {
-        return /^\$?[0-9]+\.?[0-9]?[0-9]?$/.test(val);
+    is_valid_price: function (val) {
+        return /^(\d{1,3}(\,\d{3})*|(\d+))(\.\d{2})?$/.test(val);
     },
 
     is_valid_quantity: function (val) {
