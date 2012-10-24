@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   before_filter :basic_authentication
-  helper_method :render_user_photo_template
   helper_method :mobile_device?
   helper_method :mobile_device_is_iOS?
   helper_method :user_owns_store?
@@ -50,19 +49,6 @@ class ApplicationController < ActionController::Base
         :alert => 'Sorry, there don\'t seem to be any more photos available.'
       }
     end
-  end
-
-  def render_user_photo_template(product = nil, photo)
-    selected = product.nil? ? false : product.product_image_ids.include?(photo.instagram_id)
-    {
-      :likes => (defined?(photo[:likes][:count].to_i)).nil? ? photo[:likes] : photo[:likes][:count].to_i,
-      :thumbnail => (defined?(photo[:images][:thumbnail])).nil? ? photo[:thumbnail] : photo[:images][:thumbnail][:url],
-      :url => photo.url ||= view_context.product_photo_url(photo),
-      :tags => photo.tags.split(',').join(' '),
-      :selected => selected ? 'selected' : nil,
-      :btnClass => selected ? 'btn-success' : 'btn-inverse',
-      :instagram_id => photo.id
-    }
   end
 
   private
