@@ -182,7 +182,9 @@ if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_
     $ -> ($ '.mobile-form')
         .isHappy(store_form_validation_rules)
         .submit((e) ->
-            e.preventDefault() if ($ @).find('.unhappy').length)
+            if ($ @).find('.unhappy').length
+                e.preventDefault()
+                scrollTo(($ @).find('.unhappy').offset().top))
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $ ->
@@ -206,7 +208,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
 
         ($ "#order_form")
             .isHappy(order_form_validation_rules)
-            .submit((e) ->
+            .submit (e) ->
                 e.preventDefault()
 
                 # this is really hacky, but it's all happy.js gives us to work with
@@ -216,7 +218,10 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                         number: $credit_card_number.val(),
                         exp_month: $credit_card_expiration_month.val(),
                         exp_year: $credit_card_expiration_year.val()
-                    }, stripeResponseHandler))
+                    }, stripeResponseHandler)
+                else
+                    scrollTo(($ @).find('.unhappy').offset().top)
+
 
 render_nested_product_attribute_input = ($el) ->
     attribute = $el.data('attribute')
