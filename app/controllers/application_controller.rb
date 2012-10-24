@@ -53,35 +53,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def render_product_widget_template(store, product)
-    Jbuilder.encode do |json|
-      json.name product.name
-      json.truncated_name truncate(product.name, :length => 22)
-
-      json.instagram_tag product.get_instagram_tag
-      json.colors !product.colors.empty? ? product.get_colors : nil
-      json.sizes !product.sizes.empty? ? product.get_sizes : nil
-
-      json.product_slug product.slug
-      json.store_slug store.slug
-      json.truncated_description truncate(product.description, :length => 45)
-      json.description product.description
-      json.price number_to_currency(product.price)
-      json.quantity product.get_quantity
-      json.flatrate_shipping_cost product.flatrate_shipping_cost.nil? ? nil : number_to_currency(product.flatrate_shipping_cost)
-      json.status product.status
-
-      # configure Twitter label classes
-      json._status 'warning' if product.status.gsub(' ', '-').downcase == 'draft'
-      json._status 'success' if product.status.gsub(' ', '-').downcase == 'active'
-      json._status 'important' if product.status.gsub(' ', '-').downcase == 'out_of_stock'
-      json.product_photo_count "#{product.product_images.length} #{'Photo'.pluralize(product.product_images.length)}"
-      json.product_photo !product.first_product_image.empty? ? product.first_product_image : false
-      json.product_photos product.product_images.map { |product_image| render_user_photo_template(product, product_image) }
-      json.product_photo_gallery_scroll product.product_images.length > 5 ? 'product-photos-gallery-scroll' : nil
-    end
-  end
-
   def user_owns_store?(store_id)
     !current_user.nil? && current_user.store_ids.include?(store_id)
   end
