@@ -252,9 +252,7 @@ html.no-touch {
     }
 
     .products-show {
-
         .product-detail {
-
             .product-thumbnail {
                 max-width: 612px;
             }
@@ -268,6 +266,11 @@ html.no-touch {
                     margin: 6px;
                     width: 30px;
                 }
+            }
+
+            .product-button {
+                color: $white;
+                text-decoration: none;
             }
         }
     }
