@@ -128,13 +128,6 @@ class Product < ActiveRecord::Base
     caption << " #{self.get_instagram_tag(true)}"
   end
 
-  def like_count
-    product_images_with_likes = self.product_images.reject do |product_image|
-      !product_image.likes.is_a? Integer
-    end
-    product_images_with_likes.inject(0) {|sum, product_image| sum + product_image.likes }
-  end
-
   def require_instagram_tag
     if instagram_tag.nil?
       errors.add(:base, 'You must provide at least one Instagram tag.')
