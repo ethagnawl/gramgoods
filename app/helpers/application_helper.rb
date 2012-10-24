@@ -62,18 +62,6 @@ module ApplicationHelper
     end
   end
 
-  def get_instagram_photo_feed_for_user(user, max_id = nil)
-    begin
-      configure_instagram(user.uid, user.access_token)
-      user_photo_feed = Instagram.user_recent_media({:count => 18,
-                                                     :max_id => max_id})
-      Instagram.reset
-      user_photo_feed
-    rescue
-      puts 'Instagram Connection Error'
-    end
-  end
-
   def get_instagram_feed_for_user_and_filter_by_tag(user, _tag)
     tag = _tag.downcase
     key = "#{user.uid}_#{tag}"
