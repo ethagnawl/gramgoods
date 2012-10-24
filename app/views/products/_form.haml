@@ -38,10 +38,11 @@
                                :rows => 5
 
     %fieldset
+      - price_label = (form_label(:price, true, ' (e.g. 9.99)'))
       - if edit_view
-        = product_form.label :price, (form_label(:price))
+        = product_form.label :price, price_label
       = product_form.text_field :price, :type => 'text', |
-                                :placeholder => (form_label(:price, true, ' (e.g. 9.99)'))
+                                :placeholder => price_label
 
     %fieldset
       - quantity_placeholder = form_label(:quantity, false)
