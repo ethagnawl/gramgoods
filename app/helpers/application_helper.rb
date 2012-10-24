@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def no_products_message(store)
+<<eos
+Welcome to GramGoods!
+<br>
+Get started by <a href="#{new_store_product_path(store) }"> creating your first product</a>.
+eos
+  end
+
   def is_edit_product_page(product)
     request.path == custom_product_edit_path(product.store, product)
   end
