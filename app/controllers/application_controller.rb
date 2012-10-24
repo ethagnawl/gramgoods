@@ -83,11 +83,10 @@ class ApplicationController < ActionController::Base
   end
 
   def mobile_device_is_iOS?
-    mobile_device? && request.user_agent =~ /iPhone|iPad|iPod/
+    mobile_device? && !(request.user_agent =~ /iPhone|iPad|iPod/).nil?
   end
 
   def mobile_device?
-    return true if params[:layout] == 'mobile'
     request.user_agent =~ /Mobile|webOS/
   end
 end
