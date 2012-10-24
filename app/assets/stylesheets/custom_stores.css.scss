@@ -66,7 +66,7 @@ $wink-store-color: #D30547;
 }
 
 // veda - not very DRY, but it'll be easier to change when the time comes
-$veda-store-color: #D30547;
+$veda-store-color: $black;
 
 .custom-merchant-veda {
     .store-header {
@@ -97,7 +97,7 @@ $veda-store-color: #D30547;
 }
 
 // soles - not very DRY, but it'll be easier to change when the time comes
-$soles-store-color: #D30547;
+$soles-store-color: $black;
 
 .custom-merchant-soles-inc {
     .store-header {
