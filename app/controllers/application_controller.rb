@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   before_filter :basic_authentication
+
   helper_method :mobile_device?
   helper_method :mobile_device_is_iOS?
   helper_method :user_owns_store?
@@ -25,11 +26,6 @@ class ApplicationController < ActionController::Base
     else
       new_store_path
     end
-  end
-
-  def after_sign_out_path_for(resource)
-    cookies['destroy_localStorage_auth_token'] = true
-    super
   end
 
   def _get_instagram_feed_for_user_and_filter_by_tag
@@ -60,16 +56,6 @@ class ApplicationController < ActionController::Base
   def set_gon
     gon.page = "#{params[:controller]}_#{params[:action]}"
     gon.authenticated = user_signed_in?
-    gon.auth_token = if (cookies['destroy_localStorage_auth_token'] == 'true') &&
-                       gon.page != 'static_index' #static_index is root_path
-      # delete the cookie set after sign_out
-      cookies.delete 'destroy_localStorage_auth_token'
-      'destroy'
-    elsif !current_user.nil?
-      current_user.authentication_token
-    else
-      nil
-    end
     gon.layout = params[:layout]
   end
 
