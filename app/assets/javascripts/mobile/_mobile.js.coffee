@@ -262,6 +262,10 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                     .prop('disabled', '')
                     .val(val)
 
-
-        ($ '.mobile-form').isHappy(product_form_validation_rules)
+        ($ '.mobile-form')
+            .isHappy(product_form_validation_rules)
+            .submit((e) ->
+                if ($ @).find('.unhappy').length
+                    e.preventDefault()
+                    scrollTo(($ @).find('.unhappy').offset().top))
 
