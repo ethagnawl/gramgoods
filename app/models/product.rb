@@ -93,10 +93,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def product_image_ids
-    self.product_images.map { |product_image| product_image.instagram_id }
-  end
-
   def product_image_urls
     self.product_images.map { |product_image| product_image.url }
   end
