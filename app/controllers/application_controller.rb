@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::NumberHelper
 
   protect_from_forgery
-  before_filter :sign_in_using_token
   before_filter :clear_gon
   before_filter :set_gon
   before_filter :ensure_proper_protocol
@@ -155,12 +154,5 @@ class ApplicationController < ActionController::Base
   def mobile_device?
     return true if params[:layout] == 'mobile'
     request.user_agent =~ /Mobile|webOS/
-  end
-
-  def sign_in_using_token
-    if current_user.nil? && !params[:auth_token].nil?
-      user = User.find_by_authentication_token(params[:auth_token])
-      sign_in_and_redirect(user) unless user.nil?
-    end
   end
 end
