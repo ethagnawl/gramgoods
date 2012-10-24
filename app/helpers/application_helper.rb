@@ -62,14 +62,6 @@ module ApplicationHelper
     end
   end
 
-  def conditional_layout_link(params, url)
-    if !params[:layout].nil? && params[:layout] == 'mobile'
-      url + '?layout=mobile'
-    else
-      url
-    end
-  end
-
   def get_instagram_photo_feed_for_user(user, max_id = nil)
     begin
       configure_instagram(user.uid, user.access_token)
