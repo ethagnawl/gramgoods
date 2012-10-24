@@ -10,9 +10,9 @@ window.product_form_validation_rules =
             message: 'Description is required.'
             required: true
         '#product_price':
-            message: 'Price is required.'
+            message: 'Valid price is required. (e.g. 9.99)'
             required: true
-            test: happy.is_price
+            test: happy.is_valid_price
         '#product_status':
             message: 'Status is required.'
             required: true
