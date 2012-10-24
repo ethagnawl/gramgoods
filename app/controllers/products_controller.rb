@@ -105,6 +105,18 @@ class ProductsController < ApplicationController
           Product.find(params[:id])
         rescue
           nil
+<<<<<<< HEAD
+=======
+      end
+
+      if @product.nil?
+        redirect_to root_path
+      else
+        if request.path != custom_product_path(@product.store, @product)
+          redirect_to custom_product_path(@product.store, @product, params),
+            :status => :moved_permanently
+        end
+>>>>>>> 11392594a7f81de54818a8dfb0b25aacbb3ef667
       end
 
       if @product.nil?
