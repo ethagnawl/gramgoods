@@ -57,14 +57,6 @@ class ApplicationController < ActionController::Base
     !current_user.nil? && current_user.store_ids.include?(store_id)
   end
 
-  def render_conditional_layout(layout = nil)
-    if user_signed_in?
-      render :layout => (layout.nil? ? 'admin' : layout)
-    else
-      render :layout => 'mobile'
-    end
-  end
-
   def set_gon
     gon.page = "#{params[:controller]}_#{params[:action]}"
     gon.authenticated = user_signed_in?
