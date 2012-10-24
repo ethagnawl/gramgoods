@@ -184,7 +184,7 @@ if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_
         .submit((e) ->
             if ($ @).find('.unhappy').length
                 e.preventDefault()
-                scrollTo(($ @).find('.unhappy').offset().top))
+                scrollTo(($ @).find('.unhappy').first()))
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $ ->
@@ -220,7 +220,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                         exp_year: $credit_card_expiration_year.val()
                     }, stripeResponseHandler)
                 else
-                    scrollTo(($ @).find('.unhappy').offset().top)
+                    scrollTo(($ @).find('.unhappy').first())
 
 
 render_nested_product_attribute_input = ($el) ->
@@ -272,5 +272,5 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
             .submit((e) ->
                 if ($ @).find('.unhappy').length
                     e.preventDefault()
-                    scrollTo(($ @).find('.unhappy').offset().top))
+                    scrollTo(($ @).find('.unhappy').first()))
 
