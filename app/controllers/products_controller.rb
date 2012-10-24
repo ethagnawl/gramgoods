@@ -181,10 +181,19 @@ class ProductsController < ApplicationController
     end
 
     def redirect_to_current_slug
-      @product = Product.find(params[:id])
-      if request.path != custom_product_path(@product.store, @product)
-        redirect_to custom_product_path(@product.store, @product, params),
-          status: :moved_permanently
+      @product = begin
+          Product.find(params[:id])
+        rescue
+          nil
+      end
+
+      if @product.nil?
+        redirect_to root_path
+      else
+        if request.path != custom_product_path(@product.store, @product)
+          redirect_to custom_product_path(@product.store, @product, params),
+            :status => :moved_permanently
+        end
       end
     end
 
