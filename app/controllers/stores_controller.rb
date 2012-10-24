@@ -64,9 +64,6 @@ class StoresController < ApplicationController
                 end.page(params[:page]).per_page(5)
     gon.store_slug = @store.slug
     gon.store_id = @store.id
-    gon.product_widgets = @products.map do |product|
-      render_product_widget_template(@store, product)
-    end
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
   end
 
