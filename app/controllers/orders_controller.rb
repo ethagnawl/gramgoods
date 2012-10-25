@@ -6,6 +6,13 @@ class OrdersController < ApplicationController
   def index
     @store = Store.find(params[:store_id], :include => {
                                               :orders => [:line_item, :recipient]})
+    if @store.nil?
+      redirect_to root_path
+    elsif !user_owns_store? @store.id
+      redirect_to root_path
+    else
+      render 'index'
+    end
   end
 
   def show
