@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   layout 'mobile'
   before_filter :redirect_to_current_slug, :only => :show
-  before_filter :authenticate_user!, :except => [:show, :new, :proxy]
+  before_filter :authenticate_user!, :except => [:show, :new, :proxy, :return_policy]
   before_filter :except => [:return_policy, :proxy, :create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
