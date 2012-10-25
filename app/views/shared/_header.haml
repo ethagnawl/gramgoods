@@ -12,6 +12,9 @@
         %button.btn#menu_button
           %i.icon-align-justify
     %ul#menu
+      %li
+        = link_to 'Home', root_path
+
       - if user_signed_in?
         - store = current_user.first_store
 
@@ -44,8 +47,6 @@
 
       - else
         = render 'shared/force_instagram_logout_iframe'
-        %li
-          = link_to 'Home', root_path
         %li
           %a{ :href => '/stores/new' } Sign Up
         %li
