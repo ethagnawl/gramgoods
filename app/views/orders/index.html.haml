@@ -1,8 +1,13 @@
 - content_for(:title) { "Orders | GramGoods" }
 - content_for(:header) { 'Orders' }
 
-- @store.orders.each do |order|
+- if @store.orders.empty?
   .order-details.widget
-    %p
-      = link_to inline_order_summary(order), store_order_path(order.store, order)
+    %h2
+      No orders have been placed.
+- else
+  - @store.orders.each do |order|
+    .order-details.widget
+      %p
+        = link_to inline_order_summary(order), store_order_path(order.store, order)
 
