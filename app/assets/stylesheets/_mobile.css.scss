@@ -141,15 +141,12 @@ html.no-touch {
     }
 
     a {
-        text-shadow: 0 0 1px $light-grey;
+        color: rgba(0, 140, 204, .8);
 
         &:hover,
         &:active,
         &:focus {
-            color: $bootstrap-blue;
-            text-decoration: underline;
-            text-shadow: 0 0 1px $light-grey;
-
+            color: rgba(0, 140, 204, 1);
         }
     }
 
