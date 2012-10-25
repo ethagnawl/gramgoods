@@ -20,7 +20,7 @@ Gramgoods::Application.routes.draw do
   resources :users do
     resources :stores
   end
-  match 'get_instagram_feed_for_user_and_filter_by_tag' => 'application#_get_instagram_feed_for_user_and_filter_by_tag'
+  match 'instagram_feed_for_user_filtered_by_tag' => 'application#instagram_feed_for_user_filtered_by_tag'
   match 'stores_proxy' => 'stores#proxy'
   match '/:id' => 'stores#show', :as => 'custom_store'
   match '/:id/edit' => 'stores#edit', :as => 'custom_store_edit'

@@ -82,7 +82,7 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         store_slug = $self.data('store-slug')
         $.ajax
             dataType: 'json'
-            url: '/get_instagram_feed_for_user_and_filter_by_tag'
+            url: '/instagram_feed_for_user_filtered_by_tag'
             data:
                 tag: tag
                 store_slug: store_slug

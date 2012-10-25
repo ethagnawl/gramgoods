@@ -28,11 +28,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def _get_instagram_feed_for_user_and_filter_by_tag
+  def instagram_feed_for_user_filtered_by_tag
     tag = params[:tag]
     store = params[:store_slug]
     user = Store.find(store).user
-    user_feed = view_context.get_instagram_feed_for_user_and_filter_by_tag(user, tag)
+    user_feed = fetch_instagram_feed_for_user_and_filter_by_tag(user, tag)
     if user_feed && user_feed.length > 0
       render :json => {
         :status => 'success',
@@ -48,45 +48,94 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    #TODO: move this into a module
+    def fetch_instagram_feed_for_user_and_filter_by_tag(user, _tag)
+      tag = _tag.downcase
+      key = "#{user.uid}_#{tag}"
+      user_photo_feed_from_cache = Rails.cache.read(key)
 
-  def user_owns_store?(store_id)
-    !current_user.nil? && current_user.store_ids.include?(store_id)
-  end
+      if user_photo_feed_from_cache.nil?
+        begin
+          Instagram.configure do |config|
+            config.client_id = user.uid
+            config.access_token = user.access_token
+          end
+          media_count = (Instagram.user.counts.media).to_i
+          last_id = nil
+          i = 0
+          max_id = nil
+          user_photo_feed = []
 
-  def set_gon
-    gon.page = "#{params[:controller]}_#{params[:action]}"
-    gon.authenticated = user_signed_in?
-    gon.layout = params[:layout]
-  end
+          lambda { |r, max_id = nil|
+            user_photo_feed.concat(
+              Instagram.user_recent_media(:max_id => max_id).tap { |items|
+                i += items.length
+                last_id = items.last.id
+              }.find_all { |item|
+                item.tags.member? tag
+              }.map { |item|
+                {
+                  :like_count => item.likes[:count],
+                  :url => item.images.standard_resolution.url
+                }
+              })
+            r.call(r, last_id) if i < media_count
+          }.tap { |r| r.call(r) }
 
-  def clear_gon
-    gon.clear
-  end
+          Instagram.reset
 
-  def basic_authentication
-    if ENV['USE_BASIC_AUTHENTICATION'] == 'true'
-      authenticate_or_request_with_http_basic do |username, password|
-        username == "GramG00ds" && password == "00000"
+          unless user_photo_feed.empty?
+            Rails.cache.write key, user_photo_feed, :expires_in => 5.minutes
+          end
+
+          user_photo_feed
+
+        rescue
+          puts 'Instagram Connection Error'
+        end
+      else
+        user_photo_feed_from_cache
       end
     end
-  end
 
-  def ssl_allowed_action?
-    params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
-    params[:controller] == 'registrations' || params[:controller] == 'devise/passwords'
-  end
-
-  def ensure_proper_protocol
-    if request.ssl? && !ssl_allowed_action?
-      redirect_to "http://" + request.host + request.fullpath
+    def user_owns_store?(store_id)
+      !current_user.nil? && current_user.store_ids.include?(store_id)
     end
-  end
 
-  def mobile_device_is_iOS?
-    mobile_device? && !(request.user_agent =~ /iPhone|iPad|iPod/).nil?
-  end
+    def set_gon
+      gon.page = "#{params[:controller]}_#{params[:action]}"
+      gon.authenticated = user_signed_in?
+      gon.layout = params[:layout]
+    end
 
-  def mobile_device?
-    request.user_agent =~ /Mobile|webOS/
-  end
+    def clear_gon
+      gon.clear
+    end
+
+    def basic_authentication
+      if ENV['USE_BASIC_AUTHENTICATION'] == 'true'
+        authenticate_or_request_with_http_basic do |username, password|
+          username == "GramG00ds" && password == "00000"
+        end
+      end
+    end
+
+    def ssl_allowed_action?
+      params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
+      params[:controller] == 'registrations' || params[:controller] == 'devise/passwords'
+    end
+
+    def ensure_proper_protocol
+      if request.ssl? && !ssl_allowed_action?
+        redirect_to "http://" + request.host + request.fullpath
+      end
+    end
+
+    def mobile_device_is_iOS?
+      mobile_device? && !(request.user_agent =~ /iPhone|iPad|iPod/).nil?
+    end
+
+    def mobile_device?
+      request.user_agent =~ /Mobile|webOS/
+    end
 end
