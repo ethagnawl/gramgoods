@@ -352,6 +352,15 @@ html.no-touch {
         .inline-help {
             font-size: .7em;
         }
+
+        &.checkbox {
+            label, input {
+                width: auto;
+            }
+            input {
+                margin-left: 8px;
+            }
+        }
     }
 
     .unhappyMessage {
