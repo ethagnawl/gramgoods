@@ -2,5 +2,5 @@
 - content_for(:header) { 'Order Details' }
 
 .order-details.widget
-  = render 'shared/order_confirmation', :locals => { :order => @order,
+  = render 'shared/order_summary', :locals => { :order => @order,
                                                    :product => @product }

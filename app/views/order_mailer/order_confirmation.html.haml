@@ -3,6 +3,26 @@
   %head
     %meta{ :charset => "utf-8" }
   %body
-    = render 'shared/order_confirmation', :locals => { :order => @order,
-      :context => 'mailer' }
+    .order-details.widget
+      = render 'shared/order_confirmation', :locals => { :order => @order,
+                                                       :product => @product }
 
+      .widget
+        %h2 Contact
+        %p.widget
+          %a{ :href => "mailto: #{@order.store.user.email}"}
+            #{@order.store.name}
+        %p.widget
+          %a{ :href => 'mailto: admin@gramgoods.com' } GramGoods
+
+      .widget
+        %h2 Return Policy
+        %p
+          = @order.store.return_policy
+
+      .widget
+        %p.widget
+          %a{ :href => "/#{@order.store.slug}" }
+            Back to #{@order.store.name}
+        %p.widget
+          = link_to 'Back to GramGoods', root_path

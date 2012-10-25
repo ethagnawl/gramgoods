@@ -1,0 +1,23 @@
+.order-details.widget
+  = render 'shared/order_summary', :locals => { :order => locals[:order],
+                                                :product => locals[:product] }
+
+  .widget
+    %h2 Contact
+    %p.widget
+      %a{ :href => "mailto: #{locals[:order].store.user.email}"}
+        #{locals[:order].store.name}
+    %p.widget
+      %a{ :href => 'mailto: admin@gramgoods.com' } GramGoods
+
+  .widget
+    %h2 Return Policy
+    %p
+      = locals[:order].store.return_policy
+
+  .widget
+    %p.widget
+      %a{ :href => "/#{locals[:order].store.slug}" }
+        Back to #{locals[:order].store.name}
+    %p.widget
+      = link_to 'Back to GramGoods', root_path
