@@ -605,4 +605,8 @@ html.no-touch {
 .order-details {
     border-bottom: 1px solid $medium-grey;
     padding: 2% 4%;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 }

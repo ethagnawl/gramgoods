@@ -48,10 +48,6 @@ $red: #f10026;
 
 .widget {
     @include widget;
-
-    &:last-child {
-        margin-bottom: 0;
-    }
 }
 
 .float-left {
