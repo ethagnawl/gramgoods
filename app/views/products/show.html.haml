@@ -19,9 +19,9 @@
       .widget
         %h3 Merchant
         %p
-          = link_to @product.store.name, custom_store_path(@product.store)
-        %p
-          = link_to 'Return Policy', custom_store_path(@product.store)
+          #{link_to @product.store.name, custom_store_path(@product.store)}
+          |
+          #{link_to 'Return Policy', custom_store_path(@product.store)}
 
       .widget
         %h3 Description
