@@ -45,9 +45,8 @@
           .product-link
             = render_show_product_link(product, '')
 
-- if @products.length >= 5
-  .widget.mobile-footer
-    = will_paginate @products,
-      :renderer => BootstrapPagination::Rails,
-      :page_links => false
+.widget.mobile-footer
+  = will_paginate @products,
+    :renderer => BootstrapPagination::Rails,
+    :page_links => false
 
