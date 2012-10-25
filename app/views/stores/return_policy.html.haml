@@ -1,0 +1,8 @@
+- content_for(:title) { "#{@store.name} Return Policy | GramGoods" }
+- content_for(:header) { "#{@store.name} Return Policy" }
+
+.return-policy.widget
+  %p
+    = @store.return_policy
+  %p.widget
+    = link_to 'Back', :back

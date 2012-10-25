@@ -2,7 +2,7 @@ class StoresController < ApplicationController
   layout 'mobile'
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :new, :proxy]
-  before_filter :except => [:proxy, :create, :new, :show, :index, :destroy] do |controller|
+  before_filter :except => [:return_policy, :proxy, :create, :new, :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
@@ -28,6 +28,11 @@ class StoresController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def return_policy
+    @store = Store.find_by_slug(params[:id])
+    redirect_to root_path if @store.nil?
   end
 
   def new
