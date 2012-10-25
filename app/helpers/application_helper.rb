@@ -41,16 +41,19 @@ eos
     end
   end
 
-  def render_show_product_link(product, text = 'View')
-    link_to text, custom_product_path(product.store, product)
+  #TODO: replace defaults with options hash
+  def render_show_product_link(product, text = 'View', classname = nil)
+    link_to text, custom_product_path(product.store, product), :class => classname
   end
 
-  def render_edit_product_link(product, text = 'Edit')
-    link_to text, custom_product_edit_path(product.store, product)
+  def render_edit_product_link(product, text = 'Edit', classname = nil)
+    link_to text, custom_product_edit_path(product.store, product),
+      :class => classname
   end
 
-  def render_delete_product_link(product, text = 'Delete')
+  def render_delete_product_link(product, text = 'Delete', classname = nil)
     link_to text, store_product_path(product.store.slug, product.slug),
+              :class => classname,
               :method => :delete,
               :confirm => "Are you sure you want to delete #{product.name}?"
   end

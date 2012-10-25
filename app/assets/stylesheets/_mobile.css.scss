@@ -238,7 +238,8 @@ html.no-touch {
             margin-bottom: 10% !important;
         }
 
-        .owner-action .btn a {
+        .owner-action a {
+            color: $white;
             text-decoration: none !important;
         }
     }

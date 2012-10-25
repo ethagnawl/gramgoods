@@ -28,15 +28,13 @@
       .product-right
         - if user_owns_store
           - btn_size_class = !mobile_device? ? 'btn-primary' : 'btn-mini'
+          - classname = "btn btn-primary #{btn_size_class}"
           .owner-action
-            .btn.btn-primary{ :class => btn_size_class }
-              = render_show_product_link(product)
+            = render_show_product_link(product, 'View', classname)
           .owner-action
-            .btn.btn-primary{ :class => btn_size_class }
-              = render_edit_product_link(product)
+            = render_edit_product_link(product, 'Edit', classname)
           .owner-action
-            .btn.btn-primary{ :class => btn_size_class }
-              = render_delete_product_link(product)
+            = render_delete_product_link(product, 'Delete', classname)
           .owner-action
             .btn.btn-primary{ :disabled => 'disabled', |
               :class => "#{product_status_class(product)} #{btn_size_class}" }
