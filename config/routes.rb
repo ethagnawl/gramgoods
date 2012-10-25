@@ -10,6 +10,7 @@ Gramgoods::Application.routes.draw do
 
   resources :stores do
     resources :orders do
+      get 'confirmation', :on => :member
       resources :line_items
       resources :recipients
     end

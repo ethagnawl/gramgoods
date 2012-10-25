@@ -2,6 +2,7 @@ class Order < ActiveRecord::Base
   belongs_to :store
   has_one :line_item, :order => 'updated_at DESC'
   has_one :recipient
+  before_create :generate_access_key
   after_save :update_status, :update_product_quantity, :deliver_order_confirmation
 
   attr_accessible :line_item_attributes, :recipient_attributes, :status
@@ -24,16 +25,20 @@ class Order < ActiveRecord::Base
 
   private
 
-  def update_status
-    update_column(:status, 'success')
-  end
+    def generate_access_key
+      self.access_key = [id.to_s, SecureRandom.hex(10)].join
+    end
 
-  def update_product_quantity
-    product = Product.find(self.line_item.product_id)
-    product.deduct_from_quantity(self.line_item.quantity)
-  end
+    def update_status
+      update_column(:status, 'success')
+    end
 
-  def deliver_order_confirmation
-    OrderMailer.order_confirmation(self).deliver
-  end
+    def update_product_quantity
+      product = Product.find(self.line_item.product_id)
+      product.deduct_from_quantity(self.line_item.quantity)
+    end
+
+    def deliver_order_confirmation
+      OrderMailer.order_confirmation(self).deliver
+    end
 end

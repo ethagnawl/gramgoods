@@ -29,6 +29,9 @@
           %li
             = render_delete_product_link(@product, "Delete #{@product.name}")
 
+        %li{ :class => is_orders_page(store) ? 'on' : nil }
+          = link_to "Orders", store_orders_path(store)
+
         %li{ :class => is_edit_store_page(store) ? 'on' : nil }
           = link_to "Account", custom_store_edit_path(store)
 

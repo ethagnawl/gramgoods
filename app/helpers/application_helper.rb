@@ -1,10 +1,18 @@
 module ApplicationHelper
+  def inline_order_summary(order)
+      "Order #{order.id} | #{order.line_item.product_name} | #{order.created_at.strftime("%m/%d/%Y")} | #{number_to_currency(order.line_item.total)}"
+  end
+
   def no_products_message(store)
 <<eos
 Welcome to GramGoods!
 <br>
 Get started by <a href="#{new_store_product_path(store) }"> creating your first product</a>.
 eos
+  end
+
+  def is_orders_page(store)
+    request.path == store_orders_path(store)
   end
 
   def is_edit_product_page(product)

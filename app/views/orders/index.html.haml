@@ -1,4 +1,8 @@
-.widget
-  - @store.orders.each do |order|
-    = render 'shared/order_confirmation', :locals => { :order => order,
-                                                       :context => 'admin' }
+- content_for(:title) { "Orders | GramGoods" }
+- content_for(:header) { 'Orders' }
+
+- @store.orders.each do |order|
+  .order-details.widget
+    %p
+      = link_to inline_order_summary(order), store_order_path(order.store, order)
+

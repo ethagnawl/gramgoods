@@ -6,11 +6,18 @@ class OrdersController < ApplicationController
   def index
     @store = Store.find(params[:store_id], :include => {
                                               :orders => [:line_item, :recipient]})
-    render :layout => 'admin'
   end
 
   def show
-    render 'orders/show.mobile'
+    @order = Order.find_by_id(params[:id])
+
+    if @order.nil?
+      redirect_to root_path
+    elsif !user_owns_store? @order.store.id
+      redirect_to root_path
+    else
+      render 'show'
+    end
   end
 
   def new
@@ -29,7 +36,6 @@ class OrdersController < ApplicationController
       @flatrate_shipping_cost = @product.flatrate_shipping_cost
       @total += @flatrate_shipping_cost
     end
-    render 'orders/new.mobile'
   end
 
   def create
@@ -55,9 +61,17 @@ class OrdersController < ApplicationController
     @order = @store.orders.new(params[:order])
 
     if @order.charge(params[:stripeToken]) && @order.save
-      render 'orders/show.mobile'
+      redirect_to confirmation_store_order_path @store, @order.access_key
     else
-      render 'orders/new.mobile'
+      render 'new'
+    end
+  end
+
+  def confirmation
+    @order = Order.find_by_access_key(params[:id])
+
+    if @order.nil?
+      redirect_to root_path
     end
   end
 end

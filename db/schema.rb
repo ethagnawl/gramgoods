@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024054724) do
+ActiveRecord::Schema.define(:version => 20121025072514) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20121024054724) do
     t.datetime "updated_at",                        :null => false
     t.integer  "store_id"
     t.string   "status",     :default => "pending"
+    t.string   "access_key"
   end
 
   add_index "orders", ["store_id"], :name => "index_orders_on_store_id"

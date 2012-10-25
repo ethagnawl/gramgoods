@@ -1,3 +1,6 @@
-= render 'shared/order_confirmation', :locals => { :order => @order,
-                                                   :product => @product,
-                                                   :context => 'end_user' }
+- content_for(:title) { 'Order Details | GramGoods' }
+- content_for(:header) { 'Order Details' }
+
+.order-details.widget
+  = render 'shared/order_confirmation', :locals => { :order => @order,
+                                                   :product => @product }
