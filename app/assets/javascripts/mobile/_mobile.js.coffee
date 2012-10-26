@@ -246,7 +246,8 @@ render_nested_product_attribute_input = ($el) ->
 
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
-        ($ '.mobile-form')
+        $mobile_form = ($ '.mobile-form')
+        $mobile_form
             .on 'click', '.add-button', (e) ->
                 # tap submits the form on iOS
                 e.preventDefault()
@@ -270,8 +271,9 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 ($ '#product_quantity')
                     .prop('disabled', '')
                     .val(val)
+            $mobile_form.trigger('submit')
 
-        ($ '.mobile-form')
+        $mobile_form
             .isHappy(product_form_validation_rules)
             .submit((e) ->
                 if ($ @).find('.unhappy').length
