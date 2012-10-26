@@ -19,8 +19,15 @@ $ ->
     toggle_menu = -> ($ '#menu').toggle()
 
     if has_touch_events
-        forceReflow()
         ($ '.mobile-layout-inner').css('padding-top', header_height)
+
+        # iOS fixed header hacks
+        forceReflow()
+        ($ 'input, textarea, select')
+            .focus(-> forceReflow())
+            .blur(-> forceReflow())
+        ($ window).scroll -> forceReflow()
+
         ($ '#menu_button').tap((e) ->
             e.preventDefault()
             toggle_menu())
@@ -110,14 +117,6 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                     callback($self, response.product_images, response.like_count)
 
     Zepto ($) ->
-        # fixes iOS sticky fixed position bug
-        # when navigating from stores/show to
-        # products/show the header would stick
-        # at the position it was set to at page unload
-        header_fix = -> scrollTo(0, 0)
-
-        if has_touch_events
-            ($ window).scroll -> forceReflow()
 
         if gon.page is 'stores_show' or gon.page is 'products_index'
 
