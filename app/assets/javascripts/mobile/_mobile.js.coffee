@@ -1,11 +1,26 @@
 window.templates = {}
 
+window.forceReflow = (elem = document.documentElement) ->
+    # http://stackoverflow.com/questions/11297641/mobile-webkit-reflow-issue/11479118#11479118
+    width = elem.style.width
+    px = elem.offsetWidth + 1
+    elem.style.width = px+'px'
+
+    setTimeout ->
+        elem.style.width = width
+        elem = null
+    0
+
+window.pluralize_like_count = (like_count) ->
+    if like_count is 1 then 'like' else 'likes'
+
 $ ->
     window.header_height =  ($ '.mobile-header').height()
     window.has_touch_events = !($ 'html').hasClass('no-touch')
     toggle_menu = -> ($ '#menu').toggle()
 
     if has_touch_events
+        forceReflow()
         ($ '.mobile-layout-inner').css('padding-top', header_height)
         ($ '#menu_button').tap((e) ->
             e.preventDefault()
@@ -19,8 +34,6 @@ $ ->
         error_y = $context.find('.unhappy').first().offset().top - header_height - 20
         scrollTo(0, error_y)
 
-window.pluralize_like_count = (like_count) ->
-    if like_count is 1 then 'like' else 'likes'
 
 if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index' or gon.page is 'stores_new'
     # only reveal product gallery controls if there
@@ -104,8 +117,9 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
 
+        $(window).scroll -> forceReflow()
+
         if gon.page is 'stores_show' or gon.page is 'products_index'
-            header_fix()
 
             $('.product').each ->
                 fetch_product_images(($ @), render_single_product_image)
