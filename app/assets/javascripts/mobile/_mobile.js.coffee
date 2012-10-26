@@ -1,15 +1,14 @@
 window.templates = {}
 
 window.forceReflow = (elem = document.documentElement) ->
-    # http://stackoverflow.com/questions/11297641/mobile-webkit-reflow-issue/11479118#11479118
-    width = elem.style.width
-    px = elem.offsetWidth + 1
-    elem.style.width = px+'px'
-
+    #http://stackoverflow.com/a/11478853/382982
+    hack = document.createElement("div")
+    hack.style.height = "101%"
+    document.body.appendChild(hack)
     setTimeout ->
-        elem.style.width = width
-        elem = null
-    0
+        document.body.removeChild(hack)
+        hack = null
+    , 0
 
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
