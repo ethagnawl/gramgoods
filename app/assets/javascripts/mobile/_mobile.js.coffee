@@ -264,6 +264,8 @@ render_nested_product_attribute_input = ($el) ->
         fieldset.find('.attrs').append(
             Mustache.render(span_template, data, {hidden_input_template}))
 
+    input.trigger('focus')
+
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
         $mobile_form = ($ '.mobile-form')
