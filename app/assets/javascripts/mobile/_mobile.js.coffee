@@ -1,11 +1,12 @@
 window.templates = {}
 
 $ ->
+    window.header_height =  ($ '.mobile-header').height()
     window.has_touch_events = !($ 'html').hasClass('no-touch')
     toggle_menu = -> ($ '#menu').toggle()
 
     if has_touch_events
-        ($ '.mobile-layout-inner').css('padding-top', ($ '.mobile-header').height())
+        ($ '.mobile-layout-inner').css('padding-top', header_height)
         ($ '#menu_button').tap((e) ->
             e.preventDefault()
             toggle_menu())
@@ -13,6 +14,10 @@ $ ->
         ($ '#menu_button').click((e) ->
             e.preventDefault()
             toggle_menu())
+
+    window.scroll_to_error = ($context) ->
+        error_y = $context.find('.unhappy').first().offset().top - header_height - 20
+        scrollTo(0, error_y)
 
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
@@ -188,7 +193,7 @@ if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_
         .submit((e) ->
             if ($ @).find('.unhappy').length
                 e.preventDefault()
-                scrollTo(($ @).find('.unhappy').first()))
+                scroll_to_error(($ @)))
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $ ->
@@ -224,7 +229,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                         exp_year: $credit_card_expiration_year.val()
                     }, stripeResponseHandler)
                 else
-                    scrollTo(($ @).find('.unhappy').first())
+                    scroll_to_error(($ @))
 
 
 render_nested_product_attribute_input = ($el) ->
@@ -275,8 +280,8 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
         $mobile_form
             .isHappy(product_form_validation_rules)
-            .submit((e) ->
+            .submit (e) ->
                 if ($ @).find('.unhappy').length
                     e.preventDefault()
-                    scrollTo(($ @).find('.unhappy').first()))
+                    scroll_to_error(($ @))
 
