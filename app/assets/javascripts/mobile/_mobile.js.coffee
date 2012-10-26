@@ -117,7 +117,8 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
         # at the position it was set to at page unload
         header_fix = -> scrollTo(0, 0)
 
-        $(window).scroll -> forceReflow()
+        if has_touch_events
+            ($ window).scroll -> forceReflow()
 
         if gon.page is 'stores_show' or gon.page is 'products_index'
 
