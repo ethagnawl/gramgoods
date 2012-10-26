@@ -203,12 +203,15 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
                 $redirect_to_order_form.click -> redirect_to_order_form()
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy' or gon.page is 'stores_create' or gon.page is 'stores_update'
-    $ -> ($ '.mobile-form')
-        .isHappy(store_form_validation_rules)
-        .submit((e) ->
-            if ($ @).find('.unhappy').length
-                e.preventDefault()
-                scroll_to_error(($ @)))
+    $ ->
+        ($ '.mobile-form')
+            .isHappy(store_form_validation_rules)
+            .submit((e) ->
+                if ($ @).find('.unhappy').length
+                    e.preventDefault()
+                    scroll_to_error(($ @)))
+        ($ '#store_terms_of_service').click -> ($ '.mobile-form').trigger('submit')
+
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $ ->
