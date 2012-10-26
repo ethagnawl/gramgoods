@@ -102,7 +102,8 @@ class ProductsController < ApplicationController
 
     def redirect_to_current_slug
       @product = begin
-          Product.find(params[:id])
+          id = params[:id].downcase
+          Product.find(id)
         rescue
           nil
       end
