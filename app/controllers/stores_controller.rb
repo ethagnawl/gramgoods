@@ -96,8 +96,8 @@ class StoresController < ApplicationController
 
     def redirect_to_current_slug
       @store = begin
-          id = params[:id]
-          Store.find(params[:id])
+          id = params[:id].downcase
+          Store.find(id)
         rescue
           nil
       end
