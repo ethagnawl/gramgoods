@@ -1,7 +1,5 @@
 class StaticController < ApplicationController
-  layout 'static'
-
   def tos
-    render 'static/tos', :layout => 'admin'
+    render 'static/tos', :layout => 'mobile'
   end
 end
