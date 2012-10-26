@@ -105,10 +105,13 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
             $('.product').each ->
                 fetch_product_images(($ @), render_single_product_image)
 
-            ($ '.products').on('tap', '.product', ->
+            ($ '.products').on('tap', '.product', (e) ->
+                e.preventDefault()
                 return if ($ @).data('user-owns-store') is 'true'
                 destination = ($ @).find('.product-link > a').attr('href')
-                location.href = destination)
+                location.href = destination
+                false
+            )
 
         if gon.page is 'products_show'
             header_fix()
@@ -173,10 +176,11 @@ if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'prod
 
                 window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
-            ($ '#redirect_to_order_form').tap -> redirect_to_order_form()
-
-            # for desktop users
-            ($ '#redirect_to_order_form').click (e) -> redirect_to_order_form()
+            $redirect_to_order_form = ($ '#redirect_to_order_form')
+            if has_touch_events
+                $redirect_to_order_form.tap -> redirect_to_order_form()
+            else
+                $redirect_to_order_form.click -> redirect_to_order_form()
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy' or gon.page is 'stores_create' or gon.page is 'stores_update'
     $ -> ($ '.mobile-form')
