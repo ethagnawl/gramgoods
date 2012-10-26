@@ -1,19 +1,20 @@
 window.templates = {}
 
-window.forceReflow = (elem = document.documentElement) ->
-    #http://stackoverflow.com/a/11478853/382982
-    hack = document.createElement("div")
-    hack.style.height = "101%"
-    document.body.appendChild(hack)
-    setTimeout ->
-        document.body.removeChild(hack)
-        hack = null
-    , 0
 
 window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
 
 $ ->
+    window.forceReflow = (elem = document.documentElement) ->
+        #http://stackoverflow.com/a/11478853/382982
+        hack = document.createElement("div")
+        hack.style.height = "101%"
+        document.body.appendChild(hack)
+        setTimeout ->
+            document.body.removeChild(hack)
+            hack = null
+        , 0
+
     window.header_height =  ($ '.mobile-header').height()
     window.has_touch_events = !($ 'html').hasClass('no-touch')
     toggle_menu = -> ($ '#menu').toggle()
@@ -24,8 +25,11 @@ $ ->
         # iOS fixed header hacks
         forceReflow()
         ($ 'input, textarea, select')
-            .focus(-> forceReflow())
-            .blur(-> forceReflow())
+            .focus(->
+                ($ '.mobile-header').addClass('absolute')
+            ).blur(->
+                ($ '.mobile-header').removeClass('absolute')
+            )
         ($ window).scroll -> forceReflow()
 
         ($ '#menu_button').tap((e) ->
