@@ -39,6 +39,6 @@ class Order < ActiveRecord::Base
     end
 
     def deliver_order_confirmation
-      OrderMailer.order_confirmation(self).deliver
+      OrderMailer.delay.order_confirmation(self)
     end
 end
