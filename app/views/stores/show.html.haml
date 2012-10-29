@@ -1,10 +1,8 @@
 - content_for(:title) { "#{@store.name} | GramGoods" }
 - content_for(:header) do
-  - if is_store_slug_in_merchants_with_custom_store_slugs_array?(@store.slug)
-    %span.mobile-header-store-name
-      = @store.name
+  - if @is_customized_store
     %span.mobile-header-store-logo
-      %img{ :src => custom_merchant_logo_src(@store.slug) }
+      %img{ :src => custom_merchant_logo_src(@store.slug), :alt => @store.name}
   - else
     = @store.name
 
