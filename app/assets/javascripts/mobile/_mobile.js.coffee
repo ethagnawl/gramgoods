@@ -5,6 +5,11 @@ window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
 
 $ ->
+    window.$mobile_header = ($ '#mobile_header')
+    window.$menu = ($ '#menu')
+    window.$menu_button = ($ '#menu_button')
+    window.has_touch_events = !($ 'html').hasClass('no-touch')
+    window.toggle_menu = -> $menu.toggle()
     window.forceReflow = (elem = document.documentElement) ->
         #http://stackoverflow.com/a/11478853/382982
         hack = document.createElement("div")
@@ -15,35 +20,35 @@ $ ->
             hack = null
         , 0
 
-    window.header_height =  ($ '.mobile-header').height()
-    window.has_touch_events = !($ 'html').hasClass('no-touch')
-    toggle_menu = -> ($ '#menu').toggle()
-
     if has_touch_events
-        ($ '.mobile-layout-inner').css('padding-top', header_height)
-
         # iOS fixed header hacks
         forceReflow()
         ($ 'input, textarea, select')
             .focus(->
-                ($ '.mobile-header').addClass('absolute')
+                $mobile_header.addClass('absolute')
             ).blur(->
-                ($ '.mobile-header').removeClass('absolute')
+                $mobile_header.removeClass('absolute')
             )
         ($ window).scroll -> forceReflow()
 
-        ($ '#menu_button').tap((e) ->
+        $menu_button.tap((e) ->
             e.preventDefault()
             toggle_menu())
     else
-        ($ '#menu_button').click((e) ->
+        $menu_button.click((e) ->
             e.preventDefault()
             toggle_menu())
+
+# ensure logos have been loaded
+# before calculating header height
+window.addEventListener 'load', ->
+    window.header_height =  $mobile_header.height()
+    if has_touch_events
+        ($ '#mobile_layout_inner').css('padding-top', header_height)
 
     window.scroll_to_error = ($context) ->
         error_y = $context.find('.unhappy').first().offset().top - header_height - 20
         scrollTo(0, error_y)
-
 
 if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index' or gon.page is 'stores_new'
     # only reveal product gallery controls if there
