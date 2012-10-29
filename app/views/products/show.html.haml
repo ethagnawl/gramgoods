@@ -1,5 +1,13 @@
 - content_for(:title) { "#{@product.name} | GramGoods" }
-- content_for(:header) { @product.name }
+- content_for(:header) do
+  - if @is_customized_store
+    %span.mobile-header-store-logo
+      %a{ :href => custom_store_path(@product.store), :title => @product.store.name }
+        %img{ :src => custom_merchant_logo_src(@product.store.slug), |
+              :alt => @product.store.name }
+  - else
+    = @store.name
+
 
 #order_form.hide
 #success_screen.hide
@@ -7,9 +15,14 @@
   .product{ :data => {  :'store-slug' => @product.store.slug, |
                         :'instagram-tag' => @product.get_instagram_tag }}
     .product-top.widget
+
       .product-thumbnail-gallery
         %h2.loading
           Loading...
+      - if @is_customized_store
+        .product-name
+          %h1 #{@product.name}
+
       %h3
         .product-like-count.hide
       .mobile-wrapper
