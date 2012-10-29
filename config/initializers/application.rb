@@ -3,3 +3,7 @@ class Symbol
     self.to_s.titleize
   end
 end
+
+if !ENV["MERCHANTS_WITH_CUSTOM_STORE_SLUGS_CSV"].nil?
+  MERCHANTS_WITH_CUSTOM_STORE_SLUGS = ENV["MERCHANTS_WITH_CUSTOM_STORE_SLUGS_CSV"].split(',')
+end

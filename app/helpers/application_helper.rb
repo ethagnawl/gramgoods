@@ -164,4 +164,25 @@ eos
       ['Wyoming', 'WY']
     ]
   end
+
+  def is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
+    MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? store_slug
+  end
+
+  def custom_merchant_logo_src(store_slug)
+    "//s3.amazonaws.com/gramgoods-production/#{store_slug}.jpg"
+  end
+
+  def custom_merchant_css_class(store_slug)
+    if is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
+      " custom-merchant-#{store_slug}"
+    else
+      ''
+    end
+  end
+
+  def custom_merchant_css_class_for_product(store_slug)
+    custom_css_class = custom_merchant_css_class(store_slug)
+    custom_css_class << '-product' unless custom_css_class.empty?
+  end
 end

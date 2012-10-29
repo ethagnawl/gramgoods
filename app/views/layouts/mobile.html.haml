@@ -19,7 +19,9 @@
         GramGoods
     = stylesheet_link_tag 'mobile', :media => "all"
     = csrf_meta_tags
-  %body.mobile-layout{ :class => "#{params[:controller]}-#{params[:action]}" }
+  - body_class = "#{params[:controller]}-#{params[:action]}"
+  - body_class << custom_merchant_css_class(@store.slug) if defined? @store
+  %body.mobile-layout{ :class => body_class }
     .mobile-layout-outer
       = render 'shared/header'
       .mobile-layout-inner

@@ -2,4 +2,5 @@
     *= require bootstrap_and_overrides
     *= require _mobile
     *= require add2home
+    *= require custom_stores
 */

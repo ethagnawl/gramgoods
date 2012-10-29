@@ -48,7 +48,7 @@ body {
     background-color: $blue;
     color: $white;
 
-    h1, h1 a, h3 {
+    h1, h1 span, h1 a, h3, h3 span {
         color: $white;
         float: left;
         width: 100%;
@@ -285,6 +285,11 @@ html.no-touch {
         #billing_information_legend {
             background-position: 184px 40px !important;
         }
+    }
+
+    img {
+        display: inline-block;
+        width: 33%;
     }
 }
 

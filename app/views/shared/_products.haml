@@ -1,10 +1,11 @@
 .products.widget
   - @products.each do |product|
     - user_owns_store = user_owns_store?(product.store_id)
-    .product{ :data => {  :"store-slug" => product.store.slug, |
-                          :"product-slug" => product.slug, |
-                          :"instagram-tag" => product.get_instagram_tag, |
-                          :'user-owns-store' => user_owns_store ? 'true' : 'false' }}
+    .product{ :class => custom_merchant_css_class_for_product(product.store.slug), |
+              :data => {  :"store-slug" => product.store.slug, |
+                :"product-slug" => product.slug, |
+                :"instagram-tag" => product.get_instagram_tag, |
+                :'user-owns-store' => user_owns_store ? 'true' : 'false' }}
       .product-left
         %p.loading Loading...
       .product-middle
