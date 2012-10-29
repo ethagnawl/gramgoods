@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026211316) do
+ActiveRecord::Schema.define(:version => 20121029043204) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -100,9 +100,6 @@ ActiveRecord::Schema.define(:version => 20121026211316) do
     t.string   "name"
     t.text     "description"
     t.string   "status"
-    t.string   "colors"
-    t.string   "sizes"
-    t.string   "instagram_tag"
     t.decimal  "price",                  :precision => 10, :scale => 2
     t.decimal  "flatrate_shipping_cost", :precision => 10, :scale => 2
     t.integer  "quantity"
