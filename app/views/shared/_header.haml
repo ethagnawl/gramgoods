@@ -1,16 +1,9 @@
 .mobile-header
   - if content_for?(:header)
-    - header_content_length = content_for(:header).length
-    - if header_content_length <= 26
-      %h3
-        = content_for :header
-        %button.btn#menu_button
-          %i.icon-align-justify
-    - else
-      %h5
-        = content_for :header
-        %button.btn#menu_button
-          %i.icon-align-justify
+    %h3
+      = content_for :header
+      %button.btn#menu_button
+        %i.icon-align-justify
     %ul#menu
       %li
         = link_to 'Home', root_path
