@@ -51,13 +51,32 @@ body {
     h1, h1 span, h1 a, h3, h3 span {
         color: $white;
         float: left;
+        position: relative;
         width: 100%;
+
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 40%;
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and (   min--moz-device-pixel-ratio: 2),
+        only screen and (     -o-min-device-pixel-ratio: 2/1),
+        only screen and (        min-device-pixel-ratio: 2),
+        only screen and (                min-resolution: 192dpi),
+        only screen and (                min-resolution: 2dppx) {
+            img {
+                width: 34%;
+            }
+        }
+
     }
 
     #menu_button {
-        display: inline-block;
-        float: right;
-        margin-left: 6px;
+        position: absolute;
+        right: -6px;
+        top: -6px;
     }
 
     #menu {
@@ -97,6 +116,7 @@ body {
 html.touch {
     .mobile-header {
         left: 0;
+        min-height: 50px;
         padding: 4%;
         position: fixed;
         top: 0;
@@ -110,6 +130,27 @@ html.touch {
         #menu {
             li a {
                 padding: 2% 4%;
+            }
+        }
+    }
+
+    .mobile-layout-inner {
+        padding-top: 51px;
+    }
+
+    .custom-merchant {
+        .mobile-layout-inner {
+            padding-top: 57px;
+        }
+
+        @media only screen and (-webkit-min-device-pixel-ratio: 2),
+        only screen and (   min--moz-device-pixel-ratio: 2),
+        only screen and (     -o-min-device-pixel-ratio: 2/1),
+        only screen and (        min-device-pixel-ratio: 2),
+        only screen and (                min-resolution: 192dpi),
+        only screen and (                min-resolution: 2dppx) {
+            .mobile-layout-inner {
+                padding-top: 52px;
             }
         }
     }
@@ -170,10 +211,10 @@ html.no-touch {
 
         h3 {
             font-size: 32px;
-        }
 
-        #menu_button {
-            margin-top: -4px;
+            img {
+                width: 25%;
+            }
         }
 
         #menu {
@@ -289,7 +330,7 @@ html.no-touch {
 
     img {
         display: inline-block;
-        width: 33%;
+        width: 30%;
     }
 }
 
@@ -627,6 +668,10 @@ html.no-touch {
 .mobile-layout.orders-create {
     .mobile-header {
         display: none;
+    }
+
+    .mobile-layout-inner {
+        padding-top: 0;
     }
 }
 
