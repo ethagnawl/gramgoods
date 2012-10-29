@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
     tag = params[:tag]
     store = params[:store_slug]
     user = Store.find(store).user
-    user_feed = fetch_instagram_feed_for_user_and_filter_by_tag(user, tag)
+    user_feed = user.fetch_instagram_feed_for_user_and_filter_by_tag(tag)
     if user_feed && user_feed.length > 0
       render :json => {
         :status => 'success',
@@ -48,56 +48,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    #TODO: move this into a module
-    def fetch_instagram_feed_for_user_and_filter_by_tag(user, _tag)
-      tag = _tag.downcase
-      key = "#{user.uid}_#{tag}"
-      user_photo_feed_from_cache = Rails.cache.read(key)
-
-      if user_photo_feed_from_cache.nil?
-        begin
-          Instagram.configure do |config|
-            config.client_id = user.uid
-            config.access_token = user.access_token
-          end
-          media_count = (Instagram.user.counts.media).to_i
-          last_id = nil
-          i = 0
-          max_id = nil
-          user_photo_feed = []
-
-          lambda { |r, max_id = nil|
-            user_photo_feed.concat(
-              Instagram.user_recent_media(:max_id => max_id).tap { |items|
-                i += items.length
-                last_id = items.last.id
-              }.find_all { |item|
-                item.tags.member? tag
-              }.map { |item|
-                {
-                  :like_count => item.likes[:count],
-                  :url => item.images.standard_resolution.url
-                }
-              })
-            r.call(r, last_id) if i < media_count
-          }.tap { |r| r.call(r) }
-
-          Instagram.reset
-
-          unless user_photo_feed.empty?
-            Rails.cache.write key, user_photo_feed, :expires_in => 5.minutes
-          end
-
-          user_photo_feed
-
-        rescue
-          puts 'Instagram Connection Error'
-        end
-      else
-        user_photo_feed_from_cache
-      end
-    end
-
     def user_owns_store?(store_id)
       !current_user.nil? && current_user.store_ids.include?(store_id)
     end
