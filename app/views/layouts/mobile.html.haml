@@ -21,10 +21,11 @@
     = csrf_meta_tags
   - body_class = "#{params[:controller]}-#{params[:action]}"
   - body_class << custom_merchant_css_class(@store.slug) if defined? @store
+  - body_class << (@is_customized_store ? ' custom-merchant' : '')
   %body.mobile-layout{ :class => body_class }
-    .mobile-layout-outer
+    .mobile-layout-outer#mobile_layout_outer
       = render 'shared/header'
-      .mobile-layout-inner
+      .mobile-layout-inner#mobile_layout_inner
         = render 'shared/alert', :locals => { :alert => flash[:alert] }
         = render 'shared/notice', :locals => { :notice => flash[:notice] }
         = yield
