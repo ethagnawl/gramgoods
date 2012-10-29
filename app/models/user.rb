@@ -62,4 +62,60 @@ class User < ActiveRecord::Base
   def email_required?
     super && provider.blank?
   end
+
+  def timer
+    15.seconds.from_now
+  end
+
+  def fetch_instagram_feed_for_user_and_filter_by_tag(_tag)
+    tag = _tag.downcase
+    key = "#{self.uid}_#{tag}"
+    user_photo_feed_from_cache = Rails.cache.read(key)
+
+    if user_photo_feed_from_cache.nil?
+      begin
+        Instagram.configure do |config|
+          config.client_id = self.uid
+          config.access_token = self.access_token
+        end
+        media_count = (Instagram.user.counts.media).to_i
+        last_id = nil
+        i = 0
+        max_id = nil
+        user_photo_feed = []
+
+        lambda { |r, max_id = nil|
+          user_photo_feed.concat(
+            Instagram.user_recent_media(:max_id => max_id).tap { |items|
+              i += items.length
+              last_id = items.last.id
+            }.find_all { |item|
+              item.tags.member? tag
+            }.map { |item|
+              {
+                :like_count => item.likes[:count],
+                :url => item.images.standard_resolution.url
+              }
+            })
+          r.call(r, last_id) if i < media_count
+        }.tap { |r| r.call(r) }
+
+        Instagram.reset
+
+        unless user_photo_feed.empty?
+          Rails.cache.write key, user_photo_feed, :expires_in => 10.minutes
+          self.
+            delay(:run_at => 10.minutes.from_now).
+              fetch_instagram_feed_for_user_and_filter_by_tag(tag)
+        end
+
+        user_photo_feed
+
+      rescue
+        puts 'Instagram Connection Error'
+      end
+    else
+      user_photo_feed_from_cache
+    end
+  end
 end
