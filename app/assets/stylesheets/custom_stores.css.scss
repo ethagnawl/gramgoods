@@ -126,3 +126,33 @@ $solesinc-store-color: $black;
         background-color: $solesinc-store-color;
     }
 }
+
+// dev
+$my-sample-store-store-color: $black;
+
+.custom-merchant-my-sample-store {
+    .mobile-header {
+        background-color: $my-sample-store-store-color;
+
+        h3 span, h5 span {
+            color: $white;
+        }
+    }
+
+    .products .product-button, .product-detail .product-button {
+       background-color: $my-sample-store-store-color;
+   }
+}
+
+.custom-merchant-my-sample-store .products .product-button,
+.product.custom-merchant-my-sample-store-product .product-middle .product-button {
+    background-color: $my-sample-store-store-color;
+}
+
+.custom-merchant-my-sample-store #order_form legend {
+    background-color: $my-sample-store-store-color;
+
+    &#billing_information_legend {
+        background-color: $my-sample-store-store-color;
+    }
+}
