@@ -41,6 +41,7 @@ class ProductsController < ApplicationController
 
   def show
     @store = Store.find(params[:store_id])
+    @is_customized_store = is_store_slug_in_merchants_with_custom_store_slugs_array? @store.slug
     @product = @store.products.find(params[:id])
     gon.price = number_with_precision(@product.price, :precision => 2)
     gon.product_name = @product.name

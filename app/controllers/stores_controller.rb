@@ -60,7 +60,7 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find(params[:id])
-
+    @is_customized_store = is_store_slug_in_merchants_with_custom_store_slugs_array? @store.slug
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     @products = if @current_user_owns_store
                   @store.products.includes([:store, :instagram_tag])
