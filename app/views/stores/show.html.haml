@@ -1,10 +1,12 @@
 - content_for(:title) { "#{@store.name} | GramGoods" }
 - content_for(:header) do
   - if is_store_slug_in_merchants_with_custom_store_slugs_array?(@store.slug)
-    %span
+    %span.mobile-header-store-name
+      = @store.name
+    %span.mobile-header-store-logo
       %img{ :src => custom_merchant_logo_src(@store.slug) }
   - else
-    %span #{@store.name}
+    = @store.name
 
 - if user_owns_store?(@store.id) && @store.products(true).empty?
   = render 'shared/notice', :locals => { :notice => no_products_message(@store) }
