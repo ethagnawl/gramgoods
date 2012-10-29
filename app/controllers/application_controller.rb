@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_device?
   helper_method :mobile_device_is_iOS?
   helper_method :user_owns_store?
+  helper_method :is_store_slug_in_merchants_with_custom_store_slugs_array?
 
   def after_sign_in_path_for(resource)
     unless current_user.first_store.nil?
@@ -48,6 +49,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
+      return false if !defined?(MERCHANTS_WITH_CUSTOM_STORE_SLUGS) || MERCHANTS_WITH_CUSTOM_STORE_SLUGS.nil?
+      MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? store_slug
+    end
+
     def user_owns_store?(store_id)
       !current_user.nil? && current_user.store_ids.include?(store_id)
     end
