@@ -17,7 +17,7 @@
         = yield :title
       - else
         GramGoods
-    = stylesheet_link_tag 'mobile', :media => "all"
+    = stylesheet_link_tag 'application', :media => "all"
     = csrf_meta_tags
   - body_class = "#{params[:controller]}-#{params[:action]}"
   - body_class << custom_merchant_css_class(@store.slug) if defined? @store
@@ -33,5 +33,5 @@
     = javascript_include_tag "https://js.stripe.com/v1/"
     %script
       Stripe.setPublishableKey("#{STRIPE_CONFIG['PUBLIC_KEY']}");
-    = javascript_include_tag 'mobile'
+    = javascript_include_tag 'application'
     = render 'shared/google_analytics'

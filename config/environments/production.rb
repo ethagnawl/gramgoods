@@ -10,6 +10,8 @@ Gramgoods::Application.configure do
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
+  config.static_cache_control = 'public, max-age=31536000'
+  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -19,6 +21,7 @@ Gramgoods::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+  config.assets.enabled = true
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
@@ -46,7 +49,7 @@ Gramgoods::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  # config.assets.precompile += %w( search.js )
+  config.assets.precompile += %w( .woff .eot .svg .ttf )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
