@@ -5,11 +5,18 @@ window.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
 
 $ ->
+    window.$window = ($ window)
+    window.$html = ($ 'html')
     window.$mobile_header = ($ '#mobile_header')
     window.$menu = ($ '#menu')
     window.$menu_button = ($ '#menu_button')
-    window.has_touch_events = !($ 'html').hasClass('no-touch')
+    window.has_touch_events = !$html.hasClass('no-touch')
     window.toggle_menu = -> $menu.toggle()
+    window.menu_is_visible = -> $menu.css('display') is 'block'
+    window.hide_menu_on_non_child_event = ($target) ->
+        if !$target.closest('.mobile-header').length and menu_is_visible()
+            toggle_menu()
+
     window.forceReflow = (elem = document.documentElement) ->
         #http://stackoverflow.com/a/11478853/382982
         hack = document.createElement("div")
@@ -29,12 +36,18 @@ $ ->
             ).blur(->
                 $mobile_header.removeClass('absolute')
             )
-        ($ window).scroll -> forceReflow()
+        $window.scroll -> forceReflow()
 
+        # hide/show menu
+        $html.tap (e) -> hide_menu_on_non_child_event(($ e.target))
+        $window.scroll -> $menu.hide()
         $menu_button.tap((e) ->
             e.preventDefault()
             toggle_menu())
+
     else
+        # hide/show menu
+        $html.click (e) -> hide_menu_on_non_child_event(($ e.target))
         $menu_button.click((e) ->
             e.preventDefault()
             toggle_menu())
