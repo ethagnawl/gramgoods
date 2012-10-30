@@ -13,9 +13,8 @@ $ ->
     window.has_touch_events = !$html.hasClass('no-touch')
     window.toggle_menu = -> $menu.toggle()
     window.menu_is_visible = -> $menu.css('display') is 'block'
-    window.hide_menu_on_non_child_event = ($target) ->
-        if !$target.closest('.mobile-header').length and menu_is_visible()
-            toggle_menu()
+    window.hide_menu_on_non_child_event = ($el) ->
+        toggle_menu() if !$el.closest('.mobile-header').length and menu_is_visible()
 
     window.forceReflow = (elem = document.documentElement) ->
         #http://stackoverflow.com/a/11478853/382982
