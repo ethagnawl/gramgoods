@@ -50,6 +50,7 @@ body {
 
     h1, h1 span, h1 a, h3, h3 span {
         color: $white;
+        display: block;
         float: left;
         position: relative;
         width: 100%;
@@ -482,6 +483,7 @@ html.no-touch {
     .product-name {
         /* shared */
         font-weight: bold;
+        line-height: 1;
     }
 
     .product-button {
