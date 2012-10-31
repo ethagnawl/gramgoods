@@ -5,9 +5,9 @@
 
 html.touch {
     .product-like-count {
-        background-position: 0 2px;
-        background-size: 12%;
-        padding-left: 22px;
+        background-position: 0 center;
+        background-size: 9%;
+        padding-left: 14px;
 
         @media only screen and (-webkit-min-device-pixel-ratio: 2),
         only screen and (   min--moz-device-pixel-ratio: 2),
@@ -23,14 +23,14 @@ html.touch {
 
     .products-show {
         .product-like-count {
-            background-position: 0 0;
-            background-size: 8%;
+            background-position: 0 center;
+            background-size: 6%;
             font-size: 18px;
             margin-bottom: 4px;
             padding: {
-                top: 1px;
+                top: 4px;
                 bottom: 2px;
-                left: 28px;
+                left: 20px;
             }
         }
     }
@@ -38,11 +38,18 @@ html.touch {
 
 html.no-touch {
     .product-like-count {
+        background-size: 7%;
         font-size: 32px;
         padding: {
             top: 10px;
             bottom: 12px;
             left: 40px;
+        }
+    }
+
+    .products-show {
+        .product-like-count {
+            background-size: 4%;
         }
     }
 }
