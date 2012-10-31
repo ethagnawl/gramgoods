@@ -1,0 +1,9 @@
+- content_for(:title) { "#{@store.name} | GramGoods" }
+- content_for(:header) do
+  - if is_store_slug_in_merchants_with_custom_store_slugs_array?(@store.slug)
+    %span
+      %img{ :src => custom_merchant_logo_src(@store.slug) }
+  - else
+    %span #{@store.name}
+
+= render 'shared/products', :locals => { :products => @products }

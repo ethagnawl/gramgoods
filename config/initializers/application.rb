@@ -9,4 +9,3 @@ if !ENV["MERCHANTS_WITH_CUSTOM_STORE_SLUGS_CSV"].nil?
 else
   MERCHANTS_WITH_CUSTOM_STORE_SLUGS = ['my-sample-store']
 end
-

@@ -1,6 +1,9 @@
 @import './gramgoods_common';
 
+<<<<<<< HEAD
 // fivestory
+=======
+>>>>>>> adding custom fivestory styles to product and store pages
 $fivestory-store-color: $black;
 $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
 
@@ -9,6 +12,14 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
     .products .product-button, .product-detail .product-button {
        background-color: $fivestory-store-color;
    }
+<<<<<<< HEAD
+=======
+
+   .products.products,
+   .product-detail.products {
+       padding-top: 17%;
+   }
+>>>>>>> adding custom fivestory styles to product and store pages
 }
 
 .custom-merchant-fivestory .products .product .product-right .product-link a,
@@ -16,6 +27,7 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
     background-image: url($fivestory_forward_arrow);
 }
 
+<<<<<<< HEAD
 .custom-merchant-fivestory .products .product-button,
 .product.custom-merchant-fivestory-product .product-middle .product-button {
     background-color: $fivestory-store-color;
@@ -136,3 +148,5 @@ $my-sample-store-store-color: $black;
         background-color: $my-sample-store-store-color;
     }
 }
+=======
+>>>>>>> adding custom fivestory styles to product and store pages

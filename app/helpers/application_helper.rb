@@ -165,6 +165,10 @@ eos
     ]
   end
 
+  def is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
+    MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? store_slug
+  end
+
   def custom_merchant_logo_src(store_slug)
     "//s3.amazonaws.com/gramgoods-production/#{store_slug}.jpg"
   end
