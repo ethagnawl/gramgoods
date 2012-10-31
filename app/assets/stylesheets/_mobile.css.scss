@@ -231,14 +231,6 @@ html.no-touch {
         font-size: 28px;
     }
 
-    .product-like-count {
-        background: image-url('like_desktop.png') no-repeat 0 4px !important;
-        background-size: 30px !important;
-        font-size: 32px !important;
-        font-weight: bold !important;
-        padding: 4px 0 12px 40px !important;
-    }
-
     .product-left {
         .loading {
             font-size: 28px !important;
@@ -267,10 +259,6 @@ html.no-touch {
             margin: 0 !important;
             margin-bottom: 6% !important;
             padding: 20px 36px !important;
-        }
-
-        .product-like-count {
-            padding-top: 9px !important;
         }
     }
 
@@ -491,12 +479,6 @@ html.no-touch {
         font-weight: bold;
     }
 
-    .product-like-count {
-        /* shared */
-        background: image-url('like.png') no-repeat 0 0;
-        padding-left: 22px;
-    }
-
     .product-button {
         /* shared */
 
@@ -654,11 +636,6 @@ html.no-touch {
 
         .product-name {
             text-align: center;
-        }
-
-        .product-like-count {
-            background-position: 0 4px;
-            padding-left: 8%;
         }
     }
 }
