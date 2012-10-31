@@ -121,6 +121,7 @@ class ProductsController < ApplicationController
       if @product.nil?
         redirect_to root_path
       else
+        params[:format] = nil if params[:format] == 'html'
         if request.path != custom_product_path(@product.store, @product)
           redirect_to custom_product_path(@product.store, @product, params),
             :status => :moved_permanently

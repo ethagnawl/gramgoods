@@ -105,6 +105,7 @@ class StoresController < ApplicationController
       if @store.nil?
         redirect_to root_path
       else
+        params[:format] = nil if params[:format] == 'html'
         if request.path != custom_store_path(@store)
           redirect_to custom_store_path(@store, params), :status => :moved_permanently
         end
