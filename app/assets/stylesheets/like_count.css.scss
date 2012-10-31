@@ -5,8 +5,8 @@
 
 html.touch {
     .product-like-count {
-        background-size: 12%;
         background-position: 0 2px;
+        background-size: 12%;
         padding-left: 22px;
 
         @media only screen and (-webkit-min-device-pixel-ratio: 2),
@@ -29,8 +29,8 @@ html.touch {
             margin-bottom: 4px;
             padding: {
                 top: 1px;
-                left: 28px;
                 bottom: 2px;
+                left: 28px;
             }
         }
     }
