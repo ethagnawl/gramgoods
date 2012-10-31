@@ -59,13 +59,5 @@ module Gramgoods
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.initialize_on_precompile = false
-
-    config.to_prepare do
-      Devise::SessionsController.layout 'admin'
-      Devise::RegistrationsController.layout 'admin'
-      Devise::ConfirmationsController.layout 'admin'
-      Devise::UnlocksController.layout 'admin'
-      Devise::PasswordsController.layout 'admin'
-    end
   end
 end
