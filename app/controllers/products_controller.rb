@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'mobile'
+  before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:show, :index, :destroy] do |controller|
@@ -93,6 +94,14 @@ class ProductsController < ApplicationController
   end
 
   private
+    # TODO add money gem and convert price to integer
+    def strip_commas_from_prices
+      params[:product][:price] = params[:product][:price].gsub(',', '')
+      unless params[:product][:flatrate_shipping_cost].nil?
+        params[:product][:flatrate_shipping_cost] = params[:product][:flatrate_shipping_cost].gsub(',', '')
+      end
+    end
+
     def conditionally_redirect_to_instagram_app(store, product)
         product_path = custom_product_path(store, product)
         unless params[:post_to_instagram].nil?
