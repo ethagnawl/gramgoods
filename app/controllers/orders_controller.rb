@@ -76,6 +76,7 @@ class OrdersController < ApplicationController
 
   def confirmation
     @order = Order.find_by_access_key(params[:id])
+    @store = @order.store
 
     if @order.nil?
       redirect_to root_path
