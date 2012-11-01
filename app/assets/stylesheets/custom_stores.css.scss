@@ -35,6 +35,10 @@ $wink-store-color: #D30547;
 .custom-merchant-wink {
     .mobile-header {
         background-color: #fff;
+
+        #menu li a {
+            color: $wink-store-color;
+        }
     }
 
     .products .product-button, .product-detail .product-button {
