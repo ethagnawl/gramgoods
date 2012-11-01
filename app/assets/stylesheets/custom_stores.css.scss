@@ -1,146 +1,154 @@
 @import './gramgoods_common';
 
-// fivestory
-$fivestory-store-color: $black;
-$fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
+html.touch,
+html.no-touch {
 
-.custom-merchant-fivestory {
-    .mobile-header,
-    .products .product-button, .product-detail .product-button {
-       background-color: $fivestory-store-color;
-   }
-}
+    // fivestory
+    $fivestory-store-color: $black;
+    $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
 
-.custom-merchant-fivestory .products .product .product-right .product-link a,
-.product.custom-merchant-fivestory-product .product-right .product-link a {
-    background-image: url($fivestory_forward_arrow);
-}
+    .custom-merchant-fivestory {
+        .mobile-header,
+        .products .product-button, .product-detail .product-button {
+           background-color: $fivestory-store-color;
+       }
+    }
 
-.custom-merchant-fivestory .products .product-button,
-.product.custom-merchant-fivestory-product .product-middle .product-button {
-    background-color: $fivestory-store-color;
-}
+    .custom-merchant-fivestory .products .product .product-right .product-link a,
+    .product.custom-merchant-fivestory-product .product-right .product-link a {
+        background-image: url($fivestory_forward_arrow);
+    }
 
-.custom-merchant-fivestory #order_form legend {
-    background-color: $fivestory-store-color;
-
-    &#billing_information_legend {
+    .custom-merchant-fivestory .products .product-button,
+    .product.custom-merchant-fivestory-product .product-middle .product-button {
         background-color: $fivestory-store-color;
     }
-}
 
-// wink
-$wink-store-color: #D30547;
+    .custom-merchant-fivestory #order_form legend {
+        background-color: $fivestory-store-color;
 
-.custom-merchant-wink {
-    .mobile-header {
-        background-color: #fff;
-
-        #menu li a {
-            color: $wink-store-color;
+        &#billing_information_legend {
+            background-color: $fivestory-store-color;
         }
     }
 
-    .products .product-button, .product-detail .product-button {
-       background-color: $wink-store-color;
-   }
-}
+    // wink
+    $wink-store-color: #D30547;
 
-.custom-merchant-wink .products .product-button,
-.product.custom-merchant-wink-product .product-middle .product-button {
-    background-color: $wink-store-color;
-}
+    .custom-merchant-wink {
+        .mobile-header {
+            background-color: #fff;
 
-.custom-merchant-wink #order_form legend {
-    background-color: $wink-store-color;
+            #menu li a {
+                color: $wink-store-color;
+            }
+        }
 
-    &#billing_information_legend {
+        .products .product-button, .product-detail .product-button {
+           background-color: $wink-store-color;
+       }
+    }
+
+    .custom-merchant-wink .products .product-button,
+    .product.custom-merchant-wink-product .product-middle .product-button {
         background-color: $wink-store-color;
     }
-}
 
-// veda - not very DRY, but it'll be easier to change when the time comes
-$veda-store-color: $black;
+    .custom-merchant-wink #order_form legend {
+        background-color: $wink-store-color;
 
-.custom-merchant-veda {
-    .mobile-header {
-        background-color: #fff;
-
-        #menu li a {
-            color: $veda-store-color;
+        &#billing_information_legend {
+            background-color: $wink-store-color;
         }
     }
 
-    .products .product-button, .product-detail .product-button {
-       background-color: $veda-store-color;
-   }
-}
+    // veda - not very DRY, but it'll be easier to change when the time comes
+    $veda-store-color: $black;
 
-.custom-merchant-veda .products .product-button,
-.product.custom-merchant-veda-product .product-middle .product-button {
-    background-color: $veda-store-color;
-}
+    .custom-merchant-veda {
+        .mobile-header {
+            background-color: #fff;
 
-.custom-merchant-veda #order_form legend {
-    background-color: $veda-store-color;
+            #menu li a {
+                color: $veda-store-color;
+            }
+        }
 
-    &#billing_information_legend {
+        .products .product-button, .product-detail .product-button {
+           background-color: $veda-store-color;
+       }
+    }
+
+    .custom-merchant-veda .products .product-button,
+    .product.custom-merchant-veda-product .product-middle .product-button {
         background-color: $veda-store-color;
     }
-}
 
-// soles - not very DRY, but it'll be easier to change when the time comes
-$solesinc-store-color: $black;
+    .custom-merchant-veda #order_form legend {
+        background-color: $veda-store-color;
 
-.custom-merchant-solesinc {
-    .mobile-header {
-        background-color: #fff;
-    }
-
-    .products .product-button, .product-detail .product-button {
-       background-color: $solesinc-store-color;
-   }
-}
-
-.custom-merchant-solesinc .products .product-button,
-.product.custom-merchant-solesinc-product .product-middle .product-button {
-    background-color: $solesinc-store-color;
-}
-
-.custom-merchant-solesinc #order_form legend {
-    background-color: $solesinc-store-color;
-
-    &#billing_information_legend {
-        background-color: $solesinc-store-color;
-    }
-}
-
-// dev
-$my-sample-store-store-color: $black;
-
-.custom-merchant-my-sample-store {
-    .mobile-header {
-        background-color: orange;
-
-        h3 span, h5 span {
-            color: $white;
+        &#billing_information_legend {
+            background-color: $veda-store-color;
         }
     }
 
-    .products .product-button, .product-detail .product-button {
-       background-color: $my-sample-store-store-color;
-   }
-}
+    // soles - not very DRY, but it'll be easier to change when the time comes
+    $solesinc-store-color: $black;
 
-.custom-merchant-my-sample-store .products .product-button,
-.product.custom-merchant-my-sample-store-product .product-middle .product-button {
-    background-color: $my-sample-store-store-color;
-}
+    .custom-merchant-solesinc {
+        .mobile-header {
+            background-color: #fff;
 
-.custom-merchant-my-sample-store #order_form legend {
-    background-color: $my-sample-store-store-color;
+            #menu li a {
+                color: $solesinc-store-color;
+            }
+        }
 
-    &#billing_information_legend {
+        .products .product-button, .product-detail .product-button {
+           background-color: $solesinc-store-color;
+       }
+    }
+
+    .custom-merchant-solesinc .products .product-button,
+    .product.custom-merchant-solesinc-product .product-middle .product-button {
+        background-color: $solesinc-store-color;
+    }
+
+    .custom-merchant-solesinc #order_form legend {
+        background-color: $solesinc-store-color;
+
+        &#billing_information_legend {
+            background-color: $solesinc-store-color;
+        }
+    }
+
+    // dev
+    $my-sample-store-store-color: $black;
+
+    .custom-merchant-my-sample-store {
+        .mobile-header {
+            background-color: orange;
+
+            h3 span, h5 span {
+                color: $white;
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $my-sample-store-store-color;
+       }
+    }
+
+    .custom-merchant-my-sample-store .products .product-button,
+    .product.custom-merchant-my-sample-store-product .product-middle .product-button {
         background-color: $my-sample-store-store-color;
+    }
+
+    .custom-merchant-my-sample-store #order_form legend {
+        background-color: $my-sample-store-store-color;
+
+        &#billing_information_legend {
+            background-color: $my-sample-store-store-color;
+        }
     }
 }
