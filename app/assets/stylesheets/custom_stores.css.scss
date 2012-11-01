@@ -5,7 +5,7 @@ $fivestory-store-color: $black;
 $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
 
 .custom-merchant-fivestory {
-    .store-header,
+    .mobile-header,
     .products .product-button, .product-detail .product-button {
        background-color: $fivestory-store-color;
    }
@@ -33,7 +33,7 @@ $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_for
 $wink-store-color: #D30547;
 
 .custom-merchant-wink {
-    .store-header {
+    .mobile-header {
         background-color: #fff;
     }
 
@@ -59,7 +59,7 @@ $wink-store-color: #D30547;
 $veda-store-color: $black;
 
 .custom-merchant-veda {
-    .store-header {
+    .mobile-header {
         background-color: #fff;
     }
 
@@ -85,7 +85,7 @@ $veda-store-color: $black;
 $solesinc-store-color: $black;
 
 .custom-merchant-solesinc {
-    .store-header {
+    .mobile-header {
         background-color: #fff;
     }
 
