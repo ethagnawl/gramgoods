@@ -15,7 +15,9 @@ class ProductsController < ApplicationController
   end
 
   def index
-    @products = Product.recent_active_products.page(params[:page]).per_page(5)
+    logger.info "!!!!!!!!!!!" << PRODUCT_PAGINATION_SIZE.to_s
+    @products = Product.recent_active_products.page(params[:page]).
+      per_page(PRODUCT_PAGINATION_SIZE)
   end
 
   def new

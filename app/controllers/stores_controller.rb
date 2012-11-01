@@ -66,7 +66,7 @@ class StoresController < ApplicationController
                   @store.products.includes([:store, :instagram_tag])
                 else
                   @store.displayable_products
-                end.page(params[:page]).per_page(5)
+                end.page(params[:page]).per_page(PRODUCT_PAGINATION_SIZE)
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
