@@ -39,8 +39,18 @@ html.no-touch {
         .mobile-header {
             background-color: #fff;
 
-            #menu li a {
-                color: $wink-store-color;
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $wink-store-color;
+                }
             }
         }
 
@@ -69,8 +79,18 @@ html.no-touch {
         .mobile-header {
             background-color: #fff;
 
-            #menu li a {
-                color: $veda-store-color;
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $veda-store-color;
+                }
             }
         }
 
@@ -99,8 +119,18 @@ html.no-touch {
         .mobile-header {
             background-color: #fff;
 
-            #menu li a {
-                color: $solesinc-store-color;
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $solesinc-store-color;
+                }
             }
         }
 
