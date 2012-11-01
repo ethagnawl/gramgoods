@@ -65,6 +65,10 @@ $veda-store-color: $black;
 .custom-merchant-veda {
     .mobile-header {
         background-color: #fff;
+
+        #menu li a {
+            color: $veda-store-color;
+        }
     }
 
     .products .product-button, .product-detail .product-button {
