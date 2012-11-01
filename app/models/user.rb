@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
 
   def fetch_instagram_feed_for_user_and_filter_by_tag(_tag)
     tag = _tag.downcase
+    tag = tag.split('#')[1] if /^#+/ =~ tag
     key = "#{self.uid}_#{tag}"
     user_photo_feed_from_cache = Rails.cache.read(key)
 
