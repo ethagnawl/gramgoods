@@ -2,7 +2,9 @@
 - content_for(:header) do
   - if @is_customized_store
     %span.mobile-header-store-logo
-      %img{ :src => custom_merchant_logo_src(@store.slug), :alt => @store.name}
+      %a{ :href => custom_store_path(@store), :title => @store.name }
+        %img{ :src => custom_merchant_logo_src(@store.slug), |
+              :alt => @store.name }
   - else
     = @store.name
 
