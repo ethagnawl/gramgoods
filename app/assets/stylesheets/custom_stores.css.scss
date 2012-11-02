@@ -38,6 +38,7 @@ html.no-touch {
     .custom-merchant-wink {
         .mobile-header {
             background-color: #fff;
+            color: $wink-store-color;
 
             #menu li {
                 &.on a,
@@ -78,6 +79,7 @@ html.no-touch {
     .custom-merchant-veda {
         .mobile-header {
             background-color: #fff;
+            color: $veda-store-color;
 
             #menu li {
                 &.on a,
@@ -118,6 +120,7 @@ html.no-touch {
     .custom-merchant-solesinc {
         .mobile-header {
             background-color: #fff;
+            color: $solesinc-store-color;
 
             #menu li {
                 &.on a,
