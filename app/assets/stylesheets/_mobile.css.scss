@@ -576,11 +576,16 @@ html.no-touch {
     }
 }
 
-// avoid fouc on custom store pages
+// set default background color for non-customized stores
+// the background color is set as transparent in the common class declaration
+// and then overriden below to avoid fouc on customized pages
 .products-index,
 body.non-custom-merchant {
-    .product-button {
-        background-color: $blue;
+    .product-detail, // product page
+    .non-custom-merchant-product { // product partial (recent products, store)
+        .product-button {
+            background-color: $blue;
+        }
     }
 
     .mobile-form {
