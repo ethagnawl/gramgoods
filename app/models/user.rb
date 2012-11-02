@@ -87,21 +87,25 @@ class User < ActiveRecord::Base
         max_id = nil
         user_photo_feed = []
 
-        lambda { |r, max_id = nil|
-          user_photo_feed.concat(
-            Instagram.user_recent_media(:max_id => max_id).tap { |items|
-              i += items.length
-              last_id = items.last.id
-            }.find_all { |item|
-              item.tags.member? tag
-            }.map { |item|
-              {
-                :like_count => item.likes[:count],
-                :url => item.images.standard_resolution.url
-              }
-            })
-          r.call(r, last_id) if i < media_count
-        }.tap { |r| r.call(r) }
+        begin
+          lambda { |r, max_id = nil|
+            user_photo_feed.concat(
+              Instagram.user_recent_media(:max_id => max_id).tap { |items|
+                i += items.length
+                last_id = items.last.id
+              }.find_all { |item|
+                item.tags.member? tag
+              }.map { |item|
+                {
+                  :like_count => item.likes[:count],
+                  :url => item.images.standard_resolution.url
+                }})
+            r.call(r, last_id) if i < media_count
+          }.tap { |r| r.call(r) }
+
+        rescue
+          puts 'error in lambda'
+        end
 
         Instagram.reset
 
