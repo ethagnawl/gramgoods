@@ -110,10 +110,12 @@ class User < ActiveRecord::Base
         Instagram.reset
 
         unless user_photo_feed.empty?
-          Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
-          self.
-            delay(:run_at => 20.minutes.from_now).
-              fetch_instagram_feed_for_user_and_filter_by_tag(tag)
+          begin
+            Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
+            self.update_instagram_cache(tag)
+          rescue
+            puts 'write to cache and fire background job'
+          end
         end
 
         user_photo_feed
