@@ -355,7 +355,7 @@ html.no-touch {
         @include widget;
         margin-bottom: 3%;
 
-        background-color: $blue;
+        background-color: transparent;
         color: $white;
         padding: 4% 2%;
         width: 100%;
@@ -491,7 +491,7 @@ html.no-touch {
 
         @include gramgoods_box_shadow;
 
-        background-color: $blue;
+        background-color: transparent;
         border-radius: 2px;
         color: $white;
         display: inline-block;
@@ -586,6 +586,19 @@ html.no-touch {
     }
 }
 
+// avoid fouc on custom store pages
+body.non-custom-merchant {
+    .product-button {
+        background-color: $blue;
+    }
+
+    .mobile-form {
+        legend {
+            background-color: $blue;
+        }
+    }
+}
+
 .mobile-footer {
     padding-top: 4px;
     text-align: center;
@@ -649,7 +662,7 @@ html.no-touch {
 
 .mobile-layout.orders-new,
 .mobile-layout.orders-create {
-    .mobile-header {
+    .nobile-header {
         display: none;
     }
 

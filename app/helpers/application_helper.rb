@@ -173,7 +173,7 @@ eos
     if is_store_slug_in_merchants_with_custom_store_slugs_array?(store_slug)
       " custom-merchant-#{store_slug}"
     else
-      ''
+      ' non-custom-merchant'
     end
   end
 
