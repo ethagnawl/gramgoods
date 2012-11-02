@@ -579,10 +579,11 @@ html.no-touch {
 // set default background color for non-customized stores
 // the background color is set as transparent in the common class declaration
 // and then overriden below to avoid fouc on customized pages
-.products-index,
-body.non-custom-merchant {
-    .product-detail, // product page
-    .non-custom-merchant-product { // product partial (recent products, store)
+.products-index,            // recent products page
+body.non-custom-merchant {  // store page
+
+    .product-detail,                 // product page
+    .non-custom-merchant-product {   // product partial (recent products, store)
         .product-button {
             background-color: $blue;
         }
