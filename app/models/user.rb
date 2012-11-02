@@ -107,8 +107,6 @@ class User < ActiveRecord::Base
           puts 'error in lambda'
         end
 
-        Instagram.reset
-
         unless user_photo_feed.empty?
           begin
             Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
