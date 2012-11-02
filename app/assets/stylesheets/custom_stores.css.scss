@@ -12,6 +12,12 @@ html.no-touch {
         .products .product-button, .product-detail .product-button {
            background-color: $fivestory-store-color;
        }
+
+       .mobile-header {
+            h3 span, h5 span {
+                color: #fff;
+            }
+        }
     }
 
     .custom-merchant-fivestory .products .product .product-right .product-link a,
@@ -38,7 +44,11 @@ html.no-touch {
     .custom-merchant-wink {
         .mobile-header {
             background-color: #fff;
-            color: $wink-store-color;
+
+            h3 span, h5 span {
+                color: $wink-store-color;
+            }
+
 
             #menu li {
                 &.on a,
@@ -79,7 +89,10 @@ html.no-touch {
     .custom-merchant-veda {
         .mobile-header {
             background-color: #fff;
-            color: $veda-store-color;
+
+            h3 span, h5 span {
+                color: $veda-store-color;
+            }
 
             #menu li {
                 &.on a,
@@ -120,7 +133,10 @@ html.no-touch {
     .custom-merchant-solesinc {
         .mobile-header {
             background-color: #fff;
-            color: $solesinc-store-color;
+
+            h3 span, h5 span {
+                color: $solesinc-store-color;
+            }
 
             #menu li {
                 &.on a,
