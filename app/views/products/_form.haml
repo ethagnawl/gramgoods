@@ -19,7 +19,7 @@
     = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
       %fieldset
         - instagram_tag_message = ' (e.g. #blue_jeans)'
-        - instagram_tag_custom_label = form_label('Instagram Hashtag',
+        - instagram_tag_custom_label = form_label('Unique Instagram Hashtag',
                                                     true, instagram_tag_message)
         - instagram_value = edit_view ? "#{@product.get_instagram_tag(true)}" : nil
         - if edit_view
