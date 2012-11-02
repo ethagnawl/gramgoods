@@ -577,6 +577,7 @@ html.no-touch {
 }
 
 // avoid fouc on custom store pages
+.products-index,
 body.non-custom-merchant {
     .product-button {
         background-color: $blue;
