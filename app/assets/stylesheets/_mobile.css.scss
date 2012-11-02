@@ -315,12 +315,6 @@ html.no-touch {
         }
     }
 
-    .mobile-form {
-        #billing_information_legend {
-            background-position: 184px 40px !important;
-        }
-    }
-
     img {
         display: inline-block;
         width: 30%;
@@ -359,10 +353,6 @@ html.no-touch {
         color: $white;
         padding: 4% 2%;
         width: 100%;
-
-        &#billing_information_legend {
-            background: image-url('lock.png') no-repeat 58% 40% $blue;
-        }
     }
 
     h1 {
