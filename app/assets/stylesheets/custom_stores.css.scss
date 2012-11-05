@@ -3,6 +3,14 @@
 html.touch,
 html.no-touch {
 
+    .custom-merchant {
+        .mobile-header {
+            h3 {
+                padding-right: 0;
+            }
+        }
+    }
+
     // fivestory
     $fivestory-store-color: $black;
     $fivestory-forward-arrow: "//s3.amazonaws.com/gramgoods-production/fivestory_forward_arrow.png";
