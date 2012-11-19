@@ -179,6 +179,50 @@ html.no-touch {
         }
     }
 
+    // AmericanTwoShot - not very DRY, but it'll be easier to change when the time comes
+    $american-two-shot-color: $black;
+
+    .custom-merchant-american-two-shot {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $american-two-shot-color;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $american-two-shot-color;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+            background-color: $american-two-shot-color;
+        }
+    }
+
+    .custom-merchant-american-two-shot .products .product-button,
+    .product.custom-merchant-american-two-shot-product .product-middle .product-button {
+        background-color: $american-two-shot-color;
+    }
+
+    .custom-merchant-american-two-shot #order_form legend {
+        background-color: $american-two-shot-color;
+
+        &#billing_information_legend {
+            background-color: $american-two-shot-color;
+        }
+    }
+
     // dev
     $my-sample-store-store-color: $black;
 
