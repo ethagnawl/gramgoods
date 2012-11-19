@@ -180,14 +180,14 @@ html.no-touch {
     }
 
     // AmericanTwoShot - not very DRY, but it'll be easier to change when the time comes
-    $american-two-shot-color: $black;
+    $americantwoshot-color: $black;
 
-    .custom-merchant-american-two-shot {
+    .custom-merchant-americantwoshot {
         .mobile-header {
             background-color: #fff;
 
             h3, h3 span, h5 span {
-                color: $american-two-shot-color;
+                color: $americantwoshot-color;
             }
 
             #menu li {
@@ -200,26 +200,26 @@ html.no-touch {
                 }
 
                 a {
-                    color: $american-two-shot-color;
+                    color: $americantwoshot-color;
                 }
             }
         }
 
         .products .product-button, .product-detail .product-button {
-            background-color: $american-two-shot-color;
+            background-color: $americantwoshot-color;
         }
     }
 
-    .custom-merchant-american-two-shot .products .product-button,
-    .product.custom-merchant-american-two-shot-product .product-middle .product-button {
-        background-color: $american-two-shot-color;
+    .custom-merchant-americantwoshot .products .product-button,
+    .product.custom-merchant-americantwoshot-product .product-middle .product-button {
+        background-color: $americantwoshot-color;
     }
 
-    .custom-merchant-american-two-shot #order_form legend {
-        background-color: $american-two-shot-color;
+    .custom-merchant-americantwoshot #order_form legend {
+        background-color: $americantwoshot-color;
 
         &#billing_information_legend {
-            background-color: $american-two-shot-color;
+            background-color: $americantwoshot-color;
         }
     }
 
