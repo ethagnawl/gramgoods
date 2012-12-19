@@ -1,3 +1,4 @@
+//= require ./mobile/gramgoods_config
 //= require ./mobile/zepto.min
 //= require ./mobile/modernizr.min.js
 //= require ./mobile/happy_form

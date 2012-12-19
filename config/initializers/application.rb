@@ -15,3 +15,9 @@ if !ENV["PRODUCT_PAGINATION_SIZE"].nil?
 else
   PRODUCT_PAGINATION_SIZE = 5
 end
+
+if ENV["DEBUG"].nil?
+    DEBUG = false
+else
+    DEBUG = (ENV['DEBUG'].to_s == 'true') ? true : false
+end

@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
       gon.page = "#{params[:controller]}_#{params[:action]}"
       gon.authenticated = user_signed_in?
       gon.layout = params[:layout]
+      gon.debug = DEBUG
     end
 
     def clear_gon
