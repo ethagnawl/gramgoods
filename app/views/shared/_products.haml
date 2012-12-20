@@ -1,5 +1,6 @@
 .products.widget
 
-.widget.mobile-footer
-  = link_to 'View More Products', 'javascript: void(0);',
-    :id => 'view_more_products', :class => 'large-button'
+- if @show_view_more_products_button
+  .widget.mobile-footer
+    = link_to 'View More Products', 'javascript: void(0);',
+      :id => 'view_more_products', :class => 'large-button'
