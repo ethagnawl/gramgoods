@@ -64,3 +64,44 @@ $red: #f10026;
         size: 1em;
     }
 }
+
+@mixin button {
+    @include gramgoods_box_shadow;
+
+    background-color: transparent;
+    border-radius: 2px;
+    color: $white;
+    display: inline-block;
+    font-weight: bold;
+    padding: 1% 4%;
+    text-align: center;
+    text-decoration: none;
+}
+
+.button {
+    @include button;
+}
+
+@mixin large-button {
+    @include button;
+
+    font-size: 1.2em;
+    margin: 1% auto 0;
+    padding: 3% 3% 4%;
+    width: 100%;
+}
+
+.large-button {
+    @include large-button;
+}
+
+@mixin desktop-button {
+    @include large-button;
+
+    font-size: 28px;
+    width: 98%;
+}
+
+.desktop-button {
+    @include desktop-button;
+}

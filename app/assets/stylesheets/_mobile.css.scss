@@ -240,8 +240,9 @@ html.no-touch {
         }
     }
 
-    .product-button {
-        font-size: 28px;
+    .product-button,
+    .large-button {
+        @include desktop-button;
     }
 
     .product-left {
@@ -614,8 +615,8 @@ body.non-custom-merchant {  // store page
     text-decoration: none;
 
     #view_more_products {
-    // extends btn btn-large btn-primary
-    width: 98%;
+        background-color: $blue;
+        width: 92%;
 
         &,
         &:hover,
@@ -634,10 +635,7 @@ body.non-custom-merchant {  // store page
     }
 
     .product-button {
-        font-size: 1.2em;
-        margin: 1% auto 0;
-        padding: 3% 3% 4%;
-        width: 100%;
+        @include large-button;
     }
 
     .product-top {
