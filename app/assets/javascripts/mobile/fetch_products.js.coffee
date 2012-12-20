@@ -1,14 +1,15 @@
 $view_more_products = ($ document.getElementById('view_more_products'))
 
-disable_$view_more_products = ->
+disable_$view_more_products = (permanent = false) ->
     $view_more_products
         .attr('disabled', 'disabled')
-        .addClass('hide')
+        .text('Loading Products...')
+    $view_more_products.addClass('hide') if permanent
 
 enable_$view_more_products = ->
     $view_more_products
         .removeAttr('disabled')
-        .removeClass('hide')
+        .text('View More Products')
 
 increment_pagination_page = -> gon.pagination_page = +(gon.pagination_page) + 1
 
@@ -59,12 +60,15 @@ fetch_more_products = ->
             if products.length > 0
                 unless gon.pagination_page is gon.max_pagination_page
                     enable_$view_more_products()
+                else
+                    disable_$view_more_products(true)
                 GramGoods.render_product_views(products)
 
-        error_callback: -> alert(GramGoods.error_message)
+        error_callback: (error) -> alert(error) if gon.debug
 
     fetch_products(params)
 
 $view_more_products.click ->
-    disable_$view_more_products()
-    fetch_more_products()
+    unless ($ @).attr('disabled')
+        disable_$view_more_products()
+        fetch_more_products()
