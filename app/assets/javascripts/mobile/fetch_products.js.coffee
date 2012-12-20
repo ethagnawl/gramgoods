@@ -57,7 +57,8 @@ fetch_more_products = ->
             products = GramGoods.format_products_json(response.products_json)
 
             if products.length > 0
-                enable_$view_more_products()
+                unless gon.pagination_page is gon.max_pagination_page
+                    enable_$view_more_products()
                 GramGoods.render_product_views(products)
 
         error_callback: -> alert(GramGoods.error_message)

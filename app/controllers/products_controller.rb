@@ -18,6 +18,7 @@ class ProductsController < ApplicationController
     @products = Product.recent_active_products.page(params[:page]).
       per_page(PRODUCT_PAGINATION_SIZE)
 
+    gon.max_pagination_page = @products.total_pages
     gon.products_json = products_json = products_json(@products)
 
     respond_to do |format|
