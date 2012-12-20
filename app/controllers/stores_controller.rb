@@ -68,13 +68,16 @@ class StoresController < ApplicationController
                   @store.displayable_products
                 end.page(params[:page]).per_page(PRODUCT_PAGINATION_SIZE)
 
-    gon.max_pagination_page = @products.total_pages
+    gon.max_pagination_page = @max_pagination_page = @products.total_pages
     gon.store_slug = @store.slug
     gon.store_id = @store.id
 
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
 
     gon.products_json = products_json = products_json(@products)
+
+    @show_view_more_products_button = show_view_more_products_button?(
+                                        @max_pagination_page)
 
     respond_to do |format|
       format.html

@@ -97,6 +97,10 @@ class ApplicationController < ActionController::Base
       request.user_agent =~ /Mobile|webOS/
     end
 
+    def show_view_more_products_button?(max_pagination_page)
+      max_pagination_page > 1
+    end
+
     def products_json(products)
       Jbuilder.encode do |json|
         json.products(products) do |json, product|

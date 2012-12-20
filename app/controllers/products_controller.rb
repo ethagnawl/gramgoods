@@ -21,7 +21,8 @@ class ProductsController < ApplicationController
     gon.max_pagination_page = @max_pagination_page = @products.total_pages
     gon.products_json = products_json = products_json(@products)
 
-    @show_view_more_products_button = (@max_pagination_page * PRODUCT_PAGINATION_SIZE) > PRODUCT_PAGINATION_SIZE
+    @show_view_more_products_button = show_view_more_products_button?(
+                                        @max_pagination_page)
 
     respond_to do |format|
       format.html
