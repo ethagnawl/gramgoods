@@ -46,6 +46,11 @@ html.no-touch {
         }
     }
 
+    .custom-merchant-fivestory #view_more_products {
+        background-color: $fivestory-store-color;
+    }
+
+
     // wink
     $wink-store-color: #D30547;
 
@@ -91,6 +96,11 @@ html.no-touch {
         }
     }
 
+    .custom-merchant-wink #view_more_products {
+        background-color: $wink-store-color;
+    }
+
+
     // veda - not very DRY, but it'll be easier to change when the time comes
     $veda-store-color: $black;
 
@@ -133,6 +143,10 @@ html.no-touch {
         &#billing_information_legend {
             background-color: $veda-store-color;
         }
+    }
+
+    .custom-merchant-veda #view_more_products {
+        background-color: $veda-store-color;
     }
 
     // soles - not very DRY, but it'll be easier to change when the time comes
@@ -179,6 +193,10 @@ html.no-touch {
         }
     }
 
+    .custom-merchant-solesinc #view_more_products {
+        background-color: $solesinc-store-color;
+    }
+
     // AmericanTwoShot - not very DRY, but it'll be easier to change when the time comes
     $americantwoshot-color: $black;
 
@@ -222,6 +240,11 @@ html.no-touch {
             background-color: $americantwoshot-color;
         }
     }
+
+    .custom-merchant-americantwoshot #view_more_products {
+        background-color: $americantwoshot-color;
+    }
+
 
     // dev
     $my-sample-store-store-color: $black;
