@@ -17,6 +17,17 @@ class ProductsController < ApplicationController
   def index
     @products = Product.recent_active_products.page(params[:page]).
       per_page(PRODUCT_PAGINATION_SIZE)
+
+    gon.products_json = products_json = products_json(@products)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render :json => {
+          :products_json => products_json
+        }
+      end
+    end
   end
 
   def new

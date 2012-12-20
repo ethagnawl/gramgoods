@@ -60,6 +60,7 @@ class ApplicationController < ActionController::Base
 
     def set_gon
       gon.page = "#{params[:controller]}_#{params[:action]}"
+      gon.pagination_page = params[:page] || 1
       gon.authenticated = user_signed_in?
       gon.layout = params[:layout]
       gon.debug = DEBUG
@@ -94,5 +95,22 @@ class ApplicationController < ActionController::Base
 
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
+    end
+
+    def products_json(products)
+      Jbuilder.encode do |json|
+        json.products(products) do |json, product|
+          json.product_name product.name
+          json.product_price number_to_currency(product.price)
+          json.product_slug product.slug
+          json.product_instagram_tag product.get_instagram_tag
+
+          json.store_name product.store.name
+          json.store_slug product.store.slug
+
+          json.custom_merchant_wrapper_class view_context.custom_merchant_css_class_for_product(product.store.slug)
+          json.user_owns_store user_owns_store?(product.store.id)
+        end
+      end
     end
 end

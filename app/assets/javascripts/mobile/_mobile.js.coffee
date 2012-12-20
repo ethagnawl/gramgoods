@@ -1,8 +1,83 @@
 window.templates = {}
 
-
-window.pluralize_like_count = (like_count) ->
+GramGoods.pluralize_like_count = (like_count) ->
     if like_count is 1 then 'like' else 'likes'
+
+GramGoods.render_product_gallery_controls = ->
+    if ($ '.product-gallery-control').length > 1
+        $('.product-gallery-controls')
+            .css('width', $('.product-gallery-controls').width())
+            .removeClass('invisible').addClass('display-block')
+
+GramGoods.dirty_commas = (num) ->
+    String(num).replace /^\d+(?=\.|$)/, (int) ->
+        int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
+
+GramGoods.render_like_count = ($product, like_count) ->
+   likes = GramGoods.pluralize_like_count(like_count)
+   $product
+       .find('.product-like-count').text("#{like_count} #{likes}")
+       .removeClass('hide')
+
+GramGoods.render_single_product_image = ($self, photos, like_count) ->
+    product_image = photos[0]
+    product_name = gon.product_name
+
+    $self
+        .find('.product-left').html(
+            Mustache.render templates.product_image_template, {
+                product_name,
+                product_image })
+
+    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
+
+GramGoods.render_multiple_product_images = ($self, product_images, like_count) ->
+    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
+    $product_gallery_wrapper = $('<div />')
+    $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
+
+    for product_image, i in product_images
+        product_gallery_data =
+            index: i
+            class: "product-thumbnail #{(if i is 0 then 'on' else null)}"
+            product_name: gon.product_name
+            product_image: product_image
+
+        $product_gallery_wrapper.append Mustache.render(
+            templates.product_thumbnail_gallery_image_template, product_gallery_data)
+
+        product_gallery_control_data =
+            classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
+            index: i
+
+
+        if product_images.length > 1
+            $product_gallery_controls_wrapper.append Mustache.render(
+                templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
+
+    $self.find('.product-thumbnail-gallery')
+        .html($product_gallery_wrapper)
+        .append($product_gallery_controls_wrapper)
+
+    GramGoods.render_product_gallery_controls()
+
+GramGoods.fetch_product_images = ($self, callback) ->
+    tag = $self.data('instagram-tag')
+    store_slug = $self.data('store-slug')
+
+    $.ajax
+        dataType: 'json'
+        url: '/instagram_feed_for_user_filtered_by_tag'
+        data:
+            tag: tag
+            store_slug: store_slug
+        success: (response) =>
+            $self.addClass('product-image-has-been-loaded')
+
+            if response.status is 'error'
+                $self.find('.loading').text('')
+            else
+                callback($self, response.product_images, response.like_count)
 
 $ ->
     window.$window = ($ window)
@@ -62,162 +137,89 @@ window.addEventListener 'load', ->
         error_y = $context.find('.unhappy').first().offset().top - header_height - 20
         scrollTo(0, error_y)
 
-if gon.page is 'stores_show' or gon.page is 'products_show' or gon.page is 'products_index' or gon.page is 'stores_new'
-    # only reveal product gallery controls if there
-    # is more than one product image
-    render_product_gallery_controls = ->
-        if ($ '.product-gallery-control').length > 1
-            $('.product-gallery-controls')
-                .css('width', $('.product-gallery-controls').width())
-                .removeClass('invisible').addClass('display-block')
+Zepto ($) ->
 
-    dirty_commas = (num) ->
-        String(num).replace /^\d+(?=\.|$)/, (int) ->
-            int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
+    if gon.page is 'stores_show' or gon.page is 'products_index'
+        GramGoods.render_product_views(
+            GramGoods.format_products_json(gon.products_json))
 
-   render_like_count = ($product, like_count) ->
-       likes = pluralize_like_count(like_count)
-       $product
-           .find('.product-like-count').text("#{like_count} #{likes}")
-           .removeClass('hide')
+    if gon.page is 'stores_show' or gon.page is 'products_index'
 
-    render_single_product_image = ($self, photos, like_count) ->
-        product_image = photos[0]
-        product_name = gon.product_name
-        $self
-            .find('.product-left').html(
-                Mustache.render templates.product_image_template, {
-                    product_name,
-                    product_image })
+        ($ '.products').on('tap', '.product', (e) ->
+            e.preventDefault()
+            return if ($ @).data('user-owns-store') is 'true'
+            destination = ($ @).find('.product-link > a').attr('href')
+            location.href = destination
+            false
+        )
 
-        render_like_count($self, like_count) if +(like_count) > 0
+    if gon.page is 'products_show'
+        if gon.authenticated and gon.instagram_protocol_with_params?
+            window.location = gon.instagram_protocol_with_params
 
-    render_multiple_product_images = ($self, product_images, like_count) ->
-        render_like_count($self, like_count) if +(like_count) > 0
-        $product_gallery_wrapper = $('<div />')
-        $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
+        GramGoods.fetch_product_images($('.product'),
+            GramGoods.render_multiple_product_images)
 
-        for product_image, i in product_images
-            product_gallery_data =
-                index: i
-                class: "product-thumbnail #{(if i is 0 then 'on' else null)}"
-                product_name: gon.product_name
-                product_image: product_image
+        swipe_left = (e) ->
+            $this = ($ e.target)
+            next_index = $this.next().data('index')
+            if next_index?
+                $this.removeClass('on')
+                $this.next().addClass('on')
+                ($ '.product-gallery-control.on')
+                    .removeClass('on').next().addClass('on')
 
-            $product_gallery_wrapper.append Mustache.render(
-                templates.product_thumbnail_gallery_image_template, product_gallery_data)
+        swipe_right = (e) ->
+            $this = ($ e.target)
+            previous_index = $this.prev().data('index')
+            if previous_index?
+                $this.removeClass('on')
+                $this.prev().addClass('on')
+                ($ '.product-gallery-control.on')
+                    .removeClass('on').prev().addClass('on')
 
-            product_gallery_control_data =
-                classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
-                index: i
+        if has_touch_events
+            ($ '.product-thumbnail-gallery')
+                .on('swipeLeft', (e) -> swipe_left(e))
+                .on('swipeRight', (e) -> swipe_right(e))
+        else
+            ($ '.product-thumbnail-gallery')
+                .on('click', '.product-gallery-control', ->
+                    index = ($ @).data('index')
 
-
-            if product_images.length > 1
-                $product_gallery_controls_wrapper.append Mustache.render(
-                    templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
-
-        $self.find('.product-thumbnail-gallery')
-            .html($product_gallery_wrapper)
-            .append($product_gallery_controls_wrapper)
-
-        render_product_gallery_controls()
-
-    fetch_product_images = ($self, callback) ->
-        tag = $self.data('instagram-tag')
-        store_slug = $self.data('store-slug')
-        $.ajax
-            dataType: 'json'
-            url: '/instagram_feed_for_user_filtered_by_tag'
-            data:
-                tag: tag
-                store_slug: store_slug
-            success: (response) =>
-                if response.status is 'error'
-                    $self.find('.loading').text('')
-                else
-                    callback($self, response.product_images, response.like_count)
-
-    Zepto ($) ->
-
-        if gon.page is 'stores_show' or gon.page is 'products_index'
-
-            $('.product').each ->
-                fetch_product_images(($ @), render_single_product_image)
-
-            ($ '.products').on('tap', '.product', (e) ->
-                e.preventDefault()
-                return if ($ @).data('user-owns-store') is 'true'
-                destination = ($ @).find('.product-link > a').attr('href')
-                location.href = destination
-                false
-            )
-
-        if gon.page is 'products_show'
-            if gon.authenticated and gon.instagram_protocol_with_params?
-                window.location = gon.instagram_protocol_with_params
-
-            fetch_product_images($('.product'), render_multiple_product_images)
-
-            swipe_left = (e) ->
-                $this = ($ e.target)
-                next_index = $this.next().data('index')
-                if next_index?
-                    $this.removeClass('on')
-                    $this.next().addClass('on')
-                    ($ '.product-gallery-control.on')
-                        .removeClass('on').next().addClass('on')
-
-            swipe_right = (e) ->
-                $this = ($ e.target)
-                previous_index = $this.prev().data('index')
-                if previous_index?
-                    $this.removeClass('on')
-                    $this.prev().addClass('on')
-                    ($ '.product-gallery-control.on')
-                        .removeClass('on').prev().addClass('on')
-
-            if has_touch_events
-                ($ '.product-thumbnail-gallery')
-                    .on('swipeLeft', (e) -> swipe_left(e))
-                    .on('swipeRight', (e) -> swipe_right(e))
-            else
-                ($ '.product-thumbnail-gallery')
-                    .on('click', '.product-gallery-control', ->
-                        index = ($ @).data('index')
-
-                        ($ '.product-gallery-control.on').removeClass('on')
-                        ($ @).addClass('on')
-                        ($ '.product-thumbnail.on').removeClass('on')
-                        ($ "#product_gallery_image_#{index}").addClass('on')
-                    )
+                    ($ '.product-gallery-control.on').removeClass('on')
+                    ($ @).addClass('on')
+                    ($ '.product-thumbnail.on').removeClass('on')
+                    ($ "#product_gallery_image_#{index}").addClass('on')
+                )
 
 
-            # setTimeout is required because
-            # tap was clicking the purchase
-            # link after scrollTo
-            ($ '.product-details').tap ->
-                setTimeout =>
-                    scrollTo 0, ($ @).offset().top - 56
-                , 100
+        # setTimeout is required because
+        # tap was clicking the purchase
+        # link after scrollTo
+        ($ '.product-details').tap ->
+            setTimeout =>
+                scrollTo 0, ($ @).offset().top - (GramGoods.header_offset)
+            , 100
 
-            redirect_to_order_form = ->
-                data =
-                    product_id: gon.product_id
-                    quantity: (+($.trim(($ '#quantity').val()))) or 1
-                if ($ '#color').length > 0
-                    data.color = $.trim(($ '#color').val())
-                if ($ '#size').length > 0
-                    data.size = $.trim(($ '#size').val())
-                if gon.layout is 'mobile'
-                    data.layout = 'mobile'
+        redirect_to_order_form = ->
+            data =
+                product_id: gon.product_id
+                quantity: (+($.trim(($ '#quantity').val()))) or 1
+            if ($ '#color').length > 0
+                data.color = $.trim(($ '#color').val())
+            if ($ '#size').length > 0
+                data.size = $.trim(($ '#size').val())
+            if gon.layout is 'mobile'
+                data.layout = 'mobile'
 
-                window.location = "#{gon.create_order_url}?#{$.param(data)}"
+            window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
-            $redirect_to_order_form = ($ '#redirect_to_order_form')
-            if has_touch_events
-                $redirect_to_order_form.tap -> redirect_to_order_form()
-            else
-                $redirect_to_order_form.click -> redirect_to_order_form()
+        $redirect_to_order_form = ($ '#redirect_to_order_form')
+        if has_touch_events
+            $redirect_to_order_form.tap -> redirect_to_order_form()
+        else
+            $redirect_to_order_form.click -> redirect_to_order_form()
 
 if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_proxy' or gon.page is 'stores_create' or gon.page is 'stores_update'
     $ ->
@@ -228,7 +230,6 @@ if gon.page is 'stores_new' or gon.page is 'stores_edit' or gon.page is 'stores_
                     e.preventDefault()
                     scroll_to_error(($ @)))
         ($ '#store_terms_of_service').click -> ($ '.mobile-form').trigger('submit')
-
 
 if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_create'
     $ ->
@@ -265,7 +266,6 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                     }, stripeResponseHandler)
                 else
                     scroll_to_error(($ @))
-
 
 render_nested_product_attribute_input = ($el) ->
     attribute = $el.data('attribute')

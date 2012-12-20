@@ -70,6 +70,17 @@ class StoresController < ApplicationController
     gon.store_slug = @store.slug
     gon.store_id = @store.id
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
+
+    gon.products_json = products_json = products_json(@products)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render :json => {
+          :products_json => products_json
+        }
+      end
+    end
   end
 
   def edit
