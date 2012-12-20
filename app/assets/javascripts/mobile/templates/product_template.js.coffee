@@ -46,14 +46,10 @@ templates.product_template = """
                     <a href="/{{store_slug}}/{{product_slug}}" class="btn btn-primary btn-primary">View</a>
                 </div>
                 <div class="owner-action">
-                    <a href="/{{store_slug}/{{product_slug}}/edit" class="btn btn-primary btn-primary">Edit</a>
+                    <a href="/{{store_slug}}/{{product_slug}}/edit" class="btn btn-primary btn-primary">Edit</a>
                 </div>
                 <div class="owner-action">
-                    <a
-                        href="/stores/{{store_slug}/products/{{product_slug}}"
-                        class="btn btn-primary btn-primary"
-                        data-confirm="Are you sure you want to delete {{product_name}}?"
-                        data-method="delete" rel="nofollow">Delete</a>
+                    <a href="/stores/{{store_slug}}/products/{{product_slug}}" class="btn btn-primary btn-primary" data-confirm="Are you sure you want to delete {{product_name}}?" data-method="delete" rel="nofollow">Delete</a>
                 </div>
                 <div class="owner-action">
                     <div class="btn btn-primary btn-success" disabled="disabled">
