@@ -9,6 +9,10 @@
     color: $dark-grey;
 }
 
+li {
+    list-style-type: none;
+}
+
 a {
     @include transition(.2s);
 
@@ -24,6 +28,10 @@ a {
 // Twitter Bootstrap overrides
 input[type=text], input[type=tel], input[type=password], input[type=email], input[type=number] {
     height: 28px !important;
+}
+
+.btn {
+    color: $white !important;
 }
 
 .alert {
@@ -699,6 +707,6 @@ body.non-custom-merchant {  // store page
     }
 }
 
-.return-policy, .terms-of-service {
+.return-policy, .terms-of-service, .welcome {
     padding: 2% 4%;
 }
