@@ -8,7 +8,7 @@
       %a{ :href => "mailto: #{locals[:order].store.user.email}"}
         #{locals[:order].store.name}
     %p.widget
-      %a{ :href => 'mailto: admin@gramgoods.com' } GramGoods
+      %a{ :href => "mailto:#{ADMIN_EMAIL_ADDRESS}" } GramGoods
 
   .widget
     %h2 Return Policy
