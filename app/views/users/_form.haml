@@ -1,0 +1,22 @@
+- user = locals[:user]
+
+= form_for(user, :html => { class: 'mobile-form' }) do |user_form|
+  %div
+    %fieldset
+      = user_form.label :street_address_1, 'Address'
+      = user_form.text_field :street_address_1, :placeholder => 'Address'
+    %fieldset
+      = user_form.label :street_address_1, 'Apartment Number'
+      = user_form.text_field :street_address_2, :placeholder => 'Apartment Number'
+    %fieldset
+      = user_form.label :street_address_1, 'City'
+      = user_form.text_field :city, :placeholder => 'City'
+    %fieldset
+      = user_form.label :street_address_1, 'State'
+      = user_form.select :state, options_for_select(us_states, selected: user.state)
+    %fieldset
+      = user_form.label :street_address_1, 'Postal Code'
+      = user_form.text_field :postal_code, :placeholder => 'Postal Code'
+    %fieldset
+      = user_form.submit 'Submit', :class => 'btn btn-large btn-primary'
+
