@@ -32,7 +32,7 @@
           = link_to "Account", custom_store_edit_path(store)
 
         %li
-          %a{ :href => 'mailto:admin@gramgoods.com' }
+          %a{ :href => "mailto:#{ADMIN_EMAIL_ADDRESS}" }
             Help
 
         %li
@@ -47,6 +47,6 @@
           %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
 
         %li
-          %a{ :href => 'mailto:admin@gramgoods.com' }
+          %a{ :href => "mailto:#{ADMIN_EMAIL_ADDRESS}" }
             Contact Us
 
