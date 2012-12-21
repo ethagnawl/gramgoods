@@ -710,3 +710,12 @@ body.non-custom-merchant {  // store page
 .return-policy, .terms-of-service, .welcome {
     padding: 2% 4%;
 }
+
+.welcome {
+    .screenshot {
+        display: block;
+        margin: 6px auto 14px;
+        max-width: 576px;
+        width: 100%;
+    }
+}

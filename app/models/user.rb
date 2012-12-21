@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
     :recoverable, :rememberable, :trackable, :validatable
 
   attr_accessible :email, :street_address_1, :street_address_2,
-    :city, :state, :postal_code
+    :city, :state, :postal_code, :business_name
 
   validates_uniqueness_of :email
 
-  #validates_presence_of :street_address_1, :city, :state, :postal_code
+  validates_presence_of :email, :street_address_1, :city, :state, :postal_code
 
   def self.from_omniauth(auth, user_params, store_params)
     new_user = false
@@ -22,6 +22,15 @@ class User < ActiveRecord::Base
         user.thumbnail = auth.info.image
         user.access_token = auth.credentials.token
         user.email = user_params['email']
+        user.business_name = user_params['business_name']
+        user.street_address_1 = user_params['street_address_1']
+        unless user_params['street_address_2'].nil?
+          user.street_address_2 = user_params['street_address_2']
+        end
+        user.email = user_params['email']
+        user.city = user_params['city']
+        user.state = user_params['state']
+        user.postal_code = user_params['postal_code']
       end
     end.tap { |u| u.create_store store_params if new_user }
 

@@ -1,15 +1,16 @@
-- store = locals[:store]
+- content_for(:title) { "Welcome, #{@store.name}!" }
+- content_for(:header) { "Welcome, #{@store.name}!" }
+
 .widget.welcome
-  %h1.widget Welcome to GramGoods, #{store.name}!
+  %h1.widget Welcome to GramGoods, #{@store.name}!
   %ul.widget
     %li.widget GramGoods is a simple way to sell your products on Instagram.
     %li.widget GramGoods charges 5% on all sales made on our platform. We send checks every 14 days to the business address you signed up with.
-    %li.widget Please place your store's URL in your Instagram profile. (#{link_to("http://gramgoods.com/#{store.slug}", "http://gramgoods.com/#{store.slug}", :target => '_blank')})
+    %li.widget Please place your store's URL in your Instagram profile. (#{link_to("http://gramgoods.com/#{@store.slug}", "http://gramgoods.com/#{@store.slug}", :target => '_blank')})
     %li.widget
       = image_tag("http://s3.amazonaws.com/#{S3_BUCKET}/assets/welcome.jpg",
-        alt: "Add your GramGoods URL (http://gramgoods.com/#{store.slug}) to your Instagram profile.")
+        class: 'screenshot',
+        alt: "Add your GramGoods URL (http://gramgoods.com/#{@store.slug}) to your Instagram profile.")
     %li.widget If you would like help setting up a custom forwarding URL (e.g. shopinstagram.thisisveda.com) or branding for your store pages please contact #{link_to ADMIN_EMAIL_ADDRESS, "mailto:#{ADMIN_EMAIL_ADDRESS}"}.
   %h2.widget Thanks and we look forward to helping you sell great products to your Instagram followers.
-  %a.btn.btn-large.btn-primary.widget{ href: new_store_product_path(store) } Create your first product!
-
-
+  %a.btn.btn-large.btn-primary.widget{ href: new_store_product_path(@store) } Create your first product!

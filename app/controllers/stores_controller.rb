@@ -2,7 +2,8 @@ class StoresController < ApplicationController
   layout 'mobile'
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :new, :proxy, :return_policy]
-  before_filter :except => [:return_policy, :proxy, :create, :new, :show, :index, :destroy] do |controller|
+  before_filter :except => [:welcome, :return_policy, :proxy, :create, :new,
+    :show, :index, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find(params[:id])
@@ -28,6 +29,11 @@ class StoresController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  def welcome
+    @store = Store.find_by_slug(params[:id])
+    redirect_to root_path if @store.nil?
   end
 
   def return_policy
@@ -79,12 +85,16 @@ class StoresController < ApplicationController
     @show_view_more_products_button = show_view_more_products_button?(
                                         @max_pagination_page)
 
-    respond_to do |format|
-      format.html
-      format.json do
-        render :json => {
-          :products_json => products_json
-        }
+    if @current_user_owns_store && current_user.is_a_new_user? && @store.products.length == 0
+      redirect_to(welcome_store_path(@store))
+    else
+      respond_to do |format|
+        format.html
+        format.json do
+          render :json => {
+            :products_json => products_json
+          }
+        end
       end
     end
   end

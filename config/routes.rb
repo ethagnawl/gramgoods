@@ -9,6 +9,7 @@ Gramgoods::Application.routes.draw do
   match '/tos' => 'static#tos'
 
   resources :stores do
+    get 'welcome', :on => :member
     get 'return_policy', :on => :member
 
     resources :orders do
