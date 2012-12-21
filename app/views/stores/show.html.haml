@@ -9,22 +9,11 @@
     = @store.name
 
 - if user_owns_store?(@store.id)
-  - if current_user.allowed_to_create_products?
-    - if @store.products(true).empty?
-      = render 'shared/notice', :locals => { :notice => no_products_message(@store) }
+  - if current_user.is_a_new_user?
+    = render 'welcome', locals: { store: @store }
 
-  - else
-    = render 'shared/alert', :locals => { :alert => 'You\'ll need to enter the following information before you can create a product.' }
-    .widget
-      %h1 Welcome to GramGoods: a simple way sell your products via Instagram.
-      %h2 GramGoods charges 5% on all sales you make on our platform. Please enter your business name and address here. We send checks every 14 days.
-
-      = render 'users/form', :locals => { user: current_user }
-
-      %h2
-        Please place http://gramgoods.com/#{@store.slug} in your Instagram profile. If you would like a custom subdomain like shopinstagram.thisisveda.com or your logo and colors added to your store please contact #{link_to 'admin@gramgoods.com', 'mailto:admin@gramgoods.com'}.
-
-      %h2 Thanks and we look forward to helping you sell great products to your customers on Instagram.
+  - elsif @store.products(true).empty?
+    = render 'shared/notice', :locals => { :notice => no_products_message(@store) }
 
 - else
   = render 'shared/products'
