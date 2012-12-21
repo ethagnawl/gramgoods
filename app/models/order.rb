@@ -19,7 +19,7 @@ class Order < ActiveRecord::Base
     )
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while processing transaction: #{e.message}"
-    errors.add :base, "There was a problem processing your transaction, please try again. If the problem persists, contact admin@gramgoods.com"
+    errors.add :base, "There was a problem processing your transaction, please try again. If the problem persists, contact #{ADMIN_EMAIL_ADDRESS}"
     false
   end
 
