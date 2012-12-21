@@ -1,7 +1,5 @@
 class ProductsController < ApplicationController
   layout 'mobile'
-  before_filter :redirect_unless_user_is_allowed_to_manipulate_products,
-    :except => [:index, :show]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
@@ -49,8 +47,6 @@ class ProductsController < ApplicationController
   def create
     @user = current_user
     @store = @user.stores.find(params[:store_id])
-    logger.info "!!!!!!!!! #{@user.allowed_to_create_products?}"
-    redirect_to @store unless @user.allowed_to_create_products?
     @product = @store.products.new(params[:product])
     #TODO: move into after_save callback
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
@@ -115,10 +111,6 @@ class ProductsController < ApplicationController
   end
 
   private
-    def redirect_unless_user_is_allowed_to_manipulate_products
-      redirect_to current_user.stores.first unless current_user.allowed_to_create_products?
-    end
-
     # TODO add money gem and convert price to integer
     def strip_commas_from_prices
       params[:product][:price] = params[:product][:price].gsub(',', '')
