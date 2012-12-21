@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
       if current_user.is_a_new_user?
         flash[:notice] = "#{store.name} has been created successfully. <br /> Be sure to add <a href='/#{store.slug}'>http://gramgoods.com/#{store.slug}</a> to your Instagram profile.".html_safe
-        new_store_product_path(store)
+        store_path(store)
       else
         flash[:notice] = "Signed in successfully as #{current_user.username}."
         custom_store_path(store)
