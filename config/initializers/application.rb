@@ -21,3 +21,5 @@ if ENV["DEBUG"].nil?
 else
     DEBUG = (ENV['DEBUG'].to_s == 'true') ? true : false
 end
+
+S3_BUCKET = ENV['FOG_DIRECTORY'] || 'gramgoods-development-assets'
