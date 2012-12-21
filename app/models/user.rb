@@ -4,7 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :omniauthable,
     :recoverable, :rememberable, :trackable, :validatable
 
-  attr_accessible :email
+  attr_accessible :email, :street_address_1, :street_address_2,
+    :city, :state, :postal_code
+
+  validates_uniqueness_of :email
+
+  #validates_presence_of :street_address_1, :city, :state, :postal_code
 
   def self.from_omniauth(auth, user_params, store_params)
     new_user = false

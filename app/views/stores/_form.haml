@@ -12,11 +12,40 @@
   %div
     = fields_for :user do |user_form|
       %fieldset
+        %h2 User
+      %fieldset
         - if edit_view
           = user_form.label :email, (form_label(:email))
         = user_form.text_field :email, :placeholder => (form_label(:email))
 
+      %fieldset
+        - if edit_view
+          = user_form.label :street_address_1, (form_label('Address'))
+        = user_form.text_field :street_address_1, :placeholder => (form_label('Address'))
+
+      %fieldset
+        - if edit_view
+          = user_form.label :street_address_2, (form_label('Apartment/Suite Number', false))
+        = user_form.text_field :street_address_2, :placeholder => form_label('Apartment/Suite Number', false)
+
+      %fieldset
+        - if edit_view
+          = user_form.label :city, (form_label(:city))
+        = user_form.text_field :city, :placeholder => form_label(:city)
+
+      %fieldset
+        - state = !current_user.nil? ? current_user.state : nil
+        = user_form.select :state, options_for_select(us_states, :selected => state)
+
+      %fieldset
+        - if edit_view
+          = user_form.label :postal_code, (form_label(:postal_code))
+        = user_form.text_field :postal_code, :placeholder => form_label(:postal_code)
+
     = fields_for :store do |store_form|
+      %fieldset
+        %h2 Store
+
       %fieldset
         - if edit_view
           = store_form.label :name, (form_label('Store Name'))

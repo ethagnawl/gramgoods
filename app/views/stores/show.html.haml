@@ -9,12 +9,16 @@
     = @store.name
 
 - if user_owns_store?(@store.id)
-  - if current_user.is_a_new_user?
+  - if current_user.is_a_new_user? && @store.products(true).empty?
     = render 'welcome', locals: { store: @store }
 
   - elsif @store.products(true).empty?
     = render 'shared/notice', :locals => { :notice => no_products_message(@store) }
 
+  - else
+    = render 'shared/products'
+
 - else
   = render 'shared/products'
+
 = render 'shared/footer'
