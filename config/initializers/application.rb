@@ -23,3 +23,5 @@ else
 end
 
 S3_BUCKET = ENV['FOG_DIRECTORY'] || 'gramgoods-development-assets'
+
+ADMIN_EMAIL_ADDRESS = ENV['ADMIN_EMAIL'] || 'admin@gramgoods.com'
