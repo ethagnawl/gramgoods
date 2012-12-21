@@ -5,9 +5,9 @@ module ApplicationHelper
 
   def no_products_message(store)
 <<eos
-Welcome to GramGoods!
+What are you waiting for?
 <br>
-Get started by <a href="#{new_store_product_path(store) }"> creating your first product</a>.
+<a href="#{new_store_product_path(store) }"> Create your first product!</a>
 eos
   end
 
