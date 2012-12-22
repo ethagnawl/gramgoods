@@ -4,6 +4,22 @@ window.store_form_validation_rules =
             message: 'Email Address is required.'
             required: true
             test: happy.email
+        '#user_business_name':
+            message: 'Business Name is required.'
+            required: true
+        '#user_street_address_1':
+            message: 'Street Address is required.'
+            required: true
+        '#user_city':
+            message: 'City is required.'
+            required: true
+        '#user_state':
+            message: 'State is required.'
+            required: true
+        '#user_postal_code':
+            message: 'Postal Code is required.'
+            required: true
+            test: happy.postal_code
         '#store_name':
             message: 'Store Name is required.'
             required: true
