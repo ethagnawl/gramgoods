@@ -5,7 +5,7 @@
   .widget
     %h2 Contact
     %p.widget
-      %a{ :href => "mailto: #{locals[:order].store.user.email}"}
+      %a{ :href => "mailto:#{locals[:order].store.user.email}"}
         #{locals[:order].store.name}
     %p.widget
       %a{ :href => "mailto:#{ADMIN_EMAIL_ADDRESS}" } GramGoods
@@ -17,7 +17,7 @@
 
   .widget
     %p.widget
-      %a{ :href => "/#{locals[:order].store.slug}" }
+      %a{ :href => "http://www.gramgoods.com/#{locals[:order].store.slug}" }
         Back to #{locals[:order].store.name}
     %p.widget
-      = link_to 'Back to GramGoods', root_path
+      = link_to 'Back to GramGoods', 'http://www.gramgoods.com'
