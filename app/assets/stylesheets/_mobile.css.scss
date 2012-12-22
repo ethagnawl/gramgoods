@@ -535,7 +535,7 @@ html.no-touch {
             float: left;
             margin-left: 2%;
             padding-top: 2%;
-            width: 48%;
+            width: 42%;
 
             > div {
                 float: left;
@@ -554,19 +554,19 @@ html.no-touch {
         .product-right {
             float: left;
             padding-top: 2%;
-            width: 14%;
+            width: 20%;
 
            .owner-action {
+               float: left;
                margin-bottom: 10%;
                width: 100%;
 
-                .btn {
+                div.btn,
+                a.btn {
+                    color: $white;
+                    dislay: block;
                     text-align: center;
                     width: 100%;
-
-                    a {
-                        color: $white;
-                    }
                 }
             }
 
