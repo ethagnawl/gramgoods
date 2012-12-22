@@ -16,8 +16,8 @@
 
       %fieldset
         - if edit_view
-          = user_form.label :business_name, (form_label('Name'))
-        = user_form.text_field :business_name, :placeholder => (form_label('Name'))
+          = user_form.label :business_name, (form_label(:business_name))
+        = user_form.text_field :business_name, :placeholder => (form_label(:business_name))
 
       %fieldset
         - if edit_view
@@ -54,9 +54,8 @@
 
       %fieldset
         - if edit_view
-          = store_form.label :name, (form_label(:name))
-        = store_form.text_field :name, :placeholder => (form_label(:name)), |
-                                 :class => 'input-xlarge'
+          = store_form.label :name, (form_label('Store Name'))
+        = store_form.text_field :name, :placeholder => (form_label('Store Name'))
 
       %fieldset
         - if edit_view
