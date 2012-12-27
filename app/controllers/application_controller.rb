@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :basic_authentication
 
   helper_method :mobile_device?
+  helper_method :browser_is_instagram?
   helper_method :mobile_device_is_iOS?
   helper_method :user_owns_store?
   helper_method :is_store_slug_in_merchants_with_custom_store_slugs_array?
@@ -95,6 +96,10 @@ class ApplicationController < ActionController::Base
 
     def mobile_device?
       request.user_agent =~ /Mobile|webOS/
+    end
+
+    def browser_is_instagram?
+      !(request.user_agent =~ /Instagram/).nil?
     end
 
     def show_view_more_products_button?(max_pagination_page)

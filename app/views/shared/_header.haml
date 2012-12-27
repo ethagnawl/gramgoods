@@ -39,7 +39,7 @@
           = link_to 'Sign Out', destroy_user_session_path
 
       - else
-        = render 'shared/force_instagram_logout_iframe'
+        = render 'shared/force_instagram_logout_iframe' unless browser_is_instagram?
         %li
           %a{ :href => '/stores/new' } Sign Up
 
