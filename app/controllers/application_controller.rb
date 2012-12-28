@@ -99,7 +99,8 @@ class ApplicationController < ActionController::Base
     end
 
     def browser_is_instagram?
-      !(request.user_agent =~ /Instagram/).nil?
+      (DEBUG && params[:acts_as_instagram_browser] == 'true') ||
+        !(request.user_agent =~ /Instagram/).nil?
     end
 
     def show_view_more_products_button?(max_pagination_page)
