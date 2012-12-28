@@ -1,5 +1,11 @@
 class StaticController < ApplicationController
+  layout 'mobile'
+
   def tos
-    render 'static/tos', :layout => 'mobile'
+    render 'tos'
+  end
+
+  def use_mobile_safari
+    render 'use_mobile_safari'
   end
 end

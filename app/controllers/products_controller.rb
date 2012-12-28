@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'mobile'
+  before_filter :redirect_to_use_mobile_safari, :only => [:new, :create, :edit, :update]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
@@ -33,6 +34,7 @@ class ProductsController < ApplicationController
       end
     end
   end
+
 
   def new
     @user = current_user
@@ -111,6 +113,10 @@ class ProductsController < ApplicationController
   end
 
   private
+    def redirect_to_use_mobile_safari
+      redirect_to use_mobile_safari_path if browser_is_instagram?
+    end
+
     # TODO add money gem and convert price to integer
     def strip_commas_from_prices
       params[:product][:price] = params[:product][:price].gsub(',', '')

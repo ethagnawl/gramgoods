@@ -7,6 +7,7 @@ Gramgoods::Application.routes.draw do
 
   root :to => 'products#index'
   match '/tos' => 'static#tos'
+  match '/use_mobile_safari' => 'static#use_mobile_safari'
 
   resources :stores do
     get 'welcome', :on => :member
