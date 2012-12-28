@@ -6,6 +6,10 @@ class StaticController < ApplicationController
   end
 
   def use_mobile_safari
-    render 'use_mobile_safari'
+    if browser_is_instagram?
+      render 'use_mobile_safari'
+    else
+      redirect_to root_path
+    end
   end
 end
