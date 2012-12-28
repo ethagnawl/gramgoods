@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
       render :json => {
         :status => 'success',
         :product_images => user_feed.map { |image| image[:url] },
-        :like_count => user_feed.inject(0) { |sum, image| image[:like_count] }
+        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] }
       }
     else
       render :json => {
