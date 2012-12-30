@@ -30,11 +30,32 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def instagram_feed_for_user_filtered_by_tag
+  def fetch_instagram_feed_for_user
+    store = params[:store_slug]
+    user = Store.find(store).user
+    max_id = params[:max_id] || nil
+    user_feed = user.fetch_feed(max_id)
+
+    if user_feed && user_feed.length > 0
+      render :json => {
+        :status => 'success',
+        :product_images => user_feed.map { |image| image[:url] },
+        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] }
+      }
+    else
+      render :json => {
+        :status => 'error',
+        :alert => 'Sorry, there don\'t seem to be any more photos available.'
+      }
+    end
+  end
+
+  def fetch_instagram_feed_for_user_and_filter_by_tag
     tag = params[:tag]
     store = params[:store_slug]
     user = Store.find(store).user
-    user_feed = user.fetch_instagram_feed_for_user_and_filter_by_tag(tag)
+    user_feed = user.fetch_feed_and_filter_by_tag(tag)
+
     if user_feed && user_feed.length > 0
       render :json => {
         :status => 'success',
