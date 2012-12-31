@@ -52,7 +52,7 @@ templates.product_template = """
                     <a href="/stores/{{store_slug}}/products/{{product_slug}}" class="btn btn-primary btn-primary" data-confirm="Are you sure you want to delete {{product_name}}?" data-method="delete" rel="nofollow">Delete</a>
                 </div>
                 <div class="owner-action">
-                    <div class="btn btn-primary btn-success" disabled="disabled">
+                    <div class="btn btn-primary {{product_status_class}}" disabled="disabled">
                         {{product_status}}
                     </div>
                 </div>

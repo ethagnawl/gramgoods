@@ -109,6 +109,14 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def status_class
+    case self.status
+      when 'Active' then 'btn-success'
+      when 'Draft' then 'btn-warning'
+      else 'btn-danger'
+    end
+  end
+
   # allow nested attributes to use x.product before product has been saved
   # http://stackoverflow.com/questions/2611459
   def set_nest(item)

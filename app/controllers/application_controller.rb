@@ -114,6 +114,7 @@ class ApplicationController < ActionController::Base
           json.product_price number_to_currency(product.price)
           json.product_slug product.slug
           json.product_status product.status
+          json.product_status_class product.status_class
           json.product_instagram_tag product.get_instagram_tag
 
           json.store_name product.store.name
