@@ -67,7 +67,7 @@ GramGoods.fetch_product_images = ($self, callback) ->
 
     $.ajax
         dataType: 'json'
-        url: '/instagram_feed_for_user_filtered_by_tag'
+        url: '/fetch_instagram_feed_for_user_and_filter_by_tag'
         data:
             tag: tag
             store_slug: store_slug

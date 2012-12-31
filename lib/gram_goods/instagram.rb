@@ -1,12 +1,5 @@
 module GramGoods
   module Instagram
-    def config
-      ::Instagram.configure do |config|
-        config.client_id = self.uid
-        config.access_token = self.access_token
-      end
-    end
-
     def fetch_media_count
       config
       (::Instagram.user.counts.media).to_i
@@ -27,7 +20,7 @@ module GramGoods
       last_id = nil
       items = ::Instagram.user_recent_media({:max_id => max_id}).tap do |items|
         i += items.length
-        puts last_id = items.last.id
+        last_id = items.last.id
       end.map { |item| feed_item(item) }
 
       {
@@ -37,7 +30,7 @@ module GramGoods
       }
     end
 
-    def fetch_feed(max_id = nil)
+    def fetch_proxy(max_id = nil)
       config
 
       media_count = fetch_media_count
@@ -58,21 +51,46 @@ module GramGoods
       block_given? ? yield(user_photo_feed) : user_photo_feed
     end
 
+    def fetch_feed(max_id = nil)
+      key = "#{self.uid}_feed"
+      user_photo_feed_from_cache = Rails.cache.read(key)
+
+      if user_photo_feed_from_cache.nil?
+        user_photo_feed = fetch_proxy(max_id)
+
+        Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
+        update_cache(:fetch_feed, max_id)
+        user_photo_feed
+      else
+        user_photo_feed_from_cache
+      end
+    end
+
     def fetch_feed_and_filter_by_tag(_tag)
       tag = _tag.downcase
       tag = tag.split('#')[1] if /^#+/ =~ tag
 
-      fetch_feed do |user_photo_feed|
-        user_photo_feed.find_all { |item| item.tags.member?(tag) }
+      key = "#{self.uid}_#{tag}"
+      user_photo_feed_from_cache = Rails.cache.read(key)
+
+      if user_photo_feed_from_cache.nil?
+        user_photo_feed = fetch_proxy do |user_photo_feed|
+          user_photo_feed.find_all { |item| item.tags.member?(tag) }
+        end
+
+        Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
+        update_cache(:fetch_feed_and_filter_by_tag, tag)
+        user_photo_feed
+      else
+        user_photo_feed_from_cache
       end
     end
 
-    def comment_on_feed_item(id, comment = 'WAT?')
-      # background task
+    def comment_on_feed_item(id, comment)
       config
       ::Instagram.create_media_comment(id, comment)
     end
-    #handle_asynchronously :comment_on_feed_item, :run_at => Proc.new { 20.minutes.from_now }
+    handle_asynchronously :comment_on_feed_item
 
     def comment_on_feed_items(items)
       items.each &:comment_on_feed_item
@@ -85,5 +103,11 @@ module GramGoods
           config.access_token = self.access_token
         end
       end
+
+    def update_cache(method, params)
+      return true
+      self.send(method, params)
+    end
+    handle_asynchronously :update_cache, :run_at => Proc.new { 20.minutes.from_now }
   end
 end

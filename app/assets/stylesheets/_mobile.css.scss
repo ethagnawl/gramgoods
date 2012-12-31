@@ -719,3 +719,49 @@ body.non-custom-merchant {  // store page
         width: 100%;
     }
 }
+
+#existing_photo_grid {
+    .photo-wrapper {
+        clear: none;
+        float: left;
+        margin: 4px;
+        position: relative;
+        width: 30%;
+
+        .photo {
+            @include transition(.2s);
+
+            border: 4px solid #ccc;
+            display: inline-block;
+            width: 100%;
+        }
+
+        span {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+        }
+
+        .remove {
+            display: none;
+        }
+
+        .add {
+            display: inline-block;
+        }
+
+        &.selected {
+            .photo {
+                border-color: #666;
+            }
+
+            .remove {
+                display: inline-block;
+            }
+
+            .add {
+                display: none;
+            }
+        }
+    }
+}

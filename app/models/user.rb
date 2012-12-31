@@ -79,10 +79,5 @@ class User < ActiveRecord::Base
     super && provider.blank?
   end
 
-  def update_instagram_cache(tag)
-    self.fetch_instagram_feed_for_user_and_filter_by_tag(tag)
-  end
-  handle_asynchronously :update_instagram_cache, :run_at => Proc.new {
-    20.minutes.from_now }
 
 end

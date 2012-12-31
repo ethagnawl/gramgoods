@@ -26,8 +26,8 @@ Gramgoods::Application.routes.draw do
     resources :stores
   end
   match "/delayed_job" => DelayedJobWeb, :anchor => false
-  match 'fetch_instagram_feed_for_user' => 'application#fetch_instagram_feed_for_user'
-  match 'fetch_instagram_feed_for_user_and_filter_by_tag' => 'application#fetch_instagram_feed_for_user_and_filter_by_tag'
+  match '/fetch_instagram_feed_for_user' => 'application#fetch_instagram_feed_for_user'
+  match '/fetch_instagram_feed_for_user_and_filter_by_tag' => 'application#fetch_instagram_feed_for_user_and_filter_by_tag'
   match 'stores_proxy' => 'stores#proxy'
   match '/:id' => 'stores#show', :as => 'custom_store'
   match '/:id/edit' => 'stores#edit', :as => 'custom_store_edit'
