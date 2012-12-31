@@ -113,7 +113,8 @@ class Product < ActiveRecord::Base
     case self.status
       when 'Active' then 'btn-success'
       when 'Draft' then 'btn-warning'
-      else 'btn-danger'
+      when 'Out of Stock' then 'btn-danger'
+      else ''
     end
   end
 
