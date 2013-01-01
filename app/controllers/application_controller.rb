@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
   end
 
   def fetch_instagram_feed_for_user
-    max_id = params[:max_id] || nil
-    @feed = @user.fetch_feed(max_id)
+    max_id = params[:max_id] == 'nil' ? nil : params[:max_id]
+    @feed = @user.fetch_feed({max_id: max_id})
 
     render :json => instagram_feed_json_response(@user, @feed)
   end
@@ -134,7 +134,8 @@ class ApplicationController < ActionController::Base
       {
         :status => 'success',
         :product_images => user_feed.map { |image| image[:url] },
-        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] }
+        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] },
+        :max_id => user_feed.last.id
       }
     end
 

@@ -1,34 +1,41 @@
-photo_template = """
-    <div class='photo-wrapper'>
-        <img src="{{product_image}}" class="photo">
-        <span class='remove btn btn-success'>
-            <i class='icon-ok'></i>
-        </span>
-        <span class='add btn'>
-            <i class='icon-plus-sign'></i>
-        </span>
-    </div>
-"""
-
-
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
+        max_id = 'nil'
+        photo_template = templates.existing_photo_grid_photo_template
+
         ($ '#existing_photo_grid').on 'click', '.photo-wrapper', ->
             ($ @).toggleClass('selected')
 
-        ($ '#add_existing_photos').click ->
-            $.get '/fetch_instagram_feed_for_user', (_response) ->
-                response = JSON.parse(_response)
+        fetch_and_render_existing_photos = ->
+            $.ajax
+                url: '/fetch_instagram_feed_for_user'
+                data: { max_id }
+                error: -> alert GramGoods.error_message
+                success: (_response) ->
+                    response = JSON.parse(_response)
 
-                unless response.status is 'success'
-                    alert 'Sorry, something went wrong.'
-                else
-                    for product_image in response.product_images
-                        img = Mustache.render photo_template, { product_image }
-                        $('#existing_photo_grid').append(img)
+                    unless response.status is 'success'
+                        message = if response.alert?
+                            response.alert
+                        else
+                            GramGoods.error_message
 
-                    $('#existing_photo_grid_wrapper').removeClass('hide')
-                    $('#default_submit_buttons').addClass('hide')
+                        alert message
+                    else
+                        $wrapper = $('<div />')
+                        max_id = response.max_id
+
+                        for product_image in response.product_images
+                            img = Mustache.render photo_template, { product_image }
+                            $wrapper.append(img)
+
+                        $('#existing_photo_grid').append($wrapper)
+                        $('#existing_photo_grid_wrapper').removeClass('hide')
+                        $('#default_submit_buttons').addClass('hide')
+
+        ($ '#add_existing_photos, #fetch_additional_existing_photos')
+            .on 'tap click', ->
+                fetch_and_render_existing_photos()
 
 
         ($ 'form').submit ->
