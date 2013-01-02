@@ -97,7 +97,7 @@ module GramGoods
       user_photo_feed_from_cache = _cache_response ? YAML::load(_cache_response) : nil
 
       if user_photo_feed_from_cache.nil?
-        user_photo_feed = fetch_proxy(true) do |user_photo_feed|
+        user_photo_feed = fetch_proxy({recurse: true}) do |user_photo_feed|
           user_photo_feed.find_all { |item| item.tags.member?(tag) }
         end
 
