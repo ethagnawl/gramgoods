@@ -721,12 +721,16 @@ body.non-custom-merchant {  // store page
 }
 
 #existing_photo_grid {
+    float: none;
+    margin: 0 auto;
+    width: 96%;
+
     .photo-wrapper {
         clear: none;
         float: left;
-        margin: 4px;
+        margin: 2px;
         position: relative;
-        width: 30%;
+        width: 32%;
 
         .photo {
             @include transition(.2s);

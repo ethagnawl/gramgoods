@@ -22,6 +22,7 @@ module GramGoods
       end
 
       {
+        :user_media_count => args[:user_media_count].to_i,
         :items => (items.map { |item| feed_item(item) }),
         :i => i,
         :last_id => last_id
@@ -32,10 +33,11 @@ module GramGoods
       count = args[:count] || nil
       max_id = args[:max_id] || nil
       recurse = args[:recurse] || false
+      return_object = {}
 
       config
 
-      media_count = fetch_media_count
+      return_object[:media_count] = media_count = fetch_media_count
       last_id = nil
       i = 0
       user_photo_feed = []
@@ -57,7 +59,10 @@ module GramGoods
         end
       }.tap { |_self| _self.call(_self, max_id) }
 
-      block_given? ? yield(user_photo_feed) : user_photo_feed
+      return_object[:user_photo_feed] = block_given? ?
+        yield(user_photo_feed) : user_photo_feed
+
+      return_object
     end
 
     def fetch_feed(args = {})
@@ -66,7 +71,8 @@ module GramGoods
       max_id_for_key = !max_id.nil? ? max_id : 0
 
       key = "#{self.uid}_feed_#{max_id_for_key}"
-      user_photo_feed_from_cache = Rails.cache.read(key)
+      _cache_response = Rails.cache.read(key)
+      user_photo_feed_from_cache = _cache_response ? YAML::load(_cache_response) : nil
 
       if user_photo_feed_from_cache.nil?
         user_photo_feed = fetch_proxy({
@@ -74,13 +80,9 @@ module GramGoods
           count: count
         })
 
-        unless user_photo_feed
-          false
-        else
-          Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
-          update_cache(:fetch_feed, max_id)
-          user_photo_feed
-        end
+        Rails.cache.write key, YAML::dump(user_photo_feed), :expires_in => 20.minutes
+        update_cache(:fetch_feed, max_id)
+        user_photo_feed
       else
         user_photo_feed_from_cache
       end
@@ -91,14 +93,15 @@ module GramGoods
       tag = tag.split('#')[1] if /^#+/ =~ tag
 
       key = "#{self.uid}_#{tag}"
-      user_photo_feed_from_cache = Rails.cache.read(key)
+      _cache_response = Rails.cache.read(key)
+      user_photo_feed_from_cache = _cache_response ? YAML::load(_cache_response) : nil
 
       if user_photo_feed_from_cache.nil?
         user_photo_feed = fetch_proxy(true) do |user_photo_feed|
           user_photo_feed.find_all { |item| item.tags.member?(tag) }
         end
 
-        Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
+        Rails.cache.write key, YAML::dump(user_photo_feed), :expires_in => 20.minutes
         update_cache(:fetch_feed_and_filter_by_tag, tag)
         user_photo_feed
       else

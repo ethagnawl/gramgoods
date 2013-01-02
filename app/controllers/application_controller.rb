@@ -130,8 +130,12 @@ class ApplicationController < ActionController::Base
       @user = !store.nil? ? Store.find(store).user : (user_signed_in? ? current_user : nil)
     end
 
-    def instagram_user_feed_success_json(user_feed)
+    def instagram_user_feed_success_json(args)
+      user_feed = args[:user_feed]
+      user_media_count = args[:user_media_count]
+
       {
+        :media_count => user_media_count,
         :status => 'success',
         :product_images => user_feed.map { |image| image[:url] },
         :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] },
@@ -148,7 +152,10 @@ class ApplicationController < ActionController::Base
 
     def instagram_feed_json_response(user, user_feed)
       if user && user_feed && user_feed.length > 0
-        instagram_user_feed_success_json(user_feed)
+        instagram_user_feed_success_json({
+          user_feed: user_feed[:user_photo_feed],
+          user_media_count: user_feed[:media_count]
+        })
       else
         instagram_user_feed_error_json
       end

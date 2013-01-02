@@ -5,4 +5,5 @@
 //= require ./mobile/happy_form_methods
 //= require ./common/rails
 //= require ./common/mustache
+//= require ./common/underscore
 //= require_tree ./mobile
