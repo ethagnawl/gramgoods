@@ -99,44 +99,16 @@
                                 :type => 'text',
                                 :placeholder => flatrate_shipping_label
 
-    #default_submit_buttons
-      %fieldset
-        = product_form.label :status, (form_label(:status))
-        = product_form.select :status,
-                              options_for_select(Product.order_status_array,
-                                                 @product.status ||= 'Active')
+    %fieldset
+      = product_form.label :status, (form_label(:status))
+      = product_form.select :status,
+                            options_for_select(Product.order_status_array,
+                                               @product.status ||= 'Active')
 
-      - if mobile_device_is_iOS?
-        %fieldset
-          = product_form.submit "#{verb_and_product} and Share on Instagram", |
-            :name => 'post_to_instagram', :class => 'btn btn-large btn-primary'
+    = render 'product_images', locals: { edit_view: edit_view,
+      product_images: @product.get_product_images, username: @user.username }
 
-        %fieldset
-          %a#add_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-            Add Existing Photos - TODO
+    %fieldset
+      = product_form.submit verb_and_product, |
+        :class => 'btn btn-large btn-primary'
 
-      - if !mobile_device_is_iOS? || edit_view
-        %fieldset
-          = product_form.submit verb_and_product, |
-            :class => 'btn btn-large btn-primary'
-
-    #product_images_wrapper
-      - if edit_view
-        #product_image_photo_grid_wrapper.widget
-          %label Current Product Images
-
-          #product_image_photo_grid.widget
-            - @product.get_product_images.each do |product_image|
-              .photo-wrapper.selected{ data: { url: product_image } }
-                %img.photo{ src: product_image }
-                %span.remove.btn.btn-success
-                  %i.icon-ok
-                %span.add.btn
-                  %i.icon-plus-sign
-
-      #existing_photo_grid_wrapper.widget.hide
-        %label #{current_user.username}'s Instagram Feed
-        #existing_photo_grid.widget
-        %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-          Load Additional Photos
-        = product_form.submit verb_and_product, :class => 'btn btn-large btn-primary'

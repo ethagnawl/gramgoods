@@ -722,10 +722,16 @@ body.non-custom-merchant {  // store page
     }
 }
 
+#product_image_photo_grid_wrapper,
+#product_images_wrapper {
+    margin-bottom: 0;
+}
+
 #product_image_photo_grid,
 #existing_photo_grid {
     float: none;
-    margin: 0 auto;
+    margin-right: auto;
+    margin-left: auto;
     width: 96%;
 
     .photo-wrapper {

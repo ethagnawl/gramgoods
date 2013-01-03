@@ -1,0 +1,23 @@
+#product_images_wrapper
+  - if locals[:edit_view]
+    %fieldset
+      #product_image_photo_grid_wrapper.widget
+        %label Current Product Images
+
+        #product_image_photo_grid.widget
+          - locals[:product_images].each do |product_image|
+            .photo-wrapper.selected{ data: { url: product_image } }
+              %img.photo{ src: product_image }
+              %span.remove.btn.btn-success
+                %i.icon-ok
+              %span.add.btn
+                %i.icon-plus-sign
+
+  %fieldset
+    #existing_photo_grid_wrapper.hide
+      %label #{@user.username}'s Instagram Feed
+      #existing_photo_grid
+      %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+        Load Additional Photos
+
+

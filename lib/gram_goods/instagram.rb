@@ -4,16 +4,18 @@ module GramGoods
       defaults = {
         count: 18,
         method: :fetch_feed,
-        max_id: nil
+        max_id: nil,
+        cache: false
       }
 
       args = defaults.merge(_args)
       args[:key] = "#{self.uid}_feed_#{(args[:max_id] || 0)}"
 
-      foo(args)
+      fetch_feed_and_cache(args)
     end
 
     def fetch_feed_and_filter_by_tag(_tag)
+      raise 'Not implemented.'
       tag = _tag.downcase
       tag = (tag.downcase).split('#')[1] if /^#+/ =~ tag
       key = "#{self.uid}_#{tag}"
@@ -23,7 +25,7 @@ module GramGoods
         end
       }
 
-      foo({
+      fetch_feed_and_cache({
         key: key,
         recurse: true,
         callback: callback,
@@ -32,12 +34,14 @@ module GramGoods
     end
 
     def comment_on_feed_item(id, comment)
+      raise 'Not implemented.'
       config
       ::Instagram.create_media_comment(id, comment)
     end
-    handle_asynchronously :comment_on_feed_item
+    #handle_asynchronously :comment_on_feed_item
 
     def comment_on_feed_items(items)
+      raise 'Not implemented.'
       items.each &:comment_on_feed_item
     end
 
@@ -55,10 +59,10 @@ module GramGoods
       end
 
       def update_cache(method, params)
-        return true
+        raise 'Not implemented.'
         self.send(method, params)
       end
-      handle_asynchronously :update_cache, :run_at => Proc.new { 20.minutes.from_now }
+      #handle_asynchronously :update_cache, :run_at => Proc.new { 20.minutes.from_now }
 
       def feed_item(item)
         tags = item.tags
@@ -70,8 +74,6 @@ module GramGoods
       end
 
       def fetch_recent_media(args)
-        config
-
         i = 0
         last_id = nil
         items = ::Instagram.user_recent_media(args).tap do |items|
@@ -124,18 +126,22 @@ module GramGoods
         return_object
       end
 
-      def foo(args = {})
-        _cache_response = Rails.cache.read(args[:key])
-        user_photo_feed_from_cache = _cache_response ? YAML::load(_cache_response) : nil
+      def fetch_feed_and_cache(args = {})
+        if args[:key] && args[:cache] == true
+          _cache_response = Rails.cache.read(args[:key])
+          user_photo_feed_from_cache = _cache_response ? YAML::load(_cache_response) : nil
 
-        if user_photo_feed_from_cache.nil?
-          user_photo_feed = fetch_proxy(args)
-          Rails.cache.write args[:key],
-            YAML::dump(user_photo_feed), :expires_in => 20.minutes
-          update_cache(args[:method], args)
-          user_photo_feed
+          if user_photo_feed_from_cache.nil?
+            user_photo_feed = fetch_proxy(args)
+            Rails.cache.write args[:key],
+              YAML::dump(user_photo_feed), :expires_in => 20.minutes
+            update_cache(args[:method], args)
+            user_photo_feed
+          else
+            user_photo_feed_from_cache
+          end
         else
-          user_photo_feed_from_cache
+          fetch_proxy(args)
         end
       end
   end

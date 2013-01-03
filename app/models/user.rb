@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def store_ids
-    Store.find_all_by_user_id(self.id).map { |store| store.id }
+    Store.where(user_id: self.id).map &:id
   end
 
   def first_store

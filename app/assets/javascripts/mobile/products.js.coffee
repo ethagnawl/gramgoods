@@ -1,5 +1,6 @@
 if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'products_edit' or gon.page is 'products_update'
     $ ->
+        loading_photos = true
         max_id = 'nil'
         user_media_count = 0
         photo_grid_media_count = 0
@@ -8,6 +9,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         existing_photo_grid_photos_template = templates.existing_photo_grid_photos_template
         existing_photo_grid_photo_template = templates.existing_photo_grid_photo_template
 
+        $existing_photo_grid_wrapper = ($ '#existing_photo_grid_wrapper')
         $existing_photo_grid = ($ '#existing_photo_grid')
         $loading_buttons = [($ '#add_existing_photos'),
                             $('#fetch_additional_existing_photos')]
@@ -33,7 +35,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
             $el.addClass('hide') for $el in $loading_buttons
 
         update_product_image_array = ->
-            console.log product_image_urls = ($ '.photo-wrapper.selected').map ->
+            product_image_urls = ($ '.photo-wrapper.selected').map ->
                 ($ @).data('url')
             $product_images.val product_image_urls
 
@@ -43,18 +45,28 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
             toggle_photo_wrapper_state $el
             update_product_image_array $el
 
-        if has_touch_events
-            $product_images_wrapper.on 'tap', '.photo-wrapper', ->
-                photo_wrapper_click_handler ($ @)
-        else
-            $product_images_wrapper.on 'click', '.photo-wrapper', ->
-                photo_wrapper_click_handler ($ @)
+        $product_images_wrapper.each ->
+            if has_touch_events
+                ($ @).on 'tap', '.photo-wrapper', ->
+                    photo_wrapper_click_handler ($ @)
+            else
+                ($ @).on 'click', '.photo-wrapper', ->
+                    photo_wrapper_click_handler ($ @)
 
-        fetch_and_render_existing_photos = ->
+        fetch_and_render_existing_photos = (pageload = false) ->
             $.ajax
                 url: '/fetch_instagram_feed_for_user'
                 data: { max_id }
-                complete: -> toggle_all_loading_buttons()
+                beforeSend: ->
+                    unless pageload
+                        if loading_photos
+                            return false
+                        else
+                            loading_photos = true
+
+                complete: ->
+                    toggle_all_loading_buttons() unless pageload is true
+                    loading_photos = false
                 error: -> alert GramGoods.error_message
                 success: (_response) ->
                     response = JSON.parse(_response)
@@ -89,17 +101,18 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                             })
                         )
 
-                        $('#existing_photo_grid_wrapper').removeClass('hide')
-                        $('#default_submit_buttons').addClass('hide')
+                        if $existing_photo_grid_wrapper.hasClass('hide')
+                            $existing_photo_grid_wrapper.removeClass('hide')
 
         loading_button_click_handler = ($el) ->
-            return false if $el.hasClass('loading')
-            toggle_all_loading_buttons()
-            fetch_and_render_existing_photos()
+            unless loading_photos
+                toggle_all_loading_buttons()
+                fetch_and_render_existing_photos()
 
-        if has_touch_events
-            ($ '#add_existing_photos, #fetch_additional_existing_photos')
-                .on 'tap', -> loading_button_click_handler ($ @)
-        else
-            ($ '#add_existing_photos, #fetch_additional_existing_photos')
-                .on 'click', -> loading_button_click_handler ($ @)
+        ($ '#fetch_additional_existing_photos').each ->
+            if has_touch_events
+                ($ @).on 'tap', -> loading_button_click_handler ($ @)
+            else
+                ($ @).on 'click', -> loading_button_click_handler ($ @)
+
+        fetch_and_render_existing_photos(true)
