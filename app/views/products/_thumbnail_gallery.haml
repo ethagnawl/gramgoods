@@ -7,10 +7,11 @@
       alt: "#{locals[:product_name]}",
       data: { index: index } }
 
-  .product-gallery-controls
-    - locals[:product_images].each_with_index do |product_image, index|
-      - _class = index == 0 ? 'product-gallery-control on' : 'product-gallery-control'
-      %a{ href: "javascript: void(0);",
-      class: _class,
-      data: { index: index } }
+  - if locals[:product_images].length > 1
+    .product-gallery-controls
+      - locals[:product_images].each_with_index do |product_image, index|
+        - _class = index == 0 ? 'product-gallery-control on' : 'product-gallery-control'
+        %a{ href: "javascript: void(0);",
+        class: _class,
+        data: { index: index } }
 

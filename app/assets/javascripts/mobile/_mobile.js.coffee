@@ -10,62 +10,6 @@ GramGoods.dirty_commas = (num) ->
     String(num).replace /^\d+(?=\.|$)/, (int) ->
         int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
 
-GramGoods.render_single_product_image = ($self, photos) ->
-    product_image = photos[0]
-    product_name = gon.product_name
-
-    $self
-        .find('.product-left').html(
-            Mustache.render templates.product_image_template, {
-                product_name,
-                product_image })
-
-GramGoods.render_multiple_product_images = ($self, product_images) ->
-    $product_gallery_wrapper = $('<div />')
-    $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
-
-    for product_image, i in product_images
-        product_gallery_data =
-            index: i
-            class: "product-thumbnail #{(if i is 0 then 'on' else null)}"
-            product_name: gon.product_name
-            product_image: product_image
-
-        $product_gallery_wrapper.append Mustache.render(
-            templates.product_thumbnail_gallery_image_template, product_gallery_data)
-
-        product_gallery_control_data =
-            classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
-            index: i
-
-
-        if product_images.length > 1
-            $product_gallery_controls_wrapper.append Mustache.render(
-                templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
-
-    $self.find('.product-thumbnail-gallery')
-        .html($product_gallery_wrapper)
-        .append($product_gallery_controls_wrapper)
-
-
-GramGoods.fetch_product_images = ($self, callback) ->
-    tag = $self.data('instagram-tag')
-    store_slug = $self.data('store-slug')
-
-    $.ajax
-        dataType: 'json'
-        url: '/fetch_instagram_feed_for_user_and_filter_by_tag'
-        data:
-            tag: tag
-            store_slug: store_slug
-        success: (response) =>
-            $self.addClass('product-image-has-been-loaded')
-
-            if response.status is 'error'
-                $self.find('.loading').text('')
-            else
-                callback($self, response.product_images)
-
 $ ->
     window.$window = ($ window)
     window.$html = ($ 'html')

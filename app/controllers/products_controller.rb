@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
     end
   end
 
-
   def new
     @user = current_user
     @store = @user.stores.find(params[:store_id])
@@ -84,6 +83,7 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
+    gon.product_images = @product.get_product_images
   end
 
   def update

@@ -120,8 +120,23 @@
           = product_form.submit verb_and_product, |
             :class => 'btn btn-large btn-primary'
 
-    #existing_photo_grid_wrapper.widget.hide
-      #existing_photo_grid.widget
-      %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-        Load Additional Photos
-      = product_form.submit verb_and_product, :class => 'btn btn-large btn-primary'
+    #product_images_wrapper
+      - if edit_view
+        #product_image_photo_grid_wrapper.widget
+          %label Current Product Images
+
+          #product_image_photo_grid.widget
+            - @product.get_product_images.each do |product_image|
+              .photo-wrapper.selected{ data: { url: product_image } }
+                %img.photo{ src: product_image }
+                %span.remove.btn.btn-success
+                  %i.icon-ok
+                %span.add.btn
+                  %i.icon-plus-sign
+
+      #existing_photo_grid_wrapper.widget.hide
+        %label #{current_user.username}'s Instagram Feed
+        #existing_photo_grid.widget
+        %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+          Load Additional Photos
+        = product_form.submit verb_and_product, :class => 'btn btn-large btn-primary'

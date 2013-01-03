@@ -5,13 +5,15 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         photo_grid_media_count = 0
         set_user_media_count = _.once (media_count) -> user_media_count = media_count
 
-        photo_template = templates.existing_photo_grid_photo_template
+        existing_photo_grid_photos_template = templates.existing_photo_grid_photos_template
+        existing_photo_grid_photo_template = templates.existing_photo_grid_photo_template
 
         $existing_photo_grid = ($ '#existing_photo_grid')
         $loading_buttons = [($ '#add_existing_photos'),
                             $('#fetch_additional_existing_photos')]
 
         $product_images = ($ '#product_images')
+        $product_images_wrapper = ($ '#product_images_wrapper')
 
         toggle_loading_message = ($el) ->
             if $el.hasClass('loading')
@@ -30,16 +32,10 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         disable_all_loading_buttons = ->
             $el.addClass('hide') for $el in $loading_buttons
 
-        update_product_image_array = ($product_image) ->
-            photo_url = $product_image.data('url')
-            product_images = _.compact($product_images.val().split(','))
-
-            if $product_image.hasClass('selected')
-                product_images.push(photo_url)
-            else
-                product_images = _.without(product_images, photo_url)
-
-            $product_images.val product_images.join(',')
+        update_product_image_array = ->
+            console.log product_image_urls = ($ '.photo-wrapper.selected').map ->
+                ($ @).data('url')
+            $product_images.val product_image_urls
 
         toggle_photo_wrapper_state = ($el) -> $el.toggleClass('selected')
 
@@ -48,10 +44,10 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
             update_product_image_array $el
 
         if has_touch_events
-            $existing_photo_grid.on 'tap', '.photo-wrapper', ->
+            $product_images_wrapper.on 'tap', '.photo-wrapper', ->
                 photo_wrapper_click_handler ($ @)
         else
-            $existing_photo_grid.on 'click', '.photo-wrapper', ->
+            $product_images_wrapper.on 'click', '.photo-wrapper', ->
                 photo_wrapper_click_handler ($ @)
 
         fetch_and_render_existing_photos = ->
@@ -71,7 +67,6 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
                         alert message
                     else
-                        $wrapper = $('<div />')
                         max_id = response.max_id
                         set_user_media_count(+(response.media_count))
                         photo_grid_media_count += response.product_images.length
@@ -79,11 +74,21 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                         if user_media_count is photo_grid_media_count
                             disable_all_loading_buttons()
 
-                        for product_image in response.product_images
-                            img = Mustache.render photo_template, { product_image }
-                            $wrapper.append(img)
+                        product_images = if gon.product_images?
+                            _.difference(response.product_images, gon.product_images)
+                        else
+                            response.product_images
 
-                        $existing_photo_grid.append($wrapper)
+                        product_images = _.map(product_images, (product_image) -> { product_image })
+
+                        $existing_photo_grid.append(
+                            Mustache.render(existing_photo_grid_photos_template, {
+                                product_images
+                            }, {
+                                existing_photo_grid_photo_template
+                            })
+                        )
+
                         $('#existing_photo_grid_wrapper').removeClass('hide')
                         $('#default_submit_buttons').addClass('hide')
 
