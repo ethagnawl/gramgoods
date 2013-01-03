@@ -189,6 +189,8 @@ html.touch {
 }
 
 html.no-touch {
+    background-color: $light-grey;
+
     .alert-wrapper {
         float: left;
         width: 100%;
@@ -720,6 +722,7 @@ body.non-custom-merchant {  // store page
     }
 }
 
+#product_image_photo_grid,
 #existing_photo_grid {
     float: none;
     margin: 0 auto;
