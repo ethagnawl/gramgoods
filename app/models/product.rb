@@ -22,7 +22,7 @@ class Product < ActiveRecord::Base
   :instagram_tag_attributes, :colors_attributes, :sizes_attributes, :instagram_tag,
   :colors, :sizes, :product_images
 
-  validates_presence_of :name, :price, :description
+  validates_presence_of :name, :price, :description, :product_images
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00

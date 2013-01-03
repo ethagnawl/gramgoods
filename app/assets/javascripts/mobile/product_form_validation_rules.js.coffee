@@ -36,3 +36,7 @@ window.product_form_validation_rules =
                     true
                 else
                     happy.is_valid_price(val)
+
+        '#product_images':
+            required: true
+            message: 'At least one Product Image is required.'

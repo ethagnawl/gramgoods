@@ -10,7 +10,6 @@
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
 
-  = product_form.hidden_field :product_images, id: 'product_images'
   %div
     %fieldset
       - if edit_view
@@ -106,7 +105,9 @@
                                                @product.status ||= 'Active')
 
     = render 'product_images', locals: { edit_view: edit_view,
-      product_images: @product.get_product_images, username: @user.username }
+      form: product_form,
+      product_images: @product.get_product_images,
+      username: @user.username }
 
     %fieldset
       = product_form.submit verb_and_product, |
