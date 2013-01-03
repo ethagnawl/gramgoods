@@ -77,6 +77,7 @@ GramGoods.fetch_product_images = ($self, callback) ->
             if response.status is 'error'
                 $self.find('.loading').text('')
             else
+                alert(response.product_images.join(',')) if gon.for_your_eyes_only
                 callback($self, response.product_images, response.like_count)
 
 $ ->

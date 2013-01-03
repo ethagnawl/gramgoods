@@ -65,6 +65,7 @@ class ApplicationController < ActionController::Base
       gon.authenticated = user_signed_in?
       gon.layout = params[:layout]
       gon.debug = DEBUG
+      gon.for_your_eyes_only = user_signed_in? && current_user.username == 'gramgoods'
     end
 
     def clear_gon
