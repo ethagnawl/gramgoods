@@ -42,8 +42,6 @@ GramGoods.render_product_views = (products) ->
 
     $('.products').append($wrapper)
     scrollTo 0, y_offset(_unique_id)
-    $(document.getElementById(_unique_id)).find('.product').each ->
-        GramGoods.fetch_product_images(($ @), GramGoods.render_single_product_image)
 
 fetch_more_products = ->
     increment_pagination_page()

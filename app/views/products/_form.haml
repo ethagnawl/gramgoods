@@ -10,6 +10,7 @@
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
 
+  = product_form.hidden_field :product_images, id: 'product_images'
   %div
     %fieldset
       - if edit_view

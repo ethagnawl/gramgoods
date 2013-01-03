@@ -1,5 +1,5 @@
 templates.existing_photo_grid_photo_template = """
-    <div class='photo-wrapper'>
+    <div class='photo-wrapper' data-url='{{product_image}}'>
         <img src="{{product_image}}" class="photo">
         <span class='remove btn btn-success'>
             <i class='icon-ok'></i>

@@ -1,0 +1,16 @@
+.product-thumbnail-gallery
+  - locals[:product_images].each_with_index do |product_image, index|
+    - _class = index == 0 ? 'product-thumbnail on' : 'product-thumbnail'
+    %img{ id: "product_gallery_image_#{index}",
+      src: product_image,
+      class: _class,
+      alt: "#{locals[:product_name]}",
+      data: { index: index } }
+
+  .product-gallery-controls
+    - locals[:product_images].each_with_index do |product_image, index|
+      - _class = index == 0 ? 'product-gallery-control on' : 'product-gallery-control'
+      %a{ href: "javascript: void(0);",
+      class: _class,
+      data: { index: index } }
+

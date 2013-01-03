@@ -20,7 +20,7 @@ class Product < ActiveRecord::Base
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :flatrate_shipping_cost, :unlimited_quantity,
   :instagram_tag_attributes, :colors_attributes, :sizes_attributes, :instagram_tag,
-  :colors, :sizes
+  :colors, :sizes, :product_images
 
   validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
@@ -48,6 +48,10 @@ class Product < ActiveRecord::Base
 
   def self.order_status_array
     ['Draft', 'Active', 'Out of Stock']
+  end
+
+  def get_product_images
+    self.product_images.split(',')
   end
 
   def normalize_quantity

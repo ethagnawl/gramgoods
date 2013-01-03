@@ -1,8 +1,5 @@
 window.templates = {}
 
-GramGoods.pluralize_like_count = (like_count) ->
-    if like_count is 1 then 'like' else 'likes'
-
 GramGoods.render_product_gallery_controls = ->
     if ($ '.product-gallery-control').length > 1
         $('.product-gallery-controls')
@@ -13,13 +10,7 @@ GramGoods.dirty_commas = (num) ->
     String(num).replace /^\d+(?=\.|$)/, (int) ->
         int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
 
-GramGoods.render_like_count = ($product, like_count) ->
-   likes = GramGoods.pluralize_like_count(like_count)
-   $product
-       .find('.product-like-count').text("#{like_count} #{likes}")
-       .removeClass('hide')
-
-GramGoods.render_single_product_image = ($self, photos, like_count) ->
+GramGoods.render_single_product_image = ($self, photos) ->
     product_image = photos[0]
     product_name = gon.product_name
 
@@ -29,10 +20,7 @@ GramGoods.render_single_product_image = ($self, photos, like_count) ->
                 product_name,
                 product_image })
 
-    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
-
-GramGoods.render_multiple_product_images = ($self, product_images, like_count) ->
-    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
+GramGoods.render_multiple_product_images = ($self, product_images) ->
     $product_gallery_wrapper = $('<div />')
     $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
 
@@ -59,7 +47,6 @@ GramGoods.render_multiple_product_images = ($self, product_images, like_count) -
         .html($product_gallery_wrapper)
         .append($product_gallery_controls_wrapper)
 
-    GramGoods.render_product_gallery_controls()
 
 GramGoods.fetch_product_images = ($self, callback) ->
     tag = $self.data('instagram-tag')
@@ -77,7 +64,7 @@ GramGoods.fetch_product_images = ($self, callback) ->
             if response.status is 'error'
                 $self.find('.loading').text('')
             else
-                callback($self, response.product_images, response.like_count)
+                callback($self, response.product_images)
 
 $ ->
     window.$window = ($ window)
@@ -157,8 +144,7 @@ Zepto ($) ->
         if gon.authenticated and gon.instagram_protocol_with_params?
             window.location = gon.instagram_protocol_with_params
 
-        GramGoods.fetch_product_images($('.product'),
-            GramGoods.render_multiple_product_images)
+        GramGoods.render_product_gallery_controls()
 
         swipe_left = (e) ->
             $this = ($ e.target)

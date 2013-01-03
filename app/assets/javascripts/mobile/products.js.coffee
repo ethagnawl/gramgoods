@@ -11,6 +11,8 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         $loading_buttons = [($ '#add_existing_photos'),
                             $('#fetch_additional_existing_photos')]
 
+        $product_images = ($ '#product_images')
+
         toggle_loading_message = ($el) ->
             if $el.hasClass('loading')
                 $el
@@ -28,15 +30,29 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         disable_all_loading_buttons = ->
             $el.addClass('hide') for $el in $loading_buttons
 
-        toggle_photo_wrapper_state = ($el) ->
-            $el.toggleClass('selected')
+        update_product_image_array = ($product_image) ->
+            photo_url = $product_image.data('url')
+            product_images = _.compact($product_images.val().split(','))
+
+            if $product_image.hasClass('selected')
+                product_images.push(photo_url)
+            else
+                product_images = _.without(product_images, photo_url)
+
+            $product_images.val product_images.join(',')
+
+        toggle_photo_wrapper_state = ($el) -> $el.toggleClass('selected')
+
+        photo_wrapper_click_handler = ($el) ->
+            toggle_photo_wrapper_state $el
+            update_product_image_array $el
 
         if has_touch_events
             $existing_photo_grid.on 'tap', '.photo-wrapper', ->
-                toggle_photo_wrapper_state ($ @)
+                photo_wrapper_click_handler ($ @)
         else
             $existing_photo_grid.on 'click', '.photo-wrapper', ->
-                toggle_photo_wrapper_state ($ @)
+                photo_wrapper_click_handler ($ @)
 
         fetch_and_render_existing_photos = ->
             $.ajax

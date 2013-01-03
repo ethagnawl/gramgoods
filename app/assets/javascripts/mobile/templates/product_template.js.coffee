@@ -7,7 +7,7 @@ templates.product_template = """
         data-user-owns-store="{{user_owns_store}}">
 
         <div class="product-left">
-          <p class="loading">Loading...</p>
+          <img class='product-thumbnail' src='{{product_image}}' alt='{{product_name}}' />
         </div>
         <div class="product-middle">
           <div class="product-name">

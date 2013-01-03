@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121029043204) do
+ActiveRecord::Schema.define(:version => 20130102233412) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20121029043204) do
     t.boolean  "unlimited_quantity"
     t.datetime "updated_at",                                            :null => false
     t.datetime "created_at",                                            :null => false
+    t.text     "product_images"
   end
 
   add_index "products", ["slug"], :name => "index_products_on_slug"
