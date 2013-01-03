@@ -1,15 +1,12 @@
 Gramgoods::Application.routes.draw do
-
-  resources :products
-  resources :authentications
+  root :to => 'products#index'
 
   devise_for :users, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
-  root :to => 'products#index'
-  match '/tos' => 'static#tos'
-  match '/use_mobile_safari' => 'static#use_mobile_safari'
-
+  resources :products
+  resources :authentications
   resources :stores do
+    get 'proxy', :on => :collection
     get 'welcome', :on => :member
     get 'return_policy', :on => :member
 
@@ -25,12 +22,13 @@ Gramgoods::Application.routes.draw do
   resources :users do
     resources :stores
   end
-  match "/delayed_job" => DelayedJobWeb, :anchor => false
-  match '/fetch_instagram_feed_for_user' => 'application#fetch_instagram_feed_for_user'
-  match '/fetch_instagram_feed_for_user_and_filter_by_tag' => 'application#fetch_instagram_feed_for_user_and_filter_by_tag'
-  match 'stores_proxy' => 'stores#proxy'
-  match '/:id' => 'stores#show', :as => 'custom_store'
-  match '/:id/edit' => 'stores#edit', :as => 'custom_store_edit'
-  match '/:store_id/:id' => 'products#show', :as => 'custom_product'
-  match '/:store_id/:id/edit' => 'products#edit', :as => 'custom_product_edit'
+
+  get '/tos' => 'static#tos'
+  get '/use_mobile_safari' => 'static#use_mobile_safari'
+  get "/delayed_job" => DelayedJobWeb, :anchor => false
+  get '/fetch_instagram_feed_for_user' => 'application#fetch_instagram_feed_for_user'
+  get '/:id' => 'stores#show', :as => 'custom_store'
+  get '/:id/edit' => 'stores#edit', :as => 'custom_store_edit'
+  get '/:store_id/:id' => 'products#show', :as => 'custom_product'
+  get '/:store_id/:id/edit' => 'products#edit', :as => 'custom_product_edit'
 end
