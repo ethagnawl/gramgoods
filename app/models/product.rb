@@ -51,7 +51,11 @@ class Product < ActiveRecord::Base
   end
 
   def get_product_images
-    self.product_images.split(',')
+    if self.product_images.nil?
+      []
+    else
+      self.product_images.split(',')
+    end
   end
 
   def normalize_quantity
