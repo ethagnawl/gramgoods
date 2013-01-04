@@ -32,7 +32,6 @@ templates.product_template = """
           <div class="product-button product-price">
             {{product_price}}
           </div>
-          <div class="product-like-count hide"></div>
         </div>
         <div class="product-right">
 
