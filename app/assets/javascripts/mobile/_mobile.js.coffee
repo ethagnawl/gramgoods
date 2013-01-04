@@ -65,7 +65,7 @@ window.addEventListener 'load', ->
         ($ '#mobile_layout_inner').css('padding-top', header_height)
 
     window.scroll_to_error = ($context) ->
-        error_y = $context.find('.unhappy').first().offset().top - header_height - 20
+        error_y = $context.find('.unhappyMessage').first().offset().top - header_height - 20
         scrollTo(0, error_y)
 
 Zepto ($) ->
