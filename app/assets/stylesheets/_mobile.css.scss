@@ -189,6 +189,8 @@ html.touch {
 }
 
 html.no-touch {
+    background-color: $light-grey;
+
     .alert-wrapper {
         float: left;
         width: 100%;
@@ -414,6 +416,7 @@ html.no-touch {
 
     .unhappyMessage {
         color: $red;
+        display: block;
     }
 
     input, select, option, textarea {
@@ -717,5 +720,80 @@ body.non-custom-merchant {  // store page
         margin: 6px auto 14px;
         max-width: 576px;
         width: 100%;
+    }
+}
+
+#product_image_photo_grid_wrapper,
+#product_images_wrapper {
+    margin-bottom: 0;
+}
+
+#product_image_photo_grid,
+#existing_photo_grid {
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+
+    .photo-wrapper {
+        clear: none;
+        cursor: pointer;
+        float: left;
+        position: relative;
+        width: 32%;
+
+        .photo {
+            @include transition(.2s);
+
+            border: 4px solid #ccc;
+            display: inline-block;
+            width: 100%;
+        }
+
+        span {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+        }
+
+        .remove {
+            display: none;
+        }
+
+        .add {
+            display: inline-block;
+        }
+
+        &.selected {
+            .photo {
+                border-color: #666;
+            }
+
+            .remove {
+                display: inline-block;
+            }
+
+            .add {
+                display: none;
+            }
+        }
+    }
+}
+
+html.no-touch {
+    #product_image_photo_grid,
+    #existing_photo_grid {
+        .photo-wrapper {
+            margin: 2px;
+        }
+    }
+}
+
+html.no-touch {
+    #product_image_photo_grid,
+    #existing_photo_grid {
+        .photo-wrapper {
+            margin: 6px;
+        }
     }
 }

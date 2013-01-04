@@ -1,8 +1,5 @@
 window.templates = {}
 
-GramGoods.pluralize_like_count = (like_count) ->
-    if like_count is 1 then 'like' else 'likes'
-
 GramGoods.render_product_gallery_controls = ->
     if ($ '.product-gallery-control').length > 1
         $('.product-gallery-controls')
@@ -12,73 +9,6 @@ GramGoods.render_product_gallery_controls = ->
 GramGoods.dirty_commas = (num) ->
     String(num).replace /^\d+(?=\.|$)/, (int) ->
         int.replace /(?=(?:\d{3})+$)(?!^)/g, ','
-
-GramGoods.render_like_count = ($product, like_count) ->
-   likes = GramGoods.pluralize_like_count(like_count)
-   $product
-       .find('.product-like-count').text("#{like_count} #{likes}")
-       .removeClass('hide')
-
-GramGoods.render_single_product_image = ($self, photos, like_count) ->
-    product_image = photos[0]
-    product_name = gon.product_name
-
-    $self
-        .find('.product-left').html(
-            Mustache.render templates.product_image_template, {
-                product_name,
-                product_image })
-
-    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
-
-GramGoods.render_multiple_product_images = ($self, product_images, like_count) ->
-    alert(product_images.join(',')) if gon.for_your_eyes_only
-    GramGoods.render_like_count($self, like_count) if +(like_count) > 0
-    $product_gallery_wrapper = $('<div />')
-    $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
-
-    for product_image, i in product_images
-        product_gallery_data =
-            index: i
-            class: "product-thumbnail #{(if i is 0 then 'on' else null)}"
-            product_name: gon.product_name
-            product_image: product_image
-
-        $product_gallery_wrapper.append Mustache.render(
-            templates.product_thumbnail_gallery_image_template, product_gallery_data)
-
-        product_gallery_control_data =
-            classes: "product-gallery-control #{(if i is 0 then 'on' else '')}"
-            index: i
-
-
-        if product_images.length > 1
-            $product_gallery_controls_wrapper.append Mustache.render(
-                templates.product_thumbnail_gallery_control_template, product_gallery_control_data)
-
-    $self.find('.product-thumbnail-gallery')
-        .html($product_gallery_wrapper)
-        .append($product_gallery_controls_wrapper)
-
-    GramGoods.render_product_gallery_controls()
-
-GramGoods.fetch_product_images = ($self, callback) ->
-    tag = $self.data('instagram-tag')
-    store_slug = $self.data('store-slug')
-
-    $.ajax
-        dataType: 'json'
-        url: '/instagram_feed_for_user_filtered_by_tag'
-        data:
-            tag: tag
-            store_slug: store_slug
-        success: (response) =>
-            $self.addClass('product-image-has-been-loaded')
-
-            if response.status is 'error'
-                $self.find('.loading').text('')
-            else
-                callback($self, response.product_images, response.like_count)
 
 $ ->
     window.$window = ($ window)
@@ -135,7 +65,7 @@ window.addEventListener 'load', ->
         ($ '#mobile_layout_inner').css('padding-top', header_height)
 
     window.scroll_to_error = ($context) ->
-        error_y = $context.find('.unhappy').first().offset().top - header_height - 20
+        error_y = $context.find('.unhappyMessage').first().offset().top - header_height - 20
         scrollTo(0, error_y)
 
 Zepto ($) ->
@@ -155,11 +85,7 @@ Zepto ($) ->
         )
 
     if gon.page is 'products_show'
-        if gon.authenticated and gon.instagram_protocol_with_params?
-            window.location = gon.instagram_protocol_with_params
-
-        GramGoods.fetch_product_images($('.product'),
-            GramGoods.render_multiple_product_images)
+        GramGoods.render_product_gallery_controls()
 
         swipe_left = (e) ->
             $this = ($ e.target)

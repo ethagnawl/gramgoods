@@ -1,13 +1,12 @@
 templates.product_template = """
     <div
         class="product {{custom_merchant_wrapper_class}}"
-        data-instagram-tag="{{product_instagram_tag}}"
         data-product-slug="{{product_slug}}"
         data-store-slug="{{store_slug}}"
         data-user-owns-store="{{user_owns_store}}">
 
         <div class="product-left">
-          <p class="loading">Loading...</p>
+          <img class='product-thumbnail' src='{{product_image}}' alt='{{product_name}}' />
         </div>
         <div class="product-middle">
           <div class="product-name">
@@ -33,7 +32,6 @@ templates.product_template = """
           <div class="product-button product-price">
             {{product_price}}
           </div>
-          <div class="product-like-count hide"></div>
         </div>
         <div class="product-right">
 

@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   layout 'mobile'
-  before_filter :redirect_to_use_mobile_safari, :only => [:new, :create, :edit, :update]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
@@ -35,13 +34,11 @@ class ProductsController < ApplicationController
     end
   end
 
-
   def new
     @user = current_user
     @store = @user.stores.find(params[:store_id])
 
     @product = @store.products.new({
-                                     :instagram_tag => InstagramTag.new,
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
   end
@@ -52,8 +49,9 @@ class ProductsController < ApplicationController
     @product = @store.products.new(params[:product])
     #TODO: move into after_save callback
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
+
     if @product.save
-      conditionally_redirect_to_instagram_app @store, @product
+      redirect_to custom_product_path(@store, @product)
     else
       render 'new'
     end
@@ -68,10 +66,6 @@ class ProductsController < ApplicationController
     gon.product_id = @product.id
     gon.store_slug = @store.slug
     gon.create_order_url = new_store_order_path(@store)
-    unless params[:redirect_to_instagram].nil?
-      instagram_params = URI.encode("?caption=#{@product.get_instagram_caption}")
-      gon.instagram_protocol_with_params = "instagram://camera" << instagram_params
-    end
 
     if @product.status == 'Draft'
       if user_signed_in? && (user_owns_store?(@store.id) || current_user.username == 'gramgoods')
@@ -88,6 +82,7 @@ class ProductsController < ApplicationController
     @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
+    gon.product_images = @product.get_product_images
   end
 
   def update
@@ -96,7 +91,7 @@ class ProductsController < ApplicationController
     @product.colors.destroy_all
     @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
-      conditionally_redirect_to_instagram_app @store, @product
+      redirect_to custom_product_path(@store, @product)
     else
       render 'edit'
     end
@@ -117,24 +112,12 @@ class ProductsController < ApplicationController
   end
 
   private
-    def redirect_to_use_mobile_safari
-      redirect_to use_mobile_safari_path if browser_is_instagram?
-    end
-
     # TODO add money gem and convert price to integer
     def strip_commas_from_prices
       params[:product][:price] = params[:product][:price].gsub(',', '')
       unless params[:product][:flatrate_shipping_cost].nil?
         params[:product][:flatrate_shipping_cost] = params[:product][:flatrate_shipping_cost].gsub(',', '')
       end
-    end
-
-    def conditionally_redirect_to_instagram_app(store, product)
-        product_path = custom_product_path(store, product)
-        unless params[:post_to_instagram].nil?
-          product_path << "?redirect_to_instagram=true"
-        end
-        redirect_to(product_path)
     end
 
     def redirect_to_current_slug

@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   before_filter :basic_authentication
+  before_filter :normalize_user_for_fetch_instagram_feed,
+    :only => :fetch_instagram_feed_for_user
 
   helper_method :mobile_device?
   helper_method :browser_is_instagram?
@@ -30,23 +32,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def instagram_feed_for_user_filtered_by_tag
-    tag = params[:tag]
-    store = params[:store_slug]
-    user = Store.find(store).user
-    user_feed = user.fetch_instagram_feed_for_user_and_filter_by_tag(tag)
-    if user_feed && user_feed.length > 0
-      render :json => {
-        :status => 'success',
-        :product_images => user_feed.map { |image| image[:url] },
-        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] }
-      }
-    else
-      render :json => {
-        :status => 'error',
-        :alert => 'Sorry, there don\'t seem to be any more photos available.'
-      }
-    end
+  def fetch_instagram_feed_for_user
+    max_id = params[:max_id] == 'nil' ? nil : params[:max_id]
+    @feed = @user.fetch_feed({max_id: max_id})
+
+    render :json => instagram_feed_json_response(@user, @feed)
   end
 
   private
@@ -92,6 +82,7 @@ class ApplicationController < ActionController::Base
     end
 
     def mobile_device_is_iOS?
+      return true
       mobile_device? && !(request.user_agent =~ /iPhone|iPad|iPod/).nil?
     end
 
@@ -111,12 +102,13 @@ class ApplicationController < ActionController::Base
     def products_json(products)
       Jbuilder.encode do |json|
         json.products(products) do |json, product|
+          json.product_image product.get_product_images.first
+          json.product_images product.get_product_images
           json.product_name product.name
           json.product_price number_to_currency(product.price)
           json.product_slug product.slug
           json.product_status product.status
           json.product_status_class product.status_class
-          json.product_instagram_tag product.get_instagram_tag
 
           json.store_name product.store.name
           json.store_slug product.store.slug
@@ -125,5 +117,44 @@ class ApplicationController < ActionController::Base
           json.user_owns_store user_owns_store?(product.store.id)
         end
       end
+    end
+
+    def normalize_user_for_fetch_instagram_feed
+      store = params[:store_slug]
+      @user = !store.nil? ? Store.find(store).user : (user_signed_in? ? current_user : nil)
+    end
+
+    def instagram_user_feed_success_json(args)
+      user_feed = args[:user_feed]
+      user_media_count = args[:user_media_count]
+
+      {
+        :media_count => user_media_count,
+        :status => 'success',
+        :product_images => user_feed.map { |image| image[:url] },
+        :max_id => user_feed.last.id
+      }
+    end
+
+    def instagram_user_feed_error_json
+      {
+        :status => 'error',
+        :alert => 'Sorry, there don\'t seem to be any more photos available.'
+      }
+    end
+
+    def instagram_feed_json_response(user, user_feed)
+      if user && user_feed && user_feed.length > 0
+        instagram_user_feed_success_json({
+          user_feed: user_feed[:user_photo_feed],
+          user_media_count: user_feed[:media_count]
+        })
+      else
+        instagram_user_feed_error_json
+      end
+    end
+
+    def render_instagram_feed
+      render_instagram_feed_json(@user, @user_feed)
     end
 end

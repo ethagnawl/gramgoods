@@ -1,0 +1,30 @@
+#product_images_wrapper
+  - if locals[:edit_view]
+    %fieldset
+      #product_image_photo_grid_wrapper.widget
+        %label Current Product Images
+
+        #product_image_photo_grid.widget
+          - locals[:product_images].each do |product_image|
+            .photo-wrapper.selected{ data: { url: product_image } }
+              %img.photo{ src: product_image }
+              %span.remove.btn.btn-success
+                %i.icon-ok
+              %span.add.btn
+                %i.icon-plus-sign
+
+  %fieldset
+    %label#loading_product_images_message
+      Loading #{locals[:username]}'s Instagram feed...
+    #existing_photo_grid_wrapper.hide
+      = locals[:form].hidden_field :product_images, id: 'product_images'
+      - if locals[:edit_view]
+        %label Product Images
+      - unless locals[:edit_view]
+        %label Product Images*
+        %span.inline-help Choose at least one photo from #{locals[:username]}'s Instagram feed
+      #existing_photo_grid
+      %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+        Load Additional Photos
+
+

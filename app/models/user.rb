@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include GramGoods::Instagram
+
   has_many :stores, :dependent => :destroy
 
   devise :database_authenticatable, :registerable, :omniauthable,
@@ -51,7 +53,7 @@ class User < ActiveRecord::Base
   end
 
   def store_ids
-    Store.find_all_by_user_id(self.id).map { |store| store.id }
+    Store.where(user_id: self.id).map &:id
   end
 
   def first_store
@@ -77,66 +79,5 @@ class User < ActiveRecord::Base
     super && provider.blank?
   end
 
-  def update_instagram_cache(tag)
-    self.fetch_instagram_feed_for_user_and_filter_by_tag(tag)
-  end
-  handle_asynchronously :update_instagram_cache, :run_at => Proc.new {
-    20.minutes.from_now }
 
-  def fetch_instagram_feed_for_user_and_filter_by_tag(_tag)
-    tag = _tag.downcase
-    tag = tag.split('#')[1] if /^#+/ =~ tag
-    key = "#{self.uid}_#{tag}"
-    user_photo_feed_from_cache = Rails.cache.read(key)
-
-    if user_photo_feed_from_cache.nil?
-      begin
-        Instagram.configure do |config|
-          config.client_id = self.uid
-          config.access_token = self.access_token
-        end
-        media_count = (Instagram.user.counts.media).to_i
-        last_id = nil
-        i = 0
-        max_id = nil
-        user_photo_feed = []
-
-        begin
-          lambda { |r, max_id = nil|
-            user_photo_feed.concat(
-              Instagram.user_recent_media(:max_id => max_id).tap { |items|
-                i += items.length
-                last_id = items.last.id
-              }.find_all { |item|
-                item.tags.member? tag
-              }.map { |item|
-                {
-                  :like_count => item.likes[:count],
-                  :url => item.images.standard_resolution.url
-                }})
-            r.call(r, last_id) if i < media_count
-          }.tap { |r| r.call(r) }
-
-        rescue
-          puts 'error in lambda'
-        end
-
-        unless user_photo_feed.empty?
-          begin
-            Rails.cache.write key, user_photo_feed, :expires_in => 20.minutes
-            self.update_instagram_cache(tag)
-          rescue
-            puts 'write to cache and fire background job'
-          end
-        end
-
-        user_photo_feed
-
-      rescue
-        puts 'Instagram Connection Error'
-      end
-    else
-      user_photo_feed_from_cache
-    end
-  end
 end

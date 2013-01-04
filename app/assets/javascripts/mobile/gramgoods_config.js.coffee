@@ -9,7 +9,7 @@ window.onerror = (err, file, line) ->
 
 window.GramGoods = {}
 
-GramGoods.error_messsage = """
+GramGoods.error_message = """
     Sorry!
     Something went wrong...
     Please refresh the page and try again.

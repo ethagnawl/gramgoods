@@ -14,5 +14,6 @@
 /log/*.log
 /tmp
 *.DS_Store
+/config/database.yml
 /config/stripe_config.yml
 *.env
