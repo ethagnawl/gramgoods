@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
     @store = @user.stores.find(params[:store_id])
 
     @product = @store.products.new({
-                                     :instagram_tag => InstagramTag.new,
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
   end
@@ -50,8 +49,9 @@ class ProductsController < ApplicationController
     @product = @store.products.new(params[:product])
     #TODO: move into after_save callback
     @product.status = 'Out of Stock' if @product.quantity.to_i == 0 && @product.unlimited_quantity == 0
+
     if @product.save
-      conditionally_redirect_to_instagram_app @store, @product
+      redirect_to custom_product_path(@store, @product)
     else
       render 'new'
     end
@@ -66,10 +66,6 @@ class ProductsController < ApplicationController
     gon.product_id = @product.id
     gon.store_slug = @store.slug
     gon.create_order_url = new_store_order_path(@store)
-    unless params[:redirect_to_instagram].nil?
-      instagram_params = URI.encode("?caption=#{@product.get_instagram_caption}")
-      gon.instagram_protocol_with_params = "instagram://camera" << instagram_params
-    end
 
     if @product.status == 'Draft' && !user_signed_in?
       redirect_to(custom_store_path(@store))
@@ -91,7 +87,7 @@ class ProductsController < ApplicationController
     @product.colors.destroy_all
     @product.sizes.destroy_all
     if @product.update_attributes(params[:product])
-      conditionally_redirect_to_instagram_app @store, @product
+      redirect_to custom_product_path(@store, @product)
     else
       render 'edit'
     end
@@ -118,14 +114,6 @@ class ProductsController < ApplicationController
       unless params[:product][:flatrate_shipping_cost].nil?
         params[:product][:flatrate_shipping_cost] = params[:product][:flatrate_shipping_cost].gsub(',', '')
       end
-    end
-
-    def conditionally_redirect_to_instagram_app(store, product)
-        product_path = custom_product_path(store, product)
-        unless params[:post_to_instagram].nil?
-          product_path << "?redirect_to_instagram=true"
-        end
-        redirect_to(product_path)
     end
 
     def redirect_to_current_slug

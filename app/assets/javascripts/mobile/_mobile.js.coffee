@@ -85,9 +85,6 @@ Zepto ($) ->
         )
 
     if gon.page is 'products_show'
-        if gon.authenticated and gon.instagram_protocol_with_params?
-            window.location = gon.instagram_protocol_with_params
-
         GramGoods.render_product_gallery_controls()
 
         swipe_left = (e) ->

@@ -16,20 +16,6 @@
         = product_form.label :name, (form_label(:name))
       = product_form.text_field :name, :placeholder => (form_label(:name))
 
-    = product_form.fields_for(:instagram_tag) do |instagram_tag_form|
-      %fieldset
-        - instagram_tag_message = ' (e.g. #blue_jeans)'
-        - instagram_tag_custom_label = form_label('Unique Instagram Hashtag',
-                                                    true, instagram_tag_message)
-        - instagram_value = edit_view ? "#{@product.get_instagram_tag(true)}" : nil
-        - if edit_view
-          = instagram_tag_form.label :instagram_tag, instagram_tag_custom_label
-        = instagram_tag_form.text_field :instagram_tag, |
-                                        :value => instagram_value, |
-                                        :placeholder => instagram_tag_custom_label
-        %span.inline-help
-          *The Instagram Hashtag will be used to link photos from your feed with this product. For example, using #GramGoods will associate any photos from your Instagram feed with #GramGoods in their caption with this product.
-
     %fieldset
       - if edit_view
         = product_form.label :description, (form_label(:description))

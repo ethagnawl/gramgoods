@@ -1,7 +1,6 @@
 templates.product_template = """
     <div
         class="product {{custom_merchant_wrapper_class}}"
-        data-instagram-tag="{{product_instagram_tag}}"
         data-product-slug="{{product_slug}}"
         data-store-slug="{{store_slug}}"
         data-user-owns-store="{{user_owns_store}}">

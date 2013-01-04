@@ -12,8 +12,7 @@
 #order_form.hide
 #success_screen.hide
 .product-detail
-  .product{ :data => {  :'store-slug' => @product.store.slug, |
-                        :'instagram-tag' => @product.get_instagram_tag }}
+  .product{ :data => {  :'store-slug' => @product.store.slug } }
     .product-top.widget
 
       = render 'products/thumbnail_gallery', :locals => { product_name: @product.name, product_images: @product.get_product_images}
@@ -89,6 +88,14 @@
           :id => 'redirect_to_order_form', |
           :class => 'product-button product-purchase', |
           :data => { :'js-handle' => 'true' })
+      - elsif @product.status == 'Draft'
+        .widget
+          %h3
+            Product Status: Draft
+          %p
+            This product will not be visible to customers until you change its
+            status to Active or Out of Stock.
+
       - else
         .widget
           %h3 This product is currently out of stock.

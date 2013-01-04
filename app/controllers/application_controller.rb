@@ -7,10 +7,8 @@ class ApplicationController < ActionController::Base
   before_filter :set_gon
   before_filter :ensure_proper_protocol
   before_filter :basic_authentication
-  before_filter :normalize_user_for_fetch_instagram_feed, :only => [
-                                    :fetch_instagram_feed_for_user,
-                                    :fetch_instagram_feed_for_user_and_filter_by_tag
-                                  ]
+  before_filter :normalize_user_for_fetch_instagram_feed,
+    :only => :fetch_instagram_feed_for_user
 
   helper_method :mobile_device?
   helper_method :browser_is_instagram?
@@ -37,13 +35,6 @@ class ApplicationController < ActionController::Base
   def fetch_instagram_feed_for_user
     max_id = params[:max_id] == 'nil' ? nil : params[:max_id]
     @feed = @user.fetch_feed({max_id: max_id})
-
-    render :json => instagram_feed_json_response(@user, @feed)
-  end
-
-  def fetch_instagram_feed_for_user_and_filter_by_tag
-    tag = params[:tag] || nil
-    @feed = @user.fetch_feed_and_filter_by_tag(tag)
 
     render :json => instagram_feed_json_response(@user, @feed)
   end
@@ -116,7 +107,6 @@ class ApplicationController < ActionController::Base
           json.product_price number_to_currency(product.price)
           json.product_slug product.slug
           json.product_status product.status
-          json.product_instagram_tag product.get_instagram_tag
 
           json.store_name product.store.name
           json.store_slug product.store.slug
@@ -140,7 +130,6 @@ class ApplicationController < ActionController::Base
         :media_count => user_media_count,
         :status => 'success',
         :product_images => user_feed.map { |image| image[:url] },
-        :like_count => user_feed.inject(0) { |sum, image| sum + image[:like_count] },
         :max_id => user_feed.last.id
       }
     end

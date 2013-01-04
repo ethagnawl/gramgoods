@@ -3,9 +3,6 @@ window.product_form_validation_rules =
         '#product_name':
             message: 'Product Name is required.'
             required: true
-        '#product_instagram_tag_attributes_instagram_tag':
-            message: 'Instagram Tag is required.'
-            required: true
         '#product_description':
             message: 'Description is required.'
             required: true

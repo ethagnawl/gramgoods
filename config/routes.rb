@@ -6,7 +6,7 @@ Gramgoods::Application.routes.draw do
   resources :products
   resources :authentications
   resources :stores do
-    get 'proxy', :on => :collection
+    post 'proxy', :on => :collection
     get 'welcome', :on => :member
     get 'return_policy', :on => :member
 
@@ -15,9 +15,7 @@ Gramgoods::Application.routes.draw do
       resources :line_items
       resources :recipients
     end
-    resources :products do
-      resources :product_images
-    end
+    resources :products
   end
   resources :users do
     resources :stores
