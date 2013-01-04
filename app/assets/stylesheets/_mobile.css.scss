@@ -416,6 +416,7 @@ html.no-touch {
 
     .unhappyMessage {
         color: $red;
+        display: block;
     }
 
     input, select, option, textarea {
@@ -732,12 +733,12 @@ body.non-custom-merchant {  // store page
     float: none;
     margin-right: auto;
     margin-left: auto;
-    width: 96%;
+    width: 100%;
 
     .photo-wrapper {
         clear: none;
+        cursor: pointer;
         float: left;
-        margin: 2px;
         position: relative;
         width: 32%;
 
@@ -775,6 +776,24 @@ body.non-custom-merchant {  // store page
             .add {
                 display: none;
             }
+        }
+    }
+}
+
+html.no-touch {
+    #product_image_photo_grid,
+    #existing_photo_grid {
+        .photo-wrapper {
+            margin: 2px;
+        }
+    }
+}
+
+html.no-touch {
+    #product_image_photo_grid,
+    #existing_photo_grid {
+        .photo-wrapper {
+            margin: 6px;
         }
     }
 }

@@ -104,6 +104,12 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                         if $existing_photo_grid_wrapper.hasClass('hide')
                             $existing_photo_grid_wrapper.removeClass('hide')
 
+                        if pageload
+                            ($ '#loading_product_images_message')
+                                .addClass('hide')
+                            ($ '#product_form_submit_button_wrapper')
+                                .removeClass('hide')
+
         loading_button_click_handler = ($el) ->
             unless loading_photos
                 toggle_all_loading_buttons()
