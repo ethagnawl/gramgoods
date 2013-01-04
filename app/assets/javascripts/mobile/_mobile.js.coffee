@@ -32,6 +32,7 @@ GramGoods.render_single_product_image = ($self, photos, like_count) ->
     GramGoods.render_like_count($self, like_count) if +(like_count) > 0
 
 GramGoods.render_multiple_product_images = ($self, product_images, like_count) ->
+    alert(product_images.join(',')) if gon.for_your_eyes_only
     GramGoods.render_like_count($self, like_count) if +(like_count) > 0
     $product_gallery_wrapper = $('<div />')
     $product_gallery_controls_wrapper = $("<div class='product-gallery-controls invisible'></div>")
@@ -77,7 +78,6 @@ GramGoods.fetch_product_images = ($self, callback) ->
             if response.status is 'error'
                 $self.find('.loading').text('')
             else
-                alert(response.product_images.join(',')) if gon.for_your_eyes_only
                 callback($self, response.product_images, response.like_count)
 
 $ ->
