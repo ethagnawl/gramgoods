@@ -13,4 +13,4 @@ else
   INSTAGRAM_CONFIG = hash[Rails.env.to_s]
 end
 
-INSTAGRAM_CONFIG['AUTH_URL'] = '/users/auth/instagram?scope=comments'
+INSTAGRAM_CONFIG['AUTH_URL'] = '/users/auth/instagram'
