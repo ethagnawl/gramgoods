@@ -73,8 +73,12 @@ class ProductsController < ApplicationController
       gon.instagram_protocol_with_params = "instagram://camera" << instagram_params
     end
 
-    if @product.status == 'Draft' && !user_signed_in?
-      redirect_to(custom_store_path(@store))
+    if @product.status == 'Draft'
+      if user_signed_in? && (user_owns_store?(@store.id) || current_user.username == 'gramgoods')
+        render 'show'
+      else
+        redirect_to(custom_store_path(@store))
+      end
     else
       render 'show'
     end
