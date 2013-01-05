@@ -85,7 +85,6 @@ eos
   def credit_card_years
     [
       ['Expiration Year*', nil],
-      [2012, 2012],
       [2013, 2013],
       [2014, 2014],
       [2015, 2015],
