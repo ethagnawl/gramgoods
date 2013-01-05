@@ -320,6 +320,8 @@ html.no-touch {
 
                 .product-gallery-control {
                     border-radius: 30px;
+                    display: block;
+                    float: left;
                     height: 30px;
                     margin: 6px;
                     width: 30px;
@@ -780,7 +782,7 @@ body.non-custom-merchant {  // store page
     }
 }
 
-html.no-touch {
+html.touch {
     #product_image_photo_grid,
     #existing_photo_grid {
         .photo-wrapper {
