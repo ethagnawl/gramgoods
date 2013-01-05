@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'mobile'
+  before_filter :common_vars, :except => [:index, :show]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
@@ -35,16 +36,13 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @user = current_user
     @store = @user.stores.find(params[:store_id])
-
     @product = @store.products.new({
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
   end
 
   def create
-    @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.new(params[:product])
     #TODO: move into after_save callback
@@ -79,7 +77,6 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @user = current_user
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
     gon.product_images = @product.get_product_images
@@ -103,8 +100,7 @@ class ProductsController < ApplicationController
 
     if user_owns_store?(@store.id)
       @product.destroy
-      notice = "#{@product.name} has been successfully deleted."
-      flash[:notice] = notice
+      flash[:notice] = "#{@product.name} has been successfully deleted."
       redirect_to(custom_store_path(@store))
     else
       redirect_to(root_path)
@@ -112,6 +108,10 @@ class ProductsController < ApplicationController
   end
 
   private
+    def common_vars
+      @user = current_user
+    end
+
     # TODO add money gem and convert price to integer
     def strip_commas_from_prices
       params[:product][:price] = params[:product][:price].gsub(',', '')
