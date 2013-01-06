@@ -4,4 +4,8 @@ class StaticController < ApplicationController
   def tos
     render 'tos'
   end
+
+  def desktop_welcome
+    render 'desktop_welcome', :layout => false
+  end
 end

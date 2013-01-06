@@ -22,6 +22,7 @@ Gramgoods::Application.routes.draw do
   end
 
   get '/tos' => 'static#tos'
+  get '/welcome' => 'static#desktop_welcome'
   get "/delayed_job" => DelayedJobWeb, :anchor => false
   get '/fetch_instagram_feed_for_user' => 'application#fetch_instagram_feed_for_user'
   get '/:id' => 'stores#show', :as => 'custom_store'

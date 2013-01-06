@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::NumberHelper
 
   protect_from_forgery
+  before_filter :redirect_to_desktop_landing_page
   before_filter :clear_gon
   before_filter :set_gon
   before_filter :ensure_proper_protocol
@@ -156,5 +157,11 @@ class ApplicationController < ActionController::Base
 
     def render_instagram_feed
       render_instagram_feed_json(@user, @user_feed)
+    end
+
+    def redirect_to_desktop_landing_page
+      if request.path == '/' && !mobile_device?
+        redirect_to welcome_url
+      end
     end
 end
