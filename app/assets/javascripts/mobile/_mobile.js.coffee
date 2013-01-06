@@ -120,15 +120,6 @@ Zepto ($) ->
                     ($ "#product_gallery_image_#{index}").addClass('on')
                 )
 
-
-        # setTimeout is required because
-        # tap was clicking the purchase
-        # link after scrollTo
-        ($ '.product-details').tap ->
-            setTimeout =>
-                scrollTo 0, ($ @).offset().top - (GramGoods.header_offset)
-            , 100
-
         redirect_to_order_form = ->
             data =
                 product_id: gon.product_id
