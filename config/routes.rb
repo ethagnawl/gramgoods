@@ -21,6 +21,9 @@ Gramgoods::Application.routes.draw do
     resources :stores
   end
 
+  get '/sign_in' => redirect('/users/auth/instagram')
+  get '/sign_up' => redirect('/stores/new')
+
   get '/tos' => 'static#tos'
   get '/welcome' => 'static#desktop_welcome'
   get "/delayed_job" => DelayedJobWeb, :anchor => false

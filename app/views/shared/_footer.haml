@@ -3,8 +3,8 @@
     = render 'shared/force_instagram_logout_iframe' unless browser_is_instagram?
     %p.widget
       Are you a store owner?
-    %a{ :href => '/stores/new' } Sign Up
+    %a{ :href => sign_up_path } Sign Up
     |
-    %a{ :href => INSTAGRAM_CONFIG['AUTH_URL'] } Sign In
+    %a{ :href => sign_in_path } Sign In
 
 
