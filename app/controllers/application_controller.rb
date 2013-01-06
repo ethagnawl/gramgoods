@@ -87,13 +87,13 @@ class ApplicationController < ActionController::Base
       mobile_device? && !(request.user_agent =~ /iPhone|iPad|iPod/).nil?
     end
 
-    def mobile_device?
-      request.user_agent =~ /Mobile|webOS/
-    end
-
     def browser_is_instagram?
       (DEBUG && params[:acts_as_instagram_browser] == 'true') ||
         !(request.user_agent =~ /Instagram/).nil?
+    end
+
+    def mobile_device?
+      browser_is_instagram? || request.user_agent =~ /Mobile|webOS/
     end
 
     def show_view_more_products_button?(max_pagination_page)
@@ -130,10 +130,10 @@ class ApplicationController < ActionController::Base
       user_media_count = args[:user_media_count]
 
       {
-        :media_count => user_media_count,
         :status => 'success',
-        :product_images => user_feed.map { |image| image[:url] },
-        :max_id => user_feed.last.id
+        :max_id => user_feed.last.id,
+        :media_count => user_media_count,
+        :product_images => user_feed.map { |image| image[:url] }
       }
     end
 
@@ -160,7 +160,7 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_to_desktop_landing_page
-      if request.path == '/' && !mobile_device?
+      if request.path == '/' && !mobile_device? && !user_signed_in?
         redirect_to welcome_url
       end
     end

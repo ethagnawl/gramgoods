@@ -6,6 +6,10 @@ class StaticController < ApplicationController
   end
 
   def desktop_welcome
-    render 'desktop_welcome', :layout => false
+    if user_signed_in?
+      redirect_to root_path
+    else
+      render 'desktop_welcome', :layout => false
+    end
   end
 end
