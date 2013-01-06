@@ -83,17 +83,18 @@ eos
   end
 
   def credit_card_years
-    [
+    current_year = Time.new.year
+    years = [
       ['Expiration Year*', nil],
-      [2013, 2013],
-      [2014, 2014],
-      [2015, 2015],
-      [2016, 2016],
-      [2017, 2017],
-      [2018, 2018],
-      [2019, 2019],
-      [2020, 2020]
+      [current_year, current_year]
     ]
+
+    (1..10).each do |_year|
+      year = current_year + _year
+      years << [year, year]
+    end
+
+    years
   end
 
   def us_states
