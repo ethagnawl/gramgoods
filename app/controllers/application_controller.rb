@@ -160,7 +160,8 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_to_desktop_landing_page
-      if request.path == '/' && !mobile_device? && !user_signed_in?
+      if request.path == '/' && request.query_string == '' &&
+        !mobile_device? && !user_signed_in?
         redirect_to welcome_url
       end
     end
