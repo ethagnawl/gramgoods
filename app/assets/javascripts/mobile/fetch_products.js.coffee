@@ -46,7 +46,7 @@ GramGoods.render_product_views = (products) ->
 fetch_more_products = ->
     increment_pagination_page()
 
-    url_root = if gon.page is 'products_index' then '/' else "/#{gon.store_slug}/"
+    url_root = if gon.page is 'products_index' then '/products' else "/#{gon.store_slug}/"
     url = "#{url_root}?page=#{gon.pagination_page}"
 
     params =
