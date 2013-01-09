@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '~> 3.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -25,7 +25,9 @@ end
 
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rails-behaviors'
-gem 'twitter-bootstrap-rails'
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails', '2.1.7'
 gem 'jquery-rails', "~>2.1.1"
 gem 'devise'
 gem 'haml'
