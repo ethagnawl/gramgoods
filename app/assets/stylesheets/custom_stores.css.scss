@@ -149,6 +149,54 @@ html.no-touch {
         background-color: $veda-store-color;
     }
 
+    // owen - not very DRY, but it'll be easier to change when the time comes
+    $owen: $black;
+
+    .custom-merchant-owen-nyc {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $owen;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $owen;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $owen;
+       }
+    }
+
+    .custom-merchant-owen-nyc .products .product-button,
+    .product.custom-merchant-owen-nyc .product-middle .product-button {
+        background-color: $owen;
+    }
+
+    .custom-merchant-owen-nyc #order_form legend {
+        background-color: $owen;
+
+        &#billing_information_legend {
+            background-color: $owen;
+        }
+    }
+
+    .custom-merchant-owen-nyc #view_more_products {
+        background-color: $owen;
+    }
+
     // soles - not very DRY, but it'll be easier to change when the time comes
     $solesinc-store-color: $black;
 
