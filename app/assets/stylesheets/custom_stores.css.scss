@@ -149,15 +149,15 @@ html.no-touch {
         background-color: $veda-store-color;
     }
 
-    // owen - not very DRY, but it'll be easier to change when the time comes
-    $owen: $black;
+    // owen-nyc - not very DRY, but it'll be easier to change when the time comes
+    $owen-nyc: $black;
 
     .custom-merchant-owen-nyc {
         .mobile-header {
             background-color: #fff;
 
             h3, h3 span, h5 span {
-                color: $owen;
+                color: $owen-nyc;
             }
 
             #menu li {
@@ -170,31 +170,31 @@ html.no-touch {
                 }
 
                 a {
-                    color: $owen;
+                    color: $owen-nyc;
                 }
             }
         }
 
         .products .product-button, .product-detail .product-button {
-           background-color: $owen;
+           background-color: $owen-nyc;
        }
     }
 
     .custom-merchant-owen-nyc .products .product-button,
     .product.custom-merchant-owen-nyc .product-middle .product-button {
-        background-color: $owen;
+        background-color: $owen-nyc;
     }
 
     .custom-merchant-owen-nyc #order_form legend {
-        background-color: $owen;
+        background-color: $owen-nyc;
 
         &#billing_information_legend {
-            background-color: $owen;
+            background-color: $owen-nyc;
         }
     }
 
     .custom-merchant-owen-nyc #view_more_products {
-        background-color: $owen;
+        background-color: $owen-nyc;
     }
 
     // soles - not very DRY, but it'll be easier to change when the time comes
