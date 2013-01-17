@@ -1,0 +1,9 @@
+- product = locals[:product]
+- flatrate_shipping_option = locals[:flatrate_shipping_option]
+
+.widget
+  %h3 #{flatrate_shipping_option.capitalize} Flatrate Shipping Cost
+  -# using hypens in data-attr to satiate zepto's .data() methed
+  %p{ id: "#{flatrate_shipping_option}_flatrate_shipping_cost", data: { :"#{flatrate_shipping_option}-flatrate-shipping-cost" => number_with_precision(product.send("#{flatrate_shipping_option}_flatrate_shipping_cost"), :precision => 2) }}
+    = number_to_currency(product.send("#{flatrate_shipping_option}_flatrate_shipping_cost"))
+

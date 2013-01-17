@@ -36,6 +36,10 @@
       %fieldset
         %p Flat Rate Shipping Cost: #{number_to_currency(@flatrate_shipping_cost)}
 
+    - unless @international_flatrate_shipping_cost.nil?
+      %fieldset
+        %p International Flat Rate Shipping Cost: #{number_to_currency(@international_flatrate_shipping_cost)}
+
     %fieldset
       %p Price: #{number_to_currency(@price)}
 

@@ -118,6 +118,9 @@ class ProductsController < ApplicationController
       unless params[:product][:flatrate_shipping_cost].nil?
         params[:product][:flatrate_shipping_cost] = params[:product][:flatrate_shipping_cost].gsub(',', '')
       end
+      unless params[:product][:international_flatrate_shipping_cost].nil?
+        params[:product][:international_flatrate_shipping_cost] = params[:product][:international_flatrate_shipping_cost].gsub(',', '')
+      end
     end
 
     def redirect_to_current_slug

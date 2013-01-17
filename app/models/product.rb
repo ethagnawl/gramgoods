@@ -17,15 +17,18 @@ class Product < ActiveRecord::Base
   friendly_id :name, :use => [:slugged, :history]
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
-  :flatrate_shipping_cost, :unlimited_quantity, :colors_attributes,
+  :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
+  :unlimited_quantity, :colors_attributes,
   :sizes_attributes, :colors, :sizes, :product_images
 
   validates_presence_of :name, :price, :description, :product_images
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
-  validates_numericality_of :flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
+  validates_numericality_of :domestic_flatrate_shipping_cost, :greater_than => 0.00,
+    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? }
+ validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
+    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? }
 
   accepts_nested_attributes_for :colors,
     :reject_if => lambda { |attrs|

@@ -77,12 +77,19 @@
           %div.attrs
 
     %fieldset
-      - flatrate_shipping_label = form_label('Flatrate Shipping Price', false, ' (e.g. 9.99)')
+      - flatrate_shipping_label = form_label('Domestic Flatrate Shipping Price', false, ' (e.g. 9.99)')
       - if edit_view
-        = product_form.label :flatrate_shipping_cost, flatrate_shipping_label
-      = product_form.text_field :flatrate_shipping_cost, |
+        = product_form.label :domestic_flatrate_shipping_cost, flatrate_shipping_label
+      = product_form.text_field :domestic_flatrate_shipping_cost, |
                                 :type => 'text',
                                 :placeholder => flatrate_shipping_label
+    %fieldset
+      - international_flatrate_shipping_label = form_label('International Flatrate Shipping Price', false, ' (e.g. 9.99)')
+      - if edit_view
+        = product_form.label :international_flatrate_shipping_cost, international_flatrate_shipping_label
+      = product_form.text_field :international_flatrate_shipping_cost, |
+                                :type => 'text',
+                                :placeholder => international_flatrate_shipping_label
 
     %fieldset
       = product_form.label :status, (form_label(:status))

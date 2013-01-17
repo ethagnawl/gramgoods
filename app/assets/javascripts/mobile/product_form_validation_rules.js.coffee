@@ -34,6 +34,15 @@ window.product_form_validation_rules =
                 else
                     happy.is_valid_price(val)
 
+        '#product_international_flatrate_shipping_cost':
+            message: 'Valid International Flatrate Shipping Price is required. (e.g. 9.99)'
+            required: 'sometimes'
+            test: (val) ->
+                if val is ''
+                    true
+                else
+                    happy.is_valid_price(val)
+
         '#product_images':
             required: true
             message: 'At least one Product Image is required.'

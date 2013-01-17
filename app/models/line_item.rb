@@ -2,7 +2,8 @@ class LineItem < ActiveRecord::Base
   belongs_to :order
 
   # freezes product attributes in case product name, price, etc. changes
-  attr_accessible :quantity, :color, :size, :price, :total, :flatrate_shipping_cost,
+  attr_accessible :quantity, :color, :size, :price, :total,
+    :flatrate_shipping_cost, :international_flatrate_shipping_cost,
     :product_id, :product_name
   validates_presence_of :quantity, :price, :total, :product_id, :product_name
 
@@ -18,6 +19,13 @@ class LineItem < ActiveRecord::Base
         errors.add(:flatrate_shipping_cost, 'must be valid.')
       end
     end
+
+    unless self.international_flatrate_shipping_cost.nil?
+      if product.international_flatrate_shipping_cost != self.international_flatrate_shipping_cost
+        errors.add(:international_flatrate_shipping_cost, 'must be valid.')
+      end
+    end
+
     if product.name != self.product_name
       errors.add(:product_name, 'must be valid.')
     end

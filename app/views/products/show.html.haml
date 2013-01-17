@@ -73,12 +73,7 @@
                   %option{ :value => size.size }
                     = size.size
 
-      - unless @product.flatrate_shipping_cost.nil?
-        .widget
-          %h3 Flat Rate Shipping Cost
-          -# using hypens in data-attr to satiate zepto's .data() methed
-          %p#flatrate_shipping_cost{ :data => { :"flatrate-shipping-cost" => number_with_precision(@product.flatrate_shipping_cost, :precision => 2) }}
-            = number_to_currency(@product.flatrate_shipping_cost)
+      = render 'flatrate_shipping_options', locals: { product: @product }
 
       - if @product.is_orderable
         - price = number_to_currency(@product.price)
