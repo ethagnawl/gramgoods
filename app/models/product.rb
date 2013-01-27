@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  FLATRATE_SHIPPING_OPTIONS = %w{ domestic international }
+
   include ActionView::Helpers::NumberHelper
 
   belongs_to :store
@@ -101,6 +103,10 @@ class Product < ActiveRecord::Base
       when 'Out of Stock' then 'btn-danger'
       else ''
     end
+  end
+
+  def flatrate_shipping_options
+    FLATRATE_SHIPPING_OPTIONS
   end
 
   # allow nested attributes to use x.product before product has been saved
