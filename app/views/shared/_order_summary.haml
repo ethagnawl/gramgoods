@@ -23,7 +23,7 @@
 
   - unless locals[:order].line_item.flatrate_shipping_option_cost.nil?
     %p.widget
-      Flatrate Shipping Cost: #{number_to_currency(locals[:order].line_item.flatrate_shipping_option_cost)}
+      #{locals[:order].line_item.flatrate_shipping_option.capitalize} Flatrate Shipping Cost: #{number_to_currency(locals[:order].line_item.flatrate_shipping_option_cost)}
 
   %p.widget
     Price: #{number_to_currency(locals[:order].line_item.price)}
