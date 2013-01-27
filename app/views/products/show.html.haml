@@ -35,7 +35,7 @@
         %p
           = @product.description
 
-      - if @product.is_orderable
+      - if @product.is_purchasable?
         - if (@product.unlimited_quantity != true) && (@product.quantity == 1)
           %input#quantity{ :type => 'hidden', :value => 1 }
         - else
@@ -75,19 +75,4 @@
 
       = render 'flatrate_shipping_options', locals: { product: @product }
 
-      - if @product.is_orderable
-        - price = number_to_currency(@product.price)
-        = link_to "#{@product.purchase_type} #{number_to_currency(@product.price)}", 'javascript: void(0);', |
-          :class => 'product-button product-purchase', |
-          :id => 'redirect_to_order_form'
-      - elsif @product.status == 'Draft'
-        .widget
-          %h3
-            Product Status: Draft
-          %p
-            This product will not be visible to customers until you change its
-            status to Active or Out of Stock.
-
-      - else
-        .widget
-          %h3 This product is currently out of stock.
+      = @product.purchase_button_or_status_message

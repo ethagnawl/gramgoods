@@ -62,7 +62,7 @@ class Product < ActiveRecord::Base
     self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
   end
 
-  def is_orderable
+  def is_purchasable?
     if self.quantity.nil?
       self.unlimited_quantity == true && self.status == 'Active'
     else
