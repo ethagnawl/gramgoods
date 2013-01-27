@@ -130,6 +130,9 @@ Zepto ($) ->
                 data.size = $.trim(($ '#size').val())
             if gon.layout is 'mobile'
                 data.layout = 'mobile'
+            if gon.require_flatrate_shipping_option
+                data.flatrate_shipping_option = ($ '#flatrate_shipping_option').val() || ($ '#flatrate_shipping_option').data('flatrate_shipping_option') || undefined
+
 
             window.location = "#{gon.create_order_url}?#{$.param(data)}"
 

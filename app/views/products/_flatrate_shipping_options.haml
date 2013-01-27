@@ -5,10 +5,10 @@
   - if options.length > 1
     .widget
       %h3 Flatrate Shipping Options
-      %select.input-xxlarge#size
+      %select.input-xxlarge#flatrate_shipping_option
         - options.each do |option|
           - cost = product.send("#{option}_flatrate_shipping_cost")
-          %option{ :value => cost }
+          %option{ :value => option }
             = "#{option.capitalize} - #{ number_to_currency(cost) }"
   - else
     - flatrate_shipping_option = options.first

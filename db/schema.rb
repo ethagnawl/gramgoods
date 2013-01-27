@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117065848) do
+ActiveRecord::Schema.define(:version => 20130127043802) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -70,9 +70,10 @@ ActiveRecord::Schema.define(:version => 20130117065848) do
     t.string   "color"
     t.decimal  "price",                                :precision => 10, :scale => 2
     t.decimal  "total"
-    t.decimal  "flatrate_shipping_cost",               :precision => 10, :scale => 2
+    t.decimal  "flatrate_shipping_option_cost",        :precision => 10, :scale => 2
     t.string   "product_name"
     t.decimal  "international_flatrate_shipping_cost"
+    t.string   "flatrate_shipping_option"
   end
 
   add_index "line_items", ["order_id"], :name => "index_line_items_on_order_id"

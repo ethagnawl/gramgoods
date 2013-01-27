@@ -110,9 +110,32 @@ class Product < ActiveRecord::Base
   end
 
   def flatrate_shipping_options
-    Product.flatrate_shipping_options.find_all do |option|
-      self.send("#{option}_flatrate_shipping_cost")
+    Product.flatrate_shipping_options.find_all do |flatrate_shipping_option|
+      self.send("#{flatrate_shipping_option}_flatrate_shipping_cost")
     end
+  end
+
+  def valid_flatrate_shipping_option?(flatrate_shipping_option)
+    flatrate_shipping_options.member? flatrate_shipping_option
+  end
+
+  def flatrate_shipping_option_costs
+    flatrate_shipping_options.map do |flatrate_shipping_option|
+      self.send("#{flatrate_shipping_option}_flatrate_shipping_cost")
+    end
+  end
+
+  def flatrate_shipping_option_cost(flatrate_shipping_option)
+    if valid_flatrate_shipping_option?(flatrate_shipping_option)
+      self.send("#{flatrate_shipping_option}_flatrate_shipping_cost")
+    else
+      nil
+    end
+  end
+
+  # TODO: rename this valid_shipping_option_cost?
+  def valid_shipping_cost?(cost)
+    flatrate_shipping_option_costs.member? cost
   end
 
   # allow nested attributes to use x.product before product has been saved

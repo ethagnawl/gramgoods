@@ -11,6 +11,9 @@
         = line_item.hidden_field :size, :value => @size
       - unless @color.nil?
         = line_item.hidden_field :color, :value => @color
+      - unless @flatrate_shipping_option.nil?
+        = line_item.hidden_field :flatrate_shipping_option, :value => @flatrate_shipping_option
+        = line_item.hidden_field :flatrate_shipping_option_cost, :value => @flatrate_shipping_option_cost
 
     %fieldset
       %p
@@ -32,9 +35,13 @@
           - unless @product.sizes.length == 1
             %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#size" } edit
 
-    - unless @flatrate_shipping_cost.nil?
+    - unless @flatrate_shipping_option.nil?
       %fieldset
-        %p Flat Rate Shipping Cost: #{number_to_currency(@flatrate_shipping_cost)}
+        %p
+          #{@flatrate_shipping_option.capitalize} Flatrate Shipping Cost: #{number_to_currency(@flatrate_shipping_option_cost)}
+          - unless @product.flatrate_shipping_options.length == 1
+            %a.edit-quantity{ :href => "/#{@store.slug}/#{@product.slug}#flatrate_shipping_option" } edit
+
 
     - unless @international_flatrate_shipping_cost.nil?
       %fieldset

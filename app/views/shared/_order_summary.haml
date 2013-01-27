@@ -21,13 +21,9 @@
     %p.widget
       Color: #{locals[:order].line_item.color}
 
-  - unless locals[:order].line_item.flatrate_shipping_cost.nil?
+  - unless locals[:order].line_item.flatrate_shipping_option_cost.nil?
     %p.widget
-      Flat Rate Shipping Cost: #{number_to_currency(locals[:order].line_item.flatrate_shipping_cost)}
-
-  - unless locals[:order].line_item.international_flatrate_shipping_cost.nil?
-    %p.widget
-      International Flat Rate Shipping Cost: #{number_to_currency(locals[:order].line_item.international_flatrate_shipping_cost)}
+      Flatrate Shipping Cost: #{number_to_currency(locals[:order].line_item.flatrate_shipping_option_cost)}
 
   %p.widget
     Price: #{number_to_currency(locals[:order].line_item.price)}

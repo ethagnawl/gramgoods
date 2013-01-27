@@ -39,15 +39,13 @@ class OrdersController < ApplicationController
     @size = params[:size] unless params[:size].nil?
     @price = @product.price
     @total = @quantity * @price
-    unless @product.flatrate_shipping_cost.nil?
-      @flatrate_shipping_cost = @product.flatrate_shipping_cost
-      @total += @flatrate_shipping_cost
-    end
-    unless @product.international_flatrate_shipping_cost.nil?
-      @international_flatrate_shipping_cost = @product.international_flatrate_shipping_cost
-      @total += @international_flatrate_shipping_cost
-    end
+    @flatrate_shipping_option = @product.valid_flatrate_shipping_option?(params[:flatrate_shipping_option]) ? params[:flatrate_shipping_option] : nil
 
+
+    unless @flatrate_shipping_option.nil?
+      @flatrate_shipping_option_cost = @product.flatrate_shipping_option_cost(@flatrate_shipping_option)
+      @total += @flatrate_shipping_option_cost
+    end
   end
 
   def create
@@ -60,28 +58,20 @@ class OrdersController < ApplicationController
     @size = params[:order][:line_item_attributes][:size]
     @price = @product.price
     @total = @quantity * @price
-    unless @product.flatrate_shipping_cost.nil?
-      @flatrate_shipping_cost = @product.flatrate_shipping_cost
-      @total += @flatrate_shipping_cost
-    end
-    unless @product.international_flatrate_shipping_cost.nil?
-      @international_flatrate_shipping_cost = @product.international_flatrate_shipping_cost
-      @total += @international_flatrate_shipping_cost
+
+    @flatrate_shipping_option = @product.valid_flatrate_shipping_option?(params[:order][:line_item_attributes][:flatrate_shipping_option]) ? params[:order][:line_item_attributes][:flatrate_shipping_option] : nil
+    unless @flatrate_shipping_option.nil?
+      @flatrate_shipping_option_cost = @product.flatrate_shipping_option_cost(@flatrate_shipping_option)
+      @total += @flatrate_shipping_option_cost
     end
 
     params[:order][:line_item_attributes][:product_name] = @product.name
     params[:order][:line_item_attributes][:price] = @price
     params[:order][:line_item_attributes][:total] = @total
-    unless @flatrate_shipping_cost.nil?
-      params[:order][:line_item_attributes][:flatrate_shipping_cost] = @flatrate_shipping_cost
-    end
-    unless @international_flatrate_shipping_cost.nil?
-      params[:order][:line_item_attributes][:international_flatrate_shipping_cost] = @international_flatrate_shipping_cost
-    end
 
     @order = @store.orders.new(params[:order])
 
-    if @order.charge(params[:stripeToken]) && @order.save
+    if @order.save && @order.charge(params[:stripeToken])
       redirect_to confirmation_store_order_path @store, @order.access_key
     else
       render 'new'

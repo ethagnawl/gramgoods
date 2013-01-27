@@ -65,6 +65,7 @@ class ProductsController < ApplicationController
     gon.product_id = @product.id
     gon.store_slug = @store.slug
     gon.create_order_url = new_store_order_path(@store)
+    gon.require_flatrate_shipping_option = !@product.flatrate_shipping_options.empty?
 
     if @product.status == 'Draft'
       if user_signed_in? && (user_owns_store?(@store.id) || current_user.username == 'gramgoods')
