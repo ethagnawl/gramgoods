@@ -1,0 +1,9 @@
+- flatrate_shipping_label = form_label("#{flatrate_shipping_option.capitalize} Flatrate Shipping Price", false, ' (e.g. 9.99)')
+
+%fieldset
+  - if edit_view
+    = form.label :domestic_flatrate_shipping_cost, flatrate_shipping_label
+  = form.text_field :domestic_flatrate_shipping_cost, |
+                    :type => 'text',
+                    :placeholder => flatrate_shipping_label
+
