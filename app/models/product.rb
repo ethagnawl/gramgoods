@@ -21,9 +21,9 @@ class Product < ActiveRecord::Base
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
   :unlimited_quantity, :colors_attributes,
-  :sizes_attributes, :colors, :sizes, :product_images
+  :sizes_attributes, :colors, :sizes, :product_images, :purchase_type
 
-  validates_presence_of :name, :price, :description, :product_images
+  validates_presence_of :name, :price, :description, :product_images, :purchase_type
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00

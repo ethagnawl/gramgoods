@@ -82,6 +82,15 @@
       locals: { form: product_form, edit_view: edit_view }
 
     %fieldset
+      = product_form.label :purchase_type, (form_label(:purchase_type))
+      %fieldset
+        = product_form.radio_button :purchase_type, 'Buy Now', checked: true
+        = product_form.label :purchase_type, 'Buy Now', value: 'Buy Now'
+      %fieldset
+        = product_form.radio_button :purchase_type, 'Pre-Order'
+        = product_form.label :purchase_type, 'Pre-Order', value: 'Pre-Order'
+
+    %fieldset
       = product_form.label :status, (form_label(:status))
       = product_form.select :status,
                             options_for_select(Product.order_status_array,

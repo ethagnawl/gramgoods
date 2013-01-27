@@ -77,10 +77,9 @@
 
       - if @product.is_orderable
         - price = number_to_currency(@product.price)
-        = link_to("Buy Now #{price}", 'javascript: void(0);', |
-          :id => 'redirect_to_order_form', |
+        = link_to "#{@product.purchase_type} #{number_to_currency(@product.price)}", 'javascript: void(0);', |
           :class => 'product-button product-purchase', |
-          :data => { :'js-handle' => 'true' })
+          :id => 'redirect_to_order_form'
       - elsif @product.status == 'Draft'
         .widget
           %h3
