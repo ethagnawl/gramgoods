@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   layout 'mobile'
   before_filter :common_vars, :except => [:index, :show]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
+  before_filter :normalize_shipping_option_params, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
   before_filter :authenticate_user!, :except => [:show, :index]
   before_filter :except => [:show, :index, :destroy] do |controller|
@@ -87,6 +88,7 @@ class ProductsController < ApplicationController
     @product = @store.products.find(params[:id])
     @product.colors.destroy_all
     @product.sizes.destroy_all
+
     if @product.update_attributes(params[:product])
       redirect_to custom_product_path(@store, @product)
     else
@@ -139,6 +141,12 @@ class ProductsController < ApplicationController
           redirect_to custom_product_path(@product.store, @product, params),
             :status => :moved_permanently
         end
+      end
+    end
+
+    def normalize_shipping_option_params
+      Product.flatrate_shipping_options.each do |flatrate_shipping_option|
+        params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"] = params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"].nil? || params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"].empty? ? nil : params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"]
       end
     end
 end
