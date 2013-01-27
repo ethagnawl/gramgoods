@@ -77,7 +77,7 @@
           %div.attrs
 
     = render partial: 'flatrate_shipping_option_fieldset',
-      collection: @product.flatrate_shipping_options,
+      collection: Product.flatrate_shipping_options,
       as: :flatrate_shipping_option,
       locals: { form: product_form, edit_view: edit_view }
 

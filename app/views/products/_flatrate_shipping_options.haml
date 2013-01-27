@@ -1,21 +1,15 @@
 - product = locals[:product]
-- domestic_flatrate_shipping_cost = product.domestic_flatrate_shipping_cost || nil
-- international_flatrate_shipping_cost = product.international_flatrate_shipping_cost || nil
+- options = product.flatrate_shipping_options
 
--# if the product has a shipping option
-- if domestic_flatrate_shipping_cost || international_flatrate_shipping_cost
-
-  -# if the product has multiple shipping options
-  - if domestic_flatrate_shipping_cost && international_flatrate_shipping_cost
-
+- unless options.empty?
+  - if options.length > 1
     .widget
       %h3 Flatrate Shipping Options
       %select.input-xxlarge#size
-        - { Domestic: domestic_flatrate_shipping_cost,
-            International: international_flatrate_shipping_cost }.each do |flatrate_shiping_option, cost|
-
+        - options.each do |option|
+          - cost = product.send("#{option}_flatrate_shipping_cost")
           %option{ :value => cost }
-            = "#{flatrate_shiping_option} - #{ number_to_currency(cost) }"
+            = "#{option.capitalize} - #{ number_to_currency(cost) }"
   - else
-    - flatrate_shipping_option = domestic_flatrate_shipping_cost ? 'domestic' : 'international'
+    - flatrate_shipping_option = options.first
     = render 'flatrate_shipping_option', locals: { product: product, flatrate_shipping_option: flatrate_shipping_option }

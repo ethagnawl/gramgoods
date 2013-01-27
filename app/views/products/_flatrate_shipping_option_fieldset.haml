@@ -2,8 +2,6 @@
 
 %fieldset
   - if edit_view
-    = form.label :domestic_flatrate_shipping_cost, flatrate_shipping_label
-  = form.text_field :domestic_flatrate_shipping_cost, |
-                    :type => 'text',
-                    :placeholder => flatrate_shipping_label
+    = form.label "#{flatrate_shipping_option}_flatrate_shipping_cost".to_sym, flatrate_shipping_label
+  = form.text_field "#{flatrate_shipping_option}_flatrate_shipping_cost".to_sym, :type => 'text', :placeholder => flatrate_shipping_label
 
