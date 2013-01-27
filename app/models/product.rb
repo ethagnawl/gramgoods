@@ -105,8 +105,14 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def flatrate_shipping_options
+  def self.flatrate_shipping_options
     FLATRATE_SHIPPING_OPTIONS
+  end
+
+  def flatrate_shipping_options
+    Product.flatrate_shipping_options.find_all do |option|
+      self.send("#{option}_flatrate_shipping_cost")
+    end
   end
 
   # allow nested attributes to use x.product before product has been saved
