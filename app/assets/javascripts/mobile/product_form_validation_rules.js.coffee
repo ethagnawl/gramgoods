@@ -25,8 +25,8 @@ window.product_form_validation_rules =
                     # quantity is required if unlimited quantity isn't checked
                     # quantity becomes disabled when unlimited quantity is checked
 
-        '#product_flatrate_shipping_cost':
-            message: 'Valid Flatrate Shipping Price is required. (e.g. 9.99)'
+        '#product_domestic_flatrate_shipping_cost':
+            message: 'Valid Domestic Flatrate Shipping Price is required. (e.g. 9.99)'
             required: 'sometimes'
             test: (val) ->
                 if val is ''
