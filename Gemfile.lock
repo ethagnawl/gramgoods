@@ -70,6 +70,10 @@ GEM
       orm_adapter (~> 0.1)
       railties (~> 3.1)
       warden (~> 1.2.1)
+    draper (1.0.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     erubis (2.7.0)
     excon (0.16.10)
     execjs (1.4.0)
@@ -189,6 +193,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12)
       json (~> 1.4)
+    request_store (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     ruby-hmac (0.4.0)
@@ -243,6 +248,7 @@ DEPENDENCIES
   delayed_job_active_record
   delayed_job_web
   devise
+  draper
   friendly_id
   gon
   haml
