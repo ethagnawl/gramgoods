@@ -16,4 +16,5 @@
 *.DS_Store
 /config/database.yml
 /config/stripe_config.yml
+/config/amazon_config.yml
 *.env
