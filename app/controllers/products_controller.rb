@@ -58,8 +58,8 @@ class ProductsController < ApplicationController
 
   def show
     @store = Store.find(params[:store_id])
-    @is_customized_store = is_store_slug_in_merchants_with_custom_store_slugs_array? @store.slug
     @product = ProductDecorator.decorate @store.products.find(params[:id])
+    @is_customized_store = @store.is_slug_in_merchants_with_custom_store_slugs_array?
     gon.price = number_with_precision(@product.price, :precision => 2)
     gon.product_name = @product.name
     gon.product_id = @product.id

@@ -17,4 +17,9 @@ class Store < ActiveRecord::Base
       limit(limit).
       includes([:store])
   end
+
+  def is_slug_in_merchants_with_custom_store_slugs_array?
+    return false if !defined?(MERCHANTS_WITH_CUSTOM_STORE_SLUGS) || MERCHANTS_WITH_CUSTOM_STORE_SLUGS.nil?
+    MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? self.slug
+  end
 end

@@ -1,78 +1,18 @@
 - content_for(:description) { @product.description }
 - content_for(:title) { "#{@product.name} | GramGoods" }
-- content_for(:header) do
-  - if @is_customized_store
-    %span.mobile-header-store-logo
-      %a{ :href => custom_store_path(@product.store), :title => @product.store.name }
-        %img{ :src => custom_merchant_logo_src(@product.store.slug), |
-              :alt => @product.store.name }
-  - else
-    = @product.name
+- content_for(:header) { @product.header }
 
-
-#order_form.hide
-#success_screen.hide
 .product-detail
-  .product{ :data => {  :'store-slug' => @product.store.slug } }
+  .product{ data: {  :'store-slug' => @product.store.slug } }
     .product-top.widget
-
-      = render 'products/thumbnail_gallery', :locals => { product_name: @product.name, product_images: @product.get_product_images}
+      = @product.thumbnail_gallery
 
     .product-bottom.widget
-      - if @is_customized_store
-        .widget.product-name
-          %h1 #{@product.name}
-
-      .widget
-        %h3 Merchant
-        %p
-          #{link_to @product.store.name, custom_store_path(@product.store)}
-          |
-          #{link_to 'Return Policy', return_policy_store_path(@product.store)}
-
-      .widget
-        %h3 Description
-        %p
-          = @product.description
-
-      - if @product.is_purchasable?
-        - if (@product.unlimited_quantity != true) && (@product.quantity == 1)
-          %input#quantity{ :type => 'hidden', :value => 1 }
-        - else
-          .widget
-            %h3 Quantity
-            - if @product.unlimited_quantity
-              %input.input-xxlarge#quantity{ :type => 'tel', :placeholder => 'Enter a Quantity' }
-            - else
-              %select.input-xxlarge#quantity
-                - (1..@product.quantity.to_i).each do |n|
-                  %option{ :value => n }
-                    = n
-        - unless @product.colors.empty?
-          .widget
-            %h3 Color
-            - if @product.colors.length == 1
-              %p #{@product.colors.first.color}
-              %input#color{ :type => 'hidden', |
-                            :value => @product.colors.first.color }
-            - else
-              %select.input-xxlarge#color
-                - @product.colors.each do |color|
-                  %option{ :value => color.color }
-                    = color.color
-        - unless @product.sizes.empty?
-          .widget
-            %h3 Size
-            - if @product.sizes.length == 1
-              %p #{@product.sizes.first.size}
-              %input#size{ :type => 'hidden', |
-                            :value => @product.sizes.first.size }
-            - else
-              %select.input-xxlarge#size
-                - @product.sizes.each do |size|
-                  %option{ :value => size.size }
-                    = size.size
-
-      = render 'flatrate_shipping_options', locals: { product: @product }
-
+      = @product.customized_store_body_header
+      = @product.merchant
+      = @product.description
+      = @product.quantity
+      = @product.colors
+      = @product.sizes
+      = @product.flatrate_shipping_options
       = @product.purchase_button_or_status_message

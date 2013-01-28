@@ -70,6 +70,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def belongs_to_customized_store?
+    self.store.is_slug_in_merchants_with_custom_store_slugs_array?
+  end
+
   def update_status(status)
     update_column(:status, status)
   end
