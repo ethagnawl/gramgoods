@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'mobile'
+  before_filter :set_flatrate_shipping_options_in_gon
   before_filter :common_vars, :except => [:index, :show]
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :normalize_shipping_option_params, :only => [:create, :update]
@@ -149,5 +150,9 @@ class ProductsController < ApplicationController
       Product.flatrate_shipping_options.each do |flatrate_shipping_option|
         params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"] = params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"].nil? || params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"].empty? ? nil : params[:product]["#{flatrate_shipping_option}_flatrate_shipping_cost"]
       end
+    end
+
+    def set_flatrate_shipping_options_in_gon
+      gon.flatrate_shipping_options = Product.flatrate_shipping_options
     end
 end

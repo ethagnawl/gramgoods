@@ -46,3 +46,14 @@ window.product_form_validation_rules =
         '#product_images':
             required: true
             message: 'At least one Product Image is required.'
+
+for flatrate_shipping_option in gon.flatrate_shipping_options
+    product_form_validation_rules.
+        fields["#product_#{flatrate_shipping_option}_flatrate_shipping_cost"] =
+            message: "Valid #{GramGoods.capitalize(flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
+            required: 'sometimes'
+            test: (val) ->
+                if val is ''
+                    true
+                else
+                    happy.is_valid_price(val)

@@ -16,3 +16,5 @@ GramGoods.error_message = """
 """
 
 GramGoods.header_offset = 56
+
+GramGoods.capitalize = (string) -> string.charAt(0).toUpperCase() + string.slice(1)
