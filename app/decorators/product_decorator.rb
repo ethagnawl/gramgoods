@@ -40,10 +40,14 @@ class ProductDecorator < Draper::Decorator
     end
   end
 
-  def description
-    widget do
-      h.content_tag(:h3, 'Description') +
-      h.content_tag(:p, source.description)
+  def description(passthrough = false)
+    if passthrough
+      source.description
+    else
+      widget do
+        h.content_tag(:h3, 'Description') +
+        h.content_tag(:p, source.description)
+      end
     end
   end
 

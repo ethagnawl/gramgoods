@@ -1,4 +1,4 @@
-- content_for(:description) { @product.description }
+- content_for(:description) { @product.description(true) }
 - content_for(:title) { "#{@product.name} | GramGoods" }
 - content_for(:header) { @product.header }
 
