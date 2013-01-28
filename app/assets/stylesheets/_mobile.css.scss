@@ -30,6 +30,14 @@ input[type=text], input[type=tel], input[type=password], input[type=email], inpu
     height: 28px !important;
 }
 
+.radio {
+    cursor: pointer;
+
+    input[type="radio"] {
+        width: auto !important;
+    }
+}
+
 .btn {
     color: $white !important;
 }

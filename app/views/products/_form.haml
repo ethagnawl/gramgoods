@@ -83,12 +83,12 @@
 
     %fieldset
       = product_form.label :purchase_type, (form_label(:purchase_type))
-      %fieldset
+      %label.radio
         = product_form.radio_button :purchase_type, 'Buy Now', checked: true
-        = product_form.label :purchase_type, 'Buy Now', value: 'Buy Now'
-      %fieldset
+        Buy Now
+      %label.radio
         = product_form.radio_button :purchase_type, 'Pre-Order'
-        = product_form.label :purchase_type, 'Pre-Order', value: 'Pre-Order'
+        Pre-Order
 
     %fieldset
       = product_form.label :status, (form_label(:status))
