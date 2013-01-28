@@ -4,6 +4,8 @@ class Product < ActiveRecord::Base
   belongs_to :store
   has_many :colors, :dependent => :destroy, :before_add => :set_nest
   has_many :sizes, :dependent => :destroy, :before_add => :set_nest
+  has_many :user_product_images, dependent: :destroy
+  has_many :instagram_product_images, dependent: :destroy
   extend FriendlyId
 
   scope :recent_active_products, Proc.new { |limit|
@@ -18,15 +20,16 @@ class Product < ActiveRecord::Base
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :flatrate_shipping_cost, :unlimited_quantity, :colors_attributes,
-  :sizes_attributes, :colors, :sizes, :product_images
+  :sizes_attributes, :colors, :sizes, :user_product_images,
+  :user_product_images_attributes, :instagram_product_images,
+  :instagram_product_images_attributes
 
-  validates_presence_of :name, :price, :description, :product_images
+  validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
-  validates_numericality_of :flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.flatrate_shipping_cost.nil? }
 
+  accepts_nested_attributes_for :user_product_images, allow_destroy: true
   accepts_nested_attributes_for :colors,
     :reject_if => lambda { |attrs|
       attrs.all? { |key, value| value.blank? }
@@ -45,12 +48,20 @@ class Product < ActiveRecord::Base
     ['Draft', 'Active', 'Out of Stock']
   end
 
+  def product_images
+    return []
+  end
+
+  def get_user_product_images
+    self.user_product_images.map{ |image| image.image.url }
+  end
+
+  def get_instagram_product_images
+    self.instagram_product_images.map{ |image| image.url }
+  end
+
   def get_product_images
-    if self.product_images.nil?
-      []
-    else
-      self.product_images.split(',')
-    end
+    self.get_user_product_images + self.get_instagram_product_images
   end
 
   def normalize_quantity
@@ -98,6 +109,10 @@ class Product < ActiveRecord::Base
       when 'Out of Stock' then 'btn-danger'
       else ''
     end
+  end
+
+  def flatrate_shipping_cost
+  ''
   end
 
   # allow nested attributes to use x.product before product has been saved

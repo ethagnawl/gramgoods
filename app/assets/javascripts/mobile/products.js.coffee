@@ -122,3 +122,19 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 ($ @).on 'click', -> loading_button_click_handler ($ @)
 
         fetch_and_render_existing_photos(true)
+
+        $('#add_additional_user_product_image').click ->
+            new_user_image = Mustache.render(
+                templates.product_form_new_user_product_image_template,
+                {n: new Date().getMilliseconds()}
+            )
+
+            $(this).before(new_user_image)
+
+            ($ '#new_user_product_images').on 'click', '.remove-user-product-image', ->
+                ($ @).closest('.widget').remove()
+
+        ($ '#existing_user_product_images').on 'click', '.remove-user-product-image', ->
+            $checkbox = ($ @).closest('.widget').find('input.xhide')
+            bool = !$checkbox.prop('checked')
+            $checkbox.prop('checked', bool)

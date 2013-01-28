@@ -40,6 +40,7 @@ class ProductsController < ApplicationController
     @product = @store.products.new({
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
+    5.times { @product.user_product_images.build }
   end
 
   def create

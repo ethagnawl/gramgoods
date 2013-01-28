@@ -63,15 +63,5 @@ module Gramgoods
     config.logger = Logger.new(STDOUT)
 
     config.autoload_paths += Dir["#{config.root}/lib/**"]
-
-    # amazon/paperclip config
-    config.paperclip_defaults = {
-      :storage => :s3,
-      :s3_credentials => {
-        :bucket => AMAZON_CONFIG['AWS_BUCKET'],
-        :access_key_id => AMAZON_CONFIG['AWS_ACCESS_KEY_ID'],
-        :secret_access_key => AMAZON_CONFIG['AWS_SECRET_ACCESS_KEY']
-      }
-    }
   end
 end

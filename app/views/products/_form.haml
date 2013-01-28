@@ -3,9 +3,10 @@
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
 
 = form_for([@store, @product], |
-          :html => { :class => 'mobile-form', |
-                     :autocorrect => 'off', |
-                     :autocapitalize => 'off' }) do |product_form|
+          :html => { class: 'mobile-form', |
+                     multipart: true, |
+                     autocorrect: 'off', |
+                     autocapitalize: 'off' }) do |product_form|
 
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
@@ -77,23 +78,29 @@
           %div.attrs
 
     %fieldset
-      - flatrate_shipping_label = form_label('Flatrate Shipping Price', false, ' (e.g. 9.99)')
-      - if edit_view
-        = product_form.label :flatrate_shipping_cost, flatrate_shipping_label
-      = product_form.text_field :flatrate_shipping_cost, |
-                                :type => 'text',
-                                :placeholder => flatrate_shipping_label
-
-    %fieldset
       = product_form.label :status, (form_label(:status))
       = product_form.select :status,
                             options_for_select(Product.order_status_array,
                                                @product.status ||= 'Active')
 
-    = render 'product_images', locals: { edit_view: edit_view,
-      form: product_form,
-      product_images: @product.get_product_images,
-      username: @user.username }
+    %fieldset#new_user_product_images
+      = product_form.fields_for(:user_product_images) do |user_product_image_form|
+        %div.widget
+          %span.user-product-image
+            = user_product_image_form.file_field :image
+      %a#add_additional_user_product_image{ href: 'javascript: void(0);' } +
+
+    %fieldset#existing_user_product_images
+      = product_form.fields_for(:user_product_images) do |user_product_image_form|
+        .widget.user-product-image
+          = image_tag(user_product_image_form.object.image.url(:thumb))
+          = user_product_image_form.check_box :_destroy, class: 'xhide'
+          %a.remove-user-product-image{ href: 'javascript: void(0);' } X
+
+    -#= render 'product_images', locals: { edit_view: edit_view,
+    -#  form: product_form,
+    -#  product_images: @product.get_product_images,
+    -#  username: @user.username }
 
     %fieldset#product_form_submit_button_wrapper.hide
       = product_form.submit verb_and_product, :class => 'btn btn-large btn-primary'
