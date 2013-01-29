@@ -30,6 +30,7 @@ class Product < ActiveRecord::Base
   validates_numericality_of :price, :greater_than => 0.00
 
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
+  accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
   accepts_nested_attributes_for :colors,
     :reject_if => lambda { |attrs|
       attrs.all? { |key, value| value.blank? }

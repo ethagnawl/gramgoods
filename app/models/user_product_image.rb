@@ -6,13 +6,15 @@ class UserProductImage < ActiveRecord::Base
   validate :file_dimensions
 
   has_attached_file :image, styles: {
-    medium: "300x300",
     large: "612x612"
   },
   convert_options: {
-    medium: '-background black -gravity center -extent 300x300',
     large: '-background black -gravity center -extent 612x612'
   }
+
+  def src
+    self.image.url(:large)
+  end
 
   private
     def file_dimensions

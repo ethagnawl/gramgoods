@@ -9,13 +9,13 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         existing_photo_grid_photos_template = templates.existing_photo_grid_photos_template
         existing_photo_grid_photo_template = templates.existing_photo_grid_photo_template
 
-        $existing_photo_grid_wrapper = ($ '#existing_photo_grid_wrapper')
-        $existing_photo_grid = ($ '#existing_photo_grid')
+        $existing_product_image_grid_wrapper = ($ '#existing_product_image_grid_wrapper')
+        $existing_product_image_grid = ($ '#existing_product_image_grid')
         $loading_buttons = [($ '#add_existing_photos'),
                             $('#fetch_additional_existing_photos')]
 
-        $product_images = ($ '#product_images')
-        $product_images_wrapper = ($ '#product_images_wrapper')
+        $new_product_image_grid = ($ '#new_product_image_grid')
+        $new_product_image_grid_wrapper = ($ '#new_product_image_grid_wrapper')
 
         toggle_loading_message = ($el) ->
             if $el.hasClass('loading')
@@ -34,24 +34,17 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         disable_all_loading_buttons = ->
             $el.addClass('hide') for $el in $loading_buttons
 
-        update_product_image_array = ->
-            product_image_urls = ($ '.photo-wrapper.selected').map ->
-                ($ @).data('url')
-            $product_images.val product_image_urls
+        render_instagram_product_image_template = (product_image_url) ->
+            ($ 'form').append(
+                Mustache.render(templates.instagram_product_image_template, {
+                    n: new Date().getMilliseconds() + _.random(0, 100),
+                    url: product_image_url
+                })
+            )
+
 
         toggle_photo_wrapper_state = ($el) -> $el.toggleClass('selected')
 
-        photo_wrapper_click_handler = ($el) ->
-            toggle_photo_wrapper_state $el
-            update_product_image_array $el
-
-        $product_images_wrapper.each ->
-            if has_touch_events
-                ($ @).on 'tap', '.photo-wrapper', ->
-                    photo_wrapper_click_handler ($ @)
-            else
-                ($ @).on 'click', '.photo-wrapper', ->
-                    photo_wrapper_click_handler ($ @)
 
         fetch_and_render_existing_photos = (pageload = false) ->
             $.ajax
@@ -93,7 +86,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
                         product_images = _.map(product_images, (product_image) -> { product_image })
 
-                        $existing_photo_grid.append(
+                        $new_product_image_grid.append(
                             Mustache.render(existing_photo_grid_photos_template, {
                                 product_images
                             }, {
@@ -101,12 +94,14 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                             })
                         )
 
-                        if $existing_photo_grid_wrapper.hasClass('hide')
-                            $existing_photo_grid_wrapper.removeClass('hide')
+                        if $new_product_image_grid_wrapper.hasClass('hide')
+                            $new_product_image_grid_wrapper.removeClass('hide')
 
                         if pageload
-                            ($ '#loading_product_images_message')
+                            ($ '#new_product_images_loading_message')
                                 .addClass('hide')
+                            ($ '#new_product_images_message')
+                                .removeClass('hide')
                             ($ '#product_form_submit_button_wrapper')
                                 .removeClass('hide')
 
@@ -123,8 +118,20 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
         fetch_and_render_existing_photos(true)
 
+        new_product_image_wraper_click_handler = ($el) ->
+            toggle_photo_wrapper_state $el
+            render_instagram_product_image_template $el.data('url')
+
+        $new_product_image_grid_wrapper.each ->
+            if has_touch_events
+                ($ @).on 'tap', '.photo-wrapper', ->
+                    new_product_image_wraper_click_handler ($ @)
+            else
+                ($ @).on 'click', '.photo-wrapper', ->
+                    new_product_image_wraper_click_handler ($ @)
+
         $('#add_additional_user_product_image').click ->
-            console.log new_user_image = Mustache.render(
+            new_user_image = Mustache.render(
                 templates.product_form_new_user_product_image_template,
                 {n: new Date().getMilliseconds()}
             )
@@ -134,7 +141,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         ($ '#new_user_product_images').on 'click', '.remove-user-product-image', ->
             ($ @).closest('.widget').remove()
 
-        ($ '#existing_photo_grid_wrapper').on 'click', '.photo-wrapper', ->
+        ($ '#existing_user_photo_grid_wrapper').on 'click', '.photo-wrapper', ->
             $checkbox = ($ @).find('input.hide')
             bool = !$checkbox.prop('checked')
             $checkbox.prop('checked', bool)

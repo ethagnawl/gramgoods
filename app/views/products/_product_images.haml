@@ -1,30 +1,32 @@
-#product_images_wrapper
-  - if locals[:edit_view]
-    %fieldset
-      #product_image_photo_grid_wrapper.widget
+- if locals[:edit_view]
+  %fieldset
+    #existing_product_image_grid_wrapper.widget
+      #existing_product_image_grid.widget
         %label Current Product Images
 
-        #product_image_photo_grid.widget
-          - locals[:product_images].each do |product_image|
-            .photo-wrapper.selected{ data: { url: product_image } }
-              %img.photo{ src: product_image }
-              %span.remove.btn.btn-success
-                %i.icon-ok
-              %span.add.btn
-                %i.icon-plus-sign
+        - locals[:collections].each do |collection|
+          = locals[:form].fields_for(collection) do |product_image_form|
+            - if product_image_form.object.persisted?
+              .photo-wrapper.selected
+                = product_image_form.check_box :_destroy, class: 'hide'
+                %img.photo{ src: product_image_form.object.src }
+                %span.remove.btn.btn-success
+                  %i.icon-ok
+                %span.add.btn
+                  %i.icon-plus-sign
+            - else
+              -# this is hacky and weird, but existing images were falling
+              -# through and returning a string representation of a hidden input
+              %span.hide
 
-  %fieldset
-    %label#loading_product_images_message
-      Loading #{locals[:username]}'s Instagram feed...
-    #existing_photo_grid_wrapper.hide
-      = locals[:form].hidden_field :product_images, id: 'product_images'
-      - if locals[:edit_view]
-        %label Product Images
-      - unless locals[:edit_view]
-        %label Product Images*
-        %span.inline-help Choose at least one photo from #{locals[:username]}'s Instagram feed
-      #existing_photo_grid
-      %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-        Load Additional Photos
+%fieldset
+  .widget#new_product_image_grid_wrapper
+    .widget#new_product_image_grid
+      %label#new_product_images_loading_message
+        Loading #{locals[:username]}'s Instagram feed...
+      %label#new_product_images_message.hide
+        #{locals[:username]}'s Instagram feed
+    %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+      Load Additional Photos
 
 
