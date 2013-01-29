@@ -13,7 +13,7 @@ class Product < ActiveRecord::Base
     where(:status => 'Active').
       limit(limit).
       order('updated_at DESC').
-      includes([:store])
+      includes([:store, :user_product_images, :instagram_product_images])
   }
 
   friendly_id :name, :use => [:slugged, :history]
@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
   end
 
   def get_user_product_images
-    self.user_product_images.map{ |image| image.image.url }
+    self.user_product_images.map{ |image| image.image.url(:large) }
   end
 
   def get_instagram_product_images

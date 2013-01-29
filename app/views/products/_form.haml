@@ -85,17 +85,29 @@
 
     %fieldset#new_user_product_images
       = product_form.fields_for(:user_product_images) do |user_product_image_form|
-        %div.widget
-          %span.user-product-image
-            = user_product_image_form.file_field :image
-      %a#add_additional_user_product_image{ href: 'javascript: void(0);' } +
+        - if user_product_image_form.object.new_record?
+          .widget
+            = user_product_image_form.file_field(:image)
+        - else
+          -# this is hacky and weird, but existing images were falling
+          -# through and returning a string representation of a hidden input
+          %span.hide
+      %a#add_additional_user_product_image{ href: 'javascript: void(0);' }
+        + Add Additional Photo
 
-    %fieldset#existing_user_product_images
-      = product_form.fields_for(:user_product_images) do |user_product_image_form|
-        .widget.user-product-image
-          = image_tag(user_product_image_form.object.image.url(:thumb))
-          = user_product_image_form.check_box :_destroy, class: 'xhide'
-          %a.remove-user-product-image{ href: 'javascript: void(0);' } X
+    #product_images_wrapper
+      %fieldset
+        .widget#existing_photo_grid_wrapper
+          .widget#existing_photo_grid
+            = product_form.fields_for(:user_product_images) do |user_product_image_form|
+              - if user_product_image_form.object.persisted?
+                .photo-wrapper.selected
+                  = user_product_image_form.check_box :_destroy, class: 'hide'
+                  %img.photo{ src: user_product_image_form.object.image.url(:medium) }
+                  %span.remove.btn.btn-success
+                    %i.icon-ok
+                  %span.add.btn
+                    %i.icon-plus-sign
 
     -#= render 'product_images', locals: { edit_view: edit_view,
     -#  form: product_form,

@@ -3,9 +3,22 @@ class UserProductImage < ActiveRecord::Base
 
   belongs_to :product
 
+  validate :file_dimensions
+
   has_attached_file :image, styles: {
-    thumb: "100x100#",
-    small: "300x300>",
-    large: "600x600>"
+    medium: "300x300",
+    large: "612x612"
+  },
+  convert_options: {
+    medium: '-background black -gravity center -extent 300x300',
+    large: '-background black -gravity center -extent 612x612'
   }
+
+  private
+    def file_dimensions
+      dimensions = Paperclip::Geometry.from_file(image.queued_for_write[:original].path)
+      if dimensions.width < 612 && dimensions.height < 612
+        errors.add(:file,'Width or height must be at least 612px')
+      end
+    end
 end
