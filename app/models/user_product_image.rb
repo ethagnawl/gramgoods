@@ -12,6 +12,14 @@ class UserProductImage < ActiveRecord::Base
     large: '-background black -gravity center -extent 612x612'
   }
 
+  validates_attachment_content_type :image, content_type: [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/jpg',
+    'image/JPG'
+  ]
+
   def src
     self.image.url(:large)
   end
