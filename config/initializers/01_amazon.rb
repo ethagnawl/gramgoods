@@ -10,6 +10,8 @@ Gramgoods::Application.configure do
     AMAZON_CONFIG['AWS_SECRET_ACCESS_KEY'] = ENV['AWS_SECRET_ACCESS_KEY']
   end
 
+  # Paperclip config after AMAZON_CONFIG has been set
+  Paperclip.options[:command_path] = "/usr/local/bin"
   config.paperclip_defaults = {
     :storage => :s3,
     :s3_credentials => {
