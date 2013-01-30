@@ -5,6 +5,7 @@ class UserProductImage < ActiveRecord::Base
 
   validate :ensure_image
   validate :file_dimensions
+  validates_presence_of :image
 
   has_attached_file :image, styles: {
     large: "612x612"

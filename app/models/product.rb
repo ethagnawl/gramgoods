@@ -28,14 +28,8 @@ class Product < ActiveRecord::Base
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
+  validate :has_at_least_one_product_photo
 
-  validates_presence_of :user_product_images, if: lambda { |product|
-    product.instagram_product_images.empty?
-  }
-
-  validates_presence_of :instagram_product_images, if: lambda { |product|
-    product.user_product_images.empty?
-  }
 
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
   accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
@@ -129,4 +123,11 @@ class Product < ActiveRecord::Base
   def set_nest(item)
     item.product ||= self
   end
+
+  private
+    def has_at_least_one_product_photo
+      if (user_product_images.empty? or user_product_images.all? {|child| child.marked_for_destruction? }) && (instagram_product_images.empty? or instagram_product_images.all? {|child| child.marked_for_destruction? })
+        errors.add(:base, 'You must upload or attach at least one product photo.')
+      end
+    end
 end
