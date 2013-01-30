@@ -22,10 +22,9 @@ class Product < ActiveRecord::Base
 
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
-  :unlimited_quantity, :colors_attributes,
-  :sizes_attributes, :colors, :sizes, :user_product_images,
-  :user_product_images_attributes, :instagram_product_images,
-  :instagram_product_images_attributes
+  :unlimited_quantity, :colors_attributes, :sizes_attributes, :colors, :sizes,
+  :user_product_images, :user_product_images_attributes, :instagram_product_images,
+  :instagram_product_images_attributes, :purchase_type
 
   validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
@@ -55,10 +54,6 @@ class Product < ActiveRecord::Base
 
   def self.order_status_array
     ['Draft', 'Active', 'Out of Stock']
-  end
-
-  def product_images
-    return []
   end
 
   def get_user_product_images
@@ -124,7 +119,6 @@ class Product < ActiveRecord::Base
     end
   end
 
-<<<<<<< HEAD
   def self.flatrate_shipping_options
     FLATRATE_SHIPPING_OPTIONS
   end
