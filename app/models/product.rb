@@ -29,6 +29,14 @@ class Product < ActiveRecord::Base
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
 
+  validates_presence_of :user_product_images, if: lambda { |product|
+    product.instagram_product_images.empty?
+  }
+
+  validates_presence_of :instagram_product_images, if: lambda { |product|
+    product.user_product_images.empty?
+  }
+
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
   accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
   accepts_nested_attributes_for :colors,
