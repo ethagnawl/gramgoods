@@ -3,6 +3,7 @@ class UserProductImage < ActiveRecord::Base
 
   belongs_to :product
 
+  validate :ensure_image
   validate :file_dimensions
 
   has_attached_file :image, styles: {
@@ -12,23 +13,29 @@ class UserProductImage < ActiveRecord::Base
     large: '-background black -gravity center -extent 612x612'
   }
 
-  validates_attachment_content_type :image, content_type: [
-    'image/jpeg',
-    'image/png',
-    'image/gif',
-    'image/jpg',
-    'image/JPG'
-  ]
-
   def src
     self.image.url(:large)
   end
 
   private
+    def error_message
+      'Please verify that you are attempting to upload an image file.'
+    end
+
+    def ensure_image
+      if (image_content_type =~ /^image.*/).nil?
+        errors.add(:file, error_message)
+      end
+    end
+
     def file_dimensions
-      dimensions = Paperclip::Geometry.from_file(image.queued_for_write[:original].path)
-      if dimensions.width < 612 && dimensions.height < 612
-        errors.add(:file,'Width or height must be at least 612px')
+      begin
+        dimensions = Paperclip::Geometry.from_file(image.queued_for_write[:original].path)
+        if dimensions.width < 612 && dimensions.height < 612
+          errors.add(:file,'Width or height must be at least 612px')
+        end
+      rescue
+          errors.add(:file, error_message)
       end
     end
 end
