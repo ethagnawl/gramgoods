@@ -12,7 +12,6 @@
 # It's strongly recommended to check this file into your version control system.
 
 ActiveRecord::Schema.define(:version => 20130127065126) do
-
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -60,6 +59,13 @@ ActiveRecord::Schema.define(:version => 20130127065126) do
   add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
   add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
 
+  create_table "instagram_product_images", :force => true do |t|
+    t.integer  "product_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "url"
+  end
+
   create_table "line_items", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
@@ -101,7 +107,6 @@ ActiveRecord::Schema.define(:version => 20130127065126) do
     t.boolean  "unlimited_quantity"
     t.datetime "updated_at",                                                                                 :null => false
     t.datetime "created_at",                                                                                 :null => false
-    t.text     "product_images"
     t.decimal  "international_flatrate_shipping_cost"
     t.string   "purchase_type",                                                       :default => "buy-now"
   end
@@ -145,6 +150,15 @@ ActiveRecord::Schema.define(:version => 20130127065126) do
 
   add_index "stores", ["slug"], :name => "index_stores_on_slug"
   add_index "stores", ["user_id"], :name => "index_stores_on_user_id"
+
+  create_table "user_product_images", :force => true do |t|
+    t.integer  "product_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+  end
 
   create_table "users", :force => true do |t|
     t.datetime "created_at",                             :null => false

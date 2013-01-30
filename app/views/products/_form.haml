@@ -3,9 +3,10 @@
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
 
 = form_for([@store, @product], |
-          :html => { :class => 'mobile-form', |
-                     :autocorrect => 'off', |
-                     :autocapitalize => 'off' }) do |product_form|
+          :html => { class: 'mobile-form', |
+                     multipart: true, |
+                     autocorrect: 'off', |
+                     autocapitalize: 'off' }) do |product_form|
 
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
@@ -96,9 +97,28 @@
                             options_for_select(Product.order_status_array,
                                                @product.status ||= 'Active')
 
+    %fieldset
+      %label Product Images*
+      %span.inline-help
+        Upload at least one image and/or choose at least one image from #{locals[:username]}'s Instagram feed.
+
+    %fieldset#new_user_product_images
+      = product_form.label 'Upload Product Images', (form_label('Upload Product Images', false))
+      = product_form.fields_for(:user_product_images) do |user_product_image_form|
+        - if user_product_image_form.object.new_record?
+          .widget.user-product-image-wrapper
+            %a.remove-user-product-image{ href: 'javascript: void(0);'} X
+            = user_product_image_form.file_field(:image, class: 'user-product-image-input')
+        - else
+          -# this is hacky and weird, but existing images were falling
+          -# through and returning a string representation of a hidden input
+          %span.hide
+      %a#add_additional_user_product_image{ href: 'javascript: void(0);' }
+        + Upload Additional Photo
+
     = render 'product_images', locals: { edit_view: edit_view,
       form: product_form,
-      product_images: @product.get_product_images,
+      collections: [ :user_product_images, :instagram_product_images ],
       username: @user.username }
 
     %fieldset#product_form_submit_button_wrapper.hide

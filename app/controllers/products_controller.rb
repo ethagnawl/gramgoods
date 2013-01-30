@@ -42,6 +42,7 @@ class ProductsController < ApplicationController
     @product = @store.products.new({
                                      :colors => [Color.new],
                                      :sizes => [Size.new]})
+    @product.user_product_images.build
   end
 
   def create
@@ -83,6 +84,7 @@ class ProductsController < ApplicationController
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
     gon.product_images = @product.get_product_images
+    @product.user_product_images.build
   end
 
   def update

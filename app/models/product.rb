@@ -6,6 +6,8 @@ class Product < ActiveRecord::Base
   belongs_to :store
   has_many :colors, :dependent => :destroy, :before_add => :set_nest
   has_many :sizes, :dependent => :destroy, :before_add => :set_nest
+  has_many :user_product_images, dependent: :destroy
+  has_many :instagram_product_images, dependent: :destroy
   extend FriendlyId
 
   scope :recent_active_products, Proc.new { |limit|
@@ -13,7 +15,7 @@ class Product < ActiveRecord::Base
     where(:status => 'Active').
       limit(limit).
       order('updated_at DESC').
-      includes([:store])
+      includes([:store, :user_product_images, :instagram_product_images])
   }
 
   friendly_id :name, :use => [:slugged, :history]
@@ -21,17 +23,22 @@ class Product < ActiveRecord::Base
   attr_accessible :name, :price, :quantity, :description, :store_id, :status,
   :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
   :unlimited_quantity, :colors_attributes,
-  :sizes_attributes, :colors, :sizes, :product_images, :purchase_type
+  :sizes_attributes, :colors, :sizes, :user_product_images,
+  :user_product_images_attributes, :instagram_product_images,
+  :instagram_product_images_attributes
 
-  validates_presence_of :name, :price, :description, :product_images, :purchase_type
+  validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
     :unless => Proc.new { |product| product.unlimited_quantity == true }
   validates_numericality_of :price, :greater_than => 0.00
   validates_numericality_of :domestic_flatrate_shipping_cost, :greater_than => 0.00,
     :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? }
- validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
+  validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
     :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? }
+  validate :has_at_least_one_product_photo
 
+  accepts_nested_attributes_for :user_product_images, allow_destroy: true
+  accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
   accepts_nested_attributes_for :colors,
     :reject_if => lambda { |attrs|
       attrs.all? { |key, value| value.blank? }
@@ -50,12 +57,20 @@ class Product < ActiveRecord::Base
     ['Draft', 'Active', 'Out of Stock']
   end
 
+  def product_images
+    return []
+  end
+
+  def get_user_product_images
+    self.user_product_images.map{ |image| image.image.url(:large) }
+  end
+
+  def get_instagram_product_images
+    self.instagram_product_images.map{ |image| image.url }
+  end
+
   def get_product_images
-    if self.product_images.nil?
-      []
-    else
-      self.product_images.split(',')
-    end
+    self.get_user_product_images + self.get_instagram_product_images
   end
 
   def normalize_quantity
@@ -109,6 +124,7 @@ class Product < ActiveRecord::Base
     end
   end
 
+<<<<<<< HEAD
   def self.flatrate_shipping_options
     FLATRATE_SHIPPING_OPTIONS
   end
@@ -147,4 +163,11 @@ class Product < ActiveRecord::Base
   def set_nest(item)
     item.product ||= self
   end
+
+  private
+    def has_at_least_one_product_photo
+      if (user_product_images.empty? or user_product_images.all? {|child| child.marked_for_destruction? }) && (instagram_product_images.empty? or instagram_product_images.all? {|child| child.marked_for_destruction? })
+        errors.add(:base, 'You must upload or attach at least one product photo.')
+      end
+    end
 end
