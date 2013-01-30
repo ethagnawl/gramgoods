@@ -86,19 +86,21 @@
     %fieldset
       %label Product Images*
       %span.inline-help
-        Upload at least one image or choose at least one image from #{locals[:username]}'s Instagram feed.
+        Upload at least one image and/or choose at least one image from #{locals[:username]}'s Instagram feed.
 
     %fieldset#new_user_product_images
       = product_form.label 'Upload Product Images', (form_label('Upload Product Images', false))
       = product_form.fields_for(:user_product_images) do |user_product_image_form|
         - if user_product_image_form.object.new_record?
-          .widget
-            = user_product_image_form.file_field(:image)
+          .widget.user-product-image-wrapper
+            %a.remove-user-product-image{ href: 'javascript: void(0);'} X
+            = user_product_image_form.file_field(:image, class: 'user-product-image-input')
         - else
           -# this is hacky and weird, but existing images were falling
           -# through and returning a string representation of a hidden input
           %span.hide
-      %a#add_additional_user_product_image{ href: 'javascript: void(0);' } + Add Additional Photo
+      %a#add_additional_user_product_image{ href: 'javascript: void(0);' }
+        + Upload Additional Photo
 
     = render 'product_images', locals: { edit_view: edit_view,
       form: product_form,

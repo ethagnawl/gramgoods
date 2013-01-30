@@ -34,13 +34,12 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         disable_all_loading_buttons = ->
             $el.addClass('hide') for $el in $loading_buttons
 
-        render_instagram_product_image_template = (product_image_url) ->
-            ($ 'form').append(
-                Mustache.render(templates.instagram_product_image_template, {
-                    n: new Date().getMilliseconds() + _.random(0, 100),
-                    url: product_image_url
-                })
-            )
+        render_instagram_product_image_template = (options) ->
+            Mustache.render(templates.instagram_product_image_template, {
+                n: options.id,
+                id: options.id,
+                url: options.url
+            })
 
 
         toggle_photo_wrapper_state = ($el) -> $el.toggleClass('selected')
@@ -118,18 +117,6 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
         fetch_and_render_existing_photos(true)
 
-        new_product_image_wraper_click_handler = ($el) ->
-            toggle_photo_wrapper_state $el
-            render_instagram_product_image_template $el.data('url')
-
-        $new_product_image_grid_wrapper.each ->
-            if has_touch_events
-                ($ @).on 'tap', '.photo-wrapper', ->
-                    new_product_image_wraper_click_handler ($ @)
-            else
-                ($ @).on 'click', '.photo-wrapper', ->
-                    new_product_image_wraper_click_handler ($ @)
-
         $('#add_additional_user_product_image').click ->
             new_user_image = Mustache.render(
                 templates.product_form_new_user_product_image_template,
@@ -138,11 +125,54 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
             $(this).before(new_user_image)
 
-        ($ '#new_user_product_images').on 'click', '.remove-user-product-image', ->
-            ($ @).closest('.widget').remove()
+        product_image_grid_wrapper_click_handler = ($el) ->
+            toggle_photo_wrapper_state $el
+            # only create instagram elements for photos from feed
+            # #hoge
+            if $el.parents('#new_product_image_grid_wrapper').length
+                unless $el.hasClass('selected')
+                    id = $el.data('input-id')
+                    ($ "##{id}_instagram_product_image").remove()
+                    $el.data('input-id', undefined)
+                else
+                    id = new Date().getMilliseconds() + _.random(0, 100)
+                    url = $el.data('url')
 
-        ($ '#existing_user_photo_grid_wrapper').on 'click', '.photo-wrapper', ->
-            $checkbox = ($ @).find('input.hide')
+                    $el.data('input-id', id)
+                    $el.append(
+                        render_instagram_product_image_template { id, url }
+                    )
+
+        ($ '.product-image-wrapper').each ->
+            if has_touch_events
+                ($ @).on 'tap', '.photo-wrapper', ->
+                    product_image_grid_wrapper_click_handler ($ @)
+            else
+                ($ @).on 'click', '.photo-wrapper', ->
+                    product_image_grid_wrapper_click_handler ($ @)
+
+        remove_user_product_image_click_hadler = ($el) ->
+            $el.closest('.widget').remove()
+
+        ($ '#new_user_product_images').each ->
+            if has_touch_events
+                ($ @).on 'tap', '.remove-user-product-image', ->
+                    remove_user_product_image_click_hadler(($ @))
+
+            else
+                ($ @).on 'click', '.remove-user-product-image', ->
+                    remove_user_product_image_click_hadler(($ @))
+
+        existing_product_image_grid_wrapper_click_handler = ($el) ->
+            $checkbox = $el.find('input.hide')
             bool = !$checkbox.prop('checked')
             $checkbox.prop('checked', bool)
-            console.log $checkbox.prop('checked')
+            $checkbox.prop('checked')
+
+        ($ '#existing_product_image_grid_wrapper').each ->
+            if has_touch_events
+                ($ @).on 'tap', '.photo-wrapper', ->
+                    existing_product_image_grid_wrapper_click_handler(($ @))
+            else
+                ($ @).on 'click', '.photo-wrapper', ->
+                    existing_product_image_grid_wrapper_click_handler(($ @))

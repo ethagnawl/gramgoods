@@ -1,32 +1,37 @@
-- if locals[:edit_view]
+.product-image-wrapper
+  -# for validation purposes only
+  %fieldset
+    %input#fake_product_image_input{ name: '', type: 'hidden' }
+  - if locals[:edit_view]
+    %fieldset
+      #existing_product_image_grid_wrapper.widget
+        #existing_product_image_grid.widget
+          %label Current Product Images
+
+          - locals[:collections].each do |collection|
+            = locals[:form].fields_for(collection) do |product_image_form|
+              - if product_image_form.object.persisted?
+                .photo-wrapper.selected
+                  = product_image_form.check_box :_destroy, class: 'hide'
+                  %img.photo{ src: product_image_form.object.src }
+                  %span.remove.btn.btn-success
+                    %i.icon-ok
+                  %span.add.btn
+                    %i.icon-plus-sign
+              - else
+                -# this is hacky and weird, but existing images were falling
+                -# through and returning a string representation of a hidden input
+                %span.hide
+
   %fieldset
     #existing_product_image_grid_wrapper.widget
-      #existing_product_image_grid.widget
-        %label Current Product Images
-
-        - locals[:collections].each do |collection|
-          = locals[:form].fields_for(collection) do |product_image_form|
-            - if product_image_form.object.persisted?
-              .photo-wrapper.selected
-                = product_image_form.check_box :_destroy, class: 'hide'
-                %img.photo{ src: product_image_form.object.src }
-                %span.remove.btn.btn-success
-                  %i.icon-ok
-                %span.add.btn
-                  %i.icon-plus-sign
-            - else
-              -# this is hacky and weird, but existing images were falling
-              -# through and returning a string representation of a hidden input
-              %span.hide
-
-%fieldset
-  .widget#new_product_image_grid_wrapper
-    .widget#new_product_image_grid
-      %label#new_product_images_loading_message
-        Loading #{locals[:username]}'s Instagram feed...
-      %label#new_product_images_message.hide
-        #{locals[:username]}'s Instagram feed
-    %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-      Load Additional Photos
+      .widget#new_product_image_grid_wrapper
+        .widget#new_product_image_grid
+          %label#new_product_images_loading_message
+            Loading #{locals[:username]}'s Instagram feed...
+          %label#new_product_images_message.hide
+            #{locals[:username]}'s Instagram feed
+        %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+          Load Additional Photos
 
 

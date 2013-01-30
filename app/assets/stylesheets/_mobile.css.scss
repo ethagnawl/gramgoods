@@ -728,6 +728,19 @@ body.non-custom-merchant {  // store page
     }
 }
 
+.user-product-image-wrapper {
+    .remove-user-product-image {
+        float: left;
+        margin-right: 12px;
+        margin-top: 6px;
+    }
+
+    input[type='file'] {
+        float: left;
+        width: auto;
+    }
+}
+
 #existing_product_image_grid_wrapper,
 #new_product_image_grid_wrapper {
     margin-bottom: 0;
