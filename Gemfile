@@ -6,7 +6,6 @@ gem 'rails', '~> 3.2'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'pry-rails'
   gem 'sqlite3'
   gem 'quiet_assets'
   gem 'bullet'
@@ -23,6 +22,7 @@ group :assets do
   gem 'asset_sync'
 end
 
+  gem 'pry-rails'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rails-behaviors'
 gem 'therubyracer', '0.10.1'
