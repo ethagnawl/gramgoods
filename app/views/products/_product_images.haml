@@ -24,14 +24,13 @@
                 %span.hide
 
   %fieldset
-    #existing_product_image_grid_wrapper.widget
-      .widget#new_product_image_grid_wrapper
-        .widget#new_product_image_grid
-          %label#new_product_images_loading_message
-            Loading #{locals[:username]}'s Instagram feed...
-          %label#new_product_images_message.hide
-            #{locals[:username]}'s Instagram feed
-        %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
-          Load Additional Photos
+    .widget#new_product_image_grid_wrapper
+      .widget#new_product_image_grid
+        %label#new_product_images_loading_message
+          Loading #{locals[:username]}'s Instagram feed...
+        %label#new_product_images_message.hide
+          #{locals[:username]}'s Instagram feed
+      %a#fetch_additional_existing_photos.widget.btn.btn-large.btn-primary{ :href => 'javascript: void(0);' }
+        Load Additional Photos
 
 
