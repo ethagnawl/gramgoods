@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131185222) do
+ActiveRecord::Schema.define(:version => 20130128213943) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(:version => 20130131185222) do
     t.integer  "product_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "url"
   end
 
   create_table "line_items", :force => true do |t|
@@ -127,7 +126,6 @@ ActiveRecord::Schema.define(:version => 20130131185222) do
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
-    t.string   "country"
   end
 
   add_index "recipients", ["order_id"], :name => "index_recipients_on_order_id"
@@ -155,11 +153,8 @@ ActiveRecord::Schema.define(:version => 20130131185222) do
 
   create_table "user_product_images", :force => true do |t|
     t.integer  "product_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
