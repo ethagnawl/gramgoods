@@ -30,17 +30,15 @@ window.product_form_validation_rules =
 
                     # quantity is required if unlimited quantity isn't checked
                     # quantity becomes disabled when unlimited quantity is checked
-        '#product_images':
-            required: true
-            message: 'At least one Product Image is required.'
 
-for flatrate_shipping_option in gon.flatrate_shipping_options
-    product_form_validation_rules.
-        fields["#product_#{flatrate_shipping_option}_flatrate_shipping_cost"] =
-            message: "Valid #{GramGoods.capitalize(flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
-            required: 'sometimes'
-            test: (val) ->
-                if val is ''
-                    true
-                else
-                    happy.is_valid_price(val)
+for _flatrate_shipping_option in gon.flatrate_shipping_options
+    flatrate_shipping_option = "#product_#{_flatrate_shipping_option}_flatrate_shipping_cost"
+
+    product_form_validation_rules['fields'][flatrate_shipping_option] =
+        message: "Valid #{GramGoods.capitalize(_flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
+        required: 'sometimes'
+        test: (val) ->
+            if val is ''
+                true
+            else
+                happy.is_valid_price(val)

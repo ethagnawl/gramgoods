@@ -34,16 +34,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         disable_all_loading_buttons = ->
             $el.addClass('hide') for $el in $loading_buttons
 
-        render_instagram_product_image_template = (options) ->
-            Mustache.render(templates.instagram_product_image_template, {
-                n: options.id,
-                id: options.id,
-                url: options.url
-            })
-
-
         toggle_photo_wrapper_state = ($el) -> $el.toggleClass('selected')
-
 
         fetch_and_render_existing_photos = (pageload = false) ->
             $.ajax
@@ -117,62 +108,69 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
 
         fetch_and_render_existing_photos(true)
 
-        $('#add_additional_user_product_image').click ->
-            new_user_image = Mustache.render(
-                templates.product_form_new_user_product_image_template,
-                {n: new Date().getMilliseconds()}
-            )
+        product_image_wrapper_behavior = new (Backbone.View.extend
+            el: ($ '.product-image-wrapper')
+            events: {}
+            initialize: ->
+                interaction = if has_touch_events then 'tap' else 'click'
+                event = "#{interaction} .photo-wrapper"
+                @events[event] = 'product_image_grid_wrapper_click_handler'
 
-            $(this).before(new_user_image)
+            render_instagram_product_image_template: (data) ->
+                Mustache.render templates.instagram_product_image_template, data
 
-        product_image_grid_wrapper_click_handler = ($el) ->
-            toggle_photo_wrapper_state $el
-            # only create instagram elements for photos from feed
-            # #hoge
-            if $el.parents('#new_product_image_grid_wrapper').length
-                unless $el.hasClass('selected')
-                    id = $el.data('input-id')
-                    ($ "##{id}_instagram_product_image").remove()
-                    $el.data('input-id', undefined)
-                else
-                    id = new Date().getMilliseconds() + _.random(0, 100)
-                    url = $el.data('url')
+            product_image_grid_wrapper_click_handler: (e) ->
+                $local_el = $(e.target).closest('.photo-wrapper')
+                toggle_photo_wrapper_state $local_el
+                # only create instagram elements for photos from feed
+                # #hoge
+                if $local_el.parents('#new_product_image_grid_wrapper').length
+                    unless $local_el.hasClass('selected')
+                        id = $local_el.data('input-id')
+                        ($ "##{id}_instagram_product_image").remove()
+                        $local_el.data('input-id', undefined)
+                    else
+                        n = id = new Date().getMilliseconds() + _.random(0, 100)
+                        url = $local_el.data('url')
 
-                    $el.data('input-id', id)
-                    $el.append(
-                        render_instagram_product_image_template { id, url }
-                    )
+                        $local_el.data('input-id', id)
+                        $local_el.append(
+                            @render_instagram_product_image_template { id, url, n }
+                        )
+        )
 
-        ($ '.product-image-wrapper').each ->
-            if has_touch_events
-                ($ @).on 'tap', '.photo-wrapper', ->
-                    product_image_grid_wrapper_click_handler ($ @)
-            else
-                ($ @).on 'click', '.photo-wrapper', ->
-                    product_image_grid_wrapper_click_handler ($ @)
+        new_user_product_image_input_behavior = new (Backbone.View.extend
+            el: ($ '#new_user_product_images')
+            events: {}
+            initialize: ->
+                interaction = if has_touch_events then 'tap' else 'click'
+                @events["#{interaction} .remove-user-product-image"] = 'remove_new_product_image_input'
+                @events["#{interaction} #add_additional_user_product_image"] = 'add_user_product_image_input'
 
-        remove_user_product_image_click_hadler = ($el) ->
-            $el.closest('.widget').remove()
+            remove_new_product_image_input: (e) ->
+                ($ e.target).closest('.widget').remove()
 
-        ($ '#new_user_product_images').each ->
-            if has_touch_events
-                ($ @).on 'tap', '.remove-user-product-image', ->
-                    remove_user_product_image_click_hadler(($ @))
+            add_user_product_image_input: (e) ->
+                $local_el = ($ e.target)
+                new_user_image = Mustache.render(
+                    templates.product_form_new_user_product_image_input_template,
+                        {n: new Date().getMilliseconds()})
 
-            else
-                ($ @).on 'click', '.remove-user-product-image', ->
-                    remove_user_product_image_click_hadler(($ @))
+                $local_el.before(new_user_image)
 
-        existing_product_image_grid_wrapper_click_handler = ($el) ->
-            $checkbox = $el.find('input.hide')
-            bool = !$checkbox.prop('checked')
-            $checkbox.prop('checked', bool)
-            $checkbox.prop('checked')
+        )
 
-        ($ '#existing_product_image_grid_wrapper').each ->
-            if has_touch_events
-                ($ @).on 'tap', '.photo-wrapper', ->
-                    existing_product_image_grid_wrapper_click_handler(($ @))
-            else
-                ($ @).on 'click', '.photo-wrapper', ->
-                    existing_product_image_grid_wrapper_click_handler(($ @))
+        existing_product_image_grid_wrapper_behavior = new (Backbone.View.extend
+            el: ($ '#existing_product_image_grid_wrapper')
+            events: {}
+            initialize: ->
+                interaction = if has_touch_events then 'tap' else 'click'
+                event = "#{interaction} .photo-wrapper"
+                @events[event] = 'toggle_destroy_image_check_box'
+
+            toggle_destroy_image_check_box: (e) ->
+                $local_el = ($ e.target).closest('.photo-wrapper')
+                $checkbox = $local_el.find('input.hide')
+                bool = !$checkbox.prop('checked')
+                $checkbox.prop('checked', bool)
+        )

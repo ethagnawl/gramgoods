@@ -6,4 +6,5 @@
 //= require ./common/rails
 //= require ./common/mustache
 //= require ./common/underscore
+//= require ./common/backbone
 //= require_tree ./mobile
