@@ -3,7 +3,7 @@
 - content_for(:header) { @product.header }
 
 .product-detail
-  .product{ data: {  :'store-slug' => @product.store.slug } }
+  .product{ data: {  :'store-slug' => @product.store_slug } }
     .product-top.widget
       = @product.thumbnail_gallery
 

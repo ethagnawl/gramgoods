@@ -56,6 +56,10 @@ class Product < ActiveRecord::Base
     ['Draft', 'Active', 'Out of Stock']
   end
 
+  def store_slug
+    self.store.slug
+  end
+
   def get_user_product_images
     self.user_product_images.map{ |image| image.image.url(:large) }
   end
