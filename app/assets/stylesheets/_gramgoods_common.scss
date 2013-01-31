@@ -14,6 +14,10 @@ $red: #f10026;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
 }
 
+@mixin widget_box_shadow {
+    box-shadow: 0 0 12px $medium-grey;
+}
+
 @mixin transition($transition) {
     -moz-transition:    $transition;
     -o-transition:      $transition;

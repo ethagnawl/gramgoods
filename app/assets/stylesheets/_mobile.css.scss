@@ -205,8 +205,9 @@ html.no-touch {
     }
 
     .mobile-layout-outer {
+        @include widget_box_shadow;
+
         background-color: $white;
-        box-shadow: 0 0 12px $medium-grey;
         float: left;
         margin: 12px 0;
         width: 100%;
@@ -666,7 +667,7 @@ body.non-custom-merchant {  // store page
         position: relative;
 
         .product-thumbnail {
-            @include gramgoods_box_shadow;
+            @include widget_box_shadow;
 
             display: none;
             margin: 0 auto;
