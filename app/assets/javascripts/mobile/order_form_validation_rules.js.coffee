@@ -23,6 +23,9 @@ window.order_form_validation_rules =
             message: 'Postal Code is required.'
             required: true
             test: happy.postal_code
+        '#order_recipient_attributes_country':
+            message: 'Country is required.'
+            required: true
         '#credit_card_number':
             message: 'Credit Card Number is required.'
             required: true

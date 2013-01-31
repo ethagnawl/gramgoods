@@ -69,9 +69,11 @@
       %fieldset
         = recipient.text_field :city, :placeholder => "City*"
       %fieldset
-        = recipient.select :state, options_for_select(us_states)
+        = recipient.text_field :state, :placeholder => "State*"
       %fieldset
         = recipient.text_field :postal_code, :placeholder => "Postal Code*"
+      %fieldset
+        = recipient.select :country, options_for_select(countries)
 
   %div
     %legend#billing_information_legend Billing Information

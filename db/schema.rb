@@ -11,7 +11,8 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127065126) do
+ActiveRecord::Schema.define(:version => 20130131185222) do
+
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20130127065126) do
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
+    t.string   "country"
   end
 
   add_index "recipients", ["order_id"], :name => "index_recipients_on_order_id"
