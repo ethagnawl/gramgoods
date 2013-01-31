@@ -22,7 +22,7 @@ group :assets do
   gem 'asset_sync'
 end
 
-  gem 'pry-rails'
+gem 'pry-rails'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'rails-behaviors'
 gem 'therubyracer', '0.10.1'
