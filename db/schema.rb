@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131213943) do
+ActiveRecord::Schema.define(:version => 20130131185222) do
 
   create_table "authentications", :force => true do |t|
     t.datetime "created_at",   :null => false
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130131213943) do
     t.boolean  "unlimited_quantity"
     t.datetime "updated_at",                                                                                 :null => false
     t.datetime "created_at",                                                                                 :null => false
+    t.text     "product_images"
     t.decimal  "international_flatrate_shipping_cost"
     t.string   "purchase_type",                                                       :default => "buy-now"
   end
@@ -116,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20130131213943) do
   add_index "products", ["store_id"], :name => "index_products_on_store_id"
 
   create_table "recipients", :force => true do |t|
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.integer  "order_id"
     t.string   "first_name"
     t.string   "last_name"
@@ -127,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20130131213943) do
     t.string   "city"
     t.string   "state"
     t.string   "postal_code"
-    t.string   "country"
+    t.string   "country",            :default => "United States"
   end
 
   add_index "recipients", ["order_id"], :name => "index_recipients_on_order_id"
