@@ -69,9 +69,9 @@
       %fieldset
         = recipient.text_field :city, :placeholder => "City*"
       %fieldset
-        = recipient.text_field :state, :placeholder => "State*"
+        = recipient.text_field :state, :placeholder => "State / Province / Region*"
       %fieldset
-        = recipient.text_field :postal_code, :placeholder => "Postal Code*"
+        = recipient.text_field :postal_code, :placeholder => "Zip / Postal Code*"
       %fieldset
         = recipient.select :country, options_for_select(countries)
 
