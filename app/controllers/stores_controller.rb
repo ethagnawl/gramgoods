@@ -69,7 +69,9 @@ class StoresController < ApplicationController
     @is_customized_store = @store.is_slug_in_merchants_with_custom_store_slugs_array?
     @current_user_owns_store = user_signed_in? ? user_owns_store?(@store.id) : false
     @products = if @current_user_owns_store
-                  @store.products.includes([:store])
+                  @store.products.includes([:store,
+                                           :instagram_product_images,
+                                           :user_product_images])
                 else
                   @store.displayable_products
                 end.page(params[:page]).per_page(PRODUCT_PAGINATION_SIZE)
