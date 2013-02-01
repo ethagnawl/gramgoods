@@ -31,14 +31,15 @@ window.product_form_validation_rules =
                     # quantity is required if unlimited quantity isn't checked
                     # quantity becomes disabled when unlimited quantity is checked
 
-for _flatrate_shipping_option in gon.flatrate_shipping_options
-    flatrate_shipping_option = "#product_#{_flatrate_shipping_option}_flatrate_shipping_cost"
+if gon.flatrate_shipping_options?
+    for _flatrate_shipping_option in gon.flatrate_shipping_options
+        flatrate_shipping_option = "#product_#{_flatrate_shipping_option}_flatrate_shipping_cost"
 
-    product_form_validation_rules['fields'][flatrate_shipping_option] =
-        message: "Valid #{GramGoods.capitalize(_flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
-        required: 'sometimes'
-        test: (val) ->
-            if val is ''
-                true
-            else
-                happy.is_valid_price(val)
+        product_form_validation_rules['fields'][flatrate_shipping_option] =
+            message: "Valid #{GramGoods.capitalize(_flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
+            required: 'sometimes'
+            test: (val) ->
+                if val is ''
+                    true
+                else
+                    happy.is_valid_price(val)
