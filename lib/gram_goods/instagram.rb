@@ -2,7 +2,7 @@ module GramGoods
   module Instagram
     def fetch_feed(_args = {})
       defaults = {
-        count: 18,
+        count: INSTAGRAM_FEED_COUNT,
         method: :fetch_feed,
         max_id: nil,
         cache: false
