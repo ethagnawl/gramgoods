@@ -11,7 +11,7 @@ class UserProductImage < ActiveRecord::Base
     large: "612x612"
   },
   convert_options: {
-    large: '-background black -gravity center -extent 612x612'
+    large: '-background white -gravity center -extent 612x612'
   }
 
   def src
