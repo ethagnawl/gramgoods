@@ -24,7 +24,7 @@ class Product < ActiveRecord::Base
   :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
   :unlimited_quantity, :colors_attributes, :sizes_attributes, :colors, :sizes,
   :user_product_images, :user_product_images_attributes, :instagram_product_images,
-  :instagram_product_images_attributes, :purchase_type
+  :instagram_product_images_attributes, :purchase_type, :external, :external_url
 
   validates_presence_of :name, :price, :description
   validates :quantity, :presence => true,
@@ -154,6 +154,10 @@ class Product < ActiveRecord::Base
   # TODO: rename this valid_shipping_option_cost?
   def valid_shipping_cost?(cost)
     flatrate_shipping_option_costs.member? cost
+  end
+
+  def create_order_url
+    self.external ? self.external_url : new_store_order_path(self.store)
   end
 
   # allow nested attributes to use x.product before product has been saved

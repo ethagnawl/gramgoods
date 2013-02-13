@@ -66,7 +66,7 @@ class ProductsController < ApplicationController
     gon.product_name = @product.name
     gon.product_id = @product.id
     gon.store_slug = @store.slug
-    gon.create_order_url = new_store_order_path(@store)
+    gon.create_order_url = @product.create_order_url
     gon.require_flatrate_shipping_option = !@product.flatrate_shipping_options.empty?
 
     if @product.status == 'Draft'
