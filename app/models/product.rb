@@ -160,6 +160,12 @@ class Product < ActiveRecord::Base
     self.external ? self.external_url : new_store_order_path(self.store)
   end
 
+  def increment_external_clickthroughs
+    if self.external?
+      self.update_attributes external_clickthoughs: self.external_clickthroughs += 1
+    end
+  end
+
   # allow nested attributes to use x.product before product has been saved
   # http://stackoverflow.com/questions/2611459
   def set_nest(item)

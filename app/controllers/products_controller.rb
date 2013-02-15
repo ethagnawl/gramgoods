@@ -66,6 +66,7 @@ class ProductsController < ApplicationController
     gon.product_name = @product.name
     gon.product_id = @product.id
     gon.store_slug = @store.slug
+    gon.external = @product.external
     gon.create_order_url = @product.create_order_url
     gon.require_flatrate_shipping_option = !@product.flatrate_shipping_options.empty?
 
@@ -111,6 +112,13 @@ class ProductsController < ApplicationController
     else
       redirect_to(root_path)
     end
+  end
+
+  def increment_external_clickthroughs
+    @store = Store.find(params[:store_id])
+    @product = @store.products.find(params[:id])
+
+    @product.increment_external_clickthroughs
   end
 
   private

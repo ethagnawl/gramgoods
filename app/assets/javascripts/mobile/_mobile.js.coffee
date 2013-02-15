@@ -134,7 +134,17 @@ Zepto ($) ->
                 data.flatrate_shipping_option = ($ '#flatrate_shipping_option').val() || ($ '#flatrate_shipping_option').data('flatrate_shipping_option') || undefined
 
 
-            window.location = "#{gon.create_order_url}?#{$.param(data)}"
+            if gon.external
+                $.ajax
+                    type: 'POST'
+                    url: "/#{gon.store_slug}/#{gon.product_id}/increment_external_clickthroughs"
+                    error: ->
+                        alert GramGoods.error_message
+                    success: ->
+                        window.location = gon.create_order_url
+            else
+                window.location = "#{gon.create_order_url}?#{$.param(data)}"
+            end
 
         $redirect_to_order_form = ($ '#redirect_to_order_form')
         if has_touch_events
