@@ -137,14 +137,17 @@ Zepto ($) ->
             if gon.external
                 $.ajax
                     type: 'POST'
-                    url: "/#{gon.store_slug}/#{gon.product_id}/increment_external_clickthroughs"
+                    dataType: 'json'
+                    url: gon.increment_product_clickthrough_path
                     error: ->
                         alert GramGoods.error_message
-                    success: ->
-                        window.location = gon.create_order_url
+                    success: (response) ->
+                        if response.status is 'error'
+                            alert GramGoods.error_message
+                        else
+                            window.location = gon.external_url
             else
                 window.location = "#{gon.create_order_url}?#{$.param(data)}"
-            end
 
         $redirect_to_order_form = ($ '#redirect_to_order_form')
         if has_touch_events

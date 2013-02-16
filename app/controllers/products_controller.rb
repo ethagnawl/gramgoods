@@ -118,7 +118,15 @@ class ProductsController < ApplicationController
     @store = Store.find(params[:store_id])
     @product = @store.products.find(params[:id])
 
-    @product.increment_external_clickthroughs
+    begin
+      if @product.increment_external_clickthroughs
+        render :json => { status: 'OK' }
+      else
+        render :json => { status: 'error' }
+      end
+    rescue
+      render :json => { status: 'error' }
+    end
   end
 
   private

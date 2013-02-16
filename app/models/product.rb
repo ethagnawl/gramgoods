@@ -162,7 +162,7 @@ class Product < ActiveRecord::Base
 
   def increment_external_clickthroughs
     if self.external?
-      self.update_attributes external_clickthoughs: self.external_clickthroughs += 1
+      update_column(:external_clickthroughs, self.external_clickthroughs += 1)
     end
   end
 
