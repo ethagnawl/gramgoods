@@ -3,28 +3,38 @@
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
 
 = form_for([@store, @product], |
-          :html => { class: 'mobile-form', |
+          :html => { class: 'mobile-form product-form', |
                      multipart: true, |
                      autocorrect: 'off', |
                      autocapitalize: 'off' }) do |product_form|
+
+  - unless edit_view
+    #external_product_overlay
+      %h1 Choose one of the following:
+      #external_options
+        %button.btn.btn-large.btn-block.btn-primary{ type: 'button', data: { external: 'true' }}
+          External Product
+        %button.btn.btn-large.btn-block.btn-inverse{ type: 'button', data: { external: 'false' }}
+          GramGoods Product
 
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
 
   %div
-    %fieldset.checkbox
-      = product_form.label :external, (form_label(:external, false))
-      = product_form.check_box :external
-
-    %fieldset
-      - if edit_view
-        = product_form.label :external_url, (form_label(:external_url))
-      = product_form.text_field :external_url, :placeholder => (form_label(:external_url))
 
     %fieldset
       - if edit_view
         = product_form.label :name, (form_label(:name))
       = product_form.text_field :name, :placeholder => (form_label(:name))
+
+    %fieldset.hide
+      = product_form.label :external, (form_label(:external, false))
+      = product_form.check_box :external
+
+    %fieldset#external_url_wrapper
+      - if edit_view
+        = product_form.label :external_url, (form_label(:external_url))
+      = product_form.text_field :external_url, :placeholder => (form_label(:external_url))
 
     %fieldset
       - if edit_view

@@ -361,6 +361,7 @@ html.no-touch {
     background-color: $white;
     float: left;
     padding-top: 2%;
+    position: relative;
     width: 100%;
 
     &.order-form {
@@ -822,5 +823,34 @@ html.no-touch {
         .photo-wrapper {
             margin: 6px;
         }
+    }
+}
+
+#external_product_overlay {
+    background-color: rgba(51, 51, 51, .8);
+    left: 0;
+    padding: 2% 4%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    h1 {
+        width: 100%;
+    }
+
+    .btn {
+        margin: 4% 0 2%;
+    }
+}
+
+.product-form.external-product {
+    #external_url_wrapper {
+        display: block;
+    }
+}
+
+.product-form.gramgoods-product {
+    #external_url_wrapper {
+        display: none;
     }
 }

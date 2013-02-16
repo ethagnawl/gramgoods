@@ -17,6 +17,8 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         $new_product_image_grid = ($ '#new_product_image_grid')
         $new_product_image_grid_wrapper = ($ '#new_product_image_grid_wrapper')
 
+
+
         toggle_loading_message = ($el) ->
             if $el.hasClass('loading')
                 $el
@@ -174,3 +176,19 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 bool = !$checkbox.prop('checked')
                 $checkbox.prop('checked', bool)
         )
+
+        external_product_overlay_behavior = new (Backbone.View.extend
+            el: ($ '#external_product_overlay')
+            events: {
+                'click .btn': (e) ->
+                    external = $(e.target).data('external') is 'true'
+                    form_class = if external then 'external-product' else 'gramgoods-product'
+                    $(e.target).closest('form').addClass(form_class)
+                    @$el.hide()
+            }
+            initialize: ->
+                if ($ '#external_product_overlay').length
+                    form_height = ($ '.mobile-form').height()
+                    ($ '#external_product_overlay').height(form_height)
+        )
+
