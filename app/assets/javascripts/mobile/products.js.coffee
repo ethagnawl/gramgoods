@@ -183,8 +183,11 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 'click .btn': (e) ->
                     external = $(e.target).data('external') is 'true'
                     form_class = if external then 'external-product' else 'gramgoods-product'
+
                     $(e.target).closest('form').addClass(form_class)
                     @$el.hide()
+
+                    ($ '#product_external').prop('checked', true) if external
             }
             initialize: ->
                 if ($ '#external_product_overlay').length

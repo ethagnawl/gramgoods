@@ -834,12 +834,8 @@ html.no-touch {
     top: 0;
     width: 100%;
 
-    h1 {
-        width: 100%;
-    }
-
     .btn {
-        margin: 4% 0 2%;
+        margin: 10% 0 6%;
     }
 }
 
@@ -847,10 +843,23 @@ html.no-touch {
     #external_url_wrapper {
         display: block;
     }
+
+    #description_wrapper,
+    #quantity_wrapper,
+    #unlimited_quantity_wrapper,
+    #sizes_wrapper,
+    #colors_wrapper,
+    #shipping_options_wrapper,
+    #purchase_type_wrapper,
+    #status_wrapper {
+        display: none;
+    }
 }
 
 .product-form.gramgoods-product {
+    #external_wrapper,
     #external_url_wrapper {
         display: none;
     }
 }
+
