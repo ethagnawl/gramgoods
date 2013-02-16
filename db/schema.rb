@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213145825) do
+ActiveRecord::Schema.define(:version => 20130215034723) do
 
   create_table "address", :id => false, :force => true do |t|
     t.integer "persistenceid", :limit => 8, :null => false
@@ -207,7 +207,7 @@ ActiveRecord::Schema.define(:version => 20130213145825) do
     t.string   "user_url",        :limit => 200, :null => false
     t.text     "comment",                        :null => false
     t.datetime "submit_date",                    :null => false
-    t.string   "ip_address",      :limit => nil
+    t.string   "ip_address"
     t.boolean  "is_public",                      :null => false
     t.boolean  "is_removed",                     :null => false
   end
@@ -864,20 +864,23 @@ ActiveRecord::Schema.define(:version => 20130213145825) do
   end
 
   create_table "products", :force => true do |t|
-    t.string  "name"
-    t.text    "description"
-    t.string  "status"
-    t.decimal "price",                                :precision => 10, :scale => 2
-    t.decimal "domestic_flatrate_shipping_cost",      :precision => 10, :scale => 2
-    t.integer "quantity"
-    t.integer "store_id"
-    t.string  "slug"
-    t.boolean "unlimited_quantity"
-    t.text    "product_images"
-    t.decimal "international_flatrate_shipping_cost"
-    t.string  "purchase_type",                                                       :default => "buy-now"
-    t.boolean "external",                                                            :default => false
-    t.string  "external_url"
+    t.string   "name"
+    t.text     "description"
+    t.string   "status"
+    t.decimal  "price",                                :precision => 10, :scale => 2
+    t.decimal  "domestic_flatrate_shipping_cost",      :precision => 10, :scale => 2
+    t.integer  "quantity"
+    t.integer  "store_id"
+    t.string   "slug"
+    t.boolean  "unlimited_quantity"
+    t.datetime "updated_at",                                                                                 :null => false
+    t.datetime "created_at",                                                                                 :null => false
+    t.text     "product_images"
+    t.decimal  "international_flatrate_shipping_cost"
+    t.string   "purchase_type",                                                       :default => "buy-now"
+    t.boolean  "external",                                                            :default => false
+    t.string   "external_url"
+    t.integer  "external_clickthroughs",                                              :default => 0
   end
 
   add_index "products", ["slug"], :name => "index_products_on_slug"
