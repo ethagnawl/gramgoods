@@ -156,10 +156,6 @@ class Product < ActiveRecord::Base
     flatrate_shipping_option_costs.member? cost
   end
 
-  def create_order_url
-    self.external ? self.external_url : new_store_order_path(self.store)
-  end
-
   def increment_external_clickthroughs
     if self.external?
       update_column(:external_clickthroughs, self.external_clickthroughs += 1)

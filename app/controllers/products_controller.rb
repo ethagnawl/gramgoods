@@ -67,7 +67,14 @@ class ProductsController < ApplicationController
     gon.product_id = @product.id
     gon.store_slug = @store.slug
     gon.external = @product.external
-    gon.create_order_url = @product.create_order_url
+
+    if @product.external?
+      gon.external_url = @product.external_url
+      gon.increment_product_clickthrough_path = increment_external_clickthroughs_store_product_path(@store, @product)
+    else
+      gon.create_order_url = new_store_order_path(@store)
+    end
+
     gon.require_flatrate_shipping_option = !@product.flatrate_shipping_options.empty?
 
     if @product.status == 'Draft'
