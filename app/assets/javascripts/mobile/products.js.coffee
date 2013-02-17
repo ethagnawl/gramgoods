@@ -181,7 +181,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
             el: ($ '#external_product_overlay')
             events: {
                 'click .btn': (e) ->
-                    external = $(e.target).data('external') is 'true'
+                    gon.external = external = $(e.target).data('external') is 'true'
                     form_class = if external then 'external-product' else 'gramgoods-product'
 
                     $(e.target).closest('form').addClass(form_class)

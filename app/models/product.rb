@@ -29,16 +29,16 @@ class Product < ActiveRecord::Base
   :instagram_product_images_attributes, :purchase_type, :external, :external_url
 
   validates_presence_of :name, :price
-  validates_presence_of :description, :unless => Proc.new { |product| product.external? }
-  validates_presence_of :external_url, :if => Proc.new { |product| product.external? }
+  validates_presence_of :description, :unless => Proc.new { |product| product.external == true }
+  validates_presence_of :external_url, :if => Proc.new { |product| product.external == true }
   validates :quantity, :presence => true,
-    :unless => Proc.new { |product| product.unlimited_quantity == true } ||  Proc.new { |product| product.external? }
-  validates_numericality_of :price, :greater_than => 0.00, :unless => Proc.new { |product| product.external? }
+    :unless => Proc.new { |product| product.unlimited_quantity == true || product.external == true }
+  validates_numericality_of :price, :greater_than => 0.00, :unless => Proc.new { |product| product.external == true }
   validates_numericality_of :domestic_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? } || Proc.new { |product| product.external? }
+    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? || product.external == true }
   validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? } || Proc.new { |product| product.external? }
-  validate :has_at_least_one_product_photo, :unless => Proc.new { |product| product.external? }
+    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? || product.external == true }
+  validate :has_at_least_one_product_photo
 
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
   accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
@@ -55,6 +55,7 @@ class Product < ActiveRecord::Base
     :allow_destroy => true
 
   before_save :normalize_quantity
+  before_save :normalize_external_url
 
   def self.order_status_array
     ['Draft', 'Active', 'Out of Stock']
@@ -79,6 +80,14 @@ class Product < ActiveRecord::Base
   def normalize_quantity
     unless self.external?
       self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
+    end
+  end
+
+  def normalize_external_url
+    if self.external == true
+      if (/^http(s)?:\/\// =~ self.external_url).nil?
+        self.external_url = "http://#{self.external_url}"
+      end
     end
   end
 
