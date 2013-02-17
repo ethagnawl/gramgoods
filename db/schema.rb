@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215034723) do
+ActiveRecord::Schema.define(:version => 20130217055230) do
 
   create_table "address", :id => false, :force => true do |t|
     t.integer "persistenceid", :limit => 8, :null => false
@@ -875,7 +875,6 @@ ActiveRecord::Schema.define(:version => 20130215034723) do
     t.boolean  "unlimited_quantity"
     t.datetime "updated_at",                                                                                 :null => false
     t.datetime "created_at",                                                                                 :null => false
-    t.text     "product_images"
     t.decimal  "international_flatrate_shipping_cost"
     t.string   "purchase_type",                                                       :default => "buy-now"
     t.boolean  "external",                                                            :default => false
