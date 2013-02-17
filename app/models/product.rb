@@ -28,15 +28,17 @@ class Product < ActiveRecord::Base
   :user_product_images, :user_product_images_attributes, :instagram_product_images,
   :instagram_product_images_attributes, :purchase_type, :external, :external_url
 
-  validates_presence_of :name, :price, :description
+  validates_presence_of :name, :price
+  validates_presence_of :description, :unless => Proc.new { |product| product.external? }
+  validates_presence_of :external_url, :if => Proc.new { |product| product.external? }
   validates :quantity, :presence => true,
-    :unless => Proc.new { |product| product.unlimited_quantity == true }
-  validates_numericality_of :price, :greater_than => 0.00
+    :unless => Proc.new { |product| product.unlimited_quantity == true } ||  Proc.new { |product| product.external? }
+  validates_numericality_of :price, :greater_than => 0.00, :unless => Proc.new { |product| product.external? }
   validates_numericality_of :domestic_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? }
+    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? } || Proc.new { |product| product.external? }
   validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? }
-  validate :has_at_least_one_product_photo
+    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? } || Proc.new { |product| product.external? }
+  validate :has_at_least_one_product_photo, :unless => Proc.new { |product| product.external? }
 
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
   accepts_nested_attributes_for :instagram_product_images, allow_destroy: true
@@ -75,11 +77,15 @@ class Product < ActiveRecord::Base
   end
 
   def normalize_quantity
-    self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
+    unless self.external?
+      self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
+    end
   end
 
   def is_purchasable?
-    if self.quantity.nil?
+    if self.external?
+      true
+    elsif self.quantity.nil?
       self.unlimited_quantity == true && self.status == 'Active'
     else
       (self.quantity > 0 || self.unlimited_quantity == true) && self.status == 'Active'
