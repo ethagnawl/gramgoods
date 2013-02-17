@@ -281,7 +281,7 @@ DEPENDENCIES
   pg
   pry-rails
   quiet_assets
-  rails (~> 3.2)
+  rails (= 3.2.12)
   rails-behaviors
   sass-rails (~> 3.2.3)
   sqlite3
