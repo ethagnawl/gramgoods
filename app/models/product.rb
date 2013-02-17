@@ -12,7 +12,9 @@ class Product < ActiveRecord::Base
 
   scope :recent_active_products, Proc.new { |limit|
     limit ||= 10
-    where(:status => 'Active').
+    p = Product.arel_table
+
+    where(p[:status].eq('Active').or(p[:external].eq(true))).
       limit(limit).
       order('updated_at DESC').
       includes([:store, :user_product_images, :instagram_product_images])
