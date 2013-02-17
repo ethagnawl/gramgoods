@@ -100,6 +100,55 @@ html.no-touch {
         background-color: $wink-store-color;
     }
 
+    // reasonclothing
+    $reasonclothing-store-color: $blue;
+
+    .custom-merchant-reasonclothing {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $reasonclothing-store-color;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $reasonclothing-store-color;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $reasonclothing-store-color;
+       }
+    }
+
+    .custom-merchant-reasonclothing .products .product-button,
+    .product.custom-merchant-reasonclothing-product .product-middle .product-button {
+        background-color: $reasonclothing-store-color;
+    }
+
+    .custom-merchant-reasonclothing #order_form legend {
+        background-color: $reasonclothing-store-color;
+
+        &#billing_information_legend {
+            background-color: $reasonclothing-store-color;
+        }
+    }
+
+    .custom-merchant-reasonclothing #view_more_products {
+        background-color: $reasonclothing-store-color;
+    }
+
+
 
     // veda - not very DRY, but it'll be easier to change when the time comes
     $veda-store-color: $black;
