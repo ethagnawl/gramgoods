@@ -41,7 +41,9 @@ class ProductDecorator < Draper::Decorator
   end
 
   def description(passthrough = false)
-    if passthrough
+    if source.external?
+      nil
+    elsif passthrough
       source.description
     else
       widget do
@@ -52,7 +54,9 @@ class ProductDecorator < Draper::Decorator
   end
 
   def quantity
-    if source.is_purchasable?
+    if source.external?
+      nil
+    elsif source.is_purchasable?
       widget do
         h.content_tag(:h3, 'Quantity') +
         if source.unlimited_quantity
