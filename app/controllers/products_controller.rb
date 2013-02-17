@@ -5,8 +5,8 @@ class ProductsController < ApplicationController
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :normalize_shipping_option_params, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
-  before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :except => [:show, :index, :destroy] do |controller|
+  before_filter :authenticate_user!, :except => [:show, :index, :increment_external_clickthroughs]
+  before_filter :except => [:show, :index, :increment_external_clickthroughs, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find((params[:store_id] || params[:product][:store_id]))
