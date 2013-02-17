@@ -92,6 +92,7 @@ class ProductsController < ApplicationController
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
     gon.product_images = @product.get_product_images
+    gon.external = @product.external
     @product.user_product_images.build
   end
 
