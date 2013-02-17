@@ -121,20 +121,33 @@ Zepto ($) ->
                 )
 
         redirect_to_order_form = ->
-            data =
-                product_id: gon.product_id
-                quantity: (+($.trim(($ '#quantity').val()))) or 1
-            if ($ '#color').length > 0
-                data.color = $.trim(($ '#color').val())
-            if ($ '#size').length > 0
-                data.size = $.trim(($ '#size').val())
-            if gon.layout is 'mobile'
-                data.layout = 'mobile'
-            if gon.require_flatrate_shipping_option
-                data.flatrate_shipping_option = ($ '#flatrate_shipping_option').val() || ($ '#flatrate_shipping_option').data('flatrate_shipping_option') || undefined
+            unless gon.external
+                data =
+                    product_id: gon.product_id
+                    quantity: (+($.trim(($ '#quantity').val()))) or 1
+                if ($ '#color').length > 0
+                    data.color = $.trim(($ '#color').val())
+                if ($ '#size').length > 0
+                    data.size = $.trim(($ '#size').val())
+                if gon.layout is 'mobile'
+                    data.layout = 'mobile'
+                if gon.require_flatrate_shipping_option
+                    data.flatrate_shipping_option = ($ '#flatrate_shipping_option').val() || ($ '#flatrate_shipping_option').data('flatrate_shipping_option') || undefined
 
+                window.location = "#{gon.create_order_url}?#{$.param(data)}"
 
-            window.location = "#{gon.create_order_url}?#{$.param(data)}"
+            else
+                $.ajax
+                    type: 'POST'
+                    dataType: 'json'
+                    url: gon.increment_product_clickthrough_path
+                    error: ->
+                        alert GramGoods.error_message
+                    success: (response) ->
+                        if response.status is 'error'
+                            alert GramGoods.error_message
+                        else
+                            window.location = gon.external_url
 
         $redirect_to_order_form = ($ '#redirect_to_order_form')
         if has_touch_events
@@ -235,11 +248,3 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                     .prop('disabled', '')
                     .val(val)
             $mobile_form.trigger('submit')
-
-        $mobile_form
-            .isHappy(product_form_validation_rules)
-            .submit (e) ->
-                if ($ @).find('.unhappy').length
-                    e.preventDefault()
-                    scroll_to_error(($ @))
-

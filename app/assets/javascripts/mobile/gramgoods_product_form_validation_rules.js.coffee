@@ -1,4 +1,4 @@
-window.product_form_validation_rules =
+window.gramgoods_product_form_validation_rules =
     fields:
         '#fake_product_image_input':
             message: 'At least one product image is required.'
@@ -15,7 +15,7 @@ window.product_form_validation_rules =
         '#product_price':
             message: 'Valid price is required. (e.g. 9.99)'
             required: true
-            test: happy.is_valid_price
+            test: (val) -> happy.is_valid_price(val)
         '#product_status':
             message: 'Status is required.'
             required: true
@@ -35,7 +35,7 @@ if gon.flatrate_shipping_options?
     for _flatrate_shipping_option in gon.flatrate_shipping_options
         flatrate_shipping_option = "#product_#{_flatrate_shipping_option}_flatrate_shipping_cost"
 
-        product_form_validation_rules['fields'][flatrate_shipping_option] =
+        gramgoods_product_form_validation_rules['fields'][flatrate_shipping_option] =
             message: "Valid #{GramGoods.capitalize(_flatrate_shipping_option)} Flatrate Shipping Price is required. (e.g. 9.99)"
             required: 'sometimes'
             test: (val) ->

@@ -361,6 +361,7 @@ html.no-touch {
     background-color: $white;
     float: left;
     padding-top: 2%;
+    position: relative;
     width: 100%;
 
     &.order-form {
@@ -824,3 +825,43 @@ html.no-touch {
         }
     }
 }
+
+#external_product_overlay {
+    background-color: rgba(51, 51, 51, .8);
+    left: 0;
+    padding: 2% 4%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .btn {
+        margin: 10% 0 6%;
+    }
+}
+
+.product-form.external-product,
+.product-form.edit-external-product {
+    #external_url_wrapper {
+        display: block;
+    }
+
+    #description_wrapper,
+    #quantity_wrapper,
+    #unlimited_quantity_wrapper,
+    #sizes_wrapper,
+    #colors_wrapper,
+    #shipping_options_wrapper,
+    #purchase_type_wrapper,
+    #status_wrapper {
+        display: none;
+    }
+}
+
+.product-form.gramgoods-product,
+.product-form.edit-gramgoods-product {
+    #external_wrapper,
+    #external_url_wrapper {
+        display: none;
+    }
+}
+

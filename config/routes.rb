@@ -15,7 +15,10 @@ Gramgoods::Application.routes.draw do
       resources :line_items
       resources :recipients
     end
-    resources :products
+
+    resources :products do
+      post 'increment_external_clickthroughs', :on => :member
+    end
   end
   resources :users do
     resources :stores

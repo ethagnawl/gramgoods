@@ -45,5 +45,9 @@ var happy = {
     is_valid_quantity: function (val) {
         // first character is 1-9 followed by zero or more 0-9s
         return /^[1-9]{1}[0-9]*$/.test(val);
+    },
+
+    is_valid_url: function (val) {
+        return /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(val);
     }
 };

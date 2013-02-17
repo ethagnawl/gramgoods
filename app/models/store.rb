@@ -12,6 +12,8 @@ class Store < ActiveRecord::Base
   validates_acceptance_of :terms_of_service, :on => :create
 
   def displayable_products(limit = nil)
+    # external products are set to Active by default, so this will
+    # work, but it really should become a proper AR || SQL query
     self.products.
       where(:status => ['Active', 'Out of Stock']).
       limit(limit).

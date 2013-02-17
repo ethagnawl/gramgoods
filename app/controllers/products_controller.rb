@@ -5,8 +5,8 @@ class ProductsController < ApplicationController
   before_filter :strip_commas_from_prices, :only => [:create, :update]
   before_filter :normalize_shipping_option_params, :only => [:create, :update]
   before_filter :redirect_to_current_slug, :only => :show
-  before_filter :authenticate_user!, :except => [:show, :index]
-  before_filter :except => [:show, :index, :destroy] do |controller|
+  before_filter :authenticate_user!, :except => [:show, :index, :increment_external_clickthroughs]
+  before_filter :except => [:show, :index, :increment_external_clickthroughs, :destroy] do |controller|
     # why won't this work for :destroy?
     controller.instance_eval do
       if store = Store.find((params[:store_id] || params[:product][:store_id]))
@@ -66,7 +66,15 @@ class ProductsController < ApplicationController
     gon.product_name = @product.name
     gon.product_id = @product.id
     gon.store_slug = @store.slug
-    gon.create_order_url = new_store_order_path(@store)
+    gon.external = @product.external
+
+    if @product.external?
+      gon.external_url = @product.external_url
+      gon.increment_product_clickthrough_path = increment_external_clickthroughs_store_product_path(@store, @product)
+    else
+      gon.create_order_url = new_store_order_path(@store)
+    end
+
     gon.require_flatrate_shipping_option = !@product.flatrate_shipping_options.empty?
 
     if @product.status == 'Draft'
@@ -84,6 +92,7 @@ class ProductsController < ApplicationController
     @store = @user.stores.find(params[:store_id])
     @product = @store.products.find(params[:id])
     gon.product_images = @product.get_product_images
+    gon.external = @product.external
     @product.user_product_images.build
   end
 
@@ -110,6 +119,21 @@ class ProductsController < ApplicationController
       redirect_to(custom_store_path(@store))
     else
       redirect_to(root_path)
+    end
+  end
+
+  def increment_external_clickthroughs
+    @store = Store.find(params[:store_id])
+    @product = @store.products.find(params[:id])
+
+    begin
+      if @product.increment_external_clickthroughs
+        render :json => { status: 'OK' }
+      else
+        render :json => { status: 'error' }
+      end
+    rescue
+      render :json => { status: 'error' }
     end
   end
 

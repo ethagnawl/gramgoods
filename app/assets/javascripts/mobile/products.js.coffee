@@ -17,6 +17,8 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
         $new_product_image_grid = ($ '#new_product_image_grid')
         $new_product_image_grid_wrapper = ($ '#new_product_image_grid_wrapper')
 
+
+
         toggle_loading_message = ($el) ->
             if $el.hasClass('loading')
                 $el
@@ -174,3 +176,34 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 bool = !$checkbox.prop('checked')
                 $checkbox.prop('checked', bool)
         )
+
+        internal_external_product_conditional_behavior = new (Backbone.View.extend
+            bindFormValidation: ->
+                product_form_validation_rules = if gon.external then external_product_form_validation_rules else gramgoods_product_form_validation_rules
+                $('.mobile-form')
+                    .isHappy(product_form_validation_rules)
+                    .submit (e) ->
+                        if ($ @).find('.unhappy').length
+                            e.preventDefault()
+                            scroll_to_error(($ @))
+
+            el: ($ '#external_product_overlay')
+            events: {
+                'click .btn': (e) ->
+                    gon.external = external = $(e.target).data('external') is 'true'
+                    form_class = if external then 'external-product' else 'gramgoods-product'
+
+                    $(e.target).closest('form').addClass(form_class)
+                    @$el.hide()
+
+                    ($ '#product_external').prop('checked', true) if external
+                    @bindFormValidation()
+            }
+            initialize: ->
+                if gon.external?
+                    @bindFormValidation()
+                else
+                    form_height = ($ '.mobile-form').height()
+                    ($ '#external_product_overlay').height(form_height)
+        )
+

@@ -12,7 +12,9 @@ class Product < ActiveRecord::Base
 
   scope :recent_active_products, Proc.new { |limit|
     limit ||= 10
-    where(:status => 'Active').
+    p = Product.arel_table
+
+    where(p[:status].eq('Active').or(p[:external].eq(true))).
       limit(limit).
       order('updated_at DESC').
       includes([:store, :user_product_images, :instagram_product_images])
@@ -24,16 +26,18 @@ class Product < ActiveRecord::Base
   :domestic_flatrate_shipping_cost, :international_flatrate_shipping_cost,
   :unlimited_quantity, :colors_attributes, :sizes_attributes, :colors, :sizes,
   :user_product_images, :user_product_images_attributes, :instagram_product_images,
-  :instagram_product_images_attributes, :purchase_type
+  :instagram_product_images_attributes, :purchase_type, :external, :external_url
 
-  validates_presence_of :name, :price, :description
+  validates_presence_of :name, :price
+  validates_presence_of :description, :unless => Proc.new { |product| product.external == true }
+  validates_presence_of :external_url, :if => Proc.new { |product| product.external == true }
   validates :quantity, :presence => true,
-    :unless => Proc.new { |product| product.unlimited_quantity == true }
-  validates_numericality_of :price, :greater_than => 0.00
+    :unless => Proc.new { |product| product.unlimited_quantity == true || product.external == true }
+  validates_numericality_of :price, :greater_than => 0.00, :unless => Proc.new { |product| product.external == true }
   validates_numericality_of :domestic_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? }
+    :unless => Proc.new { |product| product.domestic_flatrate_shipping_cost.nil? || product.external == true }
   validates_numericality_of :international_flatrate_shipping_cost, :greater_than => 0.00,
-    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? }
+    :unless => Proc.new { |product| product.international_flatrate_shipping_cost.nil? || product.external == true }
   validate :has_at_least_one_product_photo
 
   accepts_nested_attributes_for :user_product_images, allow_destroy: true
@@ -51,6 +55,7 @@ class Product < ActiveRecord::Base
     :allow_destroy => true
 
   before_save :normalize_quantity
+  before_save :normalize_external_url
 
   def self.order_status_array
     ['Draft', 'Active', 'Out of Stock']
@@ -73,11 +78,23 @@ class Product < ActiveRecord::Base
   end
 
   def normalize_quantity
-    self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
+    unless self.external?
+      self.quantity = 0 if self.quantity.nil? or self.unlimited_quantity == true
+    end
+  end
+
+  def normalize_external_url
+    if self.external == true
+      if (/^http(s)?:\/\// =~ self.external_url).nil?
+        self.external_url = "http://#{self.external_url}"
+      end
+    end
   end
 
   def is_purchasable?
-    if self.quantity.nil?
+    if self.external?
+      true
+    elsif self.quantity.nil?
       self.unlimited_quantity == true && self.status == 'Active'
     else
       (self.quantity > 0 || self.unlimited_quantity == true) && self.status == 'Active'
@@ -154,6 +171,12 @@ class Product < ActiveRecord::Base
   # TODO: rename this valid_shipping_option_cost?
   def valid_shipping_cost?(cost)
     flatrate_shipping_option_costs.member? cost
+  end
+
+  def increment_external_clickthroughs
+    if self.external?
+      update_column(:external_clickthroughs, self.external_clickthroughs += 1)
+    end
   end
 
   # allow nested attributes to use x.product before product has been saved

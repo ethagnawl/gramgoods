@@ -1,37 +1,56 @@
 - edit_view = locals[:action] == 'Edit'
 - verb_and_product = (locals[:action] == 'Edit' ? 'Update' : 'Create') + ' Product'
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
+- edit_form_class = edit_view ? @product.external? ? 'edit-external-product' : 'edit-gramgoods-product' : ''
 
 = form_for([@store, @product], |
-          :html => { class: 'mobile-form', |
+  :html => { class: "mobile-form product-form #{edit_form_class}", |
                      multipart: true, |
                      autocorrect: 'off', |
                      autocapitalize: 'off' }) do |product_form|
+
+  - unless edit_view
+    #external_product_overlay
+      #external_options
+        %button.btn.btn-large.btn-block.btn-primary{ type: 'button', data: { external: 'true' }}
+          Create and Link to Existing E-Commerce Product
+        %button.btn.btn-large.btn-block.btn-inverse{ type: 'button', data: { external: 'false' }}
+          Create and Sell Using GramGoods E-Commerce
 
   - if @product.errors.any?
     = render 'shared/form_errors', :target => @product
 
   %div
-    %fieldset
+
+    %fieldset#name_wrapper
       - if edit_view
         = product_form.label :name, (form_label(:name))
       = product_form.text_field :name, :placeholder => (form_label(:name))
 
-    %fieldset
+    %fieldset#description_wrapper
       - if edit_view
         = product_form.label :description, (form_label(:description))
       = product_form.text_area :description, |
                                :placeholder => (form_label(:description)),
                                :rows => 5
 
-    %fieldset
+    %fieldset#price_wrapper
       - price_label = (form_label(:price, true, ' (e.g. 9.99)'))
       - if edit_view
         = product_form.label :price, price_label
       = product_form.text_field :price, :type => 'text', |
                                 :placeholder => price_label
 
-    %fieldset
+    %fieldset#external_wrapper.hide
+      = product_form.label :external, (form_label(:external, false))
+      = product_form.check_box :external
+
+    %fieldset#external_url_wrapper
+      - if edit_view
+        = product_form.label :external_url, (form_label(:external_url))
+      = product_form.text_field :external_url, :placeholder => (form_label(:external_url))
+
+    %fieldset#quantity_wrapper
       - quantity_placeholder = form_label(:quantity, false)
       - quantity_disabled = @product.unlimited_quantity ? 'disabled' : nil
       - quantity_value = @product.quantity.nil? || @product.quantity == 0 ? nil : @product.quantity
@@ -44,45 +63,48 @@
 
       %span.inline-help
         *Quantity is required unless Unlimited Quantity has been selected.
-    %fieldset.checkbox
+    %fieldset.checkbox#unlimited_quantity_wrapper
       = product_form.label :unlimited_quantity, |
         (form_label(:unlimited_quantity, false))
       = product_form.check_box :unlimited_quantity
 
-    - color_placeholder = (form_label("#{:color}", false, ' - input and tap +'))
-    - if edit_view
-      = render 'products/nested_attribute_fieldset', |
-        { :locals => { :attribute => 'color', |
-          :collection => @product.colors, |
-          :placeholder => color_placeholder }}
-    - else
-      = product_form.fields_for(:colors) do |colors_form|
-        %fieldset
-          = colors_form.text_field :color, :class => 'width-90', |
-                                           :placeholder => color_placeholder
-          %button.add-button{ :data => { :attribute => :color.to_s} } +
-          %div.attrs
+    #colors_wrapper
+      - color_placeholder = (form_label("#{:color}", false, ' - input and tap +'))
+      - if edit_view
+        = render 'products/nested_attribute_fieldset', |
+          { :locals => { :attribute => 'color', |
+            :collection => @product.colors, |
+            :placeholder => color_placeholder }}
+      - else
+        = product_form.fields_for(:colors) do |colors_form|
+          %fieldset
+            = colors_form.text_field :color, :class => 'width-90', |
+                                             :placeholder => color_placeholder
+            %button.add-button{ :data => { :attribute => :color.to_s} } +
+            %div.attrs
 
-    - size_placeholder = (form_label("#{:size}", false, ' - input and tap +'))
-    - if edit_view
-      = render 'products/nested_attribute_fieldset', |
-        { :locals => { :attribute => 'size', |
-          :collection => @product.sizes ||= nil, |
-          :placeholder => size_placeholder }}
-    - else
-      = product_form.fields_for(:sizes) do |sizes_form|
-        %fieldset
-          = sizes_form.text_field :size, :class => 'width-90', |
-                                           :placeholder => size_placeholder
-          %button.add-button{ :data => { :attribute => :size.to_s} } +
-          %div.attrs
+    #sizes_wrapper
+      - size_placeholder = (form_label("#{:size}", false, ' - input and tap +'))
+      - if edit_view
+        = render 'products/nested_attribute_fieldset', |
+          { :locals => { :attribute => 'size', |
+            :collection => @product.sizes ||= nil, |
+            :placeholder => size_placeholder }}
+      - else
+        = product_form.fields_for(:sizes) do |sizes_form|
+          %fieldset
+            = sizes_form.text_field :size, :class => 'width-90', |
+                                             :placeholder => size_placeholder
+            %button.add-button{ :data => { :attribute => :size.to_s} } +
+            %div.attrs
 
-    = render partial: 'flatrate_shipping_option_fieldset',
-      collection: Product.flatrate_shipping_options,
-      as: :flatrate_shipping_option,
-      locals: { form: product_form, edit_view: edit_view }
+    #shipping_options_wrapper
+      = render partial: 'flatrate_shipping_option_fieldset',
+        collection: Product.flatrate_shipping_options,
+        as: :flatrate_shipping_option,
+        locals: { form: product_form, edit_view: edit_view }
 
-    %fieldset
+    %fieldset#purchase_type_wrapper
       = product_form.label :purchase_type, (form_label(:purchase_type))
       %label.radio
         = product_form.radio_button :purchase_type, 'Buy Now', checked: true
@@ -91,7 +113,7 @@
         = product_form.radio_button :purchase_type, 'Pre-Order'
         Pre-Order
 
-    %fieldset
+    %fieldset#status_wrapper
       = product_form.label :status, (form_label(:status))
       = product_form.select :status,
                             options_for_select(Product.order_status_array,
