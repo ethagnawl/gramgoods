@@ -1,9 +1,10 @@
 - edit_view = locals[:action] == 'Edit'
 - verb_and_product = (locals[:action] == 'Edit' ? 'Update' : 'Create') + ' Product'
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
+- edit_form_class = edit_view ? @product.external? ? 'edit-external-product' : 'edit-gramgoods-product' : ''
 
 = form_for([@store, @product], |
-          :html => { class: 'mobile-form product-form', |
+  :html => { class: "mobile-form product-form #{edit_form_class}", |
                      multipart: true, |
                      autocorrect: 'off', |
                      autocapitalize: 'off' }) do |product_form|
