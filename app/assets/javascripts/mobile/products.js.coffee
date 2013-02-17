@@ -177,7 +177,16 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                 $checkbox.prop('checked', bool)
         )
 
-        external_product_overlay_behavior = new (Backbone.View.extend
+        internal_external_product_conditional_behavior = new (Backbone.View.extend
+            bindFormValidation: ->
+                product_form_validation_rules = if gon.external then external_product_form_validation_rules else gramgoods_product_form_validation_rules
+                $('.mobile-form')
+                    .isHappy(product_form_validation_rules)
+                    .submit (e) ->
+                        if ($ @).find('.unhappy').length
+                            e.preventDefault()
+                            scroll_to_error(($ @))
+
             el: ($ '#external_product_overlay')
             events: {
                 'click .btn': (e) ->
@@ -188,9 +197,12 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                     @$el.hide()
 
                     ($ '#product_external').prop('checked', true) if external
+                    @bindFormValidation()
             }
             initialize: ->
-                if ($ '#external_product_overlay').length
+                if gon.external?
+                    @bindFormValidation()
+                else
                     form_height = ($ '.mobile-form').height()
                     ($ '#external_product_overlay').height(form_height)
         )

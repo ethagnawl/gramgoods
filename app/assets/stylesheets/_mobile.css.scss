@@ -839,7 +839,8 @@ html.no-touch {
     }
 }
 
-.product-form.external-product {
+.product-form.external-product,
+.product-form.edit-external-product {
     #external_url_wrapper {
         display: block;
     }
@@ -856,7 +857,8 @@ html.no-touch {
     }
 }
 
-.product-form.gramgoods-product {
+.product-form.gramgoods-product,
+.product-form.edit-gramgoods-product {
     #external_wrapper,
     #external_url_wrapper {
         display: none;
