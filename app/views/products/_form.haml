@@ -46,9 +46,10 @@
       = product_form.check_box :external
 
     %fieldset#external_url_wrapper
+      - external_url_label = "Existing E-Commerce Product URL*"
       - if edit_view
-        = product_form.label :external_url, (form_label(:external_url))
-      = product_form.text_field :external_url, :placeholder => (form_label(:external_url))
+        = product_form.label :external_url, external_url_label
+      = product_form.text_field :external_url, :placeholder => external_url_label
 
     %fieldset#quantity_wrapper
       - quantity_placeholder = form_label(:quantity, false)

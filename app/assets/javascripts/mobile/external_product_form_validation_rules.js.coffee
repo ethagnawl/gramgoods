@@ -14,6 +14,6 @@ window.external_product_form_validation_rules =
             required: true
             test: (val) -> happy.is_valid_price(val)
         '#product_external_url':
-            message: 'Valid external URL is required.'
+            message: 'Valid existing E-Commerce product URL is required.'
             required: 'sometimes'
             test: (val) -> happy.is_valid_url(val)
