@@ -1,17 +1,17 @@
 - edit_view = locals[:action] == 'Edit'
 - verb_and_product = (locals[:action] == 'Edit' ? 'Update' : 'Create') + ' Product'
 - tel_input = mobile_device_is_iOS? ? 'tel' : 'text'
-- edit_form_class = edit_view ? @product.external? ? 'edit-external-product' : 'edit-gramgoods-product' : ''
+- internal_or_external_product_form_class = @product.external? ? 'external-product' : 'gramgoods-product'
 
 = form_for([@store, @product], |
-  :html => { class: "mobile-form product-form #{edit_form_class}", |
+  :html => { class: "mobile-form product-form #{internal_or_external_product_form_class}", |
                      multipart: true, |
                      autocorrect: 'off', |
                      autocapitalize: 'off' }) do |product_form|
 
-  - unless edit_view
-    #external_product_overlay
-      #external_options
+  - unless edit_view || @product.errors.any?
+    #internal_or_external_product_overlay
+      #internal_or_external_product_options
         %button.btn.btn-large.btn-block.btn-primary{ type: 'button', data: { external: 'true' }}
           Create and Link to Existing E-Commerce Product
         %button.btn.btn-large.btn-block.btn-inverse{ type: 'button', data: { external: 'false' }}

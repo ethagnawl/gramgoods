@@ -187,13 +187,15 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                             e.preventDefault()
                             scroll_to_error(($ @))
 
-            el: ($ '#external_product_overlay')
+            el: ($ '#internal_or_external_product_overlay')
             events: {
                 'click .btn': (e) ->
                     gon.external = external = $(e.target).data('external') is 'true'
                     form_class = if external then 'external-product' else 'gramgoods-product'
+                    $form = $(e.target).closest('form')
 
-                    $(e.target).closest('form').addClass(form_class)
+                    $form.removeClass('external-product gramgoods-product')
+                    $form.addClass(form_class)
                     @$el.hide()
 
                     ($ '#product_external').prop('checked', true) if external
@@ -204,6 +206,6 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                     @bindFormValidation()
                 else
                     form_height = ($ '.mobile-form').height()
-                    ($ '#external_product_overlay').height(form_height)
+                    @$el.height(form_height)
         )
 
