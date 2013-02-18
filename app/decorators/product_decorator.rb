@@ -30,12 +30,21 @@ class ProductDecorator < Draper::Decorator
   end
 
   def merchant
-    widget do
-      h.content_tag(:h3, 'Merchant') +
-      h.content_tag(:p, 'Merchant') do
-        h.link_to(source.store.name, h.custom_store_path(source.store))+
-        h.content_tag(:span, ' | ') +
-        h.link_to('Return Policy', h.return_policy_store_path(source.store))
+    if source.external?
+      widget do
+        h.content_tag(:h3, 'Merchant') +
+        h.content_tag(:p, 'Merchant') do
+          h.link_to(source.store.name, h.custom_store_path(source.store))
+        end
+      end
+    else
+      widget do
+        h.content_tag(:h3, 'Merchant') +
+        h.content_tag(:p, 'Merchant') do
+          h.link_to(source.store.name, h.custom_store_path(source.store))+
+          h.content_tag(:span, ' | ') +
+          h.link_to('Return Policy', h.return_policy_store_path(source.store))
+        end
       end
     end
   end
