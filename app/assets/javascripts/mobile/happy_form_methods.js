@@ -49,5 +49,9 @@ var happy = {
 
     is_valid_url: function (val) {
         return /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}/.test(val);
+    },
+
+    is_valid_ccv: function (val) {
+        return /^[0-9]{3,4}$/.test(val);
     }
 };

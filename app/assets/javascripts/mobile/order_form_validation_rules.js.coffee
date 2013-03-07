@@ -36,4 +36,7 @@ window.order_form_validation_rules =
         '#credit_card_expiration_year':
             message: 'Credit Card Expiration Year is required.'
             required: true
-
+        '#credit_card_ccv':
+            message: 'Credit Card CCV is required.'
+            required: true
+            test: happy.is_valid_ccv

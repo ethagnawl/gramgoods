@@ -84,4 +84,6 @@
     %fieldset
       = select_tag(nil, options_for_select(credit_card_years), :id => 'credit_card_expiration_year')
     %fieldset
+      %input#credit_card_ccv{ :type => "tel", :placeholder => "CCV*" }
+    %fieldset
       = form.submit 'Submit Order', :id => 'order_form_submit', :class => 'btn btn-large btn-primary'

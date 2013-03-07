@@ -170,6 +170,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
         $credit_card_number = $('#credit_card_number')
         $credit_card_expiration_month = $('#credit_card_expiration_month')
         $credit_card_expiration_year = $('#credit_card_expiration_year')
+        $credit_card_ccv = $('#credit_card_ccv')
 
         stripeResponseHandler = (status, response) ->
             if response.error
@@ -179,6 +180,7 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                 $credit_card_number.val('')
                 $credit_card_expiration_month.val('')
                 $credit_card_expiration_year.val('')
+                $credit_card_ccv.val('')
                 token = response['id']
                 $(".order-form")
                     .append("<input type='hidden' name='stripeToken' value='#{token}'/>")
