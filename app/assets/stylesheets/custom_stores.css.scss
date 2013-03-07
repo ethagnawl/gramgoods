@@ -103,7 +103,7 @@ html.no-touch {
     // reasonclothing
     $reasonclothing-store-color: #000;
 
-    .custom-merchant-reasonclothing {
+    .custom-merchant-reason-clothing {
         .mobile-header {
             background-color: #000;
 
@@ -131,12 +131,12 @@ html.no-touch {
        }
     }
 
-    .custom-merchant-reasonclothing .products .product-button,
-    .product.custom-merchant-reasonclothing-product .product-middle .product-button {
+    .custom-merchant-reason-clothing .products .product-button,
+    .product.custom-merchant-reason-clothing-product .product-middle .product-button {
         background-color: $reasonclothing-store-color;
     }
 
-    .custom-merchant-reasonclothing #order_form legend {
+    .custom-merchant-reason-clothing #order_form legend {
         background-color: $reasonclothing-store-color;
 
         &#billing_information_legend {
@@ -144,7 +144,7 @@ html.no-touch {
         }
     }
 
-    .custom-merchant-reasonclothing #view_more_products {
+    .custom-merchant-reason-clothing #view_more_products {
         background-color: $reasonclothing-store-color;
     }
 
