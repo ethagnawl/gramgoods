@@ -155,11 +155,10 @@ eos
     ]
   end
 
-  def countries
-    [
+  def countries_array(filter)
+    countries = [
       ['Country*', ''],
       ["United States", "United States"],
-      ["United Kingdom", "United Kingdom"],
       ["Afghanistan", "Afghanistan"],
       ["Albania", "Albania"],
       ["Algeria", "Algeria"],
@@ -400,6 +399,8 @@ eos
       ["Zambia", "Zambia"],
       ["Zimbabwe", "Zimbabwe"],
     ]
+
+    filter.call(countries)
   end
 
   def custom_merchant_logo_src(store_slug)

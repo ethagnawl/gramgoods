@@ -73,6 +73,8 @@
       %fieldset
         = recipient.text_field :postal_code, :placeholder => "Zip / Postal Code*"
       %fieldset
+        - filter = @flatrate_shipping_option == 'international' ? Proc.new { |countries| countries.delete_if { |country| country.first == 'United States' } } : Proc.new { |countries| countries.delete_if { |country| country.first != 'United States' } }
+        - countries = countries_array(filter)
         = recipient.select :country, options_for_select(countries)
 
   %div
