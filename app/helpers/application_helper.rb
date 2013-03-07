@@ -384,7 +384,6 @@ eos
       ["Ukraine", "Ukraine"],
       ["United Arab Emirates", "United Arab Emirates"],
       ["United Kingdom", "United Kingdom"],
-      ["United States", "United States"],
       ["United States Minor Outlying Islands", "United States Minor Outlying Islands"],
       ["Uruguay", "Uruguay"],
       ["Uzbekistan", "Uzbekistan"],
