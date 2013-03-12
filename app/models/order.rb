@@ -17,7 +17,7 @@ class Order < ActiveRecord::Base
       :card => token,
       :description => "GramGoods Order ##{self.id} - #{self.recipient.email_address}"
     )
-  rescue Stripe::InvalidRequestError => e
+  rescue Exception => e
     logger.error "Stripe error while processing transaction: #{e.message}"
     errors.add :base, "There was a problem processing your transaction, please try again. If the problem persists, contact #{ADMIN_EMAIL_ADDRESS}"
     false
