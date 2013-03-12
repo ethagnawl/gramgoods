@@ -10,17 +10,23 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :line_item, :recipient
   validates_associated :line_item
 
-  def charge(token)
-    charge = Stripe::Charge.create(
-      :amount => (self.line_item.total * 100).to_i,
-      :currency => "usd",
-      :card => token,
-      :description => "GramGoods Order ##{self.id} - #{self.recipient.email_address}"
-    )
+  def save_with_payment(token)
+    if valid?
+      charge = Stripe::Charge.create(
+        :amount => (self.line_item.total * 100).to_i,
+        :currency => "usd",
+        :card => token,
+        :description => "GramGoods Order ##{self.id} - #{self.recipient.email_address}"
+      )
+      save!
+    end
   rescue Exception => e
     logger.error "Stripe error while processing transaction: #{e.message}"
-    errors.add :base, "There was a problem processing your transaction, please try again. If the problem persists, contact #{ADMIN_EMAIL_ADDRESS}"
     false
+  end
+
+  def stripe_error_message
+    "There was a problem processing your transaction, please try again. If the problem persists, contact #{ADMIN_EMAIL_ADDRESS}"
   end
 
   private

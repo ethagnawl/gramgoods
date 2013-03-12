@@ -49,6 +49,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    original_params = params.clone
     @store = Store.find(params[:store_id])
     @recipient = params[:recipient_attributes]
     @line_item = params[:line_item_attributes]
@@ -71,10 +72,11 @@ class OrdersController < ApplicationController
 
     @order = @store.orders.new(params[:order])
 
-    if @order.save && @order.charge(params[:stripeToken])
+    if @order.save_with_payment(params[:stripeToken])
       redirect_to confirmation_store_order_path @store, @order.access_key
     else
-      render 'new'
+      flash[:notice] = @order.stripe_error_message
+      redirect_to(:back)
     end
   end
 
