@@ -198,7 +198,8 @@ if gon.page is 'orders_new' or gon.page is 'orders_edit' or gon.page is 'orders_
                     Stripe.createToken({
                         number: $credit_card_number.val(),
                         exp_month: $credit_card_expiration_month.val(),
-                        exp_year: $credit_card_expiration_year.val()
+                        exp_year: $credit_card_expiration_year.val(),
+                        cvc: $credit_card_ccv.val()
                     }, stripeResponseHandler)
                 else
                     scroll_to_error(($ @))
