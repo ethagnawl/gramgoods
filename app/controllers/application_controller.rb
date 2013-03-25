@@ -3,10 +3,10 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::NumberHelper
 
   protect_from_forgery
+  before_filter :force_signed_in_users_to_use_ssl
   before_filter :redirect_to_desktop_landing_page
   before_filter :clear_gon
   before_filter :set_gon
-  before_filter :force_signed_in_users_to_use_ssl
   before_filter :basic_authentication
   before_filter :normalize_user_for_fetch_instagram_feed,
     :only => :fetch_instagram_feed_for_user
