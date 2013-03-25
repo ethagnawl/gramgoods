@@ -66,11 +66,11 @@ class Product < ActiveRecord::Base
   end
 
   def get_user_product_images
-    self.user_product_images.map{ |image| image.image.url(:large) }
+    self.user_product_images.map{ |image| strip_protocol(image.image.url(:large)) }
   end
 
   def get_instagram_product_images
-    self.instagram_product_images.map{ |image| image.url }
+    self.instagram_product_images.map{ |image| strip_protocol(image.url) }
   end
 
   def get_product_images
@@ -186,6 +186,14 @@ class Product < ActiveRecord::Base
   end
 
   private
+    def strip_protocol(url)
+      if url =~ /https?:/
+        url.split($1)[1]
+      else
+        url
+      end
+    end
+
     def has_at_least_one_product_photo
       if (user_product_images.empty? or user_product_images.all? {|child| child.marked_for_destruction? }) && (instagram_product_images.empty? or instagram_product_images.all? {|child| child.marked_for_destruction? })
         errors.add(:base, 'You must upload or attach at least one product photo.')
