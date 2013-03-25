@@ -187,7 +187,7 @@ class Product < ActiveRecord::Base
 
   private
     def strip_protocol(url)
-      if url =~ /https?:/
+      if url =~ /(https?:)/
         url.split($1)[1]
       else
         url
