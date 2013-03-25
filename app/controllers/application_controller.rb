@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :redirect_to_desktop_landing_page
   before_filter :clear_gon
   before_filter :set_gon
-  before_filter :ensure_proper_protocol
+  before_filter :force_signed_in_users_to_use_ssl
   before_filter :basic_authentication
   before_filter :normalize_user_for_fetch_instagram_feed,
     :only => :fetch_instagram_feed_for_user
@@ -71,14 +71,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def ssl_allowed_action?
-      params[:controller] == 'orders' || params[:controller] == 'devise/sessions' ||
-      params[:controller] == 'registrations' || params[:controller] == 'devise/passwords'
-    end
-
-    def ensure_proper_protocol
-      if request.ssl? && !ssl_allowed_action?
-        redirect_to "http://" + request.host + request.fullpath
+    def force_signed_in_users_to_use_ssl
+      if user_signed_in? && !request.ssl?
+        redirect_to :protocol => "https://"
       end
     end
 
