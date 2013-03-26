@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
     end
 
     def force_signed_in_users_to_use_ssl
-      if !(Rails.env == 'development') && user_signed_in? && !request.ssl?
+      if (Rails.env == 'production') && user_signed_in? && !request.ssl?
         redirect_to :protocol => "https://"
       end
     end
