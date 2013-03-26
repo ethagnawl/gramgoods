@@ -198,6 +198,55 @@ html.no-touch {
         background-color: $veda-store-color;
     }
 
+    // 10th-tribe - can't use $n, so the var is using the word tenth
+    $tenth-tribe: $black;
+
+    .custom-merchant-10th-tribe {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $tenth-tribe;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $tenth-tribe;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $tenth-tribe;
+       }
+    }
+
+    .custom-merchant-10th-tribe .products .product-button,
+    .product.custom-merchant-10th-tribe-product .product-middle .product-button {
+        background-color: $tenth-tribe;
+    }
+
+    .custom-merchant-10th-tribe #order_form legend {
+        background-color: $tenth-tribe;
+
+        &#billing_information_legend {
+            background-color: $tenth-tribe;
+        }
+    }
+
+    .custom-merchant-10th-tribe #view_more_products {
+        background-color: $tenth-tribe;
+    }
+
+
     // owen-nyc - not very DRY, but it'll be easier to change when the time comes
     $owen-nyc: $black;
 
