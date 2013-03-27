@@ -63,5 +63,7 @@ module Gramgoods
     config.logger = Logger.new(STDOUT)
 
     config.autoload_paths += Dir["#{config.root}/lib/**"]
+
+    config.middleware.use Rack::SslEnforcer, :ignore => '/welcome', :strict => true
   end
 end
