@@ -29,22 +29,28 @@ class OrdersController < ApplicationController
 
   def new
     @order = Order.new
-    @recipient = @order.build_recipient
-    @line_item = @order.build_line_item
-    quantity = params[:quantity].to_i
-    @store = Store.find(params[:store_id])
-    @product = @store.products.find(params[:product_id])
-    @quantity = quantity >= 1 ? quantity : 1
-    @color = params[:color] unless params[:color].nil?
-    @size = params[:size] unless params[:size].nil?
-    @price = @product.price
-    @total = @quantity * @price
-    @flatrate_shipping_option = @product.valid_flatrate_shipping_option?(params[:flatrate_shipping_option]) ? params[:flatrate_shipping_option] : nil
+
+    if params[:store_id] && params[:product_id]
+      @recipient = @order.build_recipient
+      @line_item = @order.build_line_item
+      quantity = params[:quantity].to_i
+      @store = Store.find(params[:store_id])
+      @product = @store.products.find(params[:product_id])
+      @quantity = quantity >= 1 ? quantity : 1
+      @color = params[:color] unless params[:color].nil?
+      @size = params[:size] unless params[:size].nil?
+      @price = @product.price
+      @total = @quantity * @price
+      @flatrate_shipping_option = @product.valid_flatrate_shipping_option?(params[:flatrate_shipping_option]) ? params[:flatrate_shipping_option] : nil
 
 
-    unless @flatrate_shipping_option.nil?
-      @flatrate_shipping_option_cost = @product.flatrate_shipping_option_cost(@flatrate_shipping_option)
-      @total += @flatrate_shipping_option_cost
+      unless @flatrate_shipping_option.nil?
+        @flatrate_shipping_option_cost = @product.flatrate_shipping_option_cost(@flatrate_shipping_option)
+        @total += @flatrate_shipping_option_cost
+      end
+    else
+      flash[:alert] = @order.stripe_error_message
+      redirect_to products_path
     end
   end
 
