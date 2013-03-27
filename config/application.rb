@@ -64,6 +64,6 @@ module Gramgoods
 
     config.autoload_paths += Dir["#{config.root}/lib/**"]
 
-    config.middleware.use Rack::SslEnforcer, except: '/welcome'
+    config.middleware.use Rack::SslEnforcer, except: '/welcome', strict: true
   end
 end
