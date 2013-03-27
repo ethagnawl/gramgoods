@@ -1,6 +1,5 @@
 class OrdersController < ApplicationController
   layout 'mobile'
-  force_ssl
   before_filter :authenticate_user!, :only => [:index]
 
   def index
