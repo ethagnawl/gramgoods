@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   include ActionView::Helpers::NumberHelper
 
   protect_from_forgery
-  before_filter :force_signed_in_users_to_use_ssl
   before_filter :redirect_to_desktop_landing_page
   before_filter :clear_gon
   before_filter :set_gon
@@ -68,12 +67,6 @@ class ApplicationController < ActionController::Base
         authenticate_or_request_with_http_basic do |username, password|
           username == "GramG00ds" && password == "00000"
         end
-      end
-    end
-
-    def force_signed_in_users_to_use_ssl
-      if (Rails.env == 'production') && user_signed_in? && !request.ssl?
-        redirect_to :protocol => "https://"
       end
     end
 
