@@ -9,7 +9,14 @@ class StaticController < ApplicationController
     if user_signed_in?
       redirect_to root_path
     else
-      render 'desktop_welcome', :layout => false
+      # homepage static assets contain absolute urls containing http://...
+      if request.ssl?
+        redirect_to :protocol => 'http://',
+                    :controller => 'static',
+                    :action => 'desktop_welcome'
+      else
+        render 'desktop_welcome', :layout => false
+      end
     end
   end
 end
