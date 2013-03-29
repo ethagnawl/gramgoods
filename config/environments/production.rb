@@ -73,4 +73,6 @@ Gramgoods::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.default_url_options = { :host => ENV['HEROKU_APP_URL'] }
+
+  config.middleware.use Rack::SslEnforcer, except: '/welcome', strict: true
 end
