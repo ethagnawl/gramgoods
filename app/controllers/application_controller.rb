@@ -117,9 +117,15 @@ class ApplicationController < ActionController::Base
       user_feed = args[:user_feed]
       user_media_count = args[:user_media_count]
 
+      begin
+        max_id = user_feed.last.id
+      rescue
+        max_id = nil
+      end
+
       {
         :status => 'success',
-        :max_id => user_feed.last.id,
+        :max_id => max_id,
         :media_count => user_media_count,
         :product_images => user_feed.map { |image| image[:url] }
       }
