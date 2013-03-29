@@ -86,7 +86,11 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                             })
                         )
 
-                        if $new_product_image_grid_wrapper.hasClass('hide')
+                        if product_images.length is 0
+                            disable_all_loading_buttons()
+                            $new_product_image_grid_wrapper.addClass('hide')
+
+                        else if $new_product_image_grid_wrapper.hasClass('hide')
                             $new_product_image_grid_wrapper.removeClass('hide')
 
                         if pageload
