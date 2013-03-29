@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130217055230) do
+ActiveRecord::Schema.define(:version => 20130329213130) do
 
   create_table "address", :id => false, :force => true do |t|
     t.integer "persistenceid", :limit => 8, :null => false
@@ -589,6 +589,13 @@ ActiveRecord::Schema.define(:version => 20130217055230) do
     t.string   "url"
   end
 
+  create_table "instagram_tags", :force => true do |t|
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "product_id"
+    t.string   "instagram_tag"
+  end
+
   create_table "line_items", :force => true do |t|
     t.datetime "created_at",                                                          :null => false
     t.datetime "updated_at",                                                          :null => false
@@ -601,7 +608,7 @@ ActiveRecord::Schema.define(:version => 20130217055230) do
     t.decimal  "total"
     t.decimal  "flatrate_shipping_option_cost",        :precision => 10, :scale => 2
     t.string   "product_name"
-    t.decimal  "international_flatrate_shipping_cost"
+    t.decimal  "international_flatrate_shipping_cost", :precision => 10, :scale => 2
     t.string   "flatrate_shipping_option"
   end
 
@@ -863,6 +870,19 @@ ActiveRecord::Schema.define(:version => 20130217055230) do
     t.integer "family_persistenceid",        :limit => 8, :null => false
   end
 
+  create_table "product_images", :force => true do |t|
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "product_id"
+    t.string   "instagram_id"
+    t.string   "url"
+    t.string   "tags"
+    t.string   "thumbnail"
+    t.integer  "likes"
+  end
+
+  add_index "product_images", ["product_id"], :name => "index_product_imagess_on_product_id"
+
   create_table "products", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -875,7 +895,7 @@ ActiveRecord::Schema.define(:version => 20130217055230) do
     t.boolean  "unlimited_quantity"
     t.datetime "updated_at",                                                                                 :null => false
     t.datetime "created_at",                                                                                 :null => false
-    t.decimal  "international_flatrate_shipping_cost"
+    t.decimal  "international_flatrate_shipping_cost", :precision => 10, :scale => 2
     t.string   "purchase_type",                                                       :default => "buy-now"
     t.boolean  "external",                                                            :default => false
     t.string   "external_url"
