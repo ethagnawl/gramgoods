@@ -4,7 +4,7 @@ class InstagramProductImage < ActiveRecord::Base
   validates_presence_of :url
 
   def src
-    self.url
+    self.url.split('http:')[1]
   end
 end
 
