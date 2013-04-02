@@ -76,7 +76,7 @@ if gon.page is 'products_new' or gon.page is 'products_create' or gon.page is 'p
                         else
                             response.product_images
 
-                        product_images = _.map(product_images, (product_image) -> { product_image })
+                        product_images = _.map(product_images, (product_image) -> { product_image: product_image.split('http:')[1] })
 
                         $new_product_image_grid.append(
                             Mustache.render(existing_photo_grid_photos_template, {
