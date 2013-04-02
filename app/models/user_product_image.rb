@@ -15,7 +15,7 @@ class UserProductImage < ActiveRecord::Base
   }
 
   def src
-    self.image.url(:large)
+    self.image.url(:large).split('http:')[1]
   end
 
   private
