@@ -22,7 +22,6 @@ window.order_form_validation_rules =
         '#order_recipient_attributes_postal_code':
             message: 'Postal Code is required.'
             required: true
-            test: happy.postal_code
         '#order_recipient_attributes_country':
             message: 'Country is required.'
             required: true
