@@ -9,6 +9,7 @@ group :development do
   gem 'sqlite3'
   gem 'quiet_assets'
   gem 'bullet'
+  gem 'metric_fu'
 end
 
 group :production do
