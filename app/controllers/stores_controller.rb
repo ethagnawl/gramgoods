@@ -109,7 +109,8 @@ class StoresController < ApplicationController
   def update
     @user = current_user
     @store = @user.stores.find(params[:id])
-    if @store.update_attributes(params[:store])
+    if @store.update_attributes(params[:store]) &&
+        @user.update_attributes(params[:user])
       flash[:notice] = "#{@store.name} has been updated successfully."
       redirect_to custom_store_path(@store)
     else
