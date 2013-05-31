@@ -343,6 +343,53 @@ html.no-touch {
         background-color: $giles-brother;
     }
 
+    // alison-lou - not very DRY, but it'll be easier to change when the time comes
+    $alison-lou: $black;
+
+    .custom-merchant-alison-lou {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $alison-lou
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $alison-lou
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $alison-lou
+       }
+    }
+
+    .custom-merchant-alison-lou .products .product-button,
+    .product.custom-merchant-alison-lou-product .product-middle .product-button {
+        background-color: $alison-lou;
+    }
+
+    .custom-merchant-alison-lou #order_form legend {
+        background-color: $alison-lou;
+
+        &#billing_information_legend {
+            background-color: $alison-lou;
+        }
+    }
+
+    .custom-merchant-alison-lou #view_more_products {
+        background-color: $alison-lou;
+    }
 
     // soles - not very DRY, but it'll be easier to change when the time comes
     $solesinc-store-color: $black;
