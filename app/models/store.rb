@@ -6,6 +6,8 @@ class Store < ActiveRecord::Base
 
   friendly_id :name, :use => [:slugged, :history]
 
+  after_create :deliver_store_confirmation
+
   attr_accessible :name, :return_policy, :terms_of_service
   validates_presence_of :name, :return_policy
   validates_uniqueness_of :name
@@ -24,4 +26,13 @@ class Store < ActiveRecord::Base
     return false if !defined?(MERCHANTS_WITH_CUSTOM_STORE_SLUGS) || MERCHANTS_WITH_CUSTOM_STORE_SLUGS.nil?
     MERCHANTS_WITH_CUSTOM_STORE_SLUGS.member? self.slug
   end
+
+  private
+    def deliver_store_confirmation
+      StoreMailer.delay.store_confirmation(self, owner)
+    end
+
+    def owner
+      self.user
+    end
 end
