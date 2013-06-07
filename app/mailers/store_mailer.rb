@@ -5,7 +5,7 @@ class StoreMailer < ActionMailer::Base
   def store_confirmation(store, owner)
     @store = store
 
-    mail( :to => owner.email_address,
+    mail( :to => owner.email,
           :subject => "Welcome to GramGoods!")
   end
 end
