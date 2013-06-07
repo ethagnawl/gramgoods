@@ -21,8 +21,23 @@
 
       %fieldset
         - if edit_view
+          = user_form.label :first_name, (form_label(:first_name))
+        = user_form.text_field :first_name, :placeholder => (form_label(:first_name))
+
+      %fieldset
+        - if edit_view
+          = user_form.label :last_name, (form_label(:last_name))
+        = user_form.text_field :last_name, :placeholder => (form_label(:last_name))
+
+      %fieldset
+        - if edit_view
           = user_form.label :email, (form_label(:email))
         = user_form.text_field :email, :placeholder => (form_label(:email))
+
+      %fieldset
+        - if edit_view
+          = user_form.label :phone_number, (form_label(:phone_number))
+        = user_form.text_field :phone_number, :placeholder => (form_label(:phone_number, true, ' (e.g. 222-222-2222)'))
 
       %fieldset
         - if edit_view

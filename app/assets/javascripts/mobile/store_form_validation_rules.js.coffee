@@ -1,11 +1,20 @@
 window.store_form_validation_rules =
     fields:
+        '#user_business_name':
+            message: 'Business Name is required.'
+            required: true
+        '#user_first_name':
+            message: 'First Name is required.'
+            required: true
+        '#user_last_name':
+            message: 'Last Name is required.'
+            required: true
         '#user_email':
             message: 'Email Address is required.'
             required: true
             test: happy.email
-        '#user_business_name':
-            message: 'Business Name is required.'
+        '#user_phone_number':
+            message: 'Phone Number is required.'
             required: true
         '#user_street_address_1':
             message: 'Street Address is required.'
