@@ -5,17 +5,18 @@
     %li.widget GramGoods charges 5% per transaction (+3% for credit card fees).
     %li.widget GramGoods sign up fee is $100.00, please #{link_to('pay here', 'https://www.gramgoods.com/gg/sign-up-fee', title: 'Pay GramGoods Sign Up Fee')}.
     %li.widget GramGoods will send payments every 14 days for any sales directly to your bank account via ACH wire transfer. A representative will reach out shortly for your banking information.
-    %li.widget Please place your store's URL in your Instagram profile. (#{link_to("https://gramgoods.com/#{locals[:store].slug}", "https://gramgoods.com/#{locals[:store].slug}", :target => '_blank')})
+    %li.widget Please place your store's URL in your Instagram profile. (#{link_to("https://www.gramgoods.com/#{locals[:store].slug}", "https://www.gramgoods.com/#{locals[:store].slug}", :target => '_blank')})
     %li.widget
       = image_tag("http://s3.amazonaws.com/#{S3_BUCKET}/assets/welcome.jpg",
         class: 'screenshot',
-        alt: "Add your GramGoods URL (http://gramgoods.com/#{locals[:store].slug}) to your Instagram profile.")
+        alt: "Add your GramGoods URL (http://www.gramgoods.com/#{locals[:store].slug}) to your Instagram profile.")
     %li.widget GramGoods offers customer stores as a premium option for $150.00 which include:
     %li.widget - Custom URL such as shop.owennyc.com
     %li.widget - Your logo at top of page
     %li.widget - Your color scheme
     %li.widget - Please #{link_to('pay here' , 'https://www.gramgoods.com/gg/custom-branded-store', title: 'Purchase GramGoods Store Customization')} if you would like a custom store
 
-  %h2.widget If you need help or have additional questions please reach out to admin@gramgoods.com
-  %a.btn.btn-large.btn-primary.widget{ href: new_store_product_path(locals[:store]) } Create your first product!
+  %ul.widget
+    %li.widget If you need help or have additional questions please reach out to #{link_to('admin@gramgoods.com', 'mailto: admin@gramgoods.com')}
+  %a.btn.btn-large.btn-primary.widget{ href: new_store_product_url(locals[:store]) } Create your first product!
 
