@@ -487,6 +487,53 @@ html.no-touch {
         background-color: $americantwoshot-color;
     }
 
+    // nolan-jewelry - not very DRY, but it'll be easier to change when the time comes
+    $nolan-jewelry: $black;
+
+    .custom-merchant-nolan-jewelry {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $nolan-jewelry;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $nolan-jewelry;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $nolan-jewelry;
+       }
+    }
+
+    .custom-merchant-nolan-jewelry .products .product-button,
+    .product.custom-merchant-nolan-jewelry-product .product-middle .product-button {
+        background-color: $nolan-jewelry;
+    }
+
+    .custom-merchant-nolan-jewelry #order_form legend {
+        background-color: $nolan-jewelry;
+
+        &#billing_information_legend {
+            background-color: $nolan-jewelry;
+        }
+    }
+
+    .custom-merchant-nolan-jewelry #view_more_products {
+        background-color: $nolan-jewelry;
+    }
 
     // dev
     $my-sample-store-store-color: $black;
