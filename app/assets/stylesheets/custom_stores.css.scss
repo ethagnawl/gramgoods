@@ -332,15 +332,15 @@ html.no-touch {
     }
 
     .custom-merchant-trendiga #order_form legend {
-        background-color: $trendiga
+        background-color: $trendiga;
 
         &#billing_information_legend {
-            background-color: $trendiga
+            background-color: $trendiga;
         }
     }
 
     .custom-merchant-trendiga #view_more_products {
-        background-color: $trendiga
+        background-color: $trendiga;
     }
 
     // giles-brother - not very DRY, but it'll be easier to change when the time comes
