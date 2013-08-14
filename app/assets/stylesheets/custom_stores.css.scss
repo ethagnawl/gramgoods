@@ -295,6 +295,54 @@ html.no-touch {
         background-color: $owen-nyc;
     }
 
+    // trendiga - not very DRY, but it'll be easier to change when the time comes
+    $trendiga: $black;
+
+    .custom-merchant-trendiga {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $trendiga;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $trendiga;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $trendiga;
+       }
+    }
+
+    .custom-merchant-trendiga .products .product-button,
+    .product.custom-merchant-trendiga-product .product-middle .product-button {
+        background-color: $trendiga;
+    }
+
+    .custom-merchant-trendiga #order_form legend {
+        background-color: $trendiga
+
+        &#billing_information_legend {
+            background-color: $trendiga
+        }
+    }
+
+    .custom-merchant-trendiga #view_more_products {
+        background-color: $trendiga
+    }
+
     // giles-brother - not very DRY, but it'll be easier to change when the time comes
     $giles-brother: $black;
 
