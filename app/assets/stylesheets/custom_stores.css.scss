@@ -535,6 +535,54 @@ html.no-touch {
         background-color: $americantwoshot-color;
     }
 
+    // ngos-goods - not very DRY, but it'll be easier to change when the time comes
+    $ngos-goods: $dark-grey;
+
+    .custom-merchant-ngos-goods {
+        .mobile-header {
+            background-color: #fff;
+
+            h3, h3 span, h5 span {
+                color: $ngos-goods;
+            }
+
+            #menu li {
+                &.on a,
+                a:hover,
+                a:focus,
+                a:active {
+                    // rgba version of light-grey
+                    background-color: rgba(238, 238, 238, .5);
+                }
+
+                a {
+                    color: $ngos-goods;
+                }
+            }
+        }
+
+        .products .product-button, .product-detail .product-button {
+           background-color: $ngos-goods;
+       }
+    }
+
+    .custom-merchant-ngos-goods .products .product-button,
+    .product.custom-merchant-ngos-goods-product .product-middle .product-button {
+        background-color: $ngos-goods;
+    }
+
+    .custom-merchant-ngos-goods #order_form legend {
+        background-color: $ngos-goods;
+
+        &#billing_information_legend {
+            background-color: $ngos-goods;
+        }
+    }
+
+    .custom-merchant-ngos-goods #view_more_products {
+        background-color: $ngos-goods;
+    }
+
     // nolan-jewelry - not very DRY, but it'll be easier to change when the time comes
     $nolan-jewelry: $black;
 
