@@ -1,0 +1,3 @@
+development:
+  id: APP_ID
+  secret: API_SECRET
