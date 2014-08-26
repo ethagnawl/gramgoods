@@ -26,7 +26,7 @@ end
 gem 'pry-rails'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'therubyracer', '0.10.1'
-gem 'less-rails'
+gem 'less-rails', '2.3.3'
 gem 'twitter-bootstrap-rails', '2.1.7'
 gem 'jquery-rails', "~>2.1.1"
 gem 'devise'
