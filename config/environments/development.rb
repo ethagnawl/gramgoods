@@ -39,13 +39,6 @@ Gramgoods::Application.configure do
 
   config.serve_static_assets = false
 
-  config.after_initialize do
-    Bullet.enable = true
-    Bullet.console = true
-    Bullet.rails_logger = true
-    Bullet.disable_browser_cache = true
-  end
-
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = false
   config.action_mailer.raise_delivery_errors = true
