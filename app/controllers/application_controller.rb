@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
 
     def products_json(products)
       Jbuilder.encode do |json|
-        json.products(products) do |json, product|
+        json.products(products) do |product|
           json.product_image product.get_product_images.first
           json.product_images product.get_product_images
           json.product_name product.name
