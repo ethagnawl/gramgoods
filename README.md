@@ -34,3 +34,4 @@ DEVISE_SECRET_KEY = "MY_DEVISE_SECRET_KEY"
 
 (These variables can also be exported using via /etc/exports or however else you add environment variables.)
 
+5. `foreman start`
